@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./register/log-in/style/standard.css" />
+    <link rel="stylesheet" href="./register/log-in/style/log-in.css" />
+    <title>Join Log in</title>
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form onsubmit="login(); return false;">
+        <input type="email" placeholder="E-Mail" id="email" required />
+        <input type="password" placeholder="Passwort" id="password" required />
+
+        <button type="submit">Login</button>
+        <button type="button" onclick="guestLogin()">Guest Login</button>
+        <button type="button">
+          <a href="./register.html">Registrieren</a>
+        </button>
+      </form>
+    </div>
+
+    <script src="./register/log-in/script/log-in.js"></script>
+    <script src="./register/log-in/script/firebase-log-in.js"></script>
+
+    <script>
+        
+    </script>
+  </body>
+</html>
