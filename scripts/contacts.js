@@ -9,3 +9,11 @@ function createContactNameInitials() {
   userImage.classList.add("user-initials");
 }
 createContactNameInitials();
+
+function createBigContactNameInitials() {
+  let firstLetterOfUserName = userName.charAt(0);
+  let secondLetterOfUserName = userName.split(" ")[1][0];
+  let bigCredentialsArea = document.getElementById("user-picture-big-index");
+  bigCredentialsArea.innerHTML = `${firstLetterOfUserName}${secondLetterOfUserName}`;
+}
+createBigContactNameInitials();

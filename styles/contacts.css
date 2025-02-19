@@ -43,7 +43,6 @@ seperator {
 #user:hover {
   background-color: #cdcdcd;
   border-radius: 10px;
-  color: white;
 }
 
 .user-picture {
@@ -86,4 +85,63 @@ seperator {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.user-name-header {
+  padding-left: 50px;
+  display: flex;
+  gap: 50px;
+}
+
+.user-name-options {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: start;
+}
+
+.option-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.user-picture-big {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  background-color: #29abe2;
+  font-weight: 500;
+  font-size: 47px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.big-user-name {
+  font-size: 47px;
+  font-weight: 500;
+}
+
+.user-name-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.edit-options {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contact-information {
+  padding-left: 50px;
+  margin-top: 50px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+#right-contacts-page-column {
+  background-color: #f6f7f8;
 }
