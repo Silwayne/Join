@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/join-main/join-main.css">
+    <link rel="stylesheet" href="/join-main/join-main.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -13,13 +13,30 @@
     <title>Contacts</title>
   </head>
   <body>
-    <div class="contacts-page-div">
-      <div id="left-contacts-page-column">
-        <button>
-          Add new contact <img class="button-icon" src="/assets/img/add-contact.svg" />
-        </button>
+    <div id="contact-div">
+      <div class="contacts-page-div">
+        <div id="left-contacts-page-column">
+          <button>
+            Add new contact
+            <img class="button-icon" src="/assets/img/add-contact.svg" />
+          </button>
+          <div id="user">
+            <div class="user-area">
+              <div class="user-picture">Userpicture</div>
+              <div class="user-info">
+                <p class="user-name">User Name</p>
+                <p class="user-email">user@e-mail.com</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="right-contacts-page-column">
+          <h1>Contacts</h1>
+          <seperator></seperator>
+          <h2>Better with a team</h2>
+        </div>
       </div>
-      <div></div>
     </div>
   </body>
+  <script src="/scripts/contacts.js"></script>
 </html>
