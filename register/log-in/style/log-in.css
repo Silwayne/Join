@@ -1,26 +1,31 @@
-.login-container {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: inter;
 }
 
-input,
-button {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 10px;
+a {
+  text-decoration: none;
 }
 
 button {
-  background-color: #007bff;
+  background-color: #2a3647;
   color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-size: 21px;
+  border-radius: 10px;
   border: none;
-  cursor: pointer;
+  padding: 12px 16px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #29abe2;
+  cursor: pointer;
+}
+
+button:active {
+  background-color: #091931;
 }
