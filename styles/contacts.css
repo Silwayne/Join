@@ -1,0 +1,89 @@
+/* Contacts */
+.contacts-page-div {
+  display: flex;
+  flex-direction: row;
+}
+#contacts-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  background-color: #f6f7f8;
+  height: auto;
+  width: auto;
+  padding: 50px;
+}
+
+#left-contacts-page-column {
+  margin: 50px;
+}
+
+seperator {
+  width: 3px;
+  height: 59px;
+  background-color: #29abe2;
+  border-radius: 5px;
+}
+
+#user {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  width: 352px;
+}
+
+.user-area {
+  display: flex;
+  justify-content: start;
+  padding-left: 24px;
+  gap: 48px;
+  width: 352px;
+}
+
+#user:hover {
+  background-color: #cdcdcd;
+  border-radius: 10px;
+  color: white;
+}
+
+.user-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.user-name {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.user-email {
+  font-weight: 400;
+  font-size: 16px;
+  color: #007cee;
+}
+
+.user-info {
+  padding: 15px 0;
+}
+
+#user:active {
+  background-color: #2a3647;
+}
+
+.user-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 21px;
+  border: solid;
+  border-width: 2px;
+  border-color: white;
+  background-color: #29abe2;
+}
+
+.user-initials {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

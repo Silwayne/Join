@@ -10,6 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
+
+    <link rel="stylesheet" href="/styles/contacts.css" />
     <title>Contacts</title>
   </head>
   <body>
@@ -22,18 +24,21 @@
           </button>
           <div id="user">
             <div class="user-area">
-              <div class="user-picture">Userpicture</div>
+              <div class="user-picture"><div id="user-icon-index" class="user-icon"></div></div>
               <div class="user-info">
-                <p class="user-name">User Name</p>
+                <p class="user-name" id="user-name-index">User Name</p>
                 <p class="user-email">user@e-mail.com</p>
               </div>
             </div>
           </div>
         </div>
         <div id="right-contacts-page-column">
-          <h1>Contacts</h1>
-          <seperator></seperator>
-          <h2>Better with a team</h2>
+          <div id="contacts-header">
+            <h1>Contacts</h1>
+            <seperator></seperator>
+            <h2>Better with a team</h2>
+          </div>
+          <div class="user-contact-header"></div>
         </div>
       </div>
     </div>
