@@ -3,6 +3,7 @@
     padding: 0;
     font-family: "Inter", sans-serif;
     overflow: auto;
+    box-sizing: border-box;
   }
   
   a {
@@ -35,10 +36,10 @@
   .log-in-container {
     display: flex;
     position: fixed;
-    top: 265.5px;
+    top: 265px;
     border-radius: 30px;
-    width: 652px;
-    height: 493px;
+    width: 30%;
+    height: 45%;
     gap: 32px;
     padding: 48px 115px 48px 115px;
     flex-direction: column;
@@ -84,21 +85,20 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 48px;
+    height: 65px;
     gap: 35px;
   }
 
   .log-in-button {
     width: 125px;
-    height: 48px;
-    padding: 9px 18px 10px 22px;
+    height: 80%;
     border-radius: 8px;
     background: #2a3647;
     color: white;
     font-size: 21px;
     font-weight: 700;
-    line-height: 25.2px;
-    text-align: left;
+    line-height: 25px;
+    text-align: center;
     cursor: pointer;
     border: none;
   }
@@ -149,4 +149,25 @@
     width: 20px;
     height: 20px;
     pointer-events: none;
+  }
+
+  footer {
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    bottom: 60px;
+    width: 246px;
+    height: 35px;
+    gap: 16px;
+    opacity: 0.5;
+  }
+  
+  .footer-link {
+    text-decoration: none;
+    color: #a8a8a8;
+  }
+  
+  .footer-link:hover {
+    font-weight: 700;
+    color: #29abe2;
   }
