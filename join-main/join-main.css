@@ -7,7 +7,7 @@
 main {
   display: flex;
   height: 100%;
-  align-items: ;
+  
 }
 
 .left-column {
@@ -53,8 +53,7 @@ nav {
   color: #cdcdcd;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 48px;
   width: 100%;
-  justify-content: center;
+  height: 46px;
 }
-

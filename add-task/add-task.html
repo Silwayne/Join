@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="add-task.css">
+    <script src="/add-task/add-task.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <section>
+        <div>
+            <h1>Add Task</h1>
+
+            <p>Title</p>
+            <input id="add-task-title" type="text" placeholder="Enter a title">
+        </div>
+        <div>
+            <p>Description</p>
+            <input id="description" type="text" placeholder="Enter a Description">
+        </div>
+        <div>
+            <p>Asigned to</p>
+            <input type="text" placeholder="Enter a Description">
+    </section>
+    <section>
+        <div>
+            <p for="due-date">Due date*</p>
+            <input type="date" id="due-date" placeholder="Hallo" required>
+        </div>
+        <div>
+            <p>Prio</p>
+            <div class="prio-box">
+                <div class="prio" id="prio-urgent">
+                    <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
+                </div>
+                <div class="prio" id="prio-medium">
+                    <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
+                </div>
+                <div class="prio" id="prio-low">
+                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label for="category">Category*</label>
+            <select id="category" name="category" required>
+                <option value="">Select task category</option>
+                <option value="technical">Technical Task</option>
+                <option value="user-story">User Story</option>
+            </select>
+        </div>
+        <div class="subtask-container">
+            <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
+            <div class="icons">
+                <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
+                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()"
+                        src="/assets/img/close.svg"></span>
+                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()"
+                        src="/assets/img/check.svg"></span>
+            </div>
+        </div>
+        <ul id="subtasks">
+
+
+        </ul>
+    </section>
+    </div>
+</body>
+
+</html>

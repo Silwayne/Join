@@ -1,0 +1,85 @@
+.subtask-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    width: 300px;
+}
+
+.subtask-container input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+    padding: 5px;
+}
+
+.icons {
+    display: flex;
+    gap: 5px;
+}
+
+.icon {
+    cursor: pointer;
+    font-size: 18px;
+    color: #333;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.d_none {
+    display: none;
+}
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 4px;
+    margin-top: 5px;
+    transition: background 0.3s;
+}
+
+#subtasks:hover {
+    background: #e0e0e0;
+}
+
+.task-icons {
+    display: none;
+    gap: 5px;
+}
+
+.task:hover .task-icons {
+    display: flex;
+}
+
+.task-icons .icon {
+    font-size: 16px;
+    cursor: pointer;
+}
+#prio-medium{
+    color: white;
+    background-color: #ffa800;
+}
+.prio-box{
+    display: flex;
+    justify-content: space-around;
+}
+.prio{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 136px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: solid #ddd 1px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);   
+}
+.prio img{
+    height: 10px ;
+}
+.prio p{
+    
+}
