@@ -36,10 +36,10 @@
   .log-in-container {
     display: flex;
     position: fixed;
-    top: 265px;
+    top: 25%;
     border-radius: 30px;
-    width: 30%;
-    height: 45%;
+    /* width: 30%;
+    height: 45%; */
     gap: 32px;
     padding: 48px 115px 48px 115px;
     flex-direction: column;
