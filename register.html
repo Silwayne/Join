@@ -7,15 +7,50 @@
     <link rel="stylesheet" href="./register/register.css" />
   </head>
   <body>
-    <section>
-    <h2>Sign Up</h2>
-    <form onsubmit="registerUser(); return false">
-      <input type="text" id="first-name" placeholder="First and Last Name" required/>
-      <input type="email" placeholder="E-Mail" id="email" required />
-      <input type="password" placeholder="Passwort" id="password" minlength="4" required />
-      <input type="password" placeholder="confirm-password" id="confirm-password" minlength="4" required />
-      <button type="submit">Sign Up</button>
-    </form>
+    <section class="login-page">
+      <div class="log-in-container">
+        <div class="login-container-headline">
+          <h1 class="login-headline">Sign Up</h1>
+          <img class="blue-line" src="./assets/img/Vector 5.svg" alt="Strich" />
+        </div>
+        <form class="log-in-form" onsubmit="registerUser(); return false">
+          <label class="input-container">
+            <input type="text" id="first-name" placeholder="First and Last Name" required/>
+            <img
+              class="input-icon"
+              src="./assets/img/mail.svg"
+              alt="E-Mail Icon"
+            />
+          </label>
+          <label class="input-container">
+            <input type="email" placeholder="E-Mail" id="email" required />
+            <img
+              class="input-icon"
+              src="./assets/img/mail.svg"
+              alt="E-Mail Icon"
+            />
+          </label>
+          <label class="input-container">
+            <input type="password" placeholder="Passwort" id="password" minlength="4" required />
+            <img
+              class="input-icon-lock"
+              src="./assets/img/lock.svg"
+              alt="Passwort Icon"
+            />
+          </label>
+          <label class="input-container">
+            <input type="password" placeholder="confirm-password" id="confirm-password" minlength="4" required />
+            <img
+              class="input-icon-lock"
+              src="./assets/img/lock.svg"
+              alt="Passwort Icon"
+            />
+          </label>
+          <div class="container-button">
+            <button class="log-in-button" type="submit">Sign Up</button>
+          </div>
+        </form>
+      </div>
   </section>
 
 

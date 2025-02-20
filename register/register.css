@@ -1,0 +1,130 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+    overflow: auto;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+
+.login-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background: #f6f7f8;
+    margin: 0;
+    padding: 0;
+  }
+
+  .log-in-container {
+    display: flex;
+    position: fixed;
+    top: 265.5px;
+    border-radius: 30px;
+    width: 652px;
+    height: 493px;
+    gap: 32px;
+    padding: 48px 115px 48px 115px;
+    flex-direction: column;
+    box-shadow: 0px 0px 14px 3px #0000000a;
+    background-color: white;
+  }
+
+  .login-container-headline {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+.login-headline {
+    font-weight: 700;
+    font-size: 61px;
+    line-height: 73.2px;
+    margin-block-start: 0;
+    margin-block-end: 0;
+  }
+  
+  .blue-line {
+    width: 170px;
+  }
+
+  .log-in-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .container-button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    gap: 35px;
+  }
+
+  .log-in-button {
+    width: 125px;
+    height: 48px;
+    padding: 9px 18px 10px 22px;
+    border-radius: 8px;
+    background: #2a3647;
+    color: white;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 25.2px;
+    text-align: left;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .log-in-button:hover {
+    background-color: #29abe2;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  input {
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 48px;
+    padding: 12px 38px 12px 21px;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1px solid;
+    opacity: 0.5;
+    box-sizing: border-box;
+  }
+  
+  input:focus-visible {
+    outline: none;
+    border: 2px solid #29abe2;
+    opacity: 1;
+  }
+
+  .input-container {
+    position: relative;
+    width: 100%;
+  }
+
+  .input-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 16px;
+    pointer-events: none;
+  }
+  
+  .input-icon-lock {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
