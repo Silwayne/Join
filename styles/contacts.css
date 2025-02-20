@@ -68,6 +68,7 @@ seperator {
 
 #user:active {
   background-color: #2a3647;
+  color: white;
 }
 
 .user-icon {
@@ -98,6 +99,7 @@ seperator {
   gap: 24px;
   align-items: center;
   justify-content: start;
+  margin-top: 16px;
 }
 
 .option-icon {
@@ -116,6 +118,9 @@ seperator {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: solid;
+  border-width: 3px;
+  border-color: white;
 }
 
 .big-user-name {
@@ -138,10 +143,15 @@ seperator {
 .contact-information {
   padding-left: 50px;
   margin-top: 50px;
+  margin-bottom: 50px;
   font-size: 20px;
   font-weight: 400;
 }
 
 #right-contacts-page-column {
   background-color: #f6f7f8;
+}
+
+.contact-details {
+  margin: 50px;
 }
