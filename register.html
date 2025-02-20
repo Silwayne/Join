@@ -8,11 +8,13 @@
   </head>
   <body>
     <section>
-    <h2>Registrierung</h2>
+    <h2>Sign Up</h2>
     <form onsubmit="registerUser(); return false">
+      <input type="text" id="first-name" placeholder="First and Last Name" required/>
       <input type="email" placeholder="E-Mail" id="email" required />
-      <input type="password" placeholder="Passwort" id="password" required />
-      <button type="submit">Registrieren</button>
+      <input type="password" placeholder="Passwort" id="password" minlength="4" required />
+      <input type="password" placeholder="confirm-password" id="confirm-password" minlength="4" required />
+      <button type="submit">Sign Up</button>
     </form>
   </section>
 
