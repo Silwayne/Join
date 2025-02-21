@@ -44,6 +44,15 @@ h2 {
   font-weight: 400;
 }
 
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Contacts */
 .contacts-page-div {
   display: flex;
@@ -196,6 +205,7 @@ seperator {
 
 #right-contacts-page-column {
   background-color: #f6f7f8;
+  height: 100vh;
 }
 
 .contact-details {

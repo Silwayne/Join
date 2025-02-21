@@ -3,6 +3,7 @@ let firebaseAnswer;
 let fireBase;
 let users;
 let user;
+let contactDetailsArea;
 
 async function contactFirebase() {
   let firebaseUrl = await fetch(
@@ -52,11 +53,20 @@ function createContactNameInitials(user, indexOfUser) {
   userImage.classList.add("user-initials");
 }
 
-function renderRightContactArea(name, email) {
-  let user = { name, email };
-  createBigContactNameInitials(user);
+function rightContactDetailsHideOnLoad() {
+  contactDetailsArea = document.getElementById("contact-details-area");
+  contactDetailsArea.classList.add("hide");
 }
 
+function renderRightContactArea(name, email) {
+  contactDetailsArea.classList.add("show");
+  let user = { name, email };
+  let rightContactNameArea = document.getElementById("big-user-name");
+  let rightEmailArea = document.getElementById("user-email")
+  rightEmailArea.innerHTML=`${email}`
+  rightContactNameArea.innerHTML = `${name}`;
+  createBigContactNameInitials(user);
+}
 
 function createBigContactNameInitials(user) {
   let userName = user.name;

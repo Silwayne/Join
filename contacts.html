@@ -10,11 +10,12 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
-
+    <!-- CSS -->
     <link rel="stylesheet" href="/styles/contacts.css" />
+    <link rel="stylesheet" href="/styles/add-contact-overlay.css" />
     <title>Contacts</title>
   </head>
-  <body>
+  <body onload="rightContactDetailsHideOnLoad()">
     <div id="contact-div">
       <div class="contacts-page-div">
         <div id="left-contacts-page-column">
@@ -22,7 +23,6 @@
             Add new contact
             <img class="button-icon" src="/assets/img/add-contact.svg" />
           </button>
-          
         </div>
         <div id="right-contacts-page-column">
           <div id="contacts-header">
@@ -31,37 +31,70 @@
             <h2>Better with a team</h2>
           </div>
           <div class="user-contact-header"></div>
-          <div class="user-name-header">
-            <div id="user-picture-big-index" class="user-picture-big">
-              Userimage
-            </div>
-            <div class="user-name-area">
-              <div class="big-user-name">User Name</div>
-              <div class="user-name-options">
-                <a class="edit-options"
-                  ><img
-                    class="option-icon"
-                    src="/assets/img/edit-pen-icon.svg"
-                  />
-                  Edit</a
-                >
-                <a class="edit-options"
-                  ><img class="option-icon" src="/assets/img/trash-icon.svg" />
-                  Delete</a
-                >
+          <div id="contact-details-area">
+            <div class="user-name-header">
+              <div id="user-picture-big-index" class="user-picture-big">
+                Userimage
+              </div>
+              <div class="user-name-area">
+                <div id="big-user-name" class="big-user-name">User Name</div>
+                <div class="user-name-options">
+                  <a class="edit-options"
+                    ><img
+                      class="option-icon"
+                      src="/assets/img/edit-pen-icon.svg"
+                    />
+                    Edit</a
+                  >
+                  <a class="edit-options"
+                    ><img
+                      class="option-icon"
+                      src="/assets/img/trash-icon.svg"
+                    />
+                    Delete</a
+                  >
+                </div>
               </div>
             </div>
+            <h3 class="contact-information">Contact Information</h3>
+            <div class="contact-details">
+              <h4>E-Mail</h4>
+              <br />
+              <p id="user-email" class="user-email">user@name.com</p>
+              <br />
+              <h4>Phone</h4>
+              <br />
+              <p class="user-phone-number">+49 1234/56789</p>
+              <br />
+            </div>
           </div>
-          <h3 class="contact-information">Contact Information</h3>
-          <div class="contact-details">
-            <h4>E-Mail</h4>
-            <br />
-            <p class="user-email">user@name.com</p>
-            <br />
-            <h4>Phone</h4>
-            <br />
-            <p class="user-phone-number">+49 1234/56789</p>
-            <br />
+        </div>
+      </div>
+    </div>
+    <div id="outer-add-contact-overlay">
+      <div id="add-contact-overlay">
+        <div id="left-add-contact-column">
+          <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
+          <h1 id="add-contact-heading">Add contact</h1>
+          <h2>Tasks are better with a team!</h2>
+        </div>
+        <div id="right-add-contact-column">
+          <div class="new-contact-icon">
+            <img src="/assets/img/new-contact-icon.svg" alt="" />
+          </div>
+          <div id="add-contact-options">
+            <form action="" class="add-contact-form">
+              <input type="text" placeholder="First and second name" /><input
+                type="email"
+                placeholder="E-Mail"
+              /><input type="tel" placeholder="Phone" />
+            </form>
+            <div id="button-area">
+              <button id="cancel-add-contact" class="add-contacts-overlay-btns">Cancel X</button
+              ><button class="add-contacts-overlay-btns">
+                Create contact ✓
+              </button>
+            </div>
           </div>
         </div>
       </div>
