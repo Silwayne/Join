@@ -1,3 +1,49 @@
+a {
+  cursor: pointer;
+}
+
+button {
+  background-color: #2a3647;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-size: 21px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  padding: 12px 16px;
+  width: 100%;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #29abe2;
+}
+
+button:active {
+  background-color: #091931;
+}
+
+.button-icon {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+}
+
+h1 {
+  font-size: 61px;
+  font-weight: 700px;
+}
+
+h2 {
+  font-size: 27px;
+  font-weight: 400;
+}
+
 /* Contacts */
 .contacts-page-div {
   display: flex;
@@ -154,4 +200,12 @@ seperator {
 
 .contact-details {
   margin: 50px;
+}
+
+.contact-list:hover {
+  background-color: #2a3647;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
 }

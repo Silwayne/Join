@@ -2,6 +2,7 @@ let leftContactsColumn = document.getElementById("left-contacts-page-column");
 let firebaseAnswer;
 let fireBase;
 let users;
+let user;
 
 async function contactFirebase() {
   let firebaseUrl = await fetch(
@@ -17,43 +18,50 @@ contactFirebase();
 
 function renderLeftColumnContacts() {
   users = fireBase.users;
-  Object.keys(users).forEach((key) => {
-    let user = users[key];
+  Object.keys(users).forEach((key, indexOfUser) => {
+    user = users[key];
     console.log(user.email);
-    renderLeftColumnContactsTemplate(user);
+    renderLeftColumnContactsTemplate(user, indexOfUser);
+    createContactNameInitials(user, indexOfUser);
   });
 }
 
-function renderLeftColumnContactsTemplate(user) {
+function renderLeftColumnContactsTemplate(user, indexOfUser) {
   leftContactsColumn.innerHTML += `
-          <div id="user">
+<div class="contact-list" onclick='renderRightContactArea("${user.name}", "${
+    user.email
+  }")' id="user${indexOfUser}">
             <div class="user-area">
               <div class="user-picture">
-                <div id="user-icon-index" class="user-icon"></div>
+                <div id="user-icon${[indexOfUser]}" class="user-icon"></div>
               </div>
               <div class="user-info">
-                <p class="user-name" id="user-name-index">User Name</p>
+                <p class="user-name" id="user-name-index">${user.name}</p>
                 <p class="user-email">${user.email}</p>
               </div>
             </div>
           </div>`;
 }
 
-function createContactNameInitials() {
-  let userName = document.getElementById("user-name-index").innerText;
+function createContactNameInitials(user, indexOfUser) {
+  let userName = user.name;
   let firstLetterOfUserName = userName.charAt(0);
   let secondLetterOfUserName = userName.split(" ")[1][0];
-  let userImage = document.getElementById("user-icon-index");
+  let userImage = document.getElementById(`user-icon${indexOfUser}`);
   userImage.innerHTML = `${firstLetterOfUserName}${secondLetterOfUserName}`;
   userImage.classList.add("user-initials");
 }
-createContactNameInitials();
 
-function createBigContactNameInitials() {
-  let userName = document.getElementById("user-name-index").innerText;
+function renderRightContactArea(name, email) {
+  let user = { name, email };
+  createBigContactNameInitials(user);
+}
+
+
+function createBigContactNameInitials(user) {
+  let userName = user.name;
   let firstLetterOfUserName = userName.charAt(0);
   let secondLetterOfUserName = userName.split(" ")[1][0];
   let bigCredentialsArea = document.getElementById("user-picture-big-index");
   bigCredentialsArea.innerHTML = `${firstLetterOfUserName}${secondLetterOfUserName}`;
 }
-createBigContactNameInitials();
