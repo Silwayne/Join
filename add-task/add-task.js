@@ -1,4 +1,10 @@
 const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+
+function init() {
+    selectContacts();
+}
+let counter = 0
+let names = []
 function updateIcons() {
     let inputField = document.getElementById("subtaskInput");
     let plusIcon = document.getElementById("plusIcon");
@@ -21,86 +27,145 @@ function clearSubTaskInput() {
 }
 
 function addSubTaskInput() {
+    counter++;
     let input = document.getElementById('subtaskInput')
     let tableSubTask = document.getElementById('subtasks')
+    tableSubTask.classList.remove('d_none')
     let inputText = input.value.trim();
 
     if (inputText === "") return;
 
     tableSubTask.innerHTML += `
                 <div class="task">
-                    <li>${inputText}</li>
+                    <li id="task_${counter}">${inputText}</li>
                     <div class="task-icons">
-                        <img src="/assets/img/edit.svg" class="icon" onclick="editSubTask(this)">
-                        <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(this)">
+                        <img id="imgID_${counter}" src="/assets/img/edit.svg" class="icon" onclick="editSubTask(this, ${counter})">
+                        <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(this, ${counter})">
                     </div>
                 </div>
             `;
 
     clearSubTaskInput();
 }
-function deleteSubtask(element) {
-    element.parentElement.parentElement.remove();
+function deleteSubtask(element, taskIdNumber) {
+    document.getElementById('task_' + taskIdNumber).remove();
+    counter--;
 }
 
-function editSubTask(element) {
-    // Das <li>-Element, das bearbeitet werden soll
-    let taskItem = element.parentElement.previousElementSibling;
-
-    // Der Text der Unteraufgabe
-    let currentText = taskItem.textContent.trim();
-
-    // Erstelle ein Eingabefeld (input), um den Text zu bearbeiten
+function editSubTask(element, taskIdNumber) {
+    let taskItem = document.getElementById('task_' + taskIdNumber);
     let inputField = document.createElement("input");
     inputField.type = "text";
-    inputField.value = currentText;
-
-    // Entferne den Punkt von der <ul>, falls das Bearbeiten beginnt
+    inputField.value = taskItem.textContent.trim();
     let parentUl = taskItem.parentElement;
-    parentUl.style.listStyleType = "none"; // Entfernt die Punkte vom <ul>
-
-    // Ersetze das <li> mit dem Input-Feld
+    parentUl.style.listStyleType = "none";
     taskItem.innerHTML = "";
     taskItem.appendChild(inputField);
-
-    // Ändere das Bearbeiten-Icon in ein Speichern-Icon
-    let icons = element.parentElement;
-    icons.querySelector("img[onclick='editSubTask(this)']").src = "/assets/img/check.svg"; // Speichern-Icon
-    icons.querySelector("img[onclick='editSubTask(this)']").onclick = function() { saveSubTask(element, inputField) }; // Speichern-Funktion zuweisen
-
-    // Die Löschen-Funktion bleibt gleich
-    let deleteIcon = icons.querySelector("img[onclick='deleteSubtask(this)']");
-    deleteIcon.onclick = function() { deleteSubtask(element) };
-
-    // Speichern der Änderung nach Bearbeitung
-    inputField.addEventListener("blur", function() {
-        saveSubTask(element, inputField);
+    document.getElementById('imgID_' + taskIdNumber).src = "/assets/img/check.svg";
+    document.getElementById('imgID_' + taskIdNumber).onclick = function () { saveSubTask(element, inputField) };
+    inputField.addEventListener("blur", function () {
+        saveSubTask(element, inputField, taskIdNumber);
     });
 
 }
 
-function saveSubTask(element, inputField) {
-    // Holen des neuen Textes aus dem Eingabefeld
+function saveSubTask(element, inputField, taskIdNumber) {
     let updatedText = inputField.value.trim();
-    let taskItem = element.parentElement.previousElementSibling;
-
-    // Speichern des neuen Textes
+    let taskItem = document.getElementById('task_' + taskIdNumber);
     if (updatedText !== "") {
         taskItem.innerHTML = updatedText;
     } else {
-        deleteSubtask(element)    
+        deleteSubtask(element, taskIdNumber)
     }
-
-    // Setze den Punkt zurück in der Liste
     let parentUl = taskItem.parentElement;
-    parentUl.style.listStyleType = "disc"; // Punkt zurücksetzen
+    parentUl.style.listStyleType = "disc";
+    document.getElementById('imgID_' + taskIdNumber).src = "/assets/img/edit.svg";
+    document.getElementById('imgID_' + taskIdNumber).onclick = function () { editSubTask(element) };
+}
 
-    // Wiederherstellen des Bearbeiten-Icons und seiner Funktion
-    let icons = element.parentElement;
-    icons.querySelector("img[onclick='editSubTask(this)']").src = "/assets/img/edit.svg"; // Zurück zum Bearbeiten-Icon
-    icons.querySelector("img[onclick='editSubTask(this)']").onclick = function() { editSubTask(element) }; // Zurück zur Editier-Funktion
+function swapToUrgent() {
+    let urgent = document.getElementById('prio-urgent')
+    urgent.classList.add('prio-urgent')
+    urgent.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p>`
+    removeMedium();
+    removeLow();
+}
+function removeUrgent() {
+    let urgent = document.getElementById('prio-urgent')
+    urgent.classList.remove('prio-urgent')
+    urgent.innerHTML = ` <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>`
+}
+function swapToMedium() {
+    let medium = document.getElementById('prio-medium')
+    medium.classList.add('prio-medium')
+    medium.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-white.svg"></p>`
+    removeUrgent();
+    removeLow();
+}
+function removeMedium() {
+    let medium = document.getElementById('prio-medium')
+    medium.classList.remove('prio-medium')
+    medium.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>`
+}
+function swapToLow() {
+    let low = document.getElementById('prio-low')
+    low.classList.add('prio-low')
+    low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-white.svg"></p>`
+    removeUrgent();
+    removeMedium();
+}
+function removeLow() {
+    let low = document.getElementById('prio-low')
+    low.classList.remove('prio-low')
+    low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`
+}
+async function selectContacts() {
+    let response = await fetch(firebaseURL);
+    firebaseAnswer = await response.json();
+    fireBase = firebaseAnswer;
+    let dropDownMenu = document.getElementById('dropdownMenu')
+    for (let key in firebaseAnswer) {
+        let email = firebaseAnswer[key].email
+        names.push(email)
 
-    // Die Löschen-Funktion bleibt gleich
-    let deleteIcon = icons.querySelector("img[onclick='deleteSubtask(this)']");
-    deleteIcon.onclick = function() { deleteSubtask(element) };
+        dropDownMenu.innerHTML += `
+                    <div>${email} Name</div>
+    `
+    }
+}
+
+function showContacts() {
+    let inputContainer = document.getElementById('contact-container');
+    inputContainer.onclick = null;
+    document.getElementById('arrow-drop-down').innerHTML = `<img onclick="hideContacts(event)" src="/assets/img/arrow_drop_downaa.svg">`
+    let dropDownMenu = document.getElementById('dropdownMenu')
+    dropDownMenu.classList.remove('d_none')
+    
+}
+
+function hideContacts(event) {
+    event.stopPropagation()
+    document.getElementById('arrow-drop-down').innerHTML = `<img onclick="hideContacts(event)" src="/assets/img/arrow_drop_down.svg">`
+    let dropDownMenu = document.getElementById('dropdownMenu')
+    dropDownMenu.classList.add('d_none')
+    let inputContainer = document.getElementById('contact-container');
+    inputContainer.onclick = showContacts;
+
+}    
+function filterNames() {
+   
+    let input = document.getElementById("dropdownInput").value.toLowerCase();
+    let resultsContainer = document.getElementById("dropdownMenu");
+    resultsContainer.innerHTML = "";
+    let filteredNames = names.filter(name => name.toLowerCase().includes(input));    
+    if (filteredNames.value == filteredNames.length) {
+        showContacts
+        return
+    } 
+    for (let index = 0; index < filteredNames.length; index++) {        
+        resultsContainer.innerHTML += `  <div>${filteredNames[index]} Name</div>`;       
+}
+}
+function hallöle(){
+    alert('Hallöle')
 }

@@ -1,19 +1,85 @@
-.subtask-container {
+body {
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #f6f7f8;
+
+}
+.red{
+    color: #ff8190
+}
+
+.display-splitter {
+    display: flex;
+    margin: 100px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+}
+
+.add-task-h1 {
+    padding-top: 200px;
+    font-size: 61px;
+    margin: 0;
+}
+.border{
+    background-color: #d1d1d1;
+    width: 1px;
+    height: 424px;
+}
+.left-section{
+    display: flex;
+    min-height: 424px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.right-section{
+    display: flex;
+    min-height: 424px;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+p {
+    font-size: 20px;
+    margin: 8px;
+}
+
+input {
+    width: 440px;
+    border-radius: 10px;
+    height: 48px;
+}
+#description-input{
+    height: 120px !important;
+}
+#category{
+    width: 440px;
+    border-radius: 10px;
+    height: 48px;
+
+}
+
+.input-container {
     display: flex;
     align-items: center;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px;
-    width: 300px;
+    border-radius: 10px;
+    width: 440px;
+    background-color: white;
 }
 
-.subtask-container input {
+.input-container input {
     border: none;
     outline: none;
     flex: 1;
     font-size: 14px;
     padding: 5px;
 }
+.fake-width{
+    height: 0;
+    width: 440px;
+}
+
 
 .icons {
     display: flex;
@@ -33,6 +99,7 @@
 .d_none {
     display: none;
 }
+
 .task {
     display: flex;
     justify-content: space-between;
@@ -44,6 +111,15 @@
 
 #subtasks:hover {
     background: #e0e0e0;
+}
+#arrow-drop-down{
+    width: 24px;
+    height: 24px;
+    
+}
+#dropdownInput{
+    padding: 0;
+    display: flex;
 }
 
 .task-icons {
@@ -59,15 +135,28 @@
     font-size: 16px;
     cursor: pointer;
 }
-#prio-medium{
+
+.prio-urgent {
+    color: white;
+    background-color: #ff3d00;
+}
+
+.prio-medium {
     color: white;
     background-color: #ffa800;
 }
-.prio-box{
+
+.prio-low {
+    color: white;
+    background-color: #7ae229;
+}
+
+.prio-box {
     display: flex;
     justify-content: space-around;
 }
-.prio{
+
+.prio {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,11 +164,23 @@
     border-radius: 10px;
     cursor: pointer;
     border: solid #ddd 1px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);   
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
-.prio img{
-    height: 10px ;
+
+.prio img {
+    height: 10px;
 }
-.prio p{
-    
+
+.dropdown-menu {
+    max-height: 300px;
+    overflow-y: auto;
+    width: 440px;
+    background-color: white;
+    margin: 0;
+
+}
+
+ul{
+    width: 440px;
+    height: 50px;
 }
