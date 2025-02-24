@@ -25,7 +25,7 @@
     <div id="contact-div">
       <div class="contacts-page-div">
         <div id="left-contacts-page-column">
-          <button>
+          <button onclick="displayAddContactOverlay()">
             Add new contact
             <img class="button-icon" src="/assets/img/add-contact.svg" />
           </button>
@@ -66,45 +66,17 @@
             <div class="contact-details">
               <h4>E-Mail</h4>
               <br />
-              <p id="user-email" class="user-email">user@name.com</p>
-              <br />
+              <a id="user-email" class="user-email">user@name.com</a>
               <h4>Phone</h4>
               <br />
-              <p class="user-phone-number">+49 1234/56789</p>
+              <p id="user-phone-number" class="user-phone-number">+49 1234/56789</p>
               <br />
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div id="outer-add-contact-overlay">
-      <div id="add-contact-overlay">
-        <div id="left-add-contact-column">
-          <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
-          <h1 id="add-contact-heading">Add contact</h1>
-          <h2>Tasks are better with a team!</h2>
-        </div>
-        <div id="right-add-contact-column">
-          <div class="new-contact-icon">
-            <img src="/assets/img/new-contact-icon.svg" alt="" />
-          </div>
-          <div id="add-contact-options">
-            <form action="" class="add-contact-form">
-              <input type="text" placeholder="First and second name" /><input
-                type="email"
-                placeholder="E-Mail"
-              /><input type="tel" placeholder="Phone" />
-            </form>
-            <div id="button-area">
-              <button onclick="closeOverlay()" id="cancel-add-contact" class="add-contacts-overlay-btns">
-                Cancel X</button
-              ><button class="add-contacts-overlay-btns">
-                Create contact ✓
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div id="overlayArea"></div>
     </div>
   </body>
   <script src="/scripts/contacts.js"></script>

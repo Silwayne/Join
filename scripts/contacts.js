@@ -62,10 +62,12 @@ function renderRightContactArea(name, email) {
   contactDetailsArea.classList.add("show");
   let user = { name, email };
   let rightContactNameArea = document.getElementById("big-user-name");
-  let rightEmailArea = document.getElementById("user-email")
-  rightEmailArea.innerHTML=`${email}`
+  let rightEmailArea = document.getElementById("user-email");
+  rightEmailArea.innerHTML = `${email}`;
+  rightEmailArea.href = `mailto:${email}`;
   rightContactNameArea.innerHTML = `${name}`;
   createBigContactNameInitials(user);
+  let userPhoneNumber = document.getElementById("user-phone-number");
 }
 
 function createBigContactNameInitials(user) {
