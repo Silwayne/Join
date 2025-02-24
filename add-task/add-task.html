@@ -2,85 +2,29 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="add-task.css">
-    <script src="/add-task/add-task.js"></script>
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="add-task.css">
+  <link rel="stylesheet" href="/join-main/join-main.css">
+
+  <script src="/add-task/add-task.js"></script>
+  <script src="/join-main/side-bar.js"></script>
+  <script src="/join-main/join-header.js"></script>
+  <title>Document</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+
 </head>
 
 <body onload="init()">
-    <h1 class="add-task-h1">Add Task</h1>
+   <header id="header">
+  </header>
 
-    <div class="display-splitter">
-    <section class="left-section">
-        <div>
-
-            <p>Title<span class="red">*</span></p>
-            <input id="add-task-title" type="text" placeholder="Enter a title">
-        </div>
-        <div>
-            <p>Description</p>
-            <input id="description-input" type="text" placeholder="Enter a Description">
-        </div>
-        
-        <div class="dropdown">
-            <p>Assinged to</p>
-            <div id="contact-container" class="input-container" onclick="showContacts()">
-            <input oninput="filterNames()" type="text" id="dropdownInput" placeholder="Select contacts to assign"> <span id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
-            </div>
-            <div class="dropdown-menu d_none" id="dropdownMenu">
-            </div>
-        </div>
-    </section>
-    <div class="border"></div>
-    <section class="right-section">
-        <div>
-            <p for="due-date">Due date<span class="red">*</span></p>
-            <input type="date" id="due-date" placeholder="Hallo" required>
-        </div>
-        <div>
-            <p>Prio</p>
-            <div class="prio-box">
-                <div onclick="swapToUrgent()" class="prio" id="prio-urgent">
-                    <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
-                </div>
-                <div onclick="swapToMedium()" class="prio prio-medium" id="prio-medium">
-                    <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
-                </div>
-                <div onclick="swapToLow()" class="prio" id="prio-low">
-                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
-                </div>
-            </div>
-        </div>
-        <div>
-            <p for="category">Category<span class="red">*</span></p>
-            <select id="category" name="category" required>
-                <option value="">Select task category</option>
-                <option value="technical">Technical Task</option>
-                <option value="user-story">User Story</option>
-            </select>
-        </div>
-
-        <div class="input-container">
-            <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
-            <div class="icons">
-                <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
-                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()"
-                        src="/assets/img/close.svg"></span>
-                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()"
-                        src="/assets/img/check.svg"></span>
-            </div>
-           
-    </div> <ul class="d_none" id="subtasks"></ul>
-  
-    </section>
-    </div>
-    
-</span>
-<footer>
-    <p><span class="red">*</span>This field is required</p> <button onclick="hallöle()">Hallöle</button>
-</footer>
+  <div id="content">
+  </div>
+  <aside id="sidbar">
+  </aside>
 
 </body>
 

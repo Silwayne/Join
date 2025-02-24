@@ -1,7 +1,11 @@
 const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 function init() {
+    renderSidebar();
+    initHTML('content');
+    renderHeader()
     selectContacts();
+
 }
 let counter = 0
 let names = []
@@ -39,20 +43,24 @@ function addSubTaskInput() {
                 <div class="task">
                     <li id="task_${counter}">${inputText}</li>
                     <div class="task-icons">
-                        <img id="imgID_${counter}" src="/assets/img/edit.svg" class="icon" onclick="editSubTask(this, ${counter})">
-                        <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(this, ${counter})">
+                        <img id="imgID_${counter}" src="/assets/img/edit.svg" class="icon" onclick="editSubTask(${counter})">
+                        <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(${counter})">
                     </div>
                 </div>
             `;
 
     clearSubTaskInput();
 }
-function deleteSubtask(element, taskIdNumber) {
-    document.getElementById('task_' + taskIdNumber).remove();
+function deleteSubtask(taskIdNumber) {
+    let taskElement = document.getElementById('task_' + taskIdNumber)
+    taskElement.parentElement.remove()
     counter--;
+    if (counter === 0) {
+        document.getElementById('subtasks').classList.add('d_none')
+    }
 }
 
-function editSubTask(element, taskIdNumber) {
+function editSubTask(taskIdNumber) {
     let taskItem = document.getElementById('task_' + taskIdNumber);
     let inputField = document.createElement("input");
     inputField.type = "text";
@@ -62,48 +70,52 @@ function editSubTask(element, taskIdNumber) {
     taskItem.innerHTML = "";
     taskItem.appendChild(inputField);
     document.getElementById('imgID_' + taskIdNumber).src = "/assets/img/check.svg";
-    document.getElementById('imgID_' + taskIdNumber).onclick = function () { saveSubTask(element, inputField) };
+    document.getElementById('imgID_' + taskIdNumber).onclick = function () { saveSubTask(inputField, taskIdNumber) };
     inputField.addEventListener("blur", function () {
-        saveSubTask(element, inputField, taskIdNumber);
+        saveSubTask(inputField, taskIdNumber);
     });
 
 }
 
-function saveSubTask(element, inputField, taskIdNumber) {
+function saveSubTask(inputField, taskIdNumber) {
     let updatedText = inputField.value.trim();
     let taskItem = document.getElementById('task_' + taskIdNumber);
     if (updatedText !== "") {
         taskItem.innerHTML = updatedText;
     } else {
-        deleteSubtask(element, taskIdNumber)
+        deleteSubtask(taskIdNumber)
     }
     let parentUl = taskItem.parentElement;
     parentUl.style.listStyleType = "disc";
     document.getElementById('imgID_' + taskIdNumber).src = "/assets/img/edit.svg";
-    document.getElementById('imgID_' + taskIdNumber).onclick = function () { editSubTask(element) };
+    document.getElementById('imgID_' + taskIdNumber).onclick = function () { editSubTask(taskIdNumber) };
 }
 
 function swapToUrgent() {
     let urgent = document.getElementById('prio-urgent')
     urgent.classList.add('prio-urgent')
     urgent.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p>`
+    urgent.classList.add('bold')
     removeMedium();
     removeLow();
 }
 function removeUrgent() {
     let urgent = document.getElementById('prio-urgent')
     urgent.classList.remove('prio-urgent')
+    urgent.classList.remove('bold')
     urgent.innerHTML = ` <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>`
 }
 function swapToMedium() {
     let medium = document.getElementById('prio-medium')
     medium.classList.add('prio-medium')
     medium.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-white.svg"></p>`
+    medium.classList.add('bold')
     removeUrgent();
     removeLow();
 }
 function removeMedium() {
     let medium = document.getElementById('prio-medium')
+    medium.classList.remove('bold')
     medium.classList.remove('prio-medium')
     medium.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>`
 }
@@ -111,11 +123,13 @@ function swapToLow() {
     let low = document.getElementById('prio-low')
     low.classList.add('prio-low')
     low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-white.svg"></p>`
+    low.classList.add('bold')
     removeUrgent();
     removeMedium();
 }
 function removeLow() {
     let low = document.getElementById('prio-low')
+    low.classList.remove('bold')
     low.classList.remove('prio-low')
     low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`
 }
@@ -125,11 +139,11 @@ async function selectContacts() {
     fireBase = firebaseAnswer;
     let dropDownMenu = document.getElementById('dropdownMenu')
     for (let key in firebaseAnswer) {
-        let email = firebaseAnswer[key].email
-        names.push(email)
+        let contactName = firebaseAnswer[key].name
+        names.push(contactName)
 
         dropDownMenu.innerHTML += `
-                    <div>${email} Name</div>
+                    <div>${contactName}</div>
     `
     }
 }
@@ -158,14 +172,94 @@ function filterNames() {
     let resultsContainer = document.getElementById("dropdownMenu");
     resultsContainer.innerHTML = "";
     let filteredNames = names.filter(name => name.toLowerCase().includes(input));    
-    if (filteredNames.value == filteredNames.length) {
+    if (filteredNames.length === 0) {
         showContacts
         return
     } 
     for (let index = 0; index < filteredNames.length; index++) {        
-        resultsContainer.innerHTML += `  <div>${filteredNames[index]} Name</div>`;       
+        resultsContainer.innerHTML += `  <div>${filteredNames[index]}</div>`;       
 }
 }
 function hallöle(){
     alert('Hallöle')
+}
+function initHTML(content){
+    document.getElementById(content).innerHTML = `
+    <h1 class="add-task-h1">Add Task</h1>
+    <div class="display-splitter">
+    <section class="left-section">
+        <div>
+
+            <p>Title<span class="red title-p">*</span></p>
+            <input id="add-task-title" type="text" placeholder="Enter a title">
+        </div>
+        <div>
+            <p>Description</p>
+            <input id="description-input" type="text" placeholder="Enter a Description">
+        </div>
+        
+        <div class="dropdown">
+            <p>Assinged to</p>
+            <div id="contact-container" class="input-container" onclick="showContacts()">
+            <input oninput="filterNames()" type="text" id="dropdownInput" placeholder="Select contacts to assign"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
+            </div>
+            <div class="dropdown-menu d_none" id="dropdownMenu">
+            </div>
+        </div>
+    </section>
+    <div class="border"></div>
+    <section class="right-section">
+        <div>
+            <p for="due-date">Due date<span class="red">*</span></p>
+            <input type="date" id="due-date" placeholder="Hallo" required>
+        </div>
+        <div>
+            <p>Prio</p>
+            <div class="prio-box">
+                <div onclick="swapToUrgent()" class="prio" id="prio-urgent">
+                    <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
+                </div>
+                <div onclick="swapToMedium()" class="prio prio-medium bold" id="prio-medium">
+                    <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
+                </div>
+                <div onclick="swapToLow()" class="prio" id="prio-low">
+                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p for="category">Category<span class="red">*</span></p>
+            <select id="category" name="category" required>
+                <option value="">Select task category</option>
+                <option value="technical">Technical Task</option>
+                <option value="user-story">User Story</option>
+            </select>
+        </div>
+        <div>
+        <div class="input-container">
+            <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
+            <div class="icons">
+                <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
+                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()"
+                        src="/assets/img/close.svg"></span>
+                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()"
+                        src="/assets/img/check.svg"></span>
+            </div>
+           
+    </div> <ul class="d_none subtasks" id="subtasks"></ul>
+  
+    </section>
+    </div>
+    
+</span>
+<footer>
+<div class="fiel-Is-Required-Div">    
+    <p><span class="red">*</span>This field is required</p>   
+    </div>
+    <div class="buttons-bottom-right">    
+    <button class="create-clear-button" id="clear-button">Clear <img src="/assets/img/Vector.svg"></button>
+    <button class="create-clear-button" id="createtask-button">Create Task <img src="/assets/img/check.svg"</button>
+        </div>
+
+</footer>`
 }

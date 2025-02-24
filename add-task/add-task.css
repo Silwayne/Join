@@ -2,9 +2,11 @@ body {
     margin: 0;
     box-sizing: border-box;
     background-color: #f6f7f8;
-
+    font-family: "Inter", sans-serif;
+    color: #2a3647;
 }
-.red{
+
+.red {
     color: #ff8190
 }
 
@@ -17,45 +19,64 @@ body {
 }
 
 .add-task-h1 {
-    padding-top: 200px;
+    padding-top: 85px;
+    padding-bottom: 25px;
     font-size: 61px;
     margin: 0;
+    margin-left: 120px;
 }
-.border{
+
+.border {
     background-color: #d1d1d1;
     width: 1px;
     height: 424px;
 }
-.left-section{
+
+.left-section {
     display: flex;
-    min-height: 424px;
+    min-height: 376px;
     flex-direction: column;
     justify-content: space-between;
+    width: 440px;
+    margin-bottom: 48px;
 }
-.right-section{
+
+.right-section {
     display: flex;
     min-height: 424px;
     flex-direction: column;
     justify-content: space-between;
+    width: 440px;
 }
 
 p {
     font-size: 20px;
     margin: 8px;
+    margin-left: 0;
 }
 
 input {
     width: 440px;
     border-radius: 10px;
     height: 48px;
+    padding-left: 8px;
+    font-size: 20px;
 }
-#description-input{
+input::placeholder{
+    color: #D1D1D1;
+}
+
+#description-input {
     height: 120px !important;
+    padding-bottom: 60px;
+
 }
-#category{
+
+#category {
     width: 440px;
     border-radius: 10px;
     height: 48px;
+    font-size: 20px;
 
 }
 
@@ -75,7 +96,8 @@ input {
     font-size: 14px;
     padding: 5px;
 }
-.fake-width{
+
+.fake-width {
     height: 0;
     width: 440px;
 }
@@ -107,19 +129,47 @@ input {
     border-radius: 4px;
     margin-top: 5px;
     transition: background 0.3s;
+    height: 50px;
 }
 
-#subtasks:hover {
+.subtasks:hover {
     background: #e0e0e0;
+
 }
-#arrow-drop-down{
+#subtaskInput{
+    font-size: 20px;
+}
+
+.arrow-drop-down {
     width: 24px;
     height: 24px;
-    
-}
-#dropdownInput{
-    padding: 0;
+    cursor: pointer;
+    padding: 10px;
+    margin-right: 8px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.arrow-drop-down:hover {
+    background-color: #e0e0e0;
+}
+
+.arrow-up-img {
+    width: 8px;
+    height: 8px;
+}
+
+#dropdownInput {
+    padding: 8px;
+    display: flex;
+    font-size: 20px;
+}
+
+#dropdownInput::placeholder {
+    color: black;
+    opacity: 1;
 }
 
 .task-icons {
@@ -141,6 +191,11 @@ input {
     background-color: #ff3d00;
 }
 
+#prio-urgent img {
+
+    height: 14px !important;
+}
+
 .prio-medium {
     color: white;
     background-color: #ffa800;
@@ -151,9 +206,17 @@ input {
     background-color: #7ae229;
 }
 
+#prio-low img {
+    height: 14px !important;
+}
+
 .prio-box {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+.bold {
+    font-weight: bold;
 }
 
 .prio {
@@ -165,22 +228,97 @@ input {
     cursor: pointer;
     border: solid #ddd 1px;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    height: 56px;
 }
 
 .prio img {
     height: 10px;
+    padding-left: 5px;
 }
 
 .dropdown-menu {
-    max-height: 300px;
+    max-height: 120px;
     overflow-y: auto;
     width: 440px;
     background-color: white;
     margin: 0;
+    position: absolute;
 
 }
 
-ul{
+ul {
     width: 440px;
+    position: absolute;
     height: 50px;
+}
+
+.create-clear-button {
+    height: 56px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+#clear-button {
+    width: 110px;
+    background: white;
+    color: black;
+    border: 2px solid #ccc;
+
+}
+
+#clear-button img {
+    height: 10.49px;
+}
+
+#clear-button:hover {
+    background: #e0f0ff;
+    border-color: #007bff;
+}
+
+#createtask-button {
+    width: 183px;
+    background: #1e293b;
+    color: white;
+}
+
+#createtask-button:hover {
+    background: #3ea8ff;
+}
+
+#createtask-button img {
+    width: 15.49;
+    height: 11.22px;
+    filter: brightness(0) saturate(100%) invert(1);
+
+}
+
+footer {
+    padding-top: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.buttons-bottom-right {
+    display: flex;
+    width: 434px;
+    gap: 20px;
+}
+
+.fiel-Is-Required-Div {
+    width: 424px;
+    padding-left: 120px;
+}
+
+.title-p {
+    margin-top: 0;
+    padding-top: 0;
 }
