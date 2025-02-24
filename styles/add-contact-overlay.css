@@ -22,7 +22,7 @@
 
 #left-add-contact-column {
   color: white;
-  width: 40%;
+  width: 35%;
   display: flex;
   flex-direction: column;
   padding-left: 5%;
@@ -32,7 +32,7 @@
   background-color: white;
   color: #2a3647;
   height: 100%;
-  width: 60%;
+  width: 65%;
   display: flex;
   justify-content: start;
   padding-left: 50px;
@@ -61,6 +61,7 @@ input {
   border-width: 1px;
   height: 50px;
   width: auto;
+  padding: 10px
 }
 
 #button-area {
@@ -69,7 +70,7 @@ input {
 }
 
 .add-contacts-overlay-btns {
-  height: 50px;
+  height: 50px; 
 }
 
 #cancel-add-contact {
@@ -77,6 +78,7 @@ input {
   color: #2a3647;
   border-color: #2a3647;
   border: solid;
+  width: auto;
 }
 
 #cancel-add-contact:hover {
@@ -85,4 +87,5 @@ input {
 
 #add-contact-options {
   padding-left: 50px;
+  width: 70%;
 }

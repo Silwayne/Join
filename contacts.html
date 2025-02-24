@@ -13,9 +13,15 @@
     <!-- CSS -->
     <link rel="stylesheet" href="/styles/contacts.css" />
     <link rel="stylesheet" href="/styles/add-contact-overlay.css" />
+    <link rel="stylesheet" href="join-main/join-main.css" />
+
     <title>Contacts</title>
   </head>
-  <body onload="rightContactDetailsHideOnLoad()">
+  <body
+    onload="rightContactDetailsHideOnLoad(), renderSidebar(), renderHeader()"
+  >
+    <div id="sidbar"></div>
+    <div id="header"></div>
     <div id="contact-div">
       <div class="contacts-page-div">
         <div id="left-contacts-page-column">
@@ -90,7 +96,8 @@
               /><input type="tel" placeholder="Phone" />
             </form>
             <div id="button-area">
-              <button id="cancel-add-contact" class="add-contacts-overlay-btns">Cancel X</button
+              <button onclick="closeOverlay()" id="cancel-add-contact" class="add-contacts-overlay-btns">
+                Cancel X</button
               ><button class="add-contacts-overlay-btns">
                 Create contact ✓
               </button>
@@ -101,4 +108,7 @@
     </div>
   </body>
   <script src="/scripts/contacts.js"></script>
+  <script src="/join-main/side-bar.js"></script>
+  <script src="/join-main/join-header.js"></script>
+  <script src="/scripts/contacts-overlay.js"></script>
 </html>

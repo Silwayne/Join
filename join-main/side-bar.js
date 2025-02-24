@@ -1,5 +1,5 @@
 function renderSidebar() {
-    document.getElementById('sidbar').innerHTML = `
+  document.getElementById("sidbar").innerHTML = `
 
      <nav class="sidbar-nav">
           <div class="sidbar-top">
@@ -17,10 +17,12 @@ function renderSidebar() {
                       <img src="/assets/img/board-icon.svg" alt="Board">
                       <span>Board</span>
                   </button>
-                  <button class="menu-button menu-button-design font-size">
-                      <img src="/assets/img/perm_contact_calendar.svg" alt="Contacts">
-                      <span>Contacts</span>
-                  </button>
+                  <a href="contacts.html">
+                    <button href="contacts.html" class="menu-button menu-button-design font-size">
+                        <img src="/assets/img/perm_contact_calendar.svg" alt="Contacts">
+                        <span>Contacts</span>
+                      </button>
+                  </a>
               </div>
           </div>
           <div class="sidbar-bottom">
@@ -34,4 +36,5 @@ function renderSidebar() {
       </nav>
 
 
-`}
+`;
+}
