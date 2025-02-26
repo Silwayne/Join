@@ -33,13 +33,13 @@ function displayAddContactOverlay() {
 async function addContactToDatabase() {
   let firebaseURL =
     "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-  let newFullName = document.getElementById("fullName").value;
-  let newEmail = document.getElementById("new-email").value;
+  let name = document.getElementById("fullName").value;
+  let email = document.getElementById("new-email").value;
   let newPhone = document.getElementById("new-phone").value;
   await fetch(firebaseURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ newFullName, newEmail, newPhone }),
+    body: JSON.stringify({ name, email, newPhone }),
   });
   contactSucessfullyAddedNotification();
 }

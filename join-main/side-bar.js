@@ -8,19 +8,23 @@ function renderSidebar() {
                     <button class="menu-button menu-button-design font-size">
                       <img src="/assets/img/summary-icon.svg" alt="Summary">
                       <span>Summary</span>
-                    </button>
-                    <button class="menu-button menu-button-design font-size">
+                  </button>
+                  <a href="/add-task/add-task.html">
+                  <button class="menu-button menu-button-design font-size">
                       <img src="/assets/img/add_task_icon.svg" alt="Add Task">
                       <span>Add Task</span>
-                    </button>
-                    <button class="menu-button menu-button-design font-size">
+                  </button>
+                  </a>
+                  <a href="">
+                  <button class="menu-button menu-button-design font-size">
                       <img src="/assets/img/board-icon.svg" alt="Board">
                       <span>Board</span>
-                    </button>
-                    <a href="contacts.html">
-                        <button href="contacts.html" class="menu-button menu-button-design font-size">
-                            <img src="/assets/img/perm_contact_calendar.svg" alt="Contacts">
-                            <span>Contacts</span>
+                  </button>
+                  </a>
+                  <a href="/contacts.html">
+                    <button class="menu-button menu-button-design font-size">
+                        <img src="/assets/img/perm_contact_calendar.svg" alt="Contacts">
+                        <span>Contacts</span>
                       </button>
                     </a>
                 </div>
