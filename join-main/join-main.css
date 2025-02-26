@@ -66,7 +66,7 @@ body {
 }
 
 #content {
-margin-left: 232px;
+  margin-left: 232px;
 }
 
 #sidbar {
@@ -154,5 +154,9 @@ margin-left: 232px;
 
 .menu-button-lower-design:hover {
   color: #29abe2;
+  cursor: pointer;
 }
 
+a:hover {
+  text-decoration: none;
+}
