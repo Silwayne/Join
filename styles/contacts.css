@@ -71,6 +71,7 @@ h2 {
 
 #left-contacts-page-column {
   margin: 50px;
+  background-color: white;
 }
 
 seperator {
@@ -218,4 +219,8 @@ seperator {
   border-radius: 10px;
   border: none;
   cursor: pointer;
+}
+
+#contact-page-area {
+  margin-left: 232px;
 }
