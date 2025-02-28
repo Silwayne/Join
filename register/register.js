@@ -5,14 +5,19 @@ function registerUser() {
     let password = document.getElementById("password").value;
     let confirmPassword = document.getElementById("confirm-password").value;
     let name = document.getElementById("first-name").value;
+    let privacyChecked = document.getElementById("checkbox").checked;
 
-    if (!validatePasswords(password, confirmPassword)) return;
+    if (!validatePasswords(password, confirmPassword, privacyChecked)) return;
     isEmailTaken(email, (exists) => {
         if (!exists) saveUser(name, email, password);
     });
 }
 
-function validatePasswords(password, confirmPassword) {
+function validatePasswords(password, confirmPassword, privacyChecked) {
+    if (!privacyChecked) {
+        alert("Bitte akzeptieren Sie die Datenschutzbestimmungen!");
+        return false;
+    }
     if (password !== confirmPassword) {
         alert("Passwörter stimmen nicht überein!");
         return false;

@@ -3,7 +3,6 @@ const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebas
 window.onload = function () {
     const loader = document.getElementById('loader');
     const logo = document.getElementById('logo');
-    const content = document.getElementById('content');
   
     setTimeout(() => {
       logo.style.width = '100px'; 
