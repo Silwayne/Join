@@ -18,17 +18,17 @@ async function contactFirebase() {
 contactFirebase();
 
 function renderLeftColumnContacts() {
-  leftContactsColumn.innerHTML = "";
+  leftContactsColumn.innerHTML += "";
   users = fireBase.users;
   Object.keys(users).forEach((keyObj, indexOfUser) => {
     user = users[keyObj];
     key = keyObj;
-    renderLeftColumnContactsTemplate(user, indexOfUser);
+    renderLeftColumnContactsTemplate(user, indexOfUser, key);
     createContactNameInitials(user, indexOfUser);
   });
 }
 
-function renderLeftColumnContactsTemplate(user, indexOfUser) {
+function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
   leftContactsColumn.innerHTML += `
 <div class="contact-list" onclick='renderRightContactArea("${user.name}", "${
     user.email
@@ -70,25 +70,6 @@ function rightContactDetailsHideOnLoad() {
   contactDetailsArea.classList.add("hide");
 }
 
-// function renderRightContactArea(name, email, key) {
-//   contactDetailsArea.classList.add("show");
-//   let user = { name, email };
-
-//   users = fireBase.users;
-//   Object.keys(users).forEach((key, indexOfUser) => {
-//     user = users[key];
-//   });
-
-//   let rightContactNameArea = document.getElementById("big-user-name");
-//   let rightEmailArea = document.getElementById("user-email");
-//   let rightDeleteButton = document.getElementById(`delete-${key}`);
-//   rightEmailArea.innerHTML = `${email}`;
-//   rightEmailArea.href = `mailto:${email}`;
-//   rightContactNameArea.innerHTML = `${name}`;
-//   createBigContactNameInitials(user);
-//   let userPhoneNumber = document.getElementById("user-phone-number");
-// }
-
 function createBigContactNameInitials(user) {
   let userName = user.name;
   let firstLetterOfUserName = userName.charAt(0);
@@ -104,30 +85,18 @@ function createBigContactNameInitials(user) {
   }
 }
 
-// async function deleteContactFromDatabase(key) {
-//   let deleteFirebaseUrl = await fetch(
-//     `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`,
-//     { method: "DELETE" }
-//   );
-//   document.getElementById(`user${key}`)?.remove();
-//   contactDetailsArea.classList.remove("show");
-// }
-
-function renderRightContactArea(name, email, key) {
+function renderRightContactArea(name, email, phone, key) {
   contactDetailsArea.classList.add("show");
-  let user = { name, email };
+  let user = { name, email, phone };
   let rightContactNameArea = document.getElementById("big-user-name");
   let rightEmailArea = document.getElementById("user-email");
-  let rightDeleteButton = document.getElementById("delete-contact-button");
-
+  let rightPhoneArea = document.getElementById("user-phone-number");
+  rightPhoneArea.innerText = user.phone;
+  let rightDeleteButton = document.getElementById("contact-to-trash");
   rightEmailArea.innerHTML = email;
   rightEmailArea.href = `mailto:${email}`;
   rightContactNameArea.innerHTML = name;
-
-  // Löschbutton aktualisieren
-  rightDeleteButton.innerHTML = `Delete Contact`;
   rightDeleteButton.onclick = () => deleteContactFromDatabase(key);
-
   createBigContactNameInitials(user);
 }
 
@@ -135,7 +104,7 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
   leftContactsColumn.innerHTML += `
     <div
       class="contact-list"
-      onclick='renderRightContactArea("${user.name}", "${user.email}", "${key}")'
+      onclick='renderRightContactArea("${user.name}", "${user.email}", "${user.phone}", "${key}")'
       id="user${indexOfUser}"
     >
       <div class="user-area">
@@ -155,27 +124,61 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
     </div>`;
 }
 
-// function renderLeftColumnContacts() {
-//   users = fireBase.users;
-//   Object.keys(users).forEach((key, indexOfUser) => {
-//     user = users[key];
-//     renderLeftColumnContactsTemplate(user, indexOfUser, key);
-//     createContactNameInitials(user, indexOfUser);
-//   });
-// }
-
 async function deleteContactFromDatabase(key) {
   let deleteFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
-
   try {
     await fetch(deleteFirebaseUrl, {
       method: "DELETE",
     });
     alert("Contact successfully deleted!");
-    // Seite neu laden, um die aktualisierte Kontaktliste anzuzeigen
     location.reload();
   } catch (error) {
     console.error("Error deleting contact:", error);
     alert("Failed to delete contact. Please try again.");
   }
+}
+
+function editContact(key, user) {
+  let body = document.getElementById("overlayArea");
+  body.innerHTML += `
+    <div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
+      <div onclick="stopPropagation(event)" id="edit-contact-overlay">
+        <div id="left-edit-contact-column">
+          <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
+          <h1 id="edit-contact-heading">Edit contact</h1>
+        </div>
+        <div id="right-edit-contact-column">
+          <div class="new-contact-icon">
+            <img src="/assets/img/new-contact-icon.svg" alt="" />
+          </div>
+          <div id="edit-contact-options">
+            <form action="" class="edit-contact-form">
+              <input type="text" id="fullName" placeholder="${user.name}" />
+              <input type="email" id="new-email" placeholder="${user.email}" required />
+              <input type="tel" id="new-phone" placeholder="${user.phone}" />
+            </form>
+            <div id="button-area">
+              <button onclick="deleteContactFromDatabase(key)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
+                Delete</button
+              ><button onclick="saveEditedContact(key)" class="edit-contacts-overlay-btns">
+                Save ✓
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+}
+
+function saveEditedContact(key) {
+  console.log(key);
+}
+
+function stopPropagation(event) {
+  event.stopPropagation();
+}
+
+function displayPhoneNumber(user) {
+  let phoneNumberArea = document.getElementById("user-phone-number");
+  phoneNumberArea.innerText = user.phone;
+  console.log(user.phone);
 }

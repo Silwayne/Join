@@ -1,8 +1,8 @@
 function displayAddContactOverlay() {
   let body = document.getElementById("overlayArea");
   body.innerHTML += `
-    <div id="outer-add-contact-overlay">
-      <div id="add-contact-overlay">
+    <div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
+      <div onclick="stopPropagation(event)" id="add-contact-overlay">
         <div id="left-add-contact-column">
           <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
           <h1 id="add-contact-heading">Add contact</h1>
@@ -35,11 +35,11 @@ async function addContactToDatabase() {
     "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   let name = document.getElementById("fullName").value;
   let email = document.getElementById("new-email").value;
-  let newPhone = document.getElementById("new-phone").value;
+  let phone = document.getElementById("new-phone").value;
   await fetch(firebaseURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, newPhone }),
+    body: JSON.stringify({ name, email, phone }),
   });
   contactSucessfullyAddedNotification();
 }
@@ -52,4 +52,14 @@ function contactSucessfullyAddedNotification() {
 function closeOverlay() {
   let overlay = document.getElementById("outer-add-contact-overlay");
   overlay.remove();
+}
+
+function closeEditOverlay() {
+  let editOverlay = document.getElementById("outer-edit-contact-overlay");
+  editOverlay.remove();
+}
+
+function closeAddContactOverlay() {
+  let addContactOverlay = document.getElementById("outer-add-contact-overlay");
+  addContactOverlay.remove();
 }

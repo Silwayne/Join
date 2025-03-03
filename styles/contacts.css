@@ -6,7 +6,6 @@ button {
   background-color: #2a3647;
   color: white;
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 16px;
   font-size: 21px;
@@ -72,6 +71,11 @@ h2 {
 #left-contacts-page-column {
   margin: 50px;
   background-color: white;
+}
+
+.add-contact-btn{
+  display: flex;
+  justify-content: center;
 }
 
 seperator {
