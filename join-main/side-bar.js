@@ -30,12 +30,12 @@ function renderSidebar() {
                 </div>
           </div>
           <div class="sidbar-bottom">
-            <a href="privacy.html">
+            <a href="/texte/privacy.html">
                 <button class="menu-button menu-button-lower-design font-size">
                     Privacy Policy
                 </button>
             </a>
-            <a href="legal.html">
+            <a href="/texte/legal.html">
                 <button class="menu-button menu-button-lower-design font-size">
                     Legal Notice
                 </button>

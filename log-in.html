@@ -7,6 +7,7 @@
     <title>Join Log in</title>
   </head>
   <body>
+    <div id="message-box" class="d-none"></div>
 
     <div class="loader" id="loader">
       <img src="./assets/img/Capa 2.svg" alt="Logo" />
@@ -16,7 +17,6 @@
 
     <section class="login-page">
       <div class="log-in-container">
-
         <div class="login-container-headline">
           <h1 class="login-headline">Log in</h1>
           <img class="blue-line" src="./assets/img/Vector 5.svg" alt="Strich" />
@@ -24,16 +24,13 @@
 
         <form class="log-in-form" onsubmit="login(); return false;">
           <label class="input-container">
-            <input 
-              type="email" 
-              placeholder="E-Mail" 
-              id="email" 
-              required/>
+            <input type="email" placeholder="E-Mail" id="email" required />
 
             <img
               class="input-icon"
               src="./assets/img/mail.svg"
-              alt="E-Mail Icon"/>
+              alt="E-Mail Icon"
+            />
           </label>
 
           <label class="input-container">
@@ -41,29 +38,23 @@
               type="password"
               placeholder="Passwort"
               id="password"
-              required/>
+              required
+            />
 
             <img
               class="input-icon-lock"
               src="./assets/img/lock.svg"
-              alt="Passwort Icon"/>
+              alt="Passwort Icon"
+            />
           </label>
-
-          <div class="wrong-text">
-            <span id="login-error" class="d-none">Wrong Password or User!</span>
-          </div>
-
           <div class="container-button">
-            <button 
-              class="log-in-button" 
-              type="submit">
-              Login
-            </button>
+            <button class="log-in-button" type="submit">Login</button>
 
             <button
               class="guest-log-in-button"
               type="button"
-              onclick="guestLogin()">
+              onclick="guestLogin()"
+            >
               Guest Login
             </button>
           </div>
@@ -73,20 +64,17 @@
       <section class="register-container">
         <span class="no-user">Not a Join user?</span>
         <a href="./register.html">
-          <button 
-            class="register-button" 
-            type="button">
-            Sign Up
-          </button>
+          <button class="register-button" type="button">Sign Up</button>
         </a>
       </section>
 
       <footer>
-        <a class="footer-link" href="./texte/privacy-login.html">Privacy Police</a>
-        <span style="color: #a8a8a8;">|</span>
+        <a class="footer-link" href="./texte/privacy-login.html"
+          >Privacy Police</a
+        >
+        <span style="color: #a8a8a8">|</span>
         <a class="footer-link" href="./texte/legal-login.html">Legal notice</a>
       </footer>
-
     </section>
 
     <script src="./register/log-in/script/log-in.js"></script>
