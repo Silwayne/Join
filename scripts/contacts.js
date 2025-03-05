@@ -86,18 +86,25 @@ function createBigContactNameInitials(user) {
 }
 
 function renderRightContactArea(name, email, phone, key) {
+  let contactDetailsArea = document.getElementById("contact-details-area");
   contactDetailsArea.classList.add("show");
-  let user = { name, email, phone };
+
   let rightContactNameArea = document.getElementById("big-user-name");
   let rightEmailArea = document.getElementById("user-email");
   let rightPhoneArea = document.getElementById("user-phone-number");
-  rightPhoneArea.innerText = user.phone;
   let rightDeleteButton = document.getElementById("contact-to-trash");
-  rightEmailArea.innerHTML = email;
+  let rightEditButton = document.getElementById("contact-edit");
+  rightPhoneArea.innerText = phone;
+  rightEmailArea.innerText = email;
   rightEmailArea.href = `mailto:${email}`;
-  rightContactNameArea.innerHTML = name;
-  rightDeleteButton.onclick = () => deleteContactFromDatabase(key);
-  createBigContactNameInitials(user);
+  rightContactNameArea.innerText = name;
+  rightDeleteButton.onclick = function () {
+    deleteContactFromDatabase(key);
+  };
+  rightEditButton.onclick = function () {
+    editContact(key, { name, email, phone });
+  };
+  createBigContactNameInitials({ name, email, phone });
 }
 
 function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
@@ -115,9 +122,7 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
           ></div>
         </div>
         <div class="user-info">
-          <p class="user-name" id="user-name-index">
-            ${user.name}
-          </p>
+          <p class="user-name">${user.name}</p>
           <p class="user-email">${user.email}</p>
         </div>
       </div>
@@ -138,9 +143,14 @@ async function deleteContactFromDatabase(key) {
   }
 }
 
-function editContact(key, user) {
+function editContact(key) {
+  let user = users[key];
+  editContactOverlay(key, user);
+}
+
+function editContactOverlay(key, user) {
   let body = document.getElementById("overlayArea");
-  body.innerHTML += `
+  body.innerHTML = `
     <div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
       <div onclick="stopPropagation(event)" id="edit-contact-overlay">
         <div id="left-edit-contact-column">
@@ -153,9 +163,9 @@ function editContact(key, user) {
           </div>
           <div id="edit-contact-options">
             <form action="" class="edit-contact-form">
-              <input type="text" id="fullName" placeholder="${user.name}" />
-              <input type="email" id="new-email" placeholder="${user.email}" required />
-              <input type="tel" id="new-phone" placeholder="${user.phone}" />
+              <input type="text" id="fullName" value="${user.name}" placeholder="${user.name}" required />
+              <input type="email" id="new-email" value="${user.email}" placeholder="${user.email}" required />
+              <input type="tel" id="new-phone" value="${user.phone}" placeholder="${user.phone}" />
             </form>
             <div id="button-area">
               <button onclick="deleteContactFromDatabase(key)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
@@ -169,8 +179,17 @@ function editContact(key, user) {
       </div>`;
 }
 
-function saveEditedContact(key) {
+async function saveEditedContact(key) {
   console.log(key);
+  let name = document.getElementById("fullName").value;
+  let email = document.getElementById("new-email").value;
+  let phone = document.getElementById("new-phone").value;
+  let editFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
+  await fetch(editFirebaseUrl, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, phone }),
+  });
 }
 
 function stopPropagation(event) {
