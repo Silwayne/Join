@@ -5,6 +5,18 @@ let users;
 let user;
 let contactDetailsArea;
 let key;
+let colours = [
+  "#FF7A00",
+  "#9327FF",
+  "#6E52FF",
+  "#FC71FF",
+  "#FFBB2B",
+  "#1FD7C1",
+  "#462F8A",
+  "#FF4646",
+  "#00BEE8",
+  "#FF7A00",
+];
 
 async function contactFirebase() {
   let firebaseUrl = await fetch(
@@ -20,14 +32,29 @@ contactFirebase();
 function renderLeftColumnContacts() {
   leftContactsList.innerHTML = "";
   users = fireBase.users;
+  let lastInitial = "";
+
   Object.keys(users)
     .sort((a, b) => users[a].name.localeCompare(users[b].name))
     .forEach((keyObj, indexOfUser) => {
       user = users[keyObj];
       key = keyObj;
+      let initial = user.name.charAt(0).toUpperCase();
+
+      // Falls sich der Anfangsbuchstabe ändert, füge eine neue Sektion hinzu
+      if (initial !== lastInitial) {
+        leftContactsList.innerHTML += `
+          <div class="contact-separator">
+            <span class="contact-initial">${initial}</span>
+            <div class="contact-divider"></div>
+          </div>`;
+        lastInitial = initial;
+      }
+
       renderLeftColumnContactsTemplate(user, indexOfUser, key);
       createContactNameInitials(user, indexOfUser);
     });
+
   applyRandomColors();
 }
 
@@ -91,14 +118,13 @@ function createBigContactNameInitials(user) {
 function renderRightContactArea(name, email, phone, key) {
   let contactDetailsArea = document.getElementById("contact-details-area");
   contactDetailsArea.classList.add("show");
-
   let rightContactNameArea = document.getElementById("big-user-name");
   let rightEmailArea = document.getElementById("user-email");
   let rightPhoneArea = document.getElementById("user-phone-number");
   let rightDeleteButton = document.getElementById("contact-to-trash");
   let rightEditButton = document.getElementById("contact-edit");
   rightPhoneArea.innerText = phone;
-  rightEmailArea.innerText = email;
+  rightEmailArea.innerHTML = `${email}<br>`;
   rightEmailArea.href = `mailto:${email}`;
   rightContactNameArea.innerText = name;
   rightDeleteButton.onclick = function () {
@@ -139,8 +165,6 @@ async function deleteContactFromDatabase(key) {
   try {
     await fetch(deleteFirebaseUrl, { method: "DELETE" });
     alert("Contact successfully deleted!");
-
-    // Nutzer aus dem lokalen Objekt entfernen & neu rendern
     delete users[key];
     renderLeftColumnContacts();
   } catch (error) {
@@ -197,6 +221,7 @@ async function saveEditedContact(key) {
     body: JSON.stringify({ name, email, phone }),
   });
   alert("Contact successfully updated!");
+  closeEditOverlay();
 }
 
 function stopPropagation(event) {
@@ -208,19 +233,6 @@ function displayPhoneNumber(user) {
   phoneNumberArea.innerText = user.phone;
   console.log(user.phone);
 }
-
-let colours = [
-  "#FF7A00",
-  "#9327FF",
-  "#6E52FF",
-  "#FC71FF",
-  "#FFBB2B",
-  "#1FD7C1",
-  "#462F8A",
-  "#FF4646",
-  "#00BEE8",
-  "#FF7A00",
-];
 
 function getRandomColor() {
   return colours[Math.floor(Math.random() * colours.length)];
@@ -239,4 +251,3 @@ function bigRandomColour() {
     bigInitialsArea.style.backgroundColor = getRandomColor();
   }
 }
-

@@ -237,3 +237,28 @@ seperator {
 #contact-page-area {
   margin-left: 232px;
 }
+
+.contact-separator {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px 0;
+}
+
+.contact-initial {
+  font-size: 22px;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 5px;
+  padding-left: 30px;
+}
+
+.contact-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #ccc;
+}
+
+.phone-number{
+  margin-top: 30px;
+}
