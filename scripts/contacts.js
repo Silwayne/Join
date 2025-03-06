@@ -1,4 +1,4 @@
-let leftContactsColumn = document.getElementById("left-contacts-page-column");
+let leftContactsList = document.getElementById("left-contact-list");
 let firebaseAnswer;
 let fireBase;
 let users;
@@ -18,18 +18,21 @@ async function contactFirebase() {
 contactFirebase();
 
 function renderLeftColumnContacts() {
-  leftContactsColumn.innerHTML += "";
+  leftContactsList.innerHTML = "";
   users = fireBase.users;
-  Object.keys(users).forEach((keyObj, indexOfUser) => {
-    user = users[keyObj];
-    key = keyObj;
-    renderLeftColumnContactsTemplate(user, indexOfUser, key);
-    createContactNameInitials(user, indexOfUser);
-  });
+  Object.keys(users)
+    .sort((a, b) => users[a].name.localeCompare(users[b].name))
+    .forEach((keyObj, indexOfUser) => {
+      user = users[keyObj];
+      key = keyObj;
+      renderLeftColumnContactsTemplate(user, indexOfUser, key);
+      createContactNameInitials(user, indexOfUser);
+    });
+  applyRandomColors();
 }
 
 function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
-  leftContactsColumn.innerHTML += `
+  leftContactsList.innerHTML += `
 <div class="contact-list" onclick='renderRightContactArea("${user.name}", "${
     user.email
   }", "${key}")' id="user${indexOfUser}">
@@ -105,10 +108,11 @@ function renderRightContactArea(name, email, phone, key) {
     editContact(key, { name, email, phone });
   };
   createBigContactNameInitials({ name, email, phone });
+  bigRandomColour();
 }
 
 function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
-  leftContactsColumn.innerHTML += `
+  leftContactsList.innerHTML += `
     <div
       class="contact-list"
       onclick='renderRightContactArea("${user.name}", "${user.email}", "${user.phone}", "${key}")'
@@ -131,12 +135,14 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
 
 async function deleteContactFromDatabase(key) {
   let deleteFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
+
   try {
-    await fetch(deleteFirebaseUrl, {
-      method: "DELETE",
-    });
+    await fetch(deleteFirebaseUrl, { method: "DELETE" });
     alert("Contact successfully deleted!");
-    location.reload();
+
+    // Nutzer aus dem lokalen Objekt entfernen & neu rendern
+    delete users[key];
+    renderLeftColumnContacts();
   } catch (error) {
     console.error("Error deleting contact:", error);
     alert("Failed to delete contact. Please try again.");
@@ -168,9 +174,9 @@ function editContactOverlay(key, user) {
               <input type="tel" id="new-phone" value="${user.phone}" placeholder="${user.phone}" />
             </form>
             <div id="button-area">
-              <button onclick="deleteContactFromDatabase(key)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
+              <button onclick="deleteContactFromDatabase('${key}')" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
                 Delete</button
-              ><button onclick="saveEditedContact(key)" class="edit-contacts-overlay-btns">
+              ><button onclick="saveEditedContact('${key}')" class="edit-contacts-overlay-btns">
                 Save ✓
               </button>
             </div>
@@ -190,6 +196,7 @@ async function saveEditedContact(key) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, phone }),
   });
+  alert("Contact successfully updated!");
 }
 
 function stopPropagation(event) {
@@ -201,3 +208,35 @@ function displayPhoneNumber(user) {
   phoneNumberArea.innerText = user.phone;
   console.log(user.phone);
 }
+
+let colours = [
+  "#FF7A00",
+  "#9327FF",
+  "#6E52FF",
+  "#FC71FF",
+  "#FFBB2B",
+  "#1FD7C1",
+  "#462F8A",
+  "#FF4646",
+  "#00BEE8",
+  "#FF7A00",
+];
+
+function getRandomColor() {
+  return colours[Math.floor(Math.random() * colours.length)];
+}
+
+function applyRandomColors() {
+  let userPictures = document.getElementsByClassName("user-initials user-icon");
+  Array.from(userPictures).forEach((element) => {
+    element.style.backgroundColor = getRandomColor();
+  });
+}
+
+function bigRandomColour() {
+  let bigInitialsArea = document.getElementById("user-picture-big-index");
+  if (bigInitialsArea) {
+    bigInitialsArea.style.backgroundColor = getRandomColor();
+  }
+}
+

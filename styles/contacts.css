@@ -56,6 +56,8 @@ h2 {
 .contacts-page-div {
   display: flex;
   flex-direction: row;
+  margin-top: 10px;
+  max-height: calc(100vh);
 }
 
 #contacts-header {
@@ -70,8 +72,14 @@ h2 {
 }
 
 #left-contacts-page-column {
-  margin: 50px;
+  padding: 50px;
+  width: 550px;
   background-color: white;
+}
+
+#left-contact-list {
+  overflow: scroll;
+  height: 75vh;
 }
 
 .add-contact-btn {
@@ -211,7 +219,7 @@ seperator {
 
 #right-contacts-page-column {
   background-color: #f6f7f8;
-  height: 100vh;
+  height: 80vh;
 }
 
 .contact-details {
