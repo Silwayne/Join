@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <script src="join-header.js"></script>
+    <script src="side-bar.js"></script>
+    <script src="join-main.js"></script>
+    <meta charset="UTF-16" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- API's -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
 
-<head>
-  <script src="join-header.js"></script>
-  <script src="side-bar.js"></script>
-  <script src="join-main.js"></script>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- API's -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-    rel="stylesheet" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="/join-main/join-main.css" />
+    <link rel="stylesheet" href="cards.css" />
+    <title>Join Main</title>
+  </head>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/join-main/join-main.css" />
+  <body onload="init()">
+    <header id="header"></header>
 
-  <title>Join Main</title>
-</head>
+    <section class="summary-content" id="content">
+      <div class="summary-headline">
+        <h1>Join 360</h1>
+        <p>|</p>
+        <span class="span-headline">Key Metrics at a Glance</span>
+      </div>
+    </section>
+    <div class="summary-cards">
+      <div class="cards-top">
+        <div class="card-top"></div>
+        <div class="card-top"></div>
+      </div>
+      <div class="card-middle"></div>
+      <div class="cards-bottom">
+        <div class="card-bottom"></div>
+        <div class="card-bottom"></div>
+        <div class="card-bottom"></div>
+      </div>
+    </div>
 
-<body onload="init()">
-  <header id="header">
-  </header>
-
-  <section id="content">
-    <h1>Hier könnte ihre Werbung stehen 🙈</h1>
-  </section>
-
-  <aside id="sidbar">
-  </aside>
-
-</body>
-
+    <aside id="sidbar"></aside>
+  </body>
 </html>

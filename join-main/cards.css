@@ -1,0 +1,71 @@
+.summary-cards {
+  margin-left: 45vh;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.cards-top {
+  display: flex;
+  flex-direction: row;
+  gap: 5vh;
+}
+
+.card-top {
+  background-color: white;
+  width: 264px;
+  height: 168px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-top:hover {
+    background-color: #2a3647;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.card-middle {
+    background-color: white;
+    width: 560px;
+    height: 168px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-middle:hover {
+    background-color: #2a3647;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+.cards-bottom {
+  display: flex;
+  flex-direction: row;
+  gap: 5vh;
+}
+
+.card-bottom {
+  background-color: white;
+  width: 168px;
+  height: 168px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-bottom:hover {
+    background-color: #2a3647;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+
+
+
