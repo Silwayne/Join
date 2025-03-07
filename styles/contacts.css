@@ -262,3 +262,29 @@ seperator {
 .phone-number{
   margin-top: 30px;
 }
+
+.success-notifications{
+  padding-left: 20px;
+  padding-right: 20px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+/* .success-notifications {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 2.5s ease-out, visibility 3.5s ease-out;
+  animation: hideNotification 3s forwards;
+}
+
+@keyframes hideNotification {
+  0% {
+      opacity: 1;
+      visibility: visible;
+  }
+  100% {
+      opacity: 0;
+      visibility: hidden;
+  }
+} */
