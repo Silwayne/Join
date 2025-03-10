@@ -4,6 +4,7 @@ function displayAddContactOverlay() {
     <div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
       <div onclick="stopPropagation(event)" id="add-contact-overlay">
         <div id="left-add-contact-column">
+          <button id="closeOverlayButton" onclick="closeOverlay()" onclick="closeOverlay()">X</button>
           <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
           <h1 id="add-contact-heading">Add contact</h1>
           <h2>Tasks are better with a team!</h2>

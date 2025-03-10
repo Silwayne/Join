@@ -321,4 +321,101 @@ seperator {
     display: flex;
     gap: 0 !important;
   }
+
+  #edit-contact-overlay {
+    display: flex;
+    flex-direction: column;
+    height: 80vh !important;
+  }
+
+  #left-edit-contact-column {
+    display: flex;
+    align-items: start;
+    padding-top: 200px;
+    padding-bottom: 150px;
+  }
+  #right-edit-contact-column {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    border-radius: 0 0 30px 30px !important;
+    align-items: center;
+    justify-content: center;
+    padding-left: 0 !important;
+  }
+
+  .new-contact-icon {
+    margin-top: -60px;
+  }
+
+  #edit-contact-options {
+    margin-bottom: 50px;
+    margin-top: 25px;
+    padding-left: 0 !important;
+  }
+
+  #button-area {
+    justify-content: center;
+  }
+
+  #overlay-join-logo {
+    display: none;
+  }
+
+  #closeEditOverlay {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    height: 30vh;
+    border-radius: 30px !important;
+    width: 100%;
+  }
+
+  #edit-contact-heading {
+    margin-top: -150px;
+    margin-bottom: 80px;
+    color: white;
+    display: flex;
+    width: 90%;
+    justify-content: start !important;
+  }
+
+  /* Add Contact overlay responsive */
+  #add-contact-overlay {
+    display: flex;
+    flex-direction: column;
+    height: 80vh !important;
+  }
+
+  #right-add-contact-column {
+    display: flex;
+    flex-direction: column;
+    border-radius: 0 0 30px 30px !important;
+    width: 100% !important;
+    padding-bottom: 50px;
+    padding-left: 0 !important;
+  }
+
+  #left-add-contact-column {
+    height: 50vh;
+    justify-content: center;
+    align-items: start;
+    width: 90% !important;
+  }
+
+  #add-contact-options {
+    padding-left: 0 !important;
+    margin-top: 50px;
+    width: 80% !important;
+  }
+
+  #closeOverlayButton {
+    margin-top: -50px;
+    display: flex;
+    justify-content: end;
+  }
+
+  #closeOverlayButton:hover {
+    background-color: none;
+  }
 }

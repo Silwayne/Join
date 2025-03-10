@@ -242,7 +242,8 @@ function editContactOverlay(key, user) {
   body.innerHTML = `
     <div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
       <div onclick="stopPropagation(event)" id="edit-contact-overlay">
-        <div id="left-edit-contact-column">
+        <div id="closeEditOverlay" id="left-edit-contact-column">
+          <button id="closeEditOverlay" onclick="closeEditOverlay()">X</button>
           <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
           <h1 id="edit-contact-heading">Edit contact</h1>
         </div>
