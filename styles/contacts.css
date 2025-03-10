@@ -73,14 +73,14 @@ h2 {
 
 #left-contacts-page-column {
   display: block;
-  padding: 50px;
+  padding-left: 50px;
+  padding-right: 50px;
   width: 550px;
   background-color: white;
 }
 
 #left-contact-list {
   overflow: scroll;
-  height: 75vh;
 }
 
 .add-contact-btn {
@@ -292,9 +292,9 @@ seperator {
   }
 
   .add-contact-btn {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
     width: auto;
     height: 64px;
     text-indent: -9999px;
@@ -320,9 +320,5 @@ seperator {
   #user-contact-header {
     display: flex;
     gap: 0 !important;
-  }
-
-  #left-contact-list {
-    width: 100vw;
   }
 }
