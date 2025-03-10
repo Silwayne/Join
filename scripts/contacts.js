@@ -33,15 +33,12 @@ function renderLeftColumnContacts() {
   leftContactsList.innerHTML = "";
   users = fireBase.users;
   let lastInitial = "";
-
   Object.keys(users)
     .sort((a, b) => users[a].name.localeCompare(users[b].name))
     .forEach((keyObj, indexOfUser) => {
       user = users[keyObj];
       key = keyObj;
       let initial = user.name.charAt(0).toUpperCase();
-
-      // Falls sich der Anfangsbuchstabe ändert, füge eine neue Sektion hinzu
       if (initial !== lastInitial) {
         leftContactsList.innerHTML += `
           <div class="contact-separator">
@@ -50,7 +47,6 @@ function renderLeftColumnContacts() {
           </div>`;
         lastInitial = initial;
       }
-
       renderLeftColumnContactsTemplate(user, indexOfUser, key);
       createContactNameInitials(user, indexOfUser);
     });
@@ -115,7 +111,26 @@ function createBigContactNameInitials(user) {
   }
 }
 
+function hideContactDetails() {
+  let rightColumn = document.getElementById("right-contacts-page-column");
+  let leftColumn = document.getElementById("left-contacts-page-column");
+  rightColumn.style.display = "none";
+  leftColumn.style.display = "block";
+}
+
 function renderRightContactArea(name, email, phone, key) {
+  if (window.innerWidth < 1440) {
+    let rightColumn = document.getElementById("right-contacts-page-column");
+    let leftColumn = document.getElementById("left-contacts-page-column");
+    let contactsHeader = document.getElementById("contacts-header");
+    let userContactHeader = document.getElementById("user-contact-header");
+    userContactHeader.innerHTML = `<button class="go-back-arrow" onclick="hideContactDetails()">
+                                  <img src="/assets/img/back-arrow.svg">
+                                 </button>`;
+    leftColumn.style.display = "none";
+    rightColumn.style.display = "block";
+  }
+
   let contactDetailsArea = document.getElementById("contact-details-area");
   contactDetailsArea.classList.add("show");
   contactDetailsArea.innerHTML = `            

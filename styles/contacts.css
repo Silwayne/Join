@@ -72,6 +72,7 @@ h2 {
 }
 
 #left-contacts-page-column {
+  display: block;
   padding: 50px;
   width: 550px;
   background-color: white;
@@ -259,11 +260,11 @@ seperator {
   background-color: #ccc;
 }
 
-.phone-number{
+.phone-number {
   margin-top: 30px;
 }
 
-.success-notifications{
+.success-notifications {
   padding-left: 20px;
   padding-right: 20px;
   opacity: 1;
@@ -271,20 +272,57 @@ seperator {
   transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
 }
 
-/* .success-notifications {
-  opacity: 1;
-  visibility: visible;
-  transition: opacity 2.5s ease-out, visibility 3.5s ease-out;
-  animation: hideNotification 3s forwards;
-}
+/* Responsive Styles */
+@media (max-width: 1440px) {
+  #right-contacts-page-column {
+    display: none;
+  }
 
-@keyframes hideNotification {
-  0% {
-      opacity: 1;
-      visibility: visible;
+  #left-contacts-page-column {
+    width: 100vw;
+    padding-bottom: 0;
   }
-  100% {
-      opacity: 0;
-      visibility: hidden;
+
+  #sidbar {
+    display: none !important;
   }
-} */
+
+  #contact-page-area {
+    margin-left: 0;
+  }
+
+  .add-contact-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: auto;
+    height: 64px;
+    text-indent: -9999px;
+    white-space: nowrap;
+    overflow: hidden;
+    gap: 0;
+    border-radius: 32px;
+  }
+
+  #header {
+    width: 100vw;
+  }
+
+  .go-back-arrow {
+    background-color: #f6f7f8;
+  }
+  .go-back-arrow:hover {
+    background-color: #eeeeee;
+    gap: 0 !important;
+    padding: 16px;
+  }
+
+  #user-contact-header {
+    display: flex;
+    gap: 0 !important;
+  }
+
+  #left-contact-list {
+    width: 100vw;
+  }
+}
