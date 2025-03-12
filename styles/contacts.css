@@ -418,4 +418,27 @@ seperator {
   #closeOverlayButton:hover {
     background-color: none;
   }
+
+  #three-dots-options {
+    background-color: #2a3647;
+  }
+
+  #overlayButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2a3647;
+    width: 56px;
+    height: 56px;
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    border-radius: 30px;
+  }
+
+  #overlayButton:hover {
+    background-color: #007cee;
+  }
+
+  #button-overlay-area{}
 }

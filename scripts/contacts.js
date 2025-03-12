@@ -122,13 +122,14 @@ function renderRightContactArea(name, email, phone, key) {
   if (window.innerWidth < 1440) {
     let rightColumn = document.getElementById("right-contacts-page-column");
     let leftColumn = document.getElementById("left-contacts-page-column");
-    let contactsHeader = document.getElementById("contacts-header");
     let userContactHeader = document.getElementById("user-contact-header");
     userContactHeader.innerHTML = `<button class="go-back-arrow" onclick="hideContactDetails()">
                                   <img src="/assets/img/back-arrow.svg">
                                  </button>`;
     leftColumn.style.display = "none";
     rightColumn.style.display = "block";
+    let contactDiv = document.getElementById("contact-div");
+    contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions()" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
   }
 
   let contactDetailsArea = document.getElementById("contact-details-area");
@@ -140,7 +141,7 @@ function renderRightContactArea(name, email, phone, key) {
                 </div>
                 <div class="user-name-area">
                   <div id="big-user-name" class="big-user-name">User Name</div>
-                  <div class="user-name-options">
+                  <div id="user-name-options" class="user-name-options">
                     <a
                       id="contact-edit"
                       onclick="editContact(key, user)"
@@ -175,6 +176,7 @@ function renderRightContactArea(name, email, phone, key) {
                 <br />
               </div>
             </div>`;
+  hideContactOptionsForMobile();
   let rightContactNameArea = document.getElementById("big-user-name");
   let rightEmailArea = document.getElementById("user-email");
   let rightPhoneArea = document.getElementById("user-phone-number");
@@ -310,4 +312,19 @@ function bigRandomColour() {
   if (bigInitialsArea) {
     bigInitialsArea.style.backgroundColor = getRandomColor();
   }
+}
+
+function hideContactOptionsForMobile() {
+  let userNameOptions = document.getElementById("user-name-options");
+  if (window.innerWidth < 1440) {
+    userNameOptions.style.display = "none";
+  }
+}
+
+function mobileEditOptions(key) {
+  let buttonOverlayArea = document.getElementById("button-overlay-area");
+  buttonOverlayArea.innerHTML = `<div>
+                                  <button onclick="editContactOverlay(key, user)">Edit</button>
+                                  <button onclick="deleteContactFromDatabase(key)">Delete</button>
+                                 </div>`;
 }
