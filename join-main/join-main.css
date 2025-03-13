@@ -23,14 +23,14 @@ body {
   align-items: center;
 }
 
-h1 {
+.summary-h1 {
   font-family: "Inter", sans-serif;
   font-weight: 700;
   font-size: 61px;
   line-height: 73px;
 }
 
-p {
+.summary-p {
   color: #29abe2;
   margin: 0 2vh 0 2vh;
   font-size: 7vh;

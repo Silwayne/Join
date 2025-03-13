@@ -6,13 +6,17 @@
   gap: 24px;
 }
 
-.cards-top {
+.cards-top,
+.cards-bottom {
   display: flex;
   flex-direction: row;
-  gap: 5vh;
+  gap: 3vh;
 }
 
-.card-top {
+.card-top-left,
+.card-top-right {
+  position: relative;
+  gap: 3vh;
   background-color: white;
   width: 264px;
   height: 168px;
@@ -21,33 +25,114 @@
   justify-content: center;
   border-radius: 30px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.card-top:hover {
-    background-color: #2a3647;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+.card-top-left:hover,
+.card-top-right:hover,
+.card-middle:hover,
+.card-bottom:hover {
+  background-color: #2a3647;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  transform: scale(1.05);
+  cursor: pointer;
+}
+
+.card-icon-wrapper {
+  position: relative;
+  width: 69px;
+  height: 69px;
+}
+
+.card-icon-wrapper img {
+  width: 69px;
+  height: 69px;
+  transition: opacity 0.3s ease;
+}
+
+.card-icon-wrapper .pen-white-icon,
+.card-icon-wrapper .done-white-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-top-left:hover .card-icon-wrapper .pen-white-icon,
+.card-top-right:hover .card-icon-wrapper .done-white-icon {
+  opacity: 1;
+}
+
+.card-top-left:hover .card-icon-wrapper .pen-black-icon,
+.card-top-right:hover .card-icon-wrapper .done-black-icon {
+  opacity: 0;
+}
+
+.cards-text,
+.middle-date-text {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.card-top-left:hover .cards-text,
+.card-top-right:hover .cards-text,
+.card-middle:hover .cards-text,
+.card-middle:hover .middle-date-text,
+.card-bottom:hover .cards-text {
+  color: white;
+}
+
+.card-text-number {
+  font-size: 64px;
+  font-weight: 600;
+}
+
+.card-text {
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
 }
 
 .card-middle {
-    background-color: white;
-    width: 560px;
-    height: 168px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 30px;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
-}
-
-.card-middle:hover {
-    background-color: #2a3647;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-}
-
-.cards-bottom {
+  background-color: white;
+  width: 560px;
+  height: 168px;
   display: flex;
-  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   gap: 5vh;
+  border-radius: 30px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.prio-icon {
+  width: 69px;
+}
+
+.card-middle-stroked {
+  background-color: #d1d1d1;
+  height: 102px;
+  border-radius: 20px;
+}
+
+.card-middle-stroked {
+  margin: 0 3vh 0 3vh;
+}
+
+.card-middle-date {
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.card-middle-date-text {
+  font-size: 16px;
+  font-weight: 400;
 }
 
 .card-bottom {
@@ -59,13 +144,5 @@
   justify-content: center;
   border-radius: 30px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
-.card-bottom:hover {
-    background-color: #2a3647;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
-}
-
-
-
-

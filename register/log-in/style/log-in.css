@@ -58,6 +58,7 @@ a {
   transition: all 1s ease-in-out;
   z-index: 1;
 }
+
 .login-page {
   display: flex;
   flex-direction: column;
