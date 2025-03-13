@@ -4,6 +4,7 @@ function displayAddContactOverlay() {
     <div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
       <div onclick="stopPropagation(event)" id="add-contact-overlay">
         <div id="left-add-contact-column">
+          <button id="closeOverlayButton" onclick="closeOverlay()" onclick="closeOverlay()">X</button>
           <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
           <h1 id="add-contact-heading">Add contact</h1>
           <h2>Tasks are better with a team!</h2>
@@ -41,12 +42,8 @@ async function addContactToDatabase() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, phone }),
   });
-  contactSucessfullyAddedNotification();
-}
-
-function contactSucessfullyAddedNotification() {
-  let displayArea = document.getElementById("right-contacts-page-column");
-  displayArea.innerHTML += `<div id="success-notification">Contact was sucessfully added to database.</div>`;
+  contactsuccessfullyAddedNotification();
+  closeAddContactOverlay();
 }
 
 function closeOverlay() {
@@ -62,4 +59,29 @@ function closeEditOverlay() {
 function closeAddContactOverlay() {
   let addContactOverlay = document.getElementById("outer-add-contact-overlay");
   addContactOverlay.remove();
+}
+
+function contactsuccessfullyAddedNotification() {
+  let displayArea = document.getElementById("contact-details-area");
+  displayArea.innerHTML += `<div class="success-notifications" id="success-notification">Contact was successfully added to database.</div>`;
+  hideSuccessMessage();
+}
+
+function contactsuccessfullyEditedNotification() {
+  let displayArea = document.getElementById("contact-details-area");
+  displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully edited and saved.</div>`;
+  hideSuccessMessage();
+}
+
+function contactsuccessfullyDeletedNotification() {
+  let displayArea = document.getElementById("contact-details-area");
+  displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully eliminated.</div>`;
+  hideSuccessMessage();
+}
+
+function hideSuccessMessage() {
+  let message = document.getElementById("success-notification");
+  setTimeout(() => {
+    message.remove();
+  }, 2500);
 }

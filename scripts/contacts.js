@@ -33,15 +33,12 @@ function renderLeftColumnContacts() {
   leftContactsList.innerHTML = "";
   users = fireBase.users;
   let lastInitial = "";
-
   Object.keys(users)
     .sort((a, b) => users[a].name.localeCompare(users[b].name))
     .forEach((keyObj, indexOfUser) => {
       user = users[keyObj];
       key = keyObj;
       let initial = user.name.charAt(0).toUpperCase();
-
-      // Falls sich der Anfangsbuchstabe ändert, füge eine neue Sektion hinzu
       if (initial !== lastInitial) {
         leftContactsList.innerHTML += `
           <div class="contact-separator">
@@ -50,7 +47,6 @@ function renderLeftColumnContacts() {
           </div>`;
         lastInitial = initial;
       }
-
       renderLeftColumnContactsTemplate(user, indexOfUser, key);
       createContactNameInitials(user, indexOfUser);
     });
@@ -115,9 +111,72 @@ function createBigContactNameInitials(user) {
   }
 }
 
+function hideContactDetails() {
+  let rightColumn = document.getElementById("right-contacts-page-column");
+  let leftColumn = document.getElementById("left-contacts-page-column");
+  rightColumn.style.display = "none";
+  leftColumn.style.display = "block";
+}
+
 function renderRightContactArea(name, email, phone, key) {
+  if (window.innerWidth < 1440) {
+    let rightColumn = document.getElementById("right-contacts-page-column");
+    let leftColumn = document.getElementById("left-contacts-page-column");
+    let userContactHeader = document.getElementById("user-contact-header");
+    userContactHeader.innerHTML = `<button class="go-back-arrow" onclick="hideContactDetails()">
+                                  <img src="/assets/img/back-arrow.svg">
+                                 </button>`;
+    leftColumn.style.display = "none";
+    rightColumn.style.display = "block";
+    let contactDiv = document.getElementById("contact-div");
+    contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions()" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
+  }
+
   let contactDetailsArea = document.getElementById("contact-details-area");
   contactDetailsArea.classList.add("show");
+  contactDetailsArea.innerHTML = `            
+              <div class="user-name-header">
+                <div id="user-picture-big-index" class="user-picture-big">
+                  Userimage
+                </div>
+                <div class="user-name-area">
+                  <div id="big-user-name" class="big-user-name">User Name</div>
+                  <div id="user-name-options" class="user-name-options">
+                    <a
+                      id="contact-edit"
+                      onclick="editContact(key, user)"
+                      class="edit-options"
+                      ><img
+                        class="option-icon"
+                        src="/assets/img/edit-pen-icon.svg"
+                      />
+                      Edit</a
+                    >
+                    <a
+                      id="contact-to-trash"
+                      class="edit-options"
+                      onclick="deleteContactFromDatabase(key)"
+                      ><img
+                        class="option-icon"
+                        src="/assets/img/trash-icon.svg"
+                      />
+                      Delete</a
+                    >
+                  </div>
+                </div>
+              </div>
+              <h3 class="contact-information">Contact Information</h3>
+              <div class="contact-details">
+                <h4>E-Mail</h4>
+                <br />
+                <a id="user-email" class="user-email">user@name.com</a>
+                <h4 class="phone-number">Phone</h4>
+                <br />
+                <p id="user-phone-number" class="user-phone-number"></p>
+                <br />
+              </div>
+            </div>`;
+  hideContactOptionsForMobile();
   let rightContactNameArea = document.getElementById("big-user-name");
   let rightEmailArea = document.getElementById("user-email");
   let rightPhoneArea = document.getElementById("user-phone-number");
@@ -161,15 +220,17 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
 
 async function deleteContactFromDatabase(key) {
   let deleteFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
-
   try {
     await fetch(deleteFirebaseUrl, { method: "DELETE" });
-    alert("Contact successfully deleted!");
+    contactsuccessfullyDeletedNotification();
     delete users[key];
     renderLeftColumnContacts();
   } catch (error) {
     console.error("Error deleting contact:", error);
     alert("Failed to delete contact. Please try again.");
+  }
+  if (editContactOverlay) {
+    closeEditOverlay();
   }
 }
 
@@ -183,7 +244,8 @@ function editContactOverlay(key, user) {
   body.innerHTML = `
     <div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
       <div onclick="stopPropagation(event)" id="edit-contact-overlay">
-        <div id="left-edit-contact-column">
+        <div id="closeEditOverlay" id="left-edit-contact-column">
+          <button id="closeEditOverlay" onclick="closeEditOverlay()">X</button>
           <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
           <h1 id="edit-contact-heading">Edit contact</h1>
         </div>
@@ -220,8 +282,8 @@ async function saveEditedContact(key) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, phone }),
   });
-  alert("Contact successfully updated!");
   closeEditOverlay();
+  contactsuccessfullyEditedNotification();
 }
 
 function stopPropagation(event) {
@@ -250,4 +312,19 @@ function bigRandomColour() {
   if (bigInitialsArea) {
     bigInitialsArea.style.backgroundColor = getRandomColor();
   }
+}
+
+function hideContactOptionsForMobile() {
+  let userNameOptions = document.getElementById("user-name-options");
+  if (window.innerWidth < 1440) {
+    userNameOptions.style.display = "none";
+  }
+}
+
+function mobileEditOptions(key) {
+  let buttonOverlayArea = document.getElementById("button-overlay-area");
+  buttonOverlayArea.innerHTML = `<div>
+                                  <button onclick="editContactOverlay(key, user)">Edit</button>
+                                  <button onclick="deleteContactFromDatabase(key)">Delete</button>
+                                 </div>`;
 }
