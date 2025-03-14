@@ -1,5 +1,7 @@
 function displayAddContactOverlay() {
   let body = document.getElementById("overlayArea");
+  let realBody = document.getElementById("body");
+  realBody.style.overflow = "hidden";
   body.innerHTML += `
     <div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
       <div onclick="stopPropagation(event)" id="add-contact-overlay">
@@ -54,11 +56,15 @@ function closeOverlay() {
 function closeEditOverlay() {
   let editOverlay = document.getElementById("outer-edit-contact-overlay");
   editOverlay.remove();
+  let realBody = document.getElementById("body");
+  realBody.style.overflow = "auto";
 }
 
 function closeAddContactOverlay() {
   let addContactOverlay = document.getElementById("outer-add-contact-overlay");
   addContactOverlay.remove();
+  let realBody = document.getElementById("body");
+  realBody.style.overflow = "auto";
 }
 
 function contactsuccessfullyAddedNotification() {

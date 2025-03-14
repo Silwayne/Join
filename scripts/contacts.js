@@ -241,6 +241,8 @@ function editContact(key) {
 
 function editContactOverlay(key, user) {
   let body = document.getElementById("overlayArea");
+  let realBody = document.getElementById("body");
+  realBody.style.overflow = "hidden";
   body.innerHTML = `
     <div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
       <div onclick="stopPropagation(event)" id="edit-contact-overlay">
@@ -323,8 +325,21 @@ function hideContactOptionsForMobile() {
 
 function mobileEditOptions(key) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
-  buttonOverlayArea.innerHTML = `<div>
-                                  <button onclick="editContactOverlay(key, user)">Edit</button>
-                                  <button onclick="deleteContactFromDatabase(key)">Delete</button>
+  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" id="mobileEditOptions(key)">
+                                  <div id="small-responsive-overlay-options">
+                                    <button class="responsiveButton" onclick="editContactOverlay(key, user)"><img id="edit-icon" src="/assets/img/edit.svg">Edit</button>
+                                    <button class="responsiveButton" onclick="deleteContactFromDatabase(key)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
+                                   </div>
                                  </div>`;
+}
+
+function closeResponsiveOverlay() {
+  let overlayArea = document.getElementById("small-responsive-overlay-options");
+  overlayArea.remove();
+  mobileEditOptions(key);
+}
+
+if (window.innerWidth > 1440) {
+  let editOptionsBtn = document.getElementById("edit-options-button");
+  editOptionsBtn.style.display = "none";
 }

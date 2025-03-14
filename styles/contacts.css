@@ -326,6 +326,7 @@ seperator {
     display: flex;
     flex-direction: column;
     height: 80vh !important;
+    justify-content: center;
   }
 
   #left-edit-contact-column {
@@ -440,5 +441,48 @@ seperator {
     background-color: #007cee;
   }
 
-  #button-overlay-area{}
+  .responsiveButton {
+    background-color: white;
+    color: black;
+    font-weight: 400;
+  }
+
+  .responsiveButton:hover {
+    background-color: #eeeeee;
+    color: #29abe2;
+    font-weight: 800;
+  }
+
+  #edit-icon {
+    color: #2a3647;
+  }
+
+  #edit-icon:hover {
+    color: #29abe2;
+  }
+
+  #trash-icon {
+    color: #2a3647;
+  }
+
+  #small-responsive-overlay-options {
+    padding: 10px;
+    background-color: white;
+    position: fixed;
+    right: 30px;
+    border-radius: 20px 20px 0 20px;
+  }
+
+  #outer-overlay-responsiv {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: blueviolet;
+  }
+}
+
+#closeEditOverlay {
+  padding-right: 50px;
+  padding-left: 50px;
 }
