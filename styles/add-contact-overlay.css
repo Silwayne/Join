@@ -17,6 +17,8 @@
   position: absolute;
   justify-content: center;
   align-items: center;
+  width: 70%;
+
 }
 
 #left-add-contact-column {
@@ -123,6 +125,7 @@ input {
   position: absolute;
   justify-content: center;
   align-items: center;
+  width: 70%;
 }
 
 #left-edit-contact-column {
@@ -141,7 +144,7 @@ input {
   display: flex;
   justify-content: start;
   padding-left: 50px;
-  padding-right: 150px;
+
   border-radius: 0 30px 30px 0;
   align-items: center;
 }

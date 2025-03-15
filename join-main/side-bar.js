@@ -5,7 +5,7 @@ function renderSidebar() {
         <div class="sidbar-top">
               <img class="sidbar-logo" src="/assets/img/Capa 2.svg" alt="Logo">
                 <div class="menu">
-                    <button class="menu-button menu-button-design font-size">
+                    <button href="join-main/join-main.html" class="menu-button menu-button-design font-size">
                       <img src="/assets/img/summary-icon.svg" alt="Summary">
                       <span>Summary</span>
                     </button>

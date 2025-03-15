@@ -17,7 +17,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+#add-contact-btn:hover {
   background-color: #29abe2;
 }
 
@@ -57,7 +57,7 @@ h2 {
   display: flex;
   flex-direction: row;
   margin-top: 10px;
-  max-height: calc(100vh);
+  max-height: calc(100vh - 100px);
 }
 
 #contacts-header {
@@ -77,10 +77,12 @@ h2 {
   padding-right: 50px;
   width: 550px;
   background-color: white;
+  height: calc(100vh - 150px);
 }
 
 #left-contact-list {
   overflow: scroll;
+  height: 80vh;
 }
 
 .add-contact-btn {
@@ -258,6 +260,10 @@ seperator {
   width: 100%;
   height: 1px;
   background-color: #ccc;
+}
+
+#contact-div {
+  height: calc(100vh - 150px);
 }
 
 .phone-number {
@@ -483,6 +489,14 @@ seperator {
 }
 
 #closeEditOverlay {
-  padding-right: 50px;
   padding-left: 50px;
+}
+
+.edit-options:hover {
+  color: #29abe2;
+  font-weight: 700;
+}
+
+.option-icon:hover {
+  fill: #29abe2;
 }
