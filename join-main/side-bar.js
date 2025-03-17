@@ -1,6 +1,5 @@
 function renderSidebar() {
   document.getElementById("sidbar").innerHTML = `
-
     <nav class="sidbar-nav">
         <div class="sidbar-top">
               <img class="sidbar-logo" src="/assets/img/Capa 2.svg" alt="Logo">
@@ -15,7 +14,7 @@ function renderSidebar() {
                         <span>Add Task</span>
                     </button>
                     </a>
-                    <a href="">
+                    <a href="board.html">
                     <button class="menu-button menu-button-design font-size">
                       <img src="/assets/img/board-icon.svg" alt="Board">
                       <span>Board</span>
@@ -42,7 +41,5 @@ function renderSidebar() {
             </a>
         </div>
     </nav>
-
-
 `;
 }

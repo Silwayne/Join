@@ -1,0 +1,21 @@
+#main {
+  margin-left: 232px;
+}
+
+h1 {
+  font-size: 61px;
+  font-weight: 700px;
+  margin-left: 64px;
+  margin-top: 80px;
+}
+
+#board-header-div {
+  display: flex;
+  align-items: end;
+}
+
+#searchTasks {
+  height: 48px;
+  width: 500px;
+  gap: 32px;
+}

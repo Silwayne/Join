@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-16" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/join-main/join-main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="join-main/join-main.css" />
+    <link rel="stylesheet" href="styles/board.css" />
+    <title>Board</title>
+  </head>
+  <body id="body" onload="renderSidebar(), renderHeader()">
+    <div id="sidbar"></div>
+    <div id="header"></div>
+    <div id="main">
+      <div id="board-header-div">
+        <h1>Board</h1>
+        <input id="searchTasks" type="text" placeholder="Find Task" /><img
+          src="/assets/img/search.svg"
+          alt=""
+        />
+        <button>Add task +</button>
+      </div>
+    </div>
+  </body>
+  <!-- Scripts -->
+  <script src="/join-main/side-bar.js"></script>
+  <script src="/join-main/join-header.js"></script>
+</html>
