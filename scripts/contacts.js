@@ -129,7 +129,7 @@ function renderRightContactArea(name, email, phone, key) {
     leftColumn.style.display = "none";
     rightColumn.style.display = "block";
     let contactDiv = document.getElementById("contact-div");
-    contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions()" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
+    contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(${key})" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
   }
   if (window.innerWidth > 1440) {
     let overlayButton = document.getElementById("overlayButton");
@@ -259,13 +259,16 @@ function editContactOverlay(key, user) {
         </div>
         <div id="right-edit-contact-column">
           <div class="new-contact-icon">
-            <img src="/assets/img/new-contact-icon.svg" alt="" />
+            <img src="/assets/img/new-contact-icon.svg"/>
           </div>
           <div id="edit-contact-options">
             <form action="" class="edit-contact-form">
               <input type="text" id="fullName" value="${user.name}" placeholder="${user.name}" required />
+                <img class="icon" src="/assets/img/person.svg">
               <input type="email" id="new-email" value="${user.email}" placeholder="${user.email}" required />
+                <img class="icon" src="/assets/img/mail.svg">
               <input type="tel" id="new-phone" value="${user.phone}" placeholder="${user.phone}" />
+                <img class="icon" src="/assets/img/call.svg">
             </form>
             <div id="button-area">
               <button onclick="deleteContactFromDatabase('${key}')" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
@@ -331,7 +334,7 @@ function hideContactOptionsForMobile() {
 
 function mobileEditOptions(key) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
-  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" id="mobileEditOptions(key)">
+  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay(${key})" class="mobileOverlay" id="mobileEditOptions(${key})">
                                   <div id="small-responsive-overlay-options">
                                     <button class="responsiveButton" onclick="editContactOverlay(key, user)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
                                     <button class="responsiveButton" onclick="deleteContactFromDatabase(key)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
@@ -339,13 +342,13 @@ function mobileEditOptions(key) {
                                  </div>`;
 }
 
-function closeResponsiveOverlay() {
-  let overlayArea = document.getElementById("small-responsive-overlay-options");
+function closeResponsiveOverlay(key) {
+  let overlayArea = document.getElementById(`mobileEditOptions(${key})`);
   overlayArea.remove();
   mobileEditOptions(key);
 }
 
-if (window.innerWidth > 1440) {
+if (window.innerWidth < 1440) {
   let editOptionsBtn = document.getElementById("edit-options-button");
   editOptionsBtn.style.display = "none";
 }
