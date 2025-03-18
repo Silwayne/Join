@@ -43,3 +43,11 @@ function renderSidebar() {
     </nav>
 `;
 }
+
+function renderRightSidebar() {
+    let greetingText = getGreetingText();
+    document.getElementById("right-sidebar").innerHTML = `
+     <h2 id="greeting" class="dynamic-text">${greetingText},</h2>
+        <p class="dynamic-name">Hierein LangerName</p>
+    `;
+}

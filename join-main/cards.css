@@ -1,6 +1,35 @@
+.summary-content {
+  margin-left: 300px;
+  margin-top: 2%;
+}
+
+.summary-headline {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.summary-h1 {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 4vw;
+}
+
+.summary-p {
+  color: #29abe2;
+  margin: 0 2vh 0 2vh;
+  font-size: 4vw;
+}
+
+.span-headline {
+  font-size: 2vw;
+  font-weight: 400;
+}
+
 .summary-cards {
-  margin-left: 45vh;
-  margin-top: 10vh;
+  width: 30%;
+  margin-left: 300px;
+  margin-top: 5%;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -18,7 +47,7 @@
   position: relative;
   gap: 3vh;
   background-color: white;
-  width: 264px;
+  width: 100%;
   height: 168px;
   display: flex;
   align-items: center;
@@ -100,7 +129,7 @@
 
 .card-middle {
   background-color: white;
-  width: 560px;
+  width: 100%;
   height: 168px;
   display: flex;
   align-items: center;
@@ -137,7 +166,7 @@
 
 .card-bottom {
   background-color: white;
-  width: 168px;
+  width: 100%;
   height: 168px;
   display: flex;
   align-items: center;
@@ -145,4 +174,26 @@
   border-radius: 30px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+#right-sidebar {
+  width: 20%;
+  position: fixed;
+  top: 50%;
+  right: 25%; 
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.dynamic-text {
+  font-size: 3vw;
+  font-weight: 500;
+  white-space: nowrap; 
+}
+
+.dynamic-name {
+  font-size: 4vw;
+  font-weight: 700;
+  color: #29ABE2;
+  white-space: nowrap; 
 }
