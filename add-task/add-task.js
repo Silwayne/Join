@@ -254,9 +254,6 @@ function renderAssignedContacts() {
     }
 }
 
-
-
-
 function filterNames() {
     let assignedContainer = document.getElementById('assignedContactsContainer');
     assignedContainer.classList.add('d_none');

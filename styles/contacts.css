@@ -222,7 +222,7 @@ seperator {
 
 #right-contacts-page-column {
   background-color: #f6f7f8;
-  height: 80vh;
+  height: auto;
 }
 
 .contact-details {
@@ -263,7 +263,7 @@ seperator {
 }
 
 #contact-div {
-  height: calc(100vh - 150px);
+  height: calc(80vh - 150px);
 }
 
 .phone-number {
@@ -332,6 +332,7 @@ seperator {
     display: flex;
     flex-direction: column;
     height: 80vh !important;
+    align-items: center !important;
     justify-content: center;
   }
 
@@ -476,7 +477,12 @@ seperator {
     background-color: white;
     position: fixed;
     right: 30px;
+    bottom: 20px;
     border-radius: 20px 20px 0 20px;
+  }
+
+  .icon {
+    margin-left: 93% !important;
   }
 
   #outer-overlay-responsiv {
@@ -485,6 +491,31 @@ seperator {
     width: 100vw;
     height: 100vh;
     background-color: blueviolet;
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  #edit-contact-overlay {
+    position: fixed;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 400px;
+    background: lightgray;
+    animation: slideIn 1s ease-out forwards;
+  }
+
+  .mobileOverlay {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
   }
 }
 
@@ -499,4 +530,38 @@ seperator {
 
 .option-icon:hover {
   fill: #29abe2;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+#contact-details-area {
+  animation: slideIn 1s forwards;
+}
+
+#edit-contact-overlay {
+  animation: slideIn 1s forwards;
+}
+
+.icon {
+  height: 16px;
+  width: 16px;
+  margin-top: -85px;
+  margin-left: 96%;
+  display: flex;
+  justify-content: end;
+}
+
+#button-overlay-area {
+  overflow: hidden;
+  position: fixed;
+  width: auto;
+  height: auto;
+  top: 0;
 }
