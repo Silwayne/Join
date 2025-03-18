@@ -116,6 +116,8 @@ function hideContactDetails() {
   let leftColumn = document.getElementById("left-contacts-page-column");
   rightColumn.style.display = "none";
   leftColumn.style.display = "block";
+  let overlayButton = document.getElementById("overlayButton");
+  overlayButton.style.display = "none";
 }
 
 function renderRightContactArea(name, email, phone, key) {
@@ -123,18 +125,28 @@ function renderRightContactArea(name, email, phone, key) {
     let rightColumn = document.getElementById("right-contacts-page-column");
     let leftColumn = document.getElementById("left-contacts-page-column");
     let userContactHeader = document.getElementById("user-contact-header");
+    rightColumn.style.display = "flex";
     userContactHeader.innerHTML = `<button class="go-back-arrow" onclick="hideContactDetails()">
                                   <img src="/assets/img/back-arrow.svg">
                                  </button>`;
     leftColumn.style.display = "none";
     rightColumn.style.display = "block";
     let contactDiv = document.getElementById("contact-div");
-    contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(${key})" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
-  }
-  if (window.innerWidth > 1440) {
+    if (!document.getElementById("overlayButton")) {
+      contactDiv.innerHTML += `<div id="button-overlay-area">
+         <button onclick="mobileEditOptions(key)" id="overlayButton">
+            <img id="three-dots-options" src="/assets/img/three_dots.svg">
+         </button>
+      </div>`;
+    }
+
     let overlayButton = document.getElementById("overlayButton");
-    if (overlayButton) {
-      overlayButton.style.display = "none";
+    let buttonOverlayArea = document.getElementById("button-overlay-area");
+    if (leftColumn) {
+      overlayButton.remove();
+    }
+    if (rightColumn) {
+      contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(key)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
     }
   }
 
@@ -334,21 +346,39 @@ function hideContactOptionsForMobile() {
 
 function mobileEditOptions(key) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
-  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay(${key})" class="mobileOverlay" id="mobileEditOptions(${key})">
+  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay(key)" class="mobileOverlay" id="mobileEditOptions(${key})">
                                   <div id="small-responsive-overlay-options">
                                     <button class="responsiveButton" onclick="editContactOverlay(key, user)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
-                                    <button class="responsiveButton" onclick="deleteContactFromDatabase(key)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
+                                    <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase(key)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
                                    </div>
                                  </div>`;
+  let overlayButton = document.getElementById("overlayButton");
+  if (overlayButton) {
+    overlayButton.remove();
+  }
+  let deleteMobileButton = document.getElementById("deleteMobileButton");
+  deleteMobileButton.onclick = "deleteContactFromDatabase(key)";
 }
 
 function closeResponsiveOverlay(key) {
-  let overlayArea = document.getElementById(`mobileEditOptions(${key})`);
-  overlayArea.remove();
-  mobileEditOptions(key);
+  let overlayButton = document.getElementById("overlayButton");
+  if (overlayButton) {
+    overlayButton.remove();
+  }
+
+  let overlayArea = document.getElementById(`mobileEditOptions${key}`);
+  if (overlayArea) {
+    overlayArea.remove();
+  }
+  let contactDiv = document.getElementById("contact-div");
+  contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(key)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
+}
+let leftColumn = document.getElementById("left-contacts-page-column");
+let buttonOverlayArea = document.getElementById("button-overlay-area");
+if (leftColumn && buttonOverlayArea) {
+  buttonOverlayArea.remove();
 }
 
-if (window.innerWidth < 1440) {
-  let editOptionsBtn = document.getElementById("edit-options-button");
-  editOptionsBtn.style.display = "none";
+if (buttonOverlayArea) {
+  buttonOverlayArea.remove();
 }
