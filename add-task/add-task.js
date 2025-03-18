@@ -7,8 +7,11 @@ function init() {
     selectContacts();
 
 }
+let assignedContacts = [];
+let countContactsID = 0
 let counter = 0
 let names = []
+let contactColors = {};
 function updateIcons() {
     let inputField = document.getElementById("subtaskInput");
     let plusIcon = document.getElementById("plusIcon");
@@ -43,7 +46,7 @@ function addSubTaskInput() {
                 <div class="task">
                     <li id="task_${counter}">${inputText}</li>
                     <div class="task-icons">
-                        <img id="imgID_${counter}" src="/assets/img/edit.svg" class="icon" onclick="editSubTask(${counter})">
+                        <img id="imgID_${counter}" src="/assets/img/edit-icon.svg" class="icon" onclick="editSubTask(${counter})">
                         <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(${counter})">
                     </div>
                 </div>
@@ -133,57 +136,247 @@ function removeLow() {
     low.classList.remove('prio-low')
     low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`
 }
-async function selectContacts() {
+function getRandomColor() {
+    const colors = ["#29abe2", "#ff8190", "#7ae229", "#ffa800", "#ff3d00", "#9055a2"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  
+  async function selectContacts() {
     let response = await fetch(firebaseURL);
-    firebaseAnswer = await response.json();
-    fireBase = firebaseAnswer;
-    let dropDownMenu = document.getElementById('dropdownMenu')
-    for (let key in firebaseAnswer) {
-        let contactName = firebaseAnswer[key].name
-        names.push(contactName)
+    let firebaseAnswer = await response.json();
+    let dropDownMenu = document.getElementById('dropdownMenu');
 
-        dropDownMenu.innerHTML += `
-                    <div>${contactName}</div>
-    `
+    let localCounter = 0;
+
+    for (let key in firebaseAnswer) {
+        let contact = firebaseAnswer[key];
+        let contactName = contact.name;
+        let contactInitials = getInitials(contactName);
+
+        names.push(contactName);
+        if (!contactColors[contactName]) {
+            contactColors[contactName] = getRandomColor();
+        }
+
+        dropDownMenu.innerHTML += getContactListHTML(contactInitials, contactName, localCounter, contactColors[contactName]);
+
+        let checkbox = document.getElementById('contactID_' + localCounter);
+        
+        checkbox.addEventListener('click', function() {
+            handleContactSelection(contactName, this.checked);
+        });
+
+        localCounter++;
     }
+}
+
+function handleContactSelection(contactName, isChecked) {
+    if (isChecked) {
+        if (!assignedContacts.includes(contactName)) {
+            assignedContacts.push(contactName);
+        }
+    } else {
+        assignedContacts = assignedContacts.filter(function(name) {
+            return name !== contactName;
+        });
+    }
+
+    console.log("Aktuell zugewiesen:", assignedContacts);
+}
+
+function getContactListHTML(contactInitials, contactName, idNumber, bgColor) {
+    return `
+        <div>      
+            <label class="contact-list" for="contactID_${idNumber}">
+                <div class="user-icon" style="background-color: ${bgColor};">
+                    <span class="user-initials">${contactInitials}</span>
+                </div>
+                <span class="contact-name">${contactName}</span>
+                <input 
+                    class="contact-checkbox" 
+                    type="checkbox" 
+                    id="contactID_${idNumber}" 
+                    name="${contactName}" 
+                    onclick="handleContactSelection('${contactName}', this.checked)">
+            </label>
+        </div>
+    `;
+}
+
+
+
+
+function getInitials(name) {
+    let nameParts = name.trim().split(" ");
+    let firstInitial = nameParts[0].charAt(0).toUpperCase();
+    let secondInitial = nameParts.length > 1 ? nameParts[1].charAt(0).toUpperCase() : "";
+    return firstInitial + secondInitial;
 }
 
 function showContacts() {
     let inputContainer = document.getElementById('contact-container');
+    document.getElementById('assignedContactsContainer').classList.add('d_none')
     inputContainer.onclick = null;
     document.getElementById('arrow-drop-down').innerHTML = `<img onclick="hideContacts(event)" src="/assets/img/arrow_drop_downaa.svg">`
     let dropDownMenu = document.getElementById('dropdownMenu')
     dropDownMenu.classList.remove('d_none')
-    
+
 }
 
 function hideContacts(event) {
-    event.stopPropagation()
-    document.getElementById('arrow-drop-down').innerHTML = `<img onclick="hideContacts(event)" src="/assets/img/arrow_drop_down.svg">`
-    let dropDownMenu = document.getElementById('dropdownMenu')
-    dropDownMenu.classList.add('d_none')
+    event.stopPropagation();
+    document.getElementById('assignedContactsContainer').classList.remove('d_none')
+
+
+    document.getElementById('arrow-drop-down').innerHTML = `<img onclick="hideContacts(event)" src="/assets/img/arrow_drop_down.svg">`;
+
+    let dropDownMenu = document.getElementById('dropdownMenu');
+    dropDownMenu.classList.add('d_none');
+
     let inputContainer = document.getElementById('contact-container');
     inputContainer.onclick = showContacts;
 
-}    
+    renderAssignedContacts();
+}
+function renderAssignedContacts() {
+    let container = document.getElementById('assignedContactsContainer');
+    container.innerHTML = '';
+
+    for (let contactName of assignedContacts) {
+        let initials = getInitials(contactName);
+        let color = contactColors[contactName];
+
+        container.innerHTML += `
+            <div class="user-icon" style="background-color: ${color};">
+                <span class="selectedInitials user-initials selected-User-Initials">${initials}</span>
+            </div>
+        `;
+    }
+}
+
+
+
+
 function filterNames() {
-   
+    let assignedContainer = document.getElementById('assignedContactsContainer');
+    assignedContainer.classList.add('d_none');
+
     let input = document.getElementById("dropdownInput").value.toLowerCase();
     let resultsContainer = document.getElementById("dropdownMenu");
     resultsContainer.innerHTML = "";
-    let filteredNames = names.filter(name => name.toLowerCase().includes(input));    
+
+    let filteredNames = names.filter(name => name.toLowerCase().includes(input));
+
     if (filteredNames.length === 0) {
-        showContacts
-        return
-    } 
-    for (let index = 0; index < filteredNames.length; index++) {        
-        resultsContainer.innerHTML += `  <div>${filteredNames[index]}</div>`;       
+        showContacts(); 
+        return;
+    }
+
+    for (let contactName of filteredNames) {
+        let contactInitials = getInitials(contactName);
+        let isChecked = assignedContacts.includes(contactName) ? "checked" : "";
+
+        resultsContainer.innerHTML += getFilteredContactHTML(contactInitials, contactName, isChecked);
+    }
 }
+
+
+
+function getFilteredContactHTML(contactInitials, contactName, isChecked) {
+    return `
+        <div>      
+            <label class="contact-list">
+                <div class="user-icon" style="background-color: ${contactColors[contactName]};">
+                    <span class="user-initials">${contactInitials}</span>
+                </div>
+                <span class="contact-name">${contactName}</span>
+                <input 
+                    class="contact-checkbox" 
+                    type="checkbox"
+                    ${isChecked}
+                    onclick="handleContactSelection('${contactName}', this.checked)">
+            </label>
+        </div>`;
 }
-function hallöle(){
-    alert('Hallöle')
+
+function clearTaskForm() {
+    let titleInput = document.getElementById('add-task-title');
+    if (titleInput) {
+        titleInput.value = '';
+    }
+    let descriptionInput = document.getElementById('description-input');
+    if (descriptionInput) {
+        descriptionInput.value = '';
+    }
+    assignedContacts = [];
+    let checkboxes = document.querySelectorAll('.contact-checkbox');
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+    }
+    renderAssignedContacts();
+    let dueDateInput = document.getElementById('due-date');
+    if (dueDateInput) {
+        dueDateInput.value = '';
+    }
+    document.getElementById('subtasks').innerHTML = '';
+    document.getElementById('category').value = '';
+
+    swapToMedium()
 }
-function initHTML(content){
+
+function createTask() {
+    let titleInput = document.getElementById('add-task-title');
+    let dueDateInput = document.getElementById('due-date');
+    let categorySelect = document.getElementById('category');
+
+    let isValid = true;
+    resetValidation(titleInput);
+    resetValidation(dueDateInput);
+    resetValidation(categorySelect);
+
+    if (titleInput.value.trim() === '') {
+        showValidationError(titleInput, 'Title is required');
+        isValid = false;
+    }
+
+    if (dueDateInput.value.trim() === '') {
+        showValidationError(dueDateInput, 'Due date is required');
+        isValid = false;
+    }
+
+    if (categorySelect.value.trim() === '') {
+        showValidationError(categorySelect, 'Category is required');
+        isValid = false;
+    }
+
+    if (isValid) {
+        console.log('Hat funktioniert!');
+        alert('Hier könnte ihre Werbung Stehen!');
+        clearTaskForm()
+    }
+}
+
+
+function showValidationError(element, message) {
+    element.classList.add('input-error');
+    let errorMessage = document.createElement('div');
+    errorMessage.className = 'error-message';
+    errorMessage.innerText = message;
+    if (!element.nextElementSibling || !element.nextElementSibling.classList.contains('error-message')) {
+        element.parentNode.insertBefore(errorMessage, element.nextSibling);
+    }
+}
+
+function resetValidation(element) {
+    element.classList.remove('input-error');
+
+    let nextElem = element.nextElementSibling;
+    if (nextElem && nextElem.classList.contains('error-message')) {
+        nextElem.remove();
+    }
+}
+
+function initHTML(content) {
     document.getElementById(content).innerHTML = `
     <h1 class="add-task-h1">Add Task</h1>
     <div class="display-splitter">
@@ -201,8 +394,9 @@ function initHTML(content){
         <div class="dropdown">
             <p>Assinged to</p>
             <div id="contact-container" class="input-container" onclick="showContacts()">
-            <input oninput="filterNames()" type="text" id="dropdownInput" placeholder="Select contacts to assign"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
+            <input oninput="filterNames()" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
             </div>
+            <div class="selectedInitials" id="assignedContactsContainer"></div>
             <div class="dropdown-menu d_none" id="dropdownMenu">
             </div>
         </div>
@@ -257,8 +451,8 @@ function initHTML(content){
     <p><span class="red">*</span>This field is required</p>   
     </div>
     <div class="buttons-bottom-right">    
-    <button class="create-clear-button" id="clear-button">Clear <img src="/assets/img/Vector.svg"></button>
-    <button class="create-clear-button" id="createtask-button">Create Task <img src="/assets/img/check.svg"</button>
+    <button class="create-clear-button" onclick="clearTaskForm()" id="clear-button">Clear <img src="/assets/img/Vector.svg"></button>
+    <button class="create-clear-button" onclick="createTask()" id="createtask-button">Create Task <img src="/assets/img/check.svg"</button>
         </div>
 
 </footer>`
