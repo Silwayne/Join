@@ -56,21 +56,24 @@ function renderLeftColumnContacts() {
 
 function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
   leftContactsList.innerHTML += `
-<div class="contact-list" onclick='renderRightContactArea("${user.name}", "${
-    user.email
-  }", "${key}")' id="user${indexOfUser}">
-            <div class="user-area">
-              <div class="user-picture">
-                <div id="user-icon${[
-                  indexOfUser,
-                ]}" class="user-initials user-icon"></div>
-              </div>
-              <div class="user-info">
-                <p class="user-name" id="user-name-index">${user.name}</p>
-                <p class="user-email">${user.email}</p>
-              </div>
-            </div>
-          </div>`;
+    <div
+      class="contact-list"
+      onclick='renderRightContactArea("${user.name}", "${user.email}", "${user.phone}", "${key}")'
+      id="user${indexOfUser}"
+    >
+      <div class="user-area">
+        <div class="user-picture">
+          <div
+            id="user-icon${indexOfUser}"
+            class="user-initials user-icon"
+          ></div>
+        </div>
+        <div class="user-info">
+          <p class="user-name">${user.name}</p>
+          <p class="user-email">${user.email}</p>
+        </div>
+      </div>
+    </div>`;
 }
 
 function createContactNameInitials(user, indexOfUser) {
@@ -257,7 +260,12 @@ function editContact(key) {
   editContactOverlay(key, user);
 }
 
-function editContactOverlay(key, user) {
+function editContactOverlay(key) {
+  let user = users[key];
+  if (!user) {
+    console.error("Benutzer nicht gefunden");
+    return;
+  }
   let body = document.getElementById("overlayArea");
   let realBody = document.getElementById("body");
   realBody.style.overflow = "hidden";
@@ -346,32 +354,30 @@ function hideContactOptionsForMobile() {
 
 function mobileEditOptions(key) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
-  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay(key)" class="mobileOverlay" id="mobileEditOptions(${key})">
-                                  <div id="small-responsive-overlay-options">
-                                    <button class="responsiveButton" onclick="editContactOverlay(key, user)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
-                                    <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase(key)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
-                                   </div>
-                                 </div>`;
+  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+  <div id="small-responsive-overlay-options">
+    <button class="responsiveButton" onclick="editContactOverlay(key)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
+    <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}')"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
+  </div>
+</div>`;
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();
   }
-  let deleteMobileButton = document.getElementById("deleteMobileButton");
-  deleteMobileButton.onclick = "deleteContactFromDatabase(key)";
 }
 
-function closeResponsiveOverlay(key) {
+function closeResponsiveOverlay() {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();
   }
 
-  let overlayArea = document.getElementById(`mobileEditOptions${key}`);
+  let overlayArea = document.getElementById("mobileEditOptions");
   if (overlayArea) {
     overlayArea.remove();
   }
   let contactDiv = document.getElementById("contact-div");
-  contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(key)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
+  contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(key, user)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
 }
 let leftColumn = document.getElementById("left-contacts-page-column");
 let buttonOverlayArea = document.getElementById("button-overlay-area");
