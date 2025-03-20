@@ -9,6 +9,10 @@ body {
     color: #ff8190
 }
 
+.headline {
+    margin-left: calc(300px - 232px) !important;
+  }
+
 .display-splitter {
     display: flex;
     margin: 100px;

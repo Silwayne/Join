@@ -255,9 +255,15 @@ async function deleteContactFromDatabase(key) {
   }
 }
 
-function editContact(key) {
+function editContact(key, name, email, phone) {
   let user = users[key];
   editContactOverlay(key, user);
+  if (window.innerWidth < 1400) {
+    let editContactButton = document.getElementById("editContactButton");
+    editContactButton.onclick = function () {
+      editContact(key, { name, email, phone });
+    };
+  }
 }
 
 function editContactOverlay(key) {
@@ -352,14 +358,15 @@ function hideContactOptionsForMobile() {
   }
 }
 
-function mobileEditOptions(key) {
+function mobileEditOptions(key, name, email, phone) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
   buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
   <div id="small-responsive-overlay-options">
-    <button class="responsiveButton" onclick="editContactOverlay(key)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
+    <button id="editContactButton" class="responsiveButton" onclick="editContact(key, name, email, phone)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
     <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}')"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
   </div>
 </div>`;
+
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();

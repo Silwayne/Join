@@ -6,7 +6,6 @@ h1 {
   font-size: 61px;
   font-weight: 700px;
   margin-left: 64px;
-  margin-top: 80px;
 }
 
 #board-header-div {
@@ -18,4 +17,63 @@ h1 {
   height: 48px;
   width: 500px;
   gap: 32px;
+  margin-right: 250px;
+}
+
+input {
+  border-radius: 10px;
+  border: solid;
+  border-color: lightgray;
+  gap: 10px;
+  padding: 8px 16px;
+  width: 312px;
+}
+
+#searchIcon {
+  margin-left: 14px;
+}
+
+#divider {
+  margin-left: -300px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  width: 1px;
+  color: lightgray;
+}
+
+#alignment-board-div {
+  margin-top: 80px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+button {
+  background-color: #2a3647;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 21px;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  padding: 12px 16px;
+  width: 160px;
+  height: 48px;
+  cursor: pointer;
+}
+
+#board-alignment-end {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+#add-task-button {
+  margin-left: 48px;
+  margin-right: 64px;
 }
