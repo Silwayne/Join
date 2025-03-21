@@ -1,8 +1,8 @@
 const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
-function init() {
+function init(content) {
     renderSidebar();
-    initHTML('content');
+    initHTML(content);
     renderHeader()
     selectContacts();
 
@@ -278,7 +278,6 @@ function filterNames() {
 }
 
 
-
 function getFilteredContactHTML(contactInitials, contactName, isChecked) {
     return `
         <div>      
@@ -453,4 +452,8 @@ function initHTML(content) {
         </div>
 
 </footer>`
+}
+/*--------- BoardHTML-ADD-TASK-OVERLAY---------*/
+function addTask(){
+    document.getElementById('add-task').classList.remove('d_none')
 }
