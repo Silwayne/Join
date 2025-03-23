@@ -14,14 +14,16 @@
     <link rel="stylesheet" href="/styles/contacts.css" />
     <link rel="stylesheet" href="/styles/add-contact-overlay.css" />
     <link rel="stylesheet" href="join-main/join-main.css" />
+    <link rel="stylesheet" href="/join-main/join-main-responsive.css">
 
     <title>Contacts</title>
   </head>
   <body
     id="body"
-    onload="rightContactDetailsHideOnLoad(), renderSidebar(), renderHeader()"
+    onload="rightContactDetailsHideOnLoad(), renderSidebar(), renderHeader(), renderSidebarResponsive()"
   >
     <div id="sidbar"></div>
+    <section id="sidebar-responsive"></section>
     <div id="contact-page-area">
       <div id="header"></div>
       <div id="contact-div">

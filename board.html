@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/join-main/join-main.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
@@ -14,12 +14,17 @@
     <!-- CSS -->
     <link rel="stylesheet" href="join-main/join-main.css" />
     <link rel="stylesheet" href="styles/board.css" />
-    <link rel="stylesheet" href="add-task/add-task.css">
-    <link rel="stylesheet" href="add-task/add-task-overlay.css">
+    <link rel="stylesheet" href="add-task/add-task.css" />
+    <link rel="stylesheet" href="add-task/add-task-overlay.css" />
+    <link rel="stylesheet" href="/join-main/join-main-responsive.css" />
     <title>Board</title>
   </head>
-  <body id="body" onload="renderSidebar(), renderHeader(), init('add-task')">
+  <body
+    id="body"
+    onload="renderSidebar(), renderHeader(), init('add-task'), renderSidebarResponsive()"
+  >
     <div id="sidbar"></div>
+    <section id="sidebar-responsive"></section>
     <div id="header"></div>
     <div id="main">
       <div id="board-header-div">
@@ -33,7 +38,7 @@
           </div>
         </div>
       </div>
-      <div id="add-task" class="d_none">
+      <div id="add-task" class="d_none"></div>
     </div>
   </body>
   <!-- Scripts -->
