@@ -77,3 +77,31 @@ button {
   margin-left: 48px;
   margin-right: 64px;
 }
+
+.small-add-task-btn {
+  background-color: rgba(255, 255, 255, 0);
+  border: solid;
+  border-color: #2a3647;
+  border-radius: 8px;
+  border-width: 2px;
+  gap: 10px;
+  color: #2a3647;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+}
+
+.task-column {
+  display: flex;
+  justify-content: space-between;
+  width: 244px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-left: 24px;
+  margin-top: 64px;
+}
+
+#the-board {
+  display: flex;
+  margin-left: 40px;
+}
