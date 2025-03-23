@@ -21,6 +21,10 @@ body {
   height: 96px;
 }
 
+.logo-responsive {
+  display: none;
+}
+
 .headline {
   font-family: "Inter", sans-serif;
   font-weight: 400;
@@ -67,9 +71,9 @@ body {
   width: 232px;
   z-index: 29;
   position: fixed;
-  top: 0;
   left: 0;
   height: 100%;
+  top: 0;
 }
 
 .sidbar-nav {
@@ -127,6 +131,10 @@ body {
   background-color: #091931;
 }
 
+.active {
+  background-color: #091931;
+}
+
 .sidbar-bottom {
   display: flex;
   padding-top: 172px;
@@ -157,50 +165,6 @@ a:hover {
   text-decoration: none;
 }
 
-@media (max-width: 900px) {
-  #right-sidebar {
-    display: none;
-  }
-
-  .summary-content {
-    margin-left: 10vh;
-  }
-
-  .card-top-left,
-  .card-top-right,
-  .card-middle,
-  .card-bottom {
-    width: 80%;
-    height: auto;
-  }
-
-  .summary-h1 {
-    font-size: 40px;
-  }
-
-  .summary-p {
-    font-size: 5vh;
-  }
-
-  .span-headline {
-    font-size: 3vh;
-  }
-}
-
-@media (max-width: 600px) {
-  .summary-content {
-    margin-left: 5vh;
-  }
-
-  .summary-h1 {
-    font-size: 30px;
-  }
-
-  .summary-p {
-    font-size: 4vh;
-  }
-
-  .span-headline {
-    font-size: 2vh;
-  }
+#sidebar-responsive {
+  display: none;
 }

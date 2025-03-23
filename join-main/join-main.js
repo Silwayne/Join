@@ -1,7 +1,8 @@
 function init(){
-    renderHeader('header')
-    renderSidebar()
-    renderRightSidebar()
+    renderHeader();
+    renderSidebar();
+    renderSidebarResponsive();
+    renderRightSidebar();
     updateDate();
   }
 

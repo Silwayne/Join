@@ -1,0 +1,255 @@
+/* ✅ Ab 900px: Sidebar nach unten verschieben */
+@media (max-width: 900px) {
+  .d-none {
+    display: none;
+  }
+
+  #header {
+    justify-content: start;
+    width: 100%;
+    margin-left: 0;
+    padding: 10px;
+    height: 80px;
+  }
+
+  .logo-responsive {
+    display: flex;
+    width: 50px;
+    margin-right: 15vw;
+  }
+
+  .headline {
+    margin-left: 0;
+    text-align: center;
+    font-size: 18px;
+  }
+
+  .header-right {
+    position: absolute;
+    right: 10px;
+  }
+
+  #sidbar {
+    display: none;
+  }
+
+  .sidbar-logo {
+    display: none;
+  }
+
+  #sidebar-responsive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2a3647;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+  }
+
+  .menu-responsive {
+    display: flex;
+    align-items: center;
+    gap: 15vw;
+  }
+
+  .menu-button-responsive {
+    background-color: #2a3647;
+    border: none;
+    color: white;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-button-design-responsive {
+    width: 12vw;
+    gap: 8px;
+    border-radius: 15px;
+    padding: 10px 0;
+  }
+
+  .menu-button-design-responsive:hover {
+    cursor: pointer;
+    background-color: #091931;
+  }
+
+  .active {
+    background-color: #091931;
+  }
+
+  .font-size-responsive {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .summary-content {
+    margin-left: 0;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .summary-cards {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #right-sidebar {
+    display: none;
+  }
+
+  .card-top-left,
+  .card-top-right,
+  .card-middle,
+  .card-bottom {
+    width: 80%;
+    height: auto;
+  }
+
+  .summary-h1 {
+    font-size: 40px;
+  }
+
+  .summary-p {
+    font-size: 5vh;
+  }
+
+  .span-headline {
+    font-size: 3vh;
+  }
+}
+
+/* ✅ Ab 600px: Noch mehr Optimierungen für kleinere Geräte */
+@media (max-width: 600px) {
+  .summary-h1 {
+    font-size: 28px;
+  }
+
+  .summary-p {
+    font-size: 18px;
+  }
+
+  .span-headline {
+    font-size: 16px;
+  }
+
+  .card-text-number {
+    font-size: 40px;
+  }
+
+  .card-text {
+    font-size: 16px;
+  }
+}
+
+/* ✅ Bis runter auf 300px */
+@media (max-width: 400px) {
+  #header {
+    height: 60px;
+    font-size: 14px;
+  }
+
+  .header-right {
+    width: 80px;
+    gap: 8px;
+  }
+
+  .help-button {
+    width: 24px;
+    height: 24px;
+  }
+
+  .user {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .menu-button img {
+    width: 20px;
+    height: 20px;
+  }
+
+  .summary-h1 {
+    font-size: 24px;
+  }
+
+  .summary-p {
+    font-size: 16px;
+  }
+
+  .span-headline {
+    font-size: 14px;
+  }
+
+  .card-text-number {
+    font-size: 32px;
+  }
+
+  .card-text {
+    font-size: 14px;
+  }
+
+  .summary-cards {
+    width: 95%;
+    gap: 16px;
+  }
+}
+
+/* ✅ Perfekte Darstellung auf Mini-Bildschirmen (300px) */
+@media (max-width: 300px) {
+  #header {
+    height: 50px;
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .headline {
+    font-size: 14px;
+  }
+
+  .header-right {
+    width: 60px;
+    gap: 5px;
+  }
+
+  .user {
+    width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
+
+  .menu-button img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .summary-h1 {
+    font-size: 20px;
+  }
+
+  .summary-p {
+    font-size: 14px;
+  }
+
+  .span-headline {
+    font-size: 12px;
+  }
+
+  .card-text-number {
+    font-size: 24px;
+  }
+
+  .card-text {
+    font-size: 12px;
+  }
+
+  .summary-cards {
+    width: 100%;
+    gap: 10px;
+  }
+}
