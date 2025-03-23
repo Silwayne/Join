@@ -4,21 +4,24 @@ function renderSidebar() {
         <div class="sidbar-top">
               <img class="sidbar-logo" src="/assets/img/Capa 2.svg" alt="Logo">
                 <div class="menu">
+                <a href="/join-main/join-main.html">
+                    <button class="menu-button menu-button-design font-size">
                     <button href="join-main/join-main.html" class="menu-button menu-button-design font-size active">
                       <img src="/assets/img/summary-icon.svg" alt="Summary">
                       <span>Summary</span>
                     </button>
+                </a>
                     <a href="/add-task/add-task.html">
                     <button class="menu-button menu-button-design font-size">
                         <img src="/assets/img/add_task_icon.svg" alt="Add Task">
                         <span style="white-space: nowrap;">Add Task</span>
                     </button>
                     </a>
-                    <a href="board.html">
-                    <button class="menu-button menu-button-design font-size">
-                      <img src="/assets/img/board-icon.svg" alt="Board">
-                      <span>Board</span>
-                    </button>
+                    <a href="/board.html">
+                        <button class="menu-button menu-button-design font-size">
+                            <img src="/assets/img/board-icon.svg" alt="Board">
+                            <span>Board</span>
+                        </button>
                     </a>
                     <a href="/contacts.html">
                     <button class="menu-button menu-button-design font-size">
@@ -74,8 +77,8 @@ function renderSidebarResponsive() {
 }
 
 function renderRightSidebar() {
-    let greetingText = getGreetingText();
-    document.getElementById("right-sidebar").innerHTML = `
+  let greetingText = getGreetingText();
+  document.getElementById("right-sidebar").innerHTML = `
      <h2 id="greeting" class="dynamic-text">${greetingText},</h2>
         <p class="dynamic-name">Hierein LangerName</p>
     `;
