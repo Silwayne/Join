@@ -109,26 +109,24 @@ button {
   margin-left: 64px;
   justify-content: space-between;
   margin-right: 64px;
-
-
 }
-.drag-and-drop-box{
+.drag-and-drop-box {
   background-color: white;
   height: 263px;
   width: 252px;
   margin-top: 24px;
   border-radius: 20px;
-  border: solid black;
-  background: yellow;
+  box-shadow: 5px 5px #c4c4c41a;
 }
+
 .no-tasks-container {
   width: 246px;
   height: 48px;
   margin-top: 24px;
 
-  border: 1px dashed #A8A8A8;
+  border: 1px dashed #a8a8a8;
   border-radius: 10px;
-  background-color: #E7E7E7;
+  background-color: #e7e7e7;
 
   display: flex;
   align-items: center;
@@ -137,6 +135,6 @@ button {
 
 .no-tasks-text {
   font-size: 19px;
-  color: #A8A8A8;
+  color: #a8a8a8;
   margin: 0;
 }
