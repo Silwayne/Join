@@ -44,8 +44,11 @@ async function addContactToDatabase() {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, phone }),
   });
-  contactsuccessfullyAddedNotification();
   closeAddContactOverlay();
+  contactsuccessfullyAddedNotification();
+  setTimeout(function () {
+    window.location.reload();
+  }, 2000);
 }
 
 function closeOverlay() {
@@ -69,7 +72,7 @@ function closeAddContactOverlay() {
 
 function contactsuccessfullyAddedNotification() {
   let displayArea = document.getElementById("contact-details-area");
-  displayArea.innerHTML += `<div class="success-notifications" id="success-notification">Contact was successfully added to database.</div>`;
+  displayArea.innerHTML += `<div class="success-notifications" id="success-notification">Contact was successfully born.</div>`;
   hideSuccessMessage();
 }
 
@@ -77,11 +80,30 @@ function contactsuccessfullyEditedNotification() {
   let displayArea = document.getElementById("contact-details-area");
   displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully edited and saved.</div>`;
   hideSuccessMessage();
+  setTimeout(function () {
+    window.location.reload();
+  }, 2000);
 }
 
 function contactsuccessfullyDeletedNotification() {
   let displayArea = document.getElementById("contact-details-area");
   displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully eliminated.</div>`;
+  setTimeout(function () {
+    window.location.reload();
+  }, 2000);
+}
+
+function contactsuccessfullyAddedNotification() {
+  if (window.innerWidth < 1440) {
+    let displayAreaMobile = document.getElementById(
+      "left-contacts-page-column"
+    );
+    displayAreaMobile.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully born.</div>`;
+  }
+  if (window.innerWidth > 1440) {
+    let displayArea = document.getElementById("contact-details-area");
+    displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully born.</div>`;
+  }
   hideSuccessMessage();
 }
 

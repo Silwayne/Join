@@ -123,7 +123,7 @@ function hideContactDetails() {
   overlayButton.style.display = "none";
 }
 
-function renderRightContactArea(name, email, phone, key) {
+function renderRightContactArea(name, email, phone, paramKey) {
   if (window.innerWidth < 1440) {
     let rightColumn = document.getElementById("right-contacts-page-column");
     let leftColumn = document.getElementById("left-contacts-page-column");
@@ -151,6 +151,7 @@ function renderRightContactArea(name, email, phone, key) {
     if (rightColumn) {
       contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(key)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
     }
+    key = paramKey;
   }
 
   let contactDetailsArea = document.getElementById("contact-details-area");
@@ -208,7 +209,7 @@ function renderRightContactArea(name, email, phone, key) {
   rightEmailArea.href = `mailto:${email}`;
   rightContactNameArea.innerText = name;
   rightDeleteButton.onclick = function () {
-    deleteContactFromDatabase(key);
+    deleteContactFromDatabase(paramKey);
   };
   rightEditButton.onclick = function () {
     editContact(key, { name, email, phone });
@@ -250,20 +251,11 @@ async function deleteContactFromDatabase(key) {
     console.error("Error deleting contact:", error);
     alert("Failed to delete contact. Please try again.");
   }
-  if (editContactOverlay) {
-    closeEditOverlay();
-  }
 }
 
-function editContact(key, name, email, phone) {
+function editContact(key) {
   let user = users[key];
   editContactOverlay(key, user);
-  if (window.innerWidth < 1400) {
-    let editContactButton = document.getElementById("editContactButton");
-    editContactButton.onclick = function () {
-      editContact(key, { name, email, phone });
-    };
-  }
 }
 
 function editContactOverlay(key) {
@@ -309,7 +301,6 @@ function editContactOverlay(key) {
 }
 
 async function saveEditedContact(key) {
-  console.log(key);
   let name = document.getElementById("fullName").value;
   let email = document.getElementById("new-email").value;
   let phone = document.getElementById("new-phone").value;
@@ -358,15 +349,14 @@ function hideContactOptionsForMobile() {
   }
 }
 
-function mobileEditOptions(key, name, email, phone) {
+function mobileEditOptions(key) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
   buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
   <div id="small-responsive-overlay-options">
-    <button id="editContactButton" class="responsiveButton" onclick="editContact(key, name, email, phone)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
+    <button class="responsiveButton" onclick="editContactOverlay(key)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
     <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}')"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
   </div>
 </div>`;
-
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();
