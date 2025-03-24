@@ -453,7 +453,22 @@ function initHTML(content) {
 
 </footer>`
 }
-/*--------- BoardHTML-ADD-TASK-OVERLAY---------*/
-function addTask(){
-    document.getElementById('add-task').classList.remove('d_none')
+
+
+
+                                                         /*--------- BoardHTML-ADD-TASK-OVERLAY---------*/
+function initAddTask(content){
+    initHTML(content);
+
+}
+
+function addTask(event){
+    event.stopPropagation()
+    document.getElementById('add-task-overlay').classList.remove('d_none')
+}
+function removeAddTask(){
+    document.getElementById('add-task-overlay').classList.add('d_none')
+
+    
+
 }
