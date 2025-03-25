@@ -75,6 +75,9 @@ input::placeholder{
     padding-bottom: 60px;
 
 }
+.absolute{
+    position: absolute;
+}
 
 #category {
     width: 440px;
@@ -126,13 +129,14 @@ input::placeholder{
 }
 
 .task {
+    margin-top: 18px !important;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-radius: 4px;
     margin-top: 5px;
     transition: background 0.3s;
-    height: 50px;
+    height: 32px;
     padding: 2px;
 }
 .user-icon {
@@ -376,5 +380,4 @@ footer {
 .error-message {
     color: red;
     font-size: 12px;
-    margin-top: 5px;
 }

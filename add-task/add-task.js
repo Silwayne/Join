@@ -1,4 +1,4 @@
-const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/";
 
 function init(content) {
     renderSidebar();
@@ -12,6 +12,7 @@ let countContactsID = 0
 let counter = 0
 let names = []
 let contactColors = {};
+let priority = 'Medium'
 
 function updateIcons() {
     let inputField = document.getElementById("subtaskInput");
@@ -35,32 +36,51 @@ function clearSubTaskInput() {
 }
 
 function addSubTaskInput() {
-    counter++;
-    let input = document.getElementById('subtaskInput')
-    let tableSubTask = document.getElementById('subtasks')
-    tableSubTask.classList.remove('d_none')
-    let inputText = input.value.trim();
+    let input = document.getElementById('subtaskInput');
+    let tableSubTask = document.getElementById('subtasks');
+    let errorMsg = document.getElementById('subtask-error');
+    let container = document.getElementById('subtask-container');
+    let existingTasks = tableSubTask.querySelectorAll('li').length;
 
+    if (existingTasks >= 2) {
+        container.classList.add('input-error');
+        errorMsg.classList.remove('d_none');
+        return;
+    }
+
+    container.classList.remove('input-error');
+    errorMsg.classList.add('d_none');
+
+    let inputText = input.value.trim();
     if (inputText === "") return;
 
+    counter++;
+    tableSubTask.classList.remove('d_none');
+
     tableSubTask.innerHTML += `
-                <div class="task">
-                    <li id="task_${counter}">${inputText}</li>
-                    <div class="task-icons">
-                        <img id="imgID_${counter}" src="/assets/img/edit-icon.svg" class="icon" onclick="editSubTask(${counter})">
-                        <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(${counter})">
-                    </div>
-                </div>
-            `;
+        <div class="task">
+            <li id="task_${counter}">${inputText}</li>
+            <div class="task-icons">
+                <img id="imgID_${counter}" src="/assets/img/edit-icon.svg" class="icon" onclick="editSubTask(${counter})">
+                <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(${counter})">
+            </div>
+        </div>
+    `;
 
     clearSubTaskInput();
 }
+
+
 function deleteSubtask(taskIdNumber) {
     let taskElement = document.getElementById('task_' + taskIdNumber)
     taskElement.parentElement.remove()
     counter--;
     if (counter === 0) {
         document.getElementById('subtasks').classList.add('d_none')
+    }
+    if (counter < 2) {
+        document.getElementById('subtask-container').classList.remove('input-error');
+        document.getElementById('subtask-error').classList.add('d_none');
     }
 }
 
@@ -102,6 +122,7 @@ function swapToUrgent() {
     urgent.classList.add('bold')
     removeMedium();
     removeLow();
+    priority = 'Urgent'
 }
 function removeUrgent() {
     let urgent = document.getElementById('prio-urgent')
@@ -116,6 +137,7 @@ function swapToMedium() {
     medium.classList.add('bold')
     removeUrgent();
     removeLow();
+    priority = 'Medium'
 }
 function removeMedium() {
     let medium = document.getElementById('prio-medium')
@@ -130,6 +152,7 @@ function swapToLow() {
     low.classList.add('bold')
     removeUrgent();
     removeMedium();
+    priority = 'Low'
 }
 function removeLow() {
     let low = document.getElementById('prio-low')
@@ -143,7 +166,7 @@ function getRandomColor() {
   }
   
   async function selectContacts() {
-    let response = await fetch(firebaseURL);
+    let response = await fetch(firebaseURL+'users.json');
     let firebaseAnswer = await response.json();
     let dropDownMenu = document.getElementById('dropdownMenu');
 
@@ -297,6 +320,11 @@ function getFilteredContactHTML(contactInitials, contactName, isChecked) {
 }
 
 function clearTaskForm() {
+    let subTaskInput = document.getElementById('subtaskInput');
+    if (subTaskInput) {
+        subTaskInput.value = '';
+        updateIcons()
+    }
     let titleInput = document.getElementById('add-task-title');
     if (titleInput) {
         titleInput.value = '';
@@ -315,18 +343,24 @@ function clearTaskForm() {
     if (dueDateInput) {
         dueDateInput.value = '';
     }
-    document.getElementById('subtasks').innerHTML = '';
     document.getElementById('category').value = '';
-
+    document.getElementById('subtask-container').classList.remove('input-error');
+    document.getElementById('subtask-error').classList.add('d_none');
+    document.getElementById('subtasks').innerHTML = '';
+    resetValidation(document.getElementById('add-task-title'));
+    resetValidation(document.getElementById('due-date'));
+    resetValidation(document.getElementById('category'));
     swapToMedium()
 }
 
-function createTask() {
+/* Function Createtask() IN create-task.js*/
+function checkValidations() {
+    let isValid = true;
+
     let titleInput = document.getElementById('add-task-title');
     let dueDateInput = document.getElementById('due-date');
     let categorySelect = document.getElementById('category');
 
-    let isValid = true;
     resetValidation(titleInput);
     resetValidation(dueDateInput);
     resetValidation(categorySelect);
@@ -346,12 +380,9 @@ function createTask() {
         isValid = false;
     }
 
-    if (isValid) {
-        console.log('Hat funktioniert!');
-        alert('Hier könnte ihre Werbung Stehen!');
-        clearTaskForm()
-    }
+    return isValid;
 }
+
 
 
 function showValidationError(element, message) {
@@ -426,8 +457,9 @@ function initHTML(content) {
                 <option value="user-story">User Story</option>
             </select>
         </div>
+
         <div>
-        <div class="input-container">
+        <div id="subtask-container" class="input-container">
             <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
             <div class="icons">
                 <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
@@ -436,11 +468,14 @@ function initHTML(content) {
                 <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()"
                         src="/assets/img/check.svg"></span>
             </div>
+
            
     </div> <ul class="d_none subtasks" id="subtasks"></ul>
-  
+                          <div id="subtask-error" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
+
     </section>
     </div>
+
     
 </span>
 <footer>
@@ -455,13 +490,10 @@ function initHTML(content) {
 </footer>`
 }
 
-
-
                                                          /*--------- BoardHTML-ADD-TASK-OVERLAY---------*/
 function initAddTask(content){
     initHTML(content);
     selectContacts();
-
 }
 
 function addTask(event) {
@@ -473,4 +505,25 @@ function addTask(event) {
 function removeAddTask() {
     document.getElementById('add-task-overlay').classList.add('d_none');
     document.getElementById('overlay-background').classList.remove('overlay-background');
+}
+
+async function loadTasksFromFirebase() {
+    let response = await fetch(firebaseURL +'tasks.json')
+    let firebaseData  = await response.json()
+    let tasksBoxContent = [];
+    let index = 0;
+    
+    for (let key in firebaseData) {
+        let task = firebaseData[key];
+        task.id = index;
+        task.firebaseID = key; 
+        tasksBoxContent.push(task);
+        index++;
+    }
+    
+
+    todos = tasksBoxContent;
+
+    
+    
 }

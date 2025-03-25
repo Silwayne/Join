@@ -117,6 +117,36 @@ button {
   margin-top: 24px;
   border-radius: 20px;
   box-shadow: 5px 5px #c4c4c41a;
+  padding: 18px;
+}
+.box-category-header-userstory{
+  background-color: #0038ff; 
+  color: white;
+  width: 113px ;
+  font-size: 16px !important;
+  border-radius: 8px;  
+  text-align: center;
+  text-decoration: none;
+  padding: 2.5px;
+}
+.box-category-title{
+  width: 220px;
+  
+}
+.box-category-descrition{
+  color: #a8a8a8;
+}
+.box-category-progress-subtasks-box{
+  padding-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.box-category-progress-bar{
+  height: 8px;
+  width: 128px;
+  background-color:#f4f4f4;
+  border-radius: 4px;
 }
 
 .no-tasks-container {
