@@ -110,6 +110,7 @@ button {
   justify-content: space-between;
   margin-right: 64px;
 }
+
 .drag-and-drop-box {
   background-color: white;
   height: 263px;
@@ -119,33 +120,50 @@ button {
   box-shadow: 5px 5px #c4c4c41a;
   padding: 18px;
 }
-.box-category-header-userstory{
-  background-color: #0038ff; 
+
+.box-category-header-userstory {
+  background-color: #0038ff;
   color: white;
-  width: 113px ;
+  width: 113px;
   font-size: 16px !important;
-  border-radius: 8px;  
+  border-radius: 8px;
   text-align: center;
   text-decoration: none;
   padding: 2.5px;
 }
-.box-category-title{
+
+.user-story {
+  background-color: #1fd7c1;
+}
+
+.box-category-title {
   width: 220px;
-  
+  font-weight: 700;
+  font-size: 16px;
 }
-.box-category-descrition{
+
+.box-category-descrition {
   color: #a8a8a8;
+  font-weight: 400;
+  font-size: 16px;
 }
-.box-category-progress-subtasks-box{
+
+#subtask-description {
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.box-category-progress-subtasks-box {
   padding-top: 12px;
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-.box-category-progress-bar{
+
+.box-category-progress-bar {
   height: 8px;
   width: 128px;
-  background-color:#f4f4f4;
+  background-color: #f4f4f4;
   border-radius: 4px;
 }
 

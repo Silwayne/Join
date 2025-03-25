@@ -41,13 +41,13 @@ function generateTodosHTML(task){
 
     return `
             <div draggable="true" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
-                    <div> <p class="box-category-header-userstory">User Story</p></div>
+                    <div> <p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
                     <div class="box-category-title"><p>${task.title}</p>
-                        <div class="box-category-descrition"><p>Description</p></div>
+                        <div class="box-category-descrition"><p>${task.description}</p></div>
                     </div>
                     <div class="box-category-progress-subtasks-box">
                     <div class="box-category-progress-bar"></div>
-                    <h5>Subtasks</h5>
+                    <h5 id="subtask-description">Subtasks</h5>
                     </div>
                     <div>
                     <div class=""></div>

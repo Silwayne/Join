@@ -453,8 +453,8 @@ function initHTML(content) {
             <p for="category">Category<span class="red">*</span></p>
             <select id="category" name="category" required>
                 <option value="">Select task category</option>
-                <option value="technical">Technical Task</option>
-                <option value="user-story">User Story</option>
+                <option value="Technical">Technical Task</option>
+                <option value="User Story">User Story</option>
             </select>
         </div>
 
