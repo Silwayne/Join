@@ -18,6 +18,7 @@ body {
   background-color: #f6f7f8;
   font-family: "Inter", sans-serif;
   color: #2a3647 !important;
+  height: 100vh;
 }
 .red {
   color: #ff8190
@@ -100,7 +101,7 @@ input::placeholder{
 .input-container {
   display: flex;
   align-items: center;
-  border: 0px solid #ccc;
+  border: 2px solid #ccc;
   border-radius: 9px;
   width: 396px;
   background-color: white;
@@ -203,6 +204,8 @@ input::placeholder{
   align-items: center;
   justify-content: center;
   border-radius: 50%;
+  z-index: 9999 !important;
+
 }
 
 .arrow-drop-down:hover {
@@ -295,9 +298,10 @@ input::placeholder{
   width: 396px;
   background-color: white;
   margin: 0;
-  position: absolute;
-
+  position: absolute;  
 }
+
+
 
 ul {
   width: 396px;
@@ -391,4 +395,13 @@ footer {
   color: red;
   font-size: 10px;
   margin-top: 4px;
+}
+
+.overlay-background {
+  background-color: rgba(0, 0, 0, 0.4); /* <- Statt filter */
+  filter: brightness(0.6);
+  transition: background-color 0.3s ease, filter 0.3s ease; 
+  width: 100vw;
+  height: 100vh;
+  z-index: 9; 
 }

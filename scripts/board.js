@@ -2,22 +2,26 @@ let todos = [
     {
         'id' : 0,
         'title': 'todo',
-        'status': 'todo'   
+        'status': 'todo',
+        'p': 'No tasks to do'   
     },
     {
         'id' : 1,
         'title': 'inprogress',
-        'status': 'inprogress'   
+        'status': 'inprogress', 
+        'p': 'No tasks in progress'  
     },
     {
         'id' : 2,
         'title': 'await',
-        'status': 'await'   
+        'status': 'await',
+        'p' : 'No tasks to await'
     },
     {
         'id' : 3,
         'title': 'done',
-        'status': 'done'   
+        'status': 'done',
+        'p': 'No tasks done'
     },
 ]
 
@@ -28,66 +32,23 @@ function allowDrop(ev){
 }
 
 function updateBoardHTML() {
+    const statuses = ['todo', 'inprogress', 'await', 'done'];
 
-    let todoDiv = document.getElementById('drag-and-drop-todo');
-    let inprogressDiv = document.getElementById('drag-and-drop-inprogress');
-    let awaitDiv = document.getElementById('drag-and-drop-await');
-    let doneDiv = document.getElementById('drag-and-drop-done');
-
-    // --------- TODO ---------
-    let todo = todos.filter(t => t['status'] === 'todo');
-    if (todo.length > 0) {
-        todoDiv.innerHTML = '';
-        todoDiv.classList.remove('no-tasks-container');
-        for (let index = 0; index < todo.length; index++) {
-            const element = todo[index];
-            todoDiv.innerHTML += generateTodoHTML(element);
+    for (let i = 0; i < statuses.length; i++) {
+        let status = statuses[i];
+        let taskDiv = document.getElementById('drag-and-drop-' + status);
+        let tasks = todos.filter(t => t.status === status);
+    
+        if (tasks.length > 0) {
+            taskDiv.innerHTML = '';
+            taskDiv.classList.remove('no-tasks-container');
+            for (let j = 0; j < tasks.length; j++) {
+                taskDiv.innerHTML += generateTodosHTML(tasks[j]);
+            }
+        } else {
+            taskDiv.innerHTML = `<p class="no-tasks-text">No tasks for ${status}</p>`;
+            taskDiv.classList.add('no-tasks-container');
         }
-    } else {
-        todoDiv.innerHTML = `<p class="no-tasks-text">No tasks to do</p>`;
-        todoDiv.classList.add('no-tasks-container');
-    }
-
-    // --------- IN PROGRESS ---------
-    let inprogress = todos.filter(t => t['status'] === 'inprogress');
-    if (inprogress.length > 0) {
-        inprogressDiv.innerHTML = '';
-        inprogressDiv.classList.remove('no-tasks-container');
-        for (let index = 0; index < inprogress.length; index++) {
-            const element = inprogress[index];
-            inprogressDiv.innerHTML += generateTodoHTML(element);
-        }
-    } else {
-        inprogressDiv.innerHTML = `<p class="no-tasks-text">No tasks in progress</p>`;
-        inprogressDiv.classList.add('no-tasks-container');
-    }
-
-    // --------- AWAIT ---------
-    let awaitTasks = todos.filter(t => t['status'] === 'await');
-    if (awaitTasks.length > 0) {
-        awaitDiv.innerHTML = '';
-        awaitDiv.classList.remove('no-tasks-container');
-        for (let index = 0; index < awaitTasks.length; index++) {
-            const element = awaitTasks[index];
-            awaitDiv.innerHTML += generateTodoHTML(element);
-        }
-    } else {
-        awaitDiv.innerHTML = `<p class="no-tasks-text">No tasks awaiting</p>`;
-        awaitDiv.classList.add('no-tasks-container');
-    }
-
-    // --------- DONE ---------
-    let done = todos.filter(t => t['status'] === 'done');
-    if (done.length > 0) {
-        doneDiv.innerHTML = '';
-        doneDiv.classList.remove('no-tasks-container');
-        for (let index = 0; index < done.length; index++) {
-            const element = done[index];
-            doneDiv.innerHTML += generateTodoHTML(element);
-        }
-    } else {
-        doneDiv.innerHTML = `<p class="no-tasks-text">No tasks done</p>`;
-        doneDiv.classList.add('no-tasks-container');
     }
 }
 
@@ -103,7 +64,7 @@ function moveTo(status){
 
 }
 
-function generateTodoHTML(element){    
+function generateTodosHTML(element){    
     return `<div draggable="true" ondragstart="moveTask(${element['id']})" class="drag-and-drop-box"></div>` 
 }
 

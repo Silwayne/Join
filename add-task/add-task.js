@@ -12,6 +12,7 @@ let countContactsID = 0
 let counter = 0
 let names = []
 let contactColors = {};
+
 function updateIcons() {
     let inputField = document.getElementById("subtaskInput");
     let plusIcon = document.getElementById("plusIcon");
@@ -459,16 +460,17 @@ function initHTML(content) {
                                                          /*--------- BoardHTML-ADD-TASK-OVERLAY---------*/
 function initAddTask(content){
     initHTML(content);
+    selectContacts();
 
 }
 
-function addTask(event){
-    event.stopPropagation()
-    document.getElementById('add-task-overlay').classList.remove('d_none')
+function addTask(event) {
+    event.stopPropagation();
+    document.getElementById('overlay-background').classList.add('overlay-background');
+    document.getElementById('add-task-overlay').classList.remove('d_none');
 }
-function removeAddTask(){
-    document.getElementById('add-task-overlay').classList.add('d_none')
 
-    
-
+function removeAddTask() {
+    document.getElementById('add-task-overlay').classList.add('d_none');
+    document.getElementById('overlay-background').classList.remove('overlay-background');
 }

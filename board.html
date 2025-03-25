@@ -24,10 +24,13 @@
     id="body"
     onload="renderSidebar(), renderHeader(), initAddTask('add-task-overlay'), renderSidebarResponsive(), updateBoardHTML()"
   >
+
+  <div id="overlay-background"  onclick="removeAddTask()">
+
     <div id="sidbar"></div>
     <section id="sidebar-responsive"></section>
     <div id="header"></div>
-    <div id="main" onclick="removeAddTask()">
+    <div id="main">
       <div id="board-header-div">
         <div id="alignment-board-div">
           <h1>Board</h1>
@@ -109,11 +112,13 @@
           </div>
         </div>
 
-        <div id="add-task-overlay" class="d_none">
-          <div id="add-task-content"></div>
-        </div>
       </div>
     </div>
+  </div>
+    <div id="add-task-overlay" class="d_none">
+      <div id="add-task-content"></div>
+    </div>
+
   </body>
   <!-- Scripts -->
   <script src="/join-main/side-bar.js"></script>
