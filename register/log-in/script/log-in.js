@@ -52,6 +52,8 @@ function checkLogin(users, email, password) {
   );
 
   if (userFound) {
+    sessionStorage.setItem("userName", userFound.name);
+    sessionStorage.setItem("userColor", userFound.color);
     window.location.href = "./join-main/join-main.html";
   } else {
     showMessage("Incorrect email or password!");

@@ -75,56 +75,24 @@
     background-color: #091931;
   }
 
-  .active {
-    background-color: #091931;
-  }
-
   .font-size-responsive {
     font-family: "Inter", sans-serif;
-    font-size: 16px;
+    font-size: 2vw;
     font-weight: 400;
-  }
-
-  .summary-content {
-    margin-left: 0;
-    padding: 20px;
-    width: 100%;
-    text-align: center;
-  }
-
-  .summary-cards {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  #right-sidebar {
-    display: none;
-  }
-
-  .card-top-left,
-  .card-top-right,
-  .card-middle,
-  .card-bottom {
-    width: 80%;
-    height: auto;
-  }
-
-  .summary-h1 {
-    font-size: 40px;
-  }
-
-  .summary-p {
-    font-size: 5vh;
-  }
-
-  .span-headline {
-    font-size: 3vh;
   }
 }
 
 /* ✅ Ab 600px: Noch mehr Optimierungen für kleinere Geräte */
 @media (max-width: 600px) {
+
+  .logo-responsive {
+    width: 40px;
+  }
+
+  .headline{
+    display: none;
+  }
+
   .summary-h1 {
     font-size: 28px;
   }

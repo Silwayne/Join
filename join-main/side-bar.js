@@ -5,7 +5,7 @@ function renderSidebar() {
               <img class="sidbar-logo" src="/assets/img/Capa 2.svg" alt="Logo">
                 <div class="menu">
                 <a href="/join-main/join-main.html">
-                    <button class="menu-button menu-button-design font-size active">
+                    <button class="menu-button menu-button-design font-size">
                       <img src="/assets/img/summary-icon.svg" alt="Summary">
                       <span>Summary</span>
                     </button>
@@ -49,7 +49,7 @@ function renderSidebar() {
 function renderSidebarResponsive() {
     document.getElementById("sidebar-responsive").innerHTML = `
     <div class="menu-responsive">
-        <button href="join-main/join-main.html" class="menu-button-responsive menu-button-design-responsive font-size-responsive active">
+        <button href="join-main/join-main.html" class="menu-button-responsive menu-button-design-responsive font-size-responsive">
           <img src="/assets/img/summary-icon.svg" alt="Summary">
           <span>Summary</span>
         </button>
@@ -77,8 +77,10 @@ function renderSidebarResponsive() {
 
 function renderRightSidebar() {
   let greetingText = getGreetingText();
+  let userName = sessionStorage.getItem("userName") || "Gast";
+  let userColor = sessionStorage.getItem("userColor") || "black";
   document.getElementById("right-sidebar").innerHTML = `
      <h2 id="greeting" class="dynamic-text">${greetingText},</h2>
-        <p class="dynamic-name">Hierein LangerName</p>
+        <p class="dynamic-name" style="color: ${userColor};">${userName}</p>
     `;
 }

@@ -14,6 +14,15 @@ function showMessage(message, isSuccess = false) {
   }, 2000);
 }
 
+function getRandomColor() {
+  let letters = "0123456789ABCDEF";
+  let color = "#";
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
 function registerUser() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
@@ -55,10 +64,11 @@ function isEmailTaken(email, callback) {
 }
 
 function saveUser(name, email, password) {
+  let color = getRandomColor();
   fetch(firebaseURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, password }),
+    body: JSON.stringify({ name, email, password, color }),
   })
     .then(() => {
       showMessage("Registration successful! Redirecting...", true);

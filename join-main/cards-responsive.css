@@ -1,0 +1,42 @@
+@media (max-width: 1000px) {
+  #right-sidebar {
+    width: 7vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .summary-content {
+    margin-left: 0;
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .summary-cards {
+    margin-left: 10px;
+  }
+
+  #right-sidebar {
+    display: none;
+  }
+
+  .card-top-left,
+  .card-top-right,
+  .card-middle,
+  .card-bottom {
+    width: 100%;
+    height: auto;
+  }
+
+  .summary-h1 {
+    font-size: 40px;
+  }
+
+  .summary-p {
+    font-size: 5vh;
+  }
+
+  .span-headline {
+    font-size: 3vh;
+  }
+}
