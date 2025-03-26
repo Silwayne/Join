@@ -18,8 +18,11 @@ async function updateBoardHTML() {
             taskDiv.classList.remove('no-tasks-container');
             for (let m = 0; m < tasks.length; m++) {
                 let task = tasks[m]
-                console.log(task);
-                
+
+                if (task.subtasks) {
+                    let subtask = task.subtasks
+                    
+                }
                 taskDiv.innerHTML += generateTodosHTML(task);
             }
         } else {
@@ -38,6 +41,12 @@ async function moveTo(status) {
 
 
 function generateTodosHTML(task){    
+    let subtask = checkIfSubtasks(task)
+    let progressBar = generateProgressBar(subtask, task)
+    let img = filterPriorityImage(task)
+    console.log(img);
+    
+    
 
     return `
             <div draggable="true" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
@@ -45,13 +54,10 @@ function generateTodosHTML(task){
                     <div class="box-category-title"><p>${task.title}</p>
                         <div class="box-category-descrition"><p>${task.description}</p></div>
                     </div>
-                    <div class="box-category-progress-subtasks-box">
-                    <div class="box-category-progress-bar"></div>
-                    <h5 id="subtask-description">Subtasks</h5>
-                    </div>
+                    ${progressBar}
                     <div>
                     <div class=""></div>
-                    <div class="box-category-prio"><img src=""></div>                    
+                    <div class="box-category-prio">${img}</div>                    
                     </div>
             </div>
             ` 
@@ -73,4 +79,54 @@ async function updateFireBaseData(firebaseID, taskObj) {
             'Content-Type': 'application/json'
         }
     });
+}
+function checkIfSubtasks(task) {
+    if (task.subtasks) {
+        let total = task.subtasks.length;
+        let done = 0;        
+        for (let i = 0; i < total; i++) {
+            if (task.subtasks[i].done === true) {
+                console.log(task.subtasks[i]);
+                
+                done++;
+            }
+        }
+
+        return done + "/" + total + " Subtasks";
+    }
+
+    return "";
+}
+
+function generateProgressBar(subtask, task){
+    if (subtask) {
+        let progressBar;
+        let done = 0;
+        for (let i = 0; i < task.subtasks.length; i++) {
+            if (task.subtasks[i].done === true) {
+                done++;
+            }
+        }
+        let progress = (done / 2) * 100;        
+        return progressBar = `
+            <div class="box-category-progress-subtasks-box">
+                <div class="box-category-progress-bar">
+                    <div class="progress" style="width: ${progress}%;"></div>
+                </div>
+                <p class="subtask-description">${subtask}</p>
+            </div>
+        `;
+    }
+    return ""
+
+}
+function filterPriorityImage(task){
+    let priority = task.priority.toLowerCase();
+
+    if (priority === "low") {
+        return '<img src="../assets/img/Prio-low-green.svg">';
+    } else if (priority === "medium") {
+        return '<img src="../assets/img/Prio-media-orange.svg">';
+    }
+    return '<img src="../assets/img/Prio-alta-red.svg">';
 }

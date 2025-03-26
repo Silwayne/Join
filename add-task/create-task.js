@@ -13,18 +13,19 @@ function getTaskData(){
     let description = document.getElementById('description-input').value
     let date = document.getElementById('due-date').value
     let category = document.getElementById('category').value
-    let subtaks = [];
-    let taskElement2 = document.getElementById('task_2')
-    let taskElement1 = document.getElementById('task_1')
-    if (taskElement1) {
-        let subtask1 = taskElement1.textContent.trim();
-        subtaks.push(subtask1);
-        if (taskElement2) {
-            let subtask2 = taskElement2.textContent.trim();
-            subtaks.push(subtask2);
+    let subtasks = [];
+    let subTaskElement2 = document.getElementById('task_2')
+    let subTaskElement1 = document.getElementById('task_1')
+    if (subTaskElement1) {
+        let subtask1 = subTaskElement1.textContent.trim();
+        subtasks.push({ title: subtask1, done: false });
+    
+        if (subTaskElement2) {
+            let subtask2 = subTaskElement2.textContent.trim();
+            subtasks.push({ title: subtask2, done: false });
         }
     }
-    pushToFireBase(title, description, assignedContacts, date, priority, category, subtaks)
+    pushToFireBase(title, description, assignedContacts, date, priority, category, subtasks)
 }
 
 async function pushToFireBase(title, description, contacts, date, priority, category, subtasks) {
@@ -35,8 +36,7 @@ async function pushToFireBase(title, description, contacts, date, priority, cate
         'date': date,
         'priority': priority,
         'category': category,
-        'subtasksCounter': subtasks.length, 
-        'subtasks': subtasks,
+        'subtasks' :subtasks,
         'status': 'todo'
       };
       
