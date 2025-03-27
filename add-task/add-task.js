@@ -1,10 +1,10 @@
 const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/";
 
 function init(content) {
+    selectContacts();
     renderSidebar();
     initHTML(content);
     renderHeader()
-    selectContacts();
 
 }
 let assignedContacts = [];
@@ -160,13 +160,10 @@ function removeLow() {
     low.classList.remove('prio-low')
     low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`
 }
-function getRandomColor() {
-    const colors = ["#29abe2", "#ff8190", "#7ae229", "#ffa800", "#ff3d00", "#9055a2"];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
+
   
   async function selectContacts() {
-    let response = await fetch(firebaseURL+'users.json');
+    let response = await fetch(firebaseURL + 'users.json');
     let firebaseAnswer = await response.json();
     let dropDownMenu = document.getElementById('dropdownMenu');
 
@@ -176,23 +173,27 @@ function getRandomColor() {
         let contact = firebaseAnswer[key];
         let contactName = contact.name;
         let contactInitials = getInitials(contactName);
+        let contactColor = contact.color
 
         names.push(contactName);
-        if (!contactColors[contactName]) {
-            contactColors[contactName] = getRandomColor();
-        }
+        contactColors[contactName] = contactColor;
 
-        dropDownMenu.innerHTML += getContactListHTML(contactInitials, contactName, localCounter, contactColors[contactName]);
+        dropDownMenu.innerHTML += getContactListHTML(
+            contactInitials,
+            contactName,
+            localCounter,
+            contactColor
+        );
 
         let checkbox = document.getElementById('contactID_' + localCounter);
-        
-        checkbox.addEventListener('click', function() {
+        checkbox.addEventListener('click', function () {
             handleContactSelection(contactName, this.checked);
         });
 
         localCounter++;
     }
 }
+
 
 function handleContactSelection(contactName, isChecked) {
     if (isChecked) {
@@ -353,7 +354,6 @@ function clearTaskForm() {
     swapToMedium()
 }
 
-/* Function Createtask() IN create-task.js*/
 function checkValidations() {
     let isValid = true;
 
@@ -379,11 +379,8 @@ function checkValidations() {
         showValidationError(categorySelect, 'Category is required');
         isValid = false;
     }
-
     return isValid;
 }
-
-
 
 function showValidationError(element, message) {
     element.classList.add('input-error');
@@ -520,10 +517,6 @@ async function loadTasksFromFirebase() {
         tasksBoxContent.push(task);
         index++;
     }
-    
-
     todos = tasksBoxContent;
 
-    
-    
 }

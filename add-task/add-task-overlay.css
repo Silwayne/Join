@@ -70,7 +70,6 @@ body {
 p {
   font-size: 18px !important;
   margin: 7px !important;
-  margin-left:  0 !important;
 
 }
 
@@ -382,10 +381,10 @@ footer {
 .selectedInitials{
   display: flex;
   position: absolute;    
-  margin-top: 9px;
+  margin-top: 4px;
 }
 .selected-User-Initials{
-  padding-bottom: 9px;
+  padding-bottom: 4px;
 }
 .input-error {
   border: 1px solid red !important;

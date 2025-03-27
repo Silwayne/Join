@@ -368,10 +368,10 @@ footer {
 .selectedInitials{
     display: flex;
     position: absolute;    
-    margin-top: 10px;
+    margin-top: 3px;
 }
 .selected-User-Initials{
-    padding-bottom: 10px;
+    padding-bottom: 3px;
 }
 .input-error {
     border: 2px solid red !important;

@@ -1,7 +1,5 @@
 function createTask() {
     let isValid = checkValidations()
-    
-    
     if (isValid) {
         getTaskData()
         clearTaskForm()
@@ -25,10 +23,10 @@ function getTaskData(){
             subtasks.push({ title: subtask2, done: false });
         }
     }
-    pushToFireBase(title, description, assignedContacts, date, priority, category, subtasks)
+    postToFireBase(title, description, assignedContacts, date, priority, category, subtasks)
 }
 
-async function pushToFireBase(title, description, contacts, date, priority, category, subtasks) {
+async function postToFireBase(title, description, contacts, date, priority, category, subtasks) {
     let task = {
         'title': title,
         'description': description,

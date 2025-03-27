@@ -6,24 +6,21 @@ function allowDrop(ev){
 }
 
 async function updateBoardHTML() {
-    await loadTasksFromFirebase()
+    await loadTasksFromFirebase();
     const statuses = ['todo', 'inprogress', 'await', 'done'];
 
     for (let i = 0; i < statuses.length; i++) {
         let status = statuses[i];
         let taskDiv = document.getElementById('drag-and-drop-' + status);
         let tasks = todos.filter(t => t.status === status);
-        if (tasks.length > 0) {            
+
+        if (tasks.length > 0) {
             taskDiv.innerHTML = '';
             taskDiv.classList.remove('no-tasks-container');
-            for (let m = 0; m < tasks.length; m++) {
-                let task = tasks[m]
 
-                if (task.subtasks) {
-                    let subtask = task.subtasks
-                    
-                }
-                taskDiv.innerHTML += generateTodosHTML(task);
+            for (let m = 0; m < tasks.length; m++) {
+                let taskHTML = await generateTodosHTML(tasks[m]);
+                taskDiv.innerHTML += taskHTML;
             }
         } else {
             taskDiv.innerHTML = `<p class="no-tasks-text">No tasks for ${status}</p>`;
@@ -32,6 +29,7 @@ async function updateBoardHTML() {
     }
 }
 
+
 async function moveTo(status) {
     let task = todos[currentDraggedTask];
     task.status = status;
@@ -39,33 +37,66 @@ async function moveTo(status) {
     updateBoardHTML();
 }
 
+async function getSelectedContactsFromAddTask(task) {
+    let html = "";
+    if (task.contacts) {
+        for (let i = 0; i < task.contacts.length; i++) {
+         
+            let name = task.contacts[i];
+            let color = await getContactColorFromFirebase(name);
+            let initials = getInitials(name);
 
-function generateTodosHTML(task){    
-    let subtask = checkIfSubtasks(task)
-    let progressBar = generateProgressBar(subtask, task)
-    let img = filterPriorityImage(task)
-    console.log(img);
-    
-    
+            if (color) {
+                html += `
+                    <div class="user-icon user-icon-board-box" style="background-color: ${color};">
+                        <p>${initials}</p>
+                    </div>
+                `;
+            }
+        }
+    }
+    return html;
+}
+
+async function getContactColorFromFirebase(contactName) {
+    let response = await fetch(firebaseURL + 'users.json')  
+    let contacts = await response.json()
+    for (let key in contacts) {
+        if (contacts[key].name === contactName) {
+            return contacts[key].color
+        }
+    }
+    return ''
+}
+
+
+
+
+async function generateTodosHTML(task) {
+    let subtask = checkIfSubtasks(task);
+    let progressBar = generateProgressBar(subtask, task);
+    let contacts = await getSelectedContactsFromAddTask(task);
+    let img = filterPriorityImage(task);
 
     return `
-            <div draggable="true" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
-                    <div> <p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
-                    <div class="box-category-title"><p>${task.title}</p>
-                        <div class="box-category-descrition"><p>${task.description}</p></div>
-                    </div>
-                    ${progressBar}
-                    <div>
-                    <div class=""></div>
-                    <div class="box-category-prio">${img}</div>                    
-                    </div>
+        <div draggable="true" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
+            <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
+            <div class="box-category-title">
+                <p>${task.title}</p>
+                <div class="box-category-descrition"><p>${task.description}</p></div>
             </div>
-            ` 
+            ${progressBar}
+            <div class="box-contacts-prio">
+                <div class="user-icon-box">${contacts}</div>
+                <div class="box-category-prio">${img}</div>                    
+            </div>
+        </div>
+    `;
 }
+
 
 function moveTask(id){
     currentDraggedTask = id 
-    console.log(id);
     
 }
 
@@ -86,12 +117,9 @@ function checkIfSubtasks(task) {
         let done = 0;        
         for (let i = 0; i < total; i++) {
             if (task.subtasks[i].done === true) {
-                console.log(task.subtasks[i]);
-                
                 done++;
             }
         }
-
         return done + "/" + total + " Subtasks";
     }
 

@@ -113,7 +113,6 @@ button {
 
 .drag-and-drop-box {
   background-color: white;
-  height: 263px;
   width: 252px;
   margin-top: 24px;
   border-radius: 20px;
@@ -198,3 +197,24 @@ button {
   color: #a8a8a8;
   margin: 0;
 }
+.user-icon-board-box{
+  width: 32px !important;
+  height: 32px !important;
+  margin-left:-10px !important ;
+}
+.user-icon-board-box p{
+  color: white !important;
+  text-align: center;
+  font-size: 12px !important;
+}
+
+.box-contacts-prio{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 10px;
+}
+.user-icon-box{
+  display: flex;
+}
+
