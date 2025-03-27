@@ -1,9 +1,3 @@
-@media (max-width: 1000px) {
-  #right-sidebar {
-    width: 7vw;
-  }
-}
-
 @media (max-width: 900px) {
   .summary-content {
     margin-left: 0;
