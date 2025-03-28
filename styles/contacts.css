@@ -497,6 +497,7 @@ seperator {
     height: 100vh;
     background-color: blueviolet;
   }
+
   @keyframes slideIn {
     from {
       transform: translateY(100%);
@@ -513,6 +514,7 @@ seperator {
     height: 400px;
     background: lightgray;
     animation: slideIn 1s ease-out forwards;
+    justify-content: center;
   }
 
   .mobileOverlay {

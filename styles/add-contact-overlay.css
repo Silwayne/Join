@@ -18,7 +18,6 @@
   justify-content: center;
   align-items: center;
   width: 70%;
-
 }
 
 #left-add-contact-column {
@@ -126,6 +125,7 @@ input {
   justify-content: center;
   align-items: center;
   width: 70%;
+  margin-left: -232px;
 }
 
 #left-edit-contact-column {

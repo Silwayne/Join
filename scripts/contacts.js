@@ -48,7 +48,8 @@ function renderLeftColumnContacts() {
       lastInitial = initial;
     }
     renderLeftColumnContactsTemplate(user, indexOfUser, keyObj);
-    createContactNameInitials(user, indexOfUser);1
+    createContactNameInitials(user, indexOfUser);
+    1;
     let userImage = document.getElementById(`user-icon${indexOfUser}`);
     if (userImage) {
       userImage.style.backgroundColor = user.color;
@@ -147,7 +148,7 @@ function renderRightContactArea(name, email, phone, paramKey) {
     deleteContactFromDatabase(paramKey);
   };
   rightEditButton.onclick = function () {
-    editContact(key, { name, email, phone });
+    editContact(paramKey, { name, email, phone });
   };
   let user = users[paramKey];
   createBigContactNameInitials(user);
@@ -247,7 +248,7 @@ async function addContactToDatabase() {
   let name = document.getElementById("fullName").value;
   let email = document.getElementById("new-email").value;
   let phone = document.getElementById("new-phone").value;
-  let color = colours[Math.floor(Math.random()*colours.length)]
+  let color = colours[Math.floor(Math.random() * colours.length)];
   await fetch(firebaseURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
