@@ -218,3 +218,35 @@ button {
   display: flex;
 }
 
+#task-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color:purple;
+  z-index: 110;
+  width: 525px;
+  min-height: 650px;
+  border-radius: 20px; 
+}
+.subtasks-list {
+  margin-top: 8px;
+}
+
+.subtask-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.subtask-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #2d3e50;
+  cursor: pointer;
+}
+
+.subtask-item label {
+  user-select: none;
+}

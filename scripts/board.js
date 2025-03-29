@@ -79,7 +79,7 @@ async function generateTodosHTML(task) {
     let img = filterPriorityImage(task);
 
     return `
-        <div draggable="true" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
+        <div draggable="true" onclick="openTaskBoxOverlay(${task.id})" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
             <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
             <div class="box-category-title">
                 <p>${task.title}</p>
@@ -93,6 +93,65 @@ async function generateTodosHTML(task) {
         </div>
     `;
 }
+function openTaskBoxOverlay(id) {
+    let task = todos.find(t => t.id === id);
+    let taskOverlay = document.getElementById('task-overlay')
+    generateTaskBoxContent(task)
+    taskOverlay.classList.remove('d_none') 
+    
+}
+function generateTaskBoxContent(task){
+    let img =  filterPriorityImage(task)
+
+    document.getElementById('task-content').innerHTML = `
+      <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
+        <div><p>${task.title}</p></div>
+            <div><p>${task.description}</p></div>
+            <div><p>Due date: ${task.date}</p></div>
+                        <div><p>Priority:  ${task.priority}</p>${img}</div>
+                                  
+                                                    <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
+
+    `
+}
+//<div><p>Assignet to: ${contactsOverlayContent(task)}</p></div>
+                                   // 
+function subtaskOverlayContent(task) {
+    if (task.subtasks) {
+        let html = `<h4>Subtasks</h4><div class="subtasks-list">`;
+
+        for (let i = 0; i < task.subtasks.length; i++) {
+            let subtask = task.subtasks[i];
+    
+            html += `
+                <div class="subtask-item">
+                    <input type="checkbox" id="subtask-${i}" onchange="toggleSubtask(${task.id}, ${i})">
+                    <label for="subtask-${i}">${subtask.title}</label>
+                </div>
+            `;
+        }
+    
+        html += `</div>`;
+        return html;
+        
+    }
+    return ""
+
+}
+function toggleSubtask(id, index){
+    document.getElementById('progress-'+id).style.width="50%"
+
+}
+
+function contactsOverlayContent(task){
+    if (task.contacts) {
+        console.log('Contakts');
+
+    }
+    
+}
+
+
 
 
 function moveTask(id){
@@ -139,7 +198,7 @@ function generateProgressBar(subtask, task){
         return progressBar = `
             <div class="box-category-progress-subtasks-box">
                 <div class="box-category-progress-bar">
-                    <div class="progress" style="width: ${progress}%;"></div>
+                    <div id="progress-${task.id}" class="progress" style="width: ${progress}%;"></div>
                 </div>
                 <p class="subtask-description">${subtask}</p>
             </div>
