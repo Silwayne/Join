@@ -116,16 +116,17 @@ function generateTaskBoxContent(task){
 }
 //<div><p>Assignet to: ${contactsOverlayContent(task)}</p></div>
                                    // 
-function subtaskOverlayContent(task) {
+function subtaskOverlayContent(task) {    
     if (task.subtasks) {
         let html = `<h4>Subtasks</h4><div class="subtasks-list">`;
 
         for (let i = 0; i < task.subtasks.length; i++) {
             let subtask = task.subtasks[i];
-    
+            let checked = subtask.done ? "checked" : ""; // ← Hier passiert’s!
+
             html += `
                 <div class="subtask-item">
-                    <input type="checkbox" id="subtask-${i}" onchange="toggleSubtask(${task.id}, ${i})">
+                    <input type="checkbox" id="subtask-${i}" ${checked} onchange="toggleSubtask(${task.id}, ${i}, event)">
                     <label for="subtask-${i}">${subtask.title}</label>
                 </div>
             `;
@@ -138,10 +139,21 @@ function subtaskOverlayContent(task) {
     return ""
 
 }
-function toggleSubtask(id, index){
-    document.getElementById('progress-'+id).style.width="50%"
+function toggleSubtask(taskId, subtaskIndex, event) {
+    let task = todos.find(t => t.id === taskId);
+    task.subtasks[subtaskIndex].done = event.target.checked;
 
+    let doneCount = task.subtasks.filter(st => st.done).length;
+    let total = task.subtasks.length;
+    let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`)
+    let progress = (doneCount / total) * 100;
+
+    let progressBar = document.getElementById(`progress-${taskId}`);
+        progressBar.style.width = `${progress}%`;
+        subtaskCounter.innerHTML = `${doneCount}/${total} Subtasks`
+    updateFireBaseData(task.firebaseID, task);
 }
+
 
 function contactsOverlayContent(task){
     if (task.contacts) {
@@ -200,7 +212,7 @@ function generateProgressBar(subtask, task){
                 <div class="box-category-progress-bar">
                     <div id="progress-${task.id}" class="progress" style="width: ${progress}%;"></div>
                 </div>
-                <p class="subtask-description">${subtask}</p>
+                <p class="subtask-description" id="subtaskcounter-${task.id}">${subtask}</p>
             </div>
         `;
     }
