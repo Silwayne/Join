@@ -105,11 +105,11 @@ function generateTaskBoxContent(task){
 
     document.getElementById('task-content').innerHTML = `
       <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
-        <div><p>${task.title}</p></div>
-            <div><p>${task.description}</p></div>
-            <div><p>Due date: ${task.date}</p></div>
-                        <div><p>Priority:  ${task.priority}</p>${img}</div>
-                                  
+        <div><p class="task-title-p">${task.title}</p></div>
+            <div class="description-div"><p class="description-p">${task.description}</p></div>
+            <div><p class="due-date">Due date: ${task.date}</p></div>
+                        <div class="priority-div"><p class="priority">Priority:  ${task.priority}</p>${img}</div>
+                                  <div>Assigned To:<br>${task.contacts}</div>
                                                     <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
 
     `

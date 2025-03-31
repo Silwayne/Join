@@ -129,13 +129,13 @@ button {
   text-align: center;
   text-decoration: none;
   padding: 2.5px;
+  margin-left: 0 !important;
 }
 
-.Technical{
+.Technical {
   background-color: #1fd7c1;
-  width:144px !important;
+  width: 144px !important;
 }
-
 
 .box-category-title {
   width: 220px;
@@ -197,24 +197,24 @@ button {
   color: #a8a8a8;
   margin: 0;
 }
-.user-icon-board-box{
+.user-icon-board-box {
   width: 32px !important;
   height: 32px !important;
-  margin-left:-10px !important ;
+  margin-left: -10px !important ;
 }
-.user-icon-board-box p{
+.user-icon-board-box p {
   color: white !important;
   text-align: center;
   font-size: 12px !important;
 }
 
-.box-contacts-prio{
+.box-contacts-prio {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-left: 10px;
 }
-.user-icon-box{
+.user-icon-box {
   display: flex;
 }
 
@@ -223,11 +223,11 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color:purple;
+  background-color: white;
   z-index: 110;
   width: 525px;
   min-height: 650px;
-  border-radius: 20px; 
+  border-radius: 30px;
 }
 .subtasks-list {
   margin-top: 8px;
@@ -249,4 +249,40 @@ button {
 
 .subtask-item label {
   user-select: none;
+}
+
+#task-content {
+  padding: 48px 40px;
+}
+
+.due-date {
+  font-size: 20px !important;
+  font-weight: 400;
+  margin: 25px 0 !important;
+  color: #2a3647 !important;
+}
+
+.priority {
+  font-size: 20px !important;
+  font-weight: 400;
+  margin: 12px 0 !important;
+}
+
+.priority-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.description-p {
+  font-size: 20px !important;
+  font-weight: 400;
+  margin-left: 0 !important;
+  margin-top: 24px;
+}
+
+.task-title-p {
+  font-size: 61px !important;
+  font-weight: 700;
+  margin-left: 0 !important;
+  color: black !important;
 }
