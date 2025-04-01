@@ -109,21 +109,18 @@ function generateTaskBoxContent(task){
             <div class="description-div"><p class="description-p">${task.description}</p></div>
             <div><p class="due-date">Due date: ${task.date}</p></div>
                         <div class="priority-div"><p class="priority">Priority:  ${task.priority}</p>${img}</div>
-                                  <div>Assigned To:<br>${task.contacts}</div>
+                                  <div><p>Assigned to: ${contactsOverlayContent(task)}</p></div>
                                                     <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
 
     `
 }
-//<div><p>Assignet to: ${contactsOverlayContent(task)}</p></div>
                                    // 
 function subtaskOverlayContent(task) {    
     if (task.subtasks) {
         let html = `<h4>Subtasks</h4><div class="subtasks-list">`;
-
         for (let i = 0; i < task.subtasks.length; i++) {
             let subtask = task.subtasks[i];
-            let checked = subtask.done ? "checked" : ""; // ← Hier passiert’s!
-
+            let checked = subtask.done ? "checked" : "";
             html += `
                 <div class="subtask-item">
                     <input type="checkbox" id="subtask-${i}" ${checked} onchange="toggleSubtask(${task.id}, ${i}, event)">
@@ -131,10 +128,8 @@ function subtaskOverlayContent(task) {
                 </div>
             `;
         }
-    
         html += `</div>`;
         return html;
-        
     }
     return ""
 
@@ -157,9 +152,18 @@ function toggleSubtask(taskId, subtaskIndex, event) {
 
 function contactsOverlayContent(task){
     if (task.contacts) {
-        console.log('Contakts');
-
+        let html = `<div class="overlay-contacts-list"><h4>Assigned to:</h4></div>`;
+        for (let i = 0; i < task.contacts.length; i++) {
+            let contact = task.contacts[i];
+            let initials = getInitials(contact);
+            html += `
+                    <div ><p class="user-icon">${initials}</p><h2>${contact}</h2></div>
+            `;
+        }
+        return html;
     }
+    return ""
+
     
 }
 
@@ -206,7 +210,7 @@ function generateProgressBar(subtask, task){
                 done++;
             }
         }
-        let progress = (done / 2) * 100;        
+        let progress = (done / task.subtasks.length) * 100;        
         return progressBar = `
             <div class="box-category-progress-subtasks-box">
                 <div class="box-category-progress-bar">
