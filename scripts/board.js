@@ -113,7 +113,6 @@ function generateTaskBoxContent(task) {
                     <div onclick="deteleOverlay(${task.id})" class="overlay-delete"><img src="../assets/img/delete.svg"><p>Delete</p></div>
                         <div class="overlay-delete-edit-border"></div>
                     <div onclick="editOverlay(${task.id})" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
-
                 </div>
     `
 }
@@ -243,6 +242,57 @@ function deteleOverlay(id){
     
 }
 function editOverlay(id){
-    console.log('Banana'+id);
+    let task = todos.find(t => t.id === id);
+    let titleValue = task.title
+    let descriptionValue = task.description
+    let dateValue = task.date
+
+    document.getElementById('task-content').innerHTML = `
+    <div>
+    <p>Title</p>
+    <input value="${titleValue}" class="overlay-input-title">
+    </div>
+    <div>
+    <p>Description</p>
+    <input  value="${descriptionValue}" class="overlay-input-description">
+    </div>
+    <div>
+    <p>Date</p>
+    <input type ="date"value="${dateValue}" class="overlay-input-date">
+    </div>
+     <div>
+            <p>Prio</p>
+            <div class="prio-box">
+                <div onclick="swapToUrgent()" class="prio" id="prio-urgent">
+                    <p>Urgent <img src="../assets/img/Prio-alta-red.svg"></p>
+                </div>
+                <div onclick="swapToMedium()" class="prio prio-medium bold" id="prio-medium">
+                    <p>Medium <img src="../assets/img/Prio-media-white.svg"></p>
+                </div>
+                <div onclick="swapToLow()" class="prio" id="prio-low">
+                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+                </div>
+            </div>
+    <div class="dropdown">
+            <p>Assinged to</p>
+            <div id="contact-container" class="input-container" onclick="showContacts()">
+            <input oninput="filterNames()" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
+            </div>
+            <div class="selectedInitials" id="assignedContactsContainer"></div>
+            <div class="dropdown-menu d_none" id="dropdownMenu">
+            </div>
+        </div>
+        <div id="subtask-container" class="input-container">
+            <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
+            <div class="icons">
+                <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
+                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()"
+                        src="/assets/img/close.svg"></span>
+                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()"
+                        src="/assets/img/check.svg"></span>
+            </div>
+    
+    `
+
     
 }
