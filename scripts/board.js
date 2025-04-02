@@ -1,7 +1,7 @@
 let todos = []
 let currentDraggedTask;
 
-function allowDrop(ev){
+function allowDrop(ev) {
     ev.preventDefault();
 }
 
@@ -37,15 +37,14 @@ async function moveTo(status) {
     updateBoardHTML();
 }
 
-async function getSelectedContactsFromAddTask(task) {
+function getSelectedContactsFromAddTask(task) {
     let html = "";
     if (task.contacts) {
         for (let i = 0; i < task.contacts.length; i++) {
-         
-            let name = task.contacts[i];
-            let color = await getContactColorFromFirebase(name);
-            let initials = getInitials(name);
 
+            let name = task.contacts[i];
+            let color = contactColors[name]
+            let initials = getInitials(name);
             if (color) {
                 html += `
                     <div class="user-icon user-icon-board-box" style="background-color: ${color};">
@@ -59,7 +58,7 @@ async function getSelectedContactsFromAddTask(task) {
 }
 
 async function getContactColorFromFirebase(contactName) {
-    let response = await fetch(firebaseURL + 'users.json')  
+    let response = await fetch(firebaseURL + 'users.json')
     let contacts = await response.json()
     for (let key in contacts) {
         if (contacts[key].name === contactName) {
@@ -71,11 +70,10 @@ async function getContactColorFromFirebase(contactName) {
 
 
 
-
-async function generateTodosHTML(task) {
+function generateTodosHTML(task) {
     let subtask = checkIfSubtasks(task);
     let progressBar = generateProgressBar(subtask, task);
-    let contacts = await getSelectedContactsFromAddTask(task);
+    let contacts = getSelectedContactsFromAddTask(task);
     let img = filterPriorityImage(task);
 
     return `
@@ -97,25 +95,30 @@ function openTaskBoxOverlay(id) {
     let task = todos.find(t => t.id === id);
     let taskOverlay = document.getElementById('task-overlay')
     generateTaskBoxContent(task)
-    taskOverlay.classList.remove('d_none') 
-    
+    taskOverlay.classList.remove('d_none')
+
 }
-function generateTaskBoxContent(task){
-    let img =  filterPriorityImage(task)
+function generateTaskBoxContent(task) {
+    let img = filterPriorityImage(task)
 
     document.getElementById('task-content').innerHTML = `
       <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
         <div><p class="task-title-p">${task.title}</p></div>
             <div class="description-div"><p class="description-p">${task.description}</p></div>
             <div><p class="due-date">Due date: ${task.date}</p></div>
-                        <div class="priority-div"><p class="priority">Priority:  ${task.priority}</p>${img}</div>
-                                  <div><p>Assigned to: ${contactsOverlayContent(task)}</p></div>
-                                                    <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
+                <div class="priority-div"><p class="priority">Priority:  ${task.priority}</p>${img}</div>
+                <div><p>${contactsOverlayContent(task)}</p></div>
+                <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
+                <div class="overlay-delete-edit">
+                    <div onclick="deteleOverlay(${task.id})" class="overlay-delete"><img><p>Delete</p></div>
+                        <div class="overlay-delete-edit-border"></div>
+                    <div onclick="editOverlay(${task.id})" class="overlay-edit"><img><p>Edit</p></div>
 
+                </div>
     `
 }
-                                   // 
-function subtaskOverlayContent(task) {    
+// 
+function subtaskOverlayContent(task) {
     if (task.subtasks) {
         let html = `<h4>Subtasks</h4><div class="subtasks-list">`;
         for (let i = 0; i < task.subtasks.length; i++) {
@@ -144,35 +147,36 @@ function toggleSubtask(taskId, subtaskIndex, event) {
     let progress = (doneCount / total) * 100;
 
     let progressBar = document.getElementById(`progress-${taskId}`);
-        progressBar.style.width = `${progress}%`;
-        subtaskCounter.innerHTML = `${doneCount}/${total} Subtasks`
+    progressBar.style.width = `${progress}%`;
+    subtaskCounter.innerHTML = `${doneCount}/${total} Subtasks`
     updateFireBaseData(task.firebaseID, task);
 }
 
 
-function contactsOverlayContent(task){
+function contactsOverlayContent(task) {
     if (task.contacts) {
         let html = `<div class="overlay-contacts-list"><h4>Assigned to:</h4></div>`;
         for (let i = 0; i < task.contacts.length; i++) {
             let contact = task.contacts[i];
+            let color = contactColors[contact]
             let initials = getInitials(contact);
             html += `
-                    <div ><p class="user-icon">${initials}</p><h2>${contact}</h2></div>
+                    <div class="overlay-user-icon"><p class="user-icon" style="background-color:${color};">${initials}</p><h2>${contact}</h2></div>
             `;
         }
         return html;
     }
     return ""
 
-    
+
 }
 
 
 
 
-function moveTask(id){
-    currentDraggedTask = id 
-    
+function moveTask(id) {
+    currentDraggedTask = id
+
 }
 
 async function updateFireBaseData(firebaseID, taskObj) {
@@ -189,7 +193,7 @@ async function updateFireBaseData(firebaseID, taskObj) {
 function checkIfSubtasks(task) {
     if (task.subtasks) {
         let total = task.subtasks.length;
-        let done = 0;        
+        let done = 0;
         for (let i = 0; i < total; i++) {
             if (task.subtasks[i].done === true) {
                 done++;
@@ -201,7 +205,7 @@ function checkIfSubtasks(task) {
     return "";
 }
 
-function generateProgressBar(subtask, task){
+function generateProgressBar(subtask, task) {
     if (subtask) {
         let progressBar;
         let done = 0;
@@ -210,7 +214,7 @@ function generateProgressBar(subtask, task){
                 done++;
             }
         }
-        let progress = (done / task.subtasks.length) * 100;        
+        let progress = (done / task.subtasks.length) * 100;
         return progressBar = `
             <div class="box-category-progress-subtasks-box">
                 <div class="box-category-progress-bar">
@@ -223,7 +227,7 @@ function generateProgressBar(subtask, task){
     return ""
 
 }
-function filterPriorityImage(task){
+function filterPriorityImage(task) {
     let priority = task.priority.toLowerCase();
 
     if (priority === "low") {
@@ -232,4 +236,13 @@ function filterPriorityImage(task){
         return '<img src="../assets/img/Prio-media-orange.svg">';
     }
     return '<img src="../assets/img/Prio-alta-red.svg">';
+}
+
+function deteleOverlay(id){
+    console.log('GELÖSCHT'+id);
+    
+}
+function editOverlay(id){
+    console.log('Banana'+id);
+    
 }

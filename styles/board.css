@@ -286,3 +286,8 @@ button {
   margin-left: 0 !important;
   color: black !important;
 }
+.overlay-user-icon{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
