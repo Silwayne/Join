@@ -110,9 +110,9 @@ function generateTaskBoxContent(task) {
                 <div><p>${contactsOverlayContent(task)}</p></div>
                 <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
                 <div class="overlay-delete-edit">
-                    <div onclick="deteleOverlay(${task.id})" class="overlay-delete"><img><p>Delete</p></div>
+                    <div onclick="deteleOverlay(${task.id})" class="overlay-delete"><img src="../assets/img/delete.svg"><p>Delete</p></div>
                         <div class="overlay-delete-edit-border"></div>
-                    <div onclick="editOverlay(${task.id})" class="overlay-edit"><img><p>Edit</p></div>
+                    <div onclick="editOverlay(${task.id})" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
 
                 </div>
     `

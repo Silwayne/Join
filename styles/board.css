@@ -291,3 +291,29 @@ button {
   justify-content: flex-start;
   align-items: center;
 }
+.overlay-delete-edit{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.overlay-delete{
+  display: flex;
+  cursor: pointer;
+}
+.overlay-delete-edit-border{
+  margin-left: 10px;
+  margin-right: 15px;
+  height: 24px;
+  width: 1px;
+  background-color: grey;
+}
+.overlay-edit{
+  display: flex;
+  cursor: pointer;
+}
+.overlay-delete:hover{
+color: red !important;
+}
+.overlay-edit:hover{
+  color: red !important;
+  }
