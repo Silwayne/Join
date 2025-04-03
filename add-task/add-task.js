@@ -14,75 +14,78 @@ let names = []
 let contactColors = {};
 let priority = 'Medium'
 
-function updateIcons() {
-    let inputField = document.getElementById("subtaskInput");
-    let plusIcon = document.getElementById("plusIcon");
-    let checkIcon = document.getElementById("checkIcon");
-    let cancelIcon = document.getElementById("cancelIcon");
+function updateIcons(taskId = '') {
+    let input = document.getElementById('subtaskInput' + (taskId ? '_' + taskId : ''));
+    let plus = document.getElementById('plusIcon' + (taskId ? '_' + taskId : ''));
+    let check = document.getElementById('checkIcon' + (taskId ? '_' + taskId : ''));
+    let cancel = document.getElementById('cancelIcon' + (taskId ? '_' + taskId : ''));
 
-    if (inputField.value.trim() !== "") {
-        plusIcon.classList.add("d_none");
-        checkIcon.classList.remove("d_none");
-        cancelIcon.classList.remove("d_none");
+    if (!input || !plus || !check || !cancel) return;
+
+    if (input.value.trim() !== '') {
+        plus.classList.add('d_none');
+        check.classList.remove('d_none');
+        cancel.classList.remove('d_none');
     } else {
-        plusIcon.classList.remove("d_none");
-        checkIcon.classList.add("d_none");
-        cancelIcon.classList.add("d_none");
+        plus.classList.remove('d_none');
+        check.classList.add('d_none');
+        cancel.classList.add('d_none');
     }
 }
-function clearSubTaskInput() {
-    document.getElementById('subtaskInput').value = ""
-    updateIcons();
+
+
+function clearSubTaskInput(taskId) {
+    document.getElementById('subtaskInput_' + taskId).value = "";
+    updateIcons(taskId);
 }
 
 function addSubTaskInput() {
     let input = document.getElementById('subtaskInput');
-    let tableSubTask = document.getElementById('subtasks');
+    let list = document.getElementById('subtasks');
     let errorMsg = document.getElementById('subtask-error');
     let container = document.getElementById('subtask-container');
-    let existingTasks = tableSubTask.querySelectorAll('li').length;
+    let inputText = input.value.trim();
 
-    if (existingTasks >= 2) {
+    if (list.children.length >= 2) {
         container.classList.add('input-error');
         errorMsg.classList.remove('d_none');
         return;
     }
-
     container.classList.remove('input-error');
     errorMsg.classList.add('d_none');
+    if (inputText === '') return;
+    list.classList.remove('d_none');
 
-    let inputText = input.value.trim();
-    if (inputText === "") return;
+    let subtaskId = 'task_' + list.children.length;
 
-    counter++;
-    tableSubTask.classList.remove('d_none');
-
-    tableSubTask.innerHTML += `
-        <div class="task">
-            <li id="task_${counter}">${inputText}</li>
-            <div class="task-icons">
-                <img id="imgID_${counter}" src="/assets/img/edit-icon.svg" class="icon" onclick="editSubTask(${counter})">
-                <img src="/assets/img/delete.svg" class="icon" onclick="deleteSubtask(${counter})">
-            </div>
-        </div>
+    let newItem = document.createElement('li');
+    newItem.id = subtaskId;
+    newItem.innerHTML = `
+        ${inputText}
+        <img src="/assets/img/delete.svg" onclick="deleteSubTask('${subtaskId}')">
     `;
 
-    clearSubTaskInput();
+    list.appendChild(newItem);
+    input.value = '';
+    updateIcons();
 }
 
 
-function deleteSubtask(taskIdNumber) {
-    let taskElement = document.getElementById('task_' + taskIdNumber)
-    taskElement.parentElement.remove()
-    counter--;
-    if (counter === 0) {
-        document.getElementById('subtasks').classList.add('d_none')
-    }
-    if (counter < 2) {
-        document.getElementById('subtask-container').classList.remove('input-error');
-        document.getElementById('subtask-error').classList.add('d_none');
+function deleteSubTask(subtaskId) {
+    let subtask = document.getElementById(subtaskId);
+    subtask.remove();
+
+    let list = document.getElementById('subtasks');
+    let container = document.getElementById('subtask-container');
+    let errorMsg = document.getElementById('subtask-error');
+
+    if (list.children.length < 2) {
+        container.classList.remove('input-error');
+        errorMsg.classList.add('d_none');
     }
 }
+
+
 
 function editSubTask(taskIdNumber) {
     let taskItem = document.getElementById('task_' + taskIdNumber);
@@ -115,51 +118,70 @@ function saveSubTask(inputField, taskIdNumber) {
     document.getElementById('imgID_' + taskIdNumber).onclick = function () { editSubTask(taskIdNumber) };
 }
 
-function swapToUrgent() {
-    let urgent = document.getElementById('prio-urgent')
-    urgent.classList.add('prio-urgent')
-    urgent.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p>`
-    urgent.classList.add('bold')
-    removeMedium();
-    removeLow();
-    priority = 'Urgent'
+function swapToUrgent(elementId) {
+    let element = document.getElementById(elementId);
+    element.classList.add('prio-urgent');
+    element.classList.remove('prio-medium', 'prio-low');
+    element.classList.add('bold');
+
+    clearPriorityStyles(getSiblingId(elementId, 'medium'));
+    clearPriorityStyles(getSiblingId(elementId, 'low'));
+
+    element.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p>`;
+    priority = 'Urgent';
 }
-function removeUrgent() {
-    let urgent = document.getElementById('prio-urgent')
-    urgent.classList.remove('prio-urgent')
-    urgent.classList.remove('bold')
-    urgent.innerHTML = ` <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>`
+
+function swapToMedium(elementId) {
+    let element = document.getElementById(elementId);
+    element.classList.add('prio-medium');
+    element.classList.remove('prio-urgent', 'prio-low');
+    element.classList.add('bold');
+
+    clearPriorityStyles(getSiblingId(elementId, 'urgent'));
+    clearPriorityStyles(getSiblingId(elementId, 'low'));
+
+    element.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-white.svg"></p>`;
+    priority = 'Medium';
 }
-function swapToMedium() {
-    let medium = document.getElementById('prio-medium')
-    medium.classList.add('prio-medium')
-    medium.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-white.svg"></p>`
-    medium.classList.add('bold')
-    removeUrgent();
-    removeLow();
-    priority = 'Medium'
+
+function swapToLow(elementId) {
+    let element = document.getElementById(elementId);
+    element.classList.add('prio-low');
+    element.classList.remove('prio-urgent', 'prio-medium');
+    element.classList.add('bold');
+
+    clearPriorityStyles(getSiblingId(elementId, 'urgent'));
+    clearPriorityStyles(getSiblingId(elementId, 'medium'));
+
+    element.innerHTML = `<p>Low <img src="/assets/img/Prio-low-white.svg"></p>`;
+    priority = 'Low';
 }
-function removeMedium() {
-    let medium = document.getElementById('prio-medium')
-    medium.classList.remove('bold')
-    medium.classList.remove('prio-medium')
-    medium.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>`
+
+function clearPriorityStyles(elementId) {
+    let element = document.getElementById(elementId);
+    element.classList.remove('prio-urgent', 'prio-medium', 'prio-low', 'bold');
+
+    if (elementId.includes('urgent')) {
+        element.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>`;
+    } else if (elementId.includes('medium')) {
+        element.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>`;
+    } else if (elementId.includes('low')) {
+        element.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`;
+    }
 }
-function swapToLow() {
-    let low = document.getElementById('prio-low')
-    low.classList.add('prio-low')
-    low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-white.svg"></p>`
-    low.classList.add('bold')
-    removeUrgent();
-    removeMedium();
-    priority = 'Low'
+
+function getSiblingId(currentId, targetPriority) {
+    let parts = currentId.split('_');
+
+    if (parts.length === 2) {
+        let suffix = parts[1];
+        return `prio-${targetPriority}_${suffix}`;
+    } else {
+        return `prio-${targetPriority}`;
+    }
 }
-function removeLow() {
-    let low = document.getElementById('prio-low')
-    low.classList.remove('bold')
-    low.classList.remove('prio-low')
-    low.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`
-}
+
+
 
   
   async function selectContacts() {
@@ -263,21 +285,23 @@ function hideContacts(event) {
 
     renderAssignedContacts();
 }
-function renderAssignedContacts() {
-    let container = document.getElementById('assignedContactsContainer');
+function renderAssignedContacts(taskId, contactList) {
+    let container = document.getElementById('assignedContactsContainer_' + taskId);
     container.innerHTML = '';
 
-    for (let contactName of assignedContacts) {
-        let initials = getInitials(contactName);
-        let color = contactColors[contactName];
+    for (let i = 0; i < contactList.length; i++) {
+        let name = contactList[i];
+        let initials = getInitials(name);
+        let color = contactColors[name];
 
         container.innerHTML += `
             <div class="user-icon" style="background-color: ${color};">
-                <span class="selectedInitials user-initials selected-User-Initials">${initials}</span>
+                <span class="user-initials">${initials}</span>
             </div>
         `;
     }
 }
+
 
 function filterNames() {
     let assignedContainer = document.getElementById('assignedContactsContainer');
@@ -351,7 +375,7 @@ function clearTaskForm() {
     resetValidation(document.getElementById('add-task-title'));
     resetValidation(document.getElementById('due-date'));
     resetValidation(document.getElementById('category'));
-    swapToMedium()
+    swapToMedium('prio-medium')
 }
 
 function checkValidations() {
@@ -435,13 +459,13 @@ function initHTML(content) {
         <div>
             <p>Prio</p>
             <div class="prio-box">
-                <div onclick="swapToUrgent()" class="prio" id="prio-urgent">
+                <div onclick="swapToUrgent('prio-urgent')" class="prio" id="prio-urgent">
                     <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
                 </div>
-                <div onclick="swapToMedium()" class="prio prio-medium bold" id="prio-medium">
+                <div onclick="swapToMedium('prio-medium')" class="prio prio-medium bold" id="prio-medium">
                     <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
                 </div>
-                <div onclick="swapToLow()" class="prio" id="prio-low">
+                <div onclick="swapToLow('prio-low')" class="prio" id="prio-low">
                     <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
                 </div>
             </div>
@@ -460,10 +484,9 @@ function initHTML(content) {
             <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
             <div class="icons">
                 <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
-                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()"
-                        src="/assets/img/close.svg"></span>
-                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()"
-                        src="/assets/img/check.svg"></span>
+                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()" src="/assets/img/close.svg"></span>
+                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()" src="/assets/img/check.svg"></span>
+
             </div>
 
            

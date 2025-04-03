@@ -237,11 +237,11 @@ function filterPriorityImage(task) {
     return '<img src="../assets/img/Prio-alta-red.svg">';
 }
 
-function deteleOverlay(id){
-    console.log('GELÖSCHT'+id);
-    
+function deteleOverlay(id) {
+    console.log('GELÖSCHT' + id);
+
 }
-function editOverlay(id){
+function editOverlay(id) {
     let task = todos.find(t => t.id === id);
     let titleValue = task.title
     let descriptionValue = task.description
@@ -262,37 +262,44 @@ function editOverlay(id){
     </div>
      <div>
             <p>Prio</p>
-            <div class="prio-box">
-                <div onclick="swapToUrgent()" class="prio" id="prio-urgent">
-                    <p>Urgent <img src="../assets/img/Prio-alta-red.svg"></p>
-                </div>
-                <div onclick="swapToMedium()" class="prio prio-medium bold" id="prio-medium">
-                    <p>Medium <img src="../assets/img/Prio-media-white.svg"></p>
-                </div>
-                <div onclick="swapToLow()" class="prio" id="prio-low">
-                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
-                </div>
+       <div class="prio-box">
+    <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
+        <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
+    </div>
+    <div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
+        <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
+    </div>
+    <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
+        <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+    </div>
+</div>
+
             </div>
     <div class="dropdown">
             <p>Assinged to</p>
             <div id="contact-container" class="input-container" onclick="showContacts()">
             <input oninput="filterNames()" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
             </div>
-            <div class="selectedInitials" id="assignedContactsContainer"></div>
+            <div class="selectedInitials" id="assignedContactsContainer_${id}"></div>
             <div class="dropdown-menu d_none" id="dropdownMenu">
             </div>
         </div>
-        <div id="subtask-container" class="input-container">
-            <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
-            <div class="icons">
-                <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
-                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()"
-                        src="/assets/img/close.svg"></span>
-                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()"
-                        src="/assets/img/check.svg"></span>
+        <div id="subtask-container_${id}" class="input-container">
+  <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
+  <div class="icons">
+    <span id="plusIcon_${id}" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
+    <span id="checkIcon_${id}" class="icon d_none"><img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg"></span>
+    <span id="cancelIcon_${id}" class="icon d_none"><img onclick="addSubtaskInput(${id})" src="/assets/img/check.svg"></span>
+  </div>
+</div>
+
+<ul id="subtasks_${id}" class="subtask-list"></ul>
+<div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
+
+
             </div>
     
     `
 
-    
+
 }
