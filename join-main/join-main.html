@@ -17,8 +17,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="join-main.css" />
     <link rel="stylesheet" href="cards.css" />
-    <link rel="stylesheet" href="cards-responsive.css">
-    <link rel="stylesheet" href="join-main-responsive.css">
+    <link rel="stylesheet" href="cards-responsive.css" />
+    <link rel="stylesheet" href="join-main-responsive.css" />
     <title>Join Main</title>
   </head>
 
@@ -26,8 +26,7 @@
     <header id="header"></header>
     <aside id="sidbar"></aside>
     <section id="sidebar-responsive"></section>
-    <aside id="right-sidebar"></aside>
-
+    <main>
     <section class="summary-content" id="content">
       <div class="summary-headline">
         <h1 class="summary-h1">Join 360</h1>
@@ -35,81 +34,91 @@
         <span class="span-headline">Key Metrics at a Glance</span>
       </div>
     </section>
-    <div class="summary-cards">
-      <div class="cards-top">
-        <div class="card-top-left">
-          <div class="card-icon-wrapper">
-            <img
-              class="pen-black-icon"
-              src="/assets/img/Frame 59.svg"
-              alt="Penciel Black"
-            />
-            <img
-              class="pen-white-icon"
-              src="/assets/img/Frame 59-white.svg"
-              alt="Penciel White"
-            />
+    <section class="summary-container">
+      <section class="summary-cards">
+        <section class="cards-top">
+          <div class="card-top-left">
+            <div class="card-icon-wrapper">
+              <img
+                class="pen-black-icon"
+                src="/assets/img/Frame 59.svg"
+                alt="Penciel Black"
+              />
+              <img
+                class="pen-white-icon"
+                src="/assets/img/Frame 59-white.svg"
+                alt="Penciel White"
+              />
+            </div>
+            <div class="cards-text">
+              <p class="card-text-number">1</p>
+              <span class="card-text">To-do</span>
+            </div>
           </div>
-          <div class="cards-text">
-            <p class="card-text-number">1</p>
-            <span class="card-text">To-do</span>
+          <div class="card-top-right">
+            <div class="card-icon-wrapper">
+              <img
+                class="done-back-icon"
+                src="/assets/img/done.svg"
+                alt="Done"
+              />
+              <img
+                class="done-white-icon"
+                src="/assets/img/done_white.svg"
+                alt="Done White"
+              />
+            </div>
+            <div class="cards-text">
+              <p class="card-text-number">2</p>
+              <span class="card-text">Done</span>
+            </div>
+          </div>
+        </section>
+        <section class="card-middle">
+          <div class="middle-container">
+            <div class="card-icon">
+              <img
+                class="prio-icon"
+                src="/assets/img/red-prio.svg"
+                alt="Red Arrow"
+              />
+            </div>
+            <div class="cards-text">
+              <p class="card-text-number">3</p>
+              <span class="card-text">Urgent</span>
+            </div>
+            <div class="middle-stroked">
+              <img src="/assets/img/stroked.svg" alt="Stroked" />
+            </div>
+            <div class="middle-date-text" style="align-items: flex-start">
+              <p class="card-middle-date"></p>
+              <span class="card-middle-date-text">Upcoming Deadline</span>
+            </div>
+          </div>
+        </section>
+        <div class="cards-bottom">
+          <div class="card-bottom">
+            <div class="cards-text">
+              <p class="card-text-number">4</p>
+              <span class="card-text">Tasks in<br />Board</span>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <div class="cards-text">
+              <p class="card-text-number">5</p>
+              <span class="card-text">Tasks in<br />Progress</span>
+            </div>
+          </div>
+          <div class="card-bottom">
+            <div class="cards-text">
+              <p class="card-text-number">6</p>
+              <span class="card-text">Awaiting<br />Feedback</span>
+            </div>
           </div>
         </div>
-        <div class="card-top-right">
-          <div class="card-icon-wrapper">
-            <img class="done-back-icon" src="/assets/img/done.svg" alt="Done" />
-            <img
-              class="done-white-icon"
-              src="/assets/img/done_white.svg"
-              alt="Done White"
-            />
-          </div>
-          <div class="cards-text">
-            <p class="card-text-number">2</p>
-            <span class="card-text">Done</span>
-          </div>
-        </div>
-      </div>
-      <div class="card-middle">
-        <div class="card-icon">
-          <img
-            class="prio-icon"
-            src="/assets/img/red-prio.svg"
-            alt="Red Arrow"
-          />
-        </div>
-        <div class="cards-text">
-          <p class="card-text-number">3</p>
-          <span class="card-text">Urgent</span>
-        </div>
-        <div class="middle-stroked">
-          <img src="/assets/img/stroked.svg" alt="Stroked" />
-        </div>
-        <div class="middle-date-text" style="align-items: flex-start">
-          <p class="card-middle-date"></p>
-          <span class="card-middle-date-text">Upcoming Deadline</span>
-        </div>
-      </div>
-      <div class="cards-bottom">
-        <div class="card-bottom">
-          <div class="cards-text">
-            <p class="card-text-number">4</p>
-            <span class="card-text">Tasks in<br />Board</span>
-          </div>
-        </div>
-        <div class="card-bottom">
-          <div class="cards-text">
-            <p class="card-text-number">5</p>
-            <span class="card-text">Tasks in<br />Progress</span>
-          </div>
-        </div>
-        <div class="card-bottom">
-          <div class="cards-text">
-            <p class="card-text-number">6</p>
-            <span class="card-text">Awaiting<br />Feedback</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      </section>
+      <article id="right-sidebar"></article>
+    </section>
+  </main>
   </body>
 </html>
