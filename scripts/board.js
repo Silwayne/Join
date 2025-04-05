@@ -131,13 +131,20 @@ function openTaskBoxOverlay(id) {
     let taskOverlay = document.getElementById('task-overlay')
     generateTaskBoxContent(task)
     taskOverlay.classList.remove('d_none')
+}
+function closeOverlay() {
+    let taskOverlay = document.getElementById('task-overlay')
+    taskOverlay.classList.add('d_none')
 
 }
 function generateTaskBoxContent(task) {
     let img = filterPriorityImage(task)
 
     document.getElementById('task-content').innerHTML = `
-      <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
+      <div class="categorydiv"> 
+      <div> <p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
+      <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
+      </div>
         <div><p class="task-title-p">${task.title}</p></div>
             <div class="description-div"><p class="description-p">${task.description}</p></div>
             <div><p class="due-date">Due date: ${task.date}</p></div>
@@ -151,7 +158,6 @@ function generateTaskBoxContent(task) {
                 </div>
     `
 }
-// 
 function subtaskOverlayContent(task) {
     if (task.subtasks) {
         let html = `<h4 class="assigned-to">Subtasks</h4><div class="subtasks-list">`;
@@ -283,6 +289,9 @@ function editOverlay(id) {
     overlayContacts = contacts
 
     document.getElementById('task-content').innerHTML = `
+        <div class="closeEditOverlay-x">
+          <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
+          </div>
         <div>
             <p>Title</p>
             <input value="${title}" class="overlay-input-title">

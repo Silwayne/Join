@@ -13,6 +13,7 @@ let counter = 0
 let contactColors = {};
 let priority = 'Medium'
 let overlayContacts = [];
+let names = []
 
 function updateIcons(taskId) {
     let id = '';
@@ -232,7 +233,10 @@ async function selectContacts(id) {
         let contactInitials = getInitials(contactName);
         let contactColor = contact.color;
         contactColors[contactName] = contactColor;
-
+        if (!names.includes(contactName)) {
+            names.push(contactName);
+        }
+        
         let isChecked = overlayContacts.includes(contactName);
         dropDownMenu.innerHTML += getContactListHTML(
             contactInitials,
@@ -267,6 +271,7 @@ function handleContactSelection(name, checked, id) {
 
     renderAssignedContacts(id); 
 }
+
 
 
 
@@ -399,9 +404,7 @@ function filterNames(id) {
     resultsContainer.innerHTML = '';
 
     let assigned = overlayContacts;
-    let filteredNames = overlayContacts.filter(name => name.toLowerCase().includes(input));
-    console.log(filteredNames);
-    
+    let filteredNames = names.filter(name => name.toLowerCase().includes(input));
     if (filteredNames.length === 0) {
         showContacts(id); 
         return;

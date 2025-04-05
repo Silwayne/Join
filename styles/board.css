@@ -162,7 +162,6 @@ button {
   padding: 2.5px;
   margin-left: 0 !important;
   margin-top: 0 !important;
-  margin-bottom: 18px !important;
 }
 
 .Technical {
@@ -195,15 +194,45 @@ button {
   justify-content: space-between;
 }
 
+.categorydiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.closeOverlay-x{
+  display: flex;
+  width: 25px;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  border-radius: 20px;
+  cursor: pointer;
+
+}
+.closeOverlay-x img{
+  width: 13.5;
+}
+
+.closeOverlay-x:hover {
+  background-color: rgb(217, 215, 215);
+}
+.closeEditOverlay-x{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
 .box-category-progress-bar {
   height: 8px;
   width: 128px;
   background-color: #f4f4f4;
   border-radius: 4px;
 }
+
 .box-category-progress-subtasks-box {
   margin-top: 8px;
 }
+
 .progress {
   height: 100%;
   background-color: #4589ff;
@@ -230,11 +259,13 @@ button {
   color: #a8a8a8;
   margin: 0;
 }
+
 .user-icon-board-box {
   width: 32px !important;
   height: 32px !important;
-  margin-left: -10px !important ;
+  margin-left: -10px !important;
 }
+
 .user-icon-board-box p {
   color: white !important;
   text-align: center;
@@ -247,6 +278,7 @@ button {
   justify-content: space-between;
   padding-left: 10px;
 }
+
 .user-icon-box {
   display: flex;
 }
@@ -262,6 +294,7 @@ button {
   min-height: 650px;
   border-radius: 30px;
 }
+
 .subtasks-list {
   margin-top: 8px;
 }
@@ -337,12 +370,14 @@ textarea {
   margin-left: 0 !important;
   color: black !important;
 }
+
 .overlay-user-icon {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   margin: 8px 0;
 }
+
 .overlay-delete-edit {
   display: flex;
   justify-content: flex-end;
@@ -382,6 +417,7 @@ textarea {
   width: 1px;
   background-color: grey;
 }
+
 .overlay-edit {
   display: flex;
   cursor: pointer;
