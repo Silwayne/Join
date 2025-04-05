@@ -77,7 +77,7 @@ button {
   align-items: center;
 }
 
-#add-task-button {
+.add-task-button {
   margin-left: 48px;
   margin-right: 64px;
 }
@@ -316,4 +316,7 @@ color: red !important;
 }
 .overlay-edit:hover{
   color: red !important;
-  }
+}
+.overlay-dropdown{
+  margin-bottom: 64px;
+}

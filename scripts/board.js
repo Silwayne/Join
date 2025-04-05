@@ -1,6 +1,41 @@
 let todos = []
 let currentDraggedTask;
 
+function initAddTask(content){
+    initHTML(content);
+    selectContacts('dropdownMenu');
+}
+
+function addTask(event) {
+    overlayContacts = []
+    event.stopPropagation();
+    priority = 'Medium'
+    document.getElementById('overlay-background').classList.add('overlay-background');
+    document.getElementById('add-task-overlay').classList.remove('d_none');
+}
+
+function removeAddTask() {
+    document.getElementById('add-task-overlay').classList.add('d_none');
+    document.getElementById('overlay-background').classList.remove('overlay-background');
+}
+
+async function loadTasksFromFirebase() {
+    let response = await fetch(firebaseURL +'tasks.json')
+    let firebaseData  = await response.json()
+    let tasksBoxContent = [];
+    let index = 0;
+    
+    for (let key in firebaseData) {
+        let task = firebaseData[key];
+        task.id = index;
+        task.firebaseID = key; 
+        tasksBoxContent.push(task);
+        index++;
+    }
+    todos = tasksBoxContent;
+
+}
+
 function allowDrop(ev) {
     ev.preventDefault();
 }
@@ -242,64 +277,113 @@ function deteleOverlay(id) {
 
 }
 function editOverlay(id) {
+    selectContacts(id)
     let task = todos.find(t => t.id === id);
-    let titleValue = task.title
-    let descriptionValue = task.description
-    let dateValue = task.date
+    let { title, description, date, contacts = [], subtasks = [] } = task;
+    overlayContacts = contacts
 
     document.getElementById('task-content').innerHTML = `
-    <div>
-    <p>Title</p>
-    <input value="${titleValue}" class="overlay-input-title">
-    </div>
-    <div>
-    <p>Description</p>
-    <input  value="${descriptionValue}" class="overlay-input-description">
-    </div>
-    <div>
-    <p>Date</p>
-    <input type ="date"value="${dateValue}" class="overlay-input-date">
-    </div>
-     <div>
-            <p>Prio</p>
-       <div class="prio-box">
-    <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
-        <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
-    </div>
-    <div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
-        <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
-    </div>
-    <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
-        <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
-    </div>
-</div>
+        <div>
+            <p>Title</p>
+            <input value="${title}" class="overlay-input-title">
+        </div>
 
-            </div>
-    <div class="dropdown">
-            <p>Assinged to</p>
-            <div id="contact-container" class="input-container" onclick="showContacts()">
-            <input oninput="filterNames()" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
-            </div>
-            <div class="selectedInitials" id="assignedContactsContainer_${id}"></div>
-            <div class="dropdown-menu d_none" id="dropdownMenu">
+        <div>
+            <p>Description</p>
+            <input value="${description}" class="overlay-input-description">
+        </div>
+
+        <div>
+            <p>Date</p>
+            <input type="date" value="${date}" class="overlay-input-date">
+        </div>
+
+        <div>
+            <p>Prio</p>
+            <div class="prio-box">
+                <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
+                    <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
+                </div>
+                <div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
+                    <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
+                </div>
+                <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
+                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+                </div>
             </div>
         </div>
-        <div id="subtask-container_${id}" class="input-container">
-  <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
-  <div class="icons">
-    <span id="plusIcon_${id}" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
-    <span id="checkIcon_${id}" class="icon d_none"><img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg"></span>
-    <span id="cancelIcon_${id}" class="icon d_none"><img onclick="addSubtaskInput(${id})" src="/assets/img/check.svg"></span>
-  </div>
-</div>
 
-<ul id="subtasks_${id}" class="subtask-list"></ul>
-<div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
-
-
+        <div class="dropdown overlay-dropdown">
+            <p>Assigned to</p>
+            <div id="contact-container_${id}" class="input-container" onclick="showContacts(${id})">
+                <input oninput="filterNames(${id})" type="text" id="dropdownInput_${id}" placeholder="Select contacts to assign"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'">
+                <span class="arrow-drop-down" id="arrow-drop-down_${id}">
+                    <img src="/assets/img/arrow_drop_down.svg">
+                </span>
             </div>
-    
-    `
+            <div class="selectedInitials" id="assignedContactsContainer_${id}"></div>
+            <div class="dropdown-menu d_none" id="dropdownMenu_${id}"></div>
+        </div>
 
+        <div id="subtask-container_${id}" class="input-container">
+            <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
+            <div class="icons">
+                <span id="plusIcon_${id}" class="icon">
+                    <img src="/assets/img/Subtasks icons11.svg">
+                </span>
+                <span id="checkIcon_${id}" class="icon d_none">
+                    <img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg">
+                </span>
+                <span id="cancelIcon_${id}" class="icon d_none">
+                    <img onclick="addSubTaskInput(${id})" src="/assets/img/check.svg">
+                </span>
+            </div>
+        </div>
 
+        <ul id="subtasks_${id}" class="subtask-list">
+            ${subtasks.map((s, i) => `<li id="task_${i}">${s.title}</li>`).join('')}
+        </ul>
+
+        <div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
+
+        <button onclick="saveEditedTask(${id})">Save</button>
+    `;
+
+    renderAssignedContacts(id);
+    updateIcons(id);
 }
+/*
+--------- von GPT geholt -> schaue ich mir morgen an!
+
+function saveEditedTask(id) {
+    let task = todos.find(t => t.id === id);
+    let firebaseID = task.firebaseID;
+
+    // Neue Werte aus dem Overlay holen
+    let title = document.querySelector('.overlay-input-title').value.trim();
+    let description = document.querySelector('.overlay-input-description').value.trim();
+    let date = document.querySelector('.overlay-input-date').value;
+
+    // Die aktuelle Priority hast du eh in der globalen `priority`-Variable!
+    // Und die Kontakte sind in overlayContacts
+
+    // Falls du Subtasks editierbar machst, müsstest du die auch lesen – hier nehmen wir einfach die alten
+    let subtasks = task.subtasks;
+
+    let updatedTask = {
+        ...task,
+        title,
+        description,
+        date,
+        priority,
+        contacts: overlayContacts,
+        subtasks,
+    };
+
+    updateFireBaseData(firebaseID, updatedTask).then(() => {
+        document.getElementById('task-overlay').classList.add('d_none');
+        updateBoardHTML(); // Aktualisiere Board nach Speichern
+    });
+}
+*/
