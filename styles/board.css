@@ -37,6 +37,26 @@ input {
   margin-left: 14px;
 }
 
+.user-icon {
+  color: white;
+  font-weight: 400;
+  font-size: 12px !important;
+}
+
+.selectedInitials {
+  gap: 10px;
+}
+
+.contact-name {
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.overlay-input-description {
+  height: 120px;
+  text-align: start;
+}
+
 #divider {
   margin-left: -300px;
   height: 40px;
@@ -104,6 +124,17 @@ button {
   margin-top: 64px;
 }
 
+.assigned-to {
+  font-weight: 400;
+  font-size: 20px;
+  margin-top: 24px;
+}
+
+.subtask-class {
+  font-weight: 400;
+  font-size: 16px;
+}
+
 #the-board {
   display: flex;
   margin-left: 64px;
@@ -130,6 +161,8 @@ button {
   text-decoration: none;
   padding: 2.5px;
   margin-left: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 18px !important;
 }
 
 .Technical {
@@ -273,6 +306,24 @@ button {
   flex-direction: row;
 }
 
+textarea {
+  width: 445px;
+  border-radius: 9px;
+  padding-left: 7px;
+  font-size: 18px;
+  border: solid;
+  border-color: lightgray;
+  resize: vertical;
+  height: 100px;
+}
+
+#task-content {
+  float: left;
+  overflow-y: auto;
+  width: 100%;
+  height: 70vh;
+}
+
 .description-p {
   font-size: 20px !important;
   font-weight: 400;
@@ -286,37 +337,87 @@ button {
   margin-left: 0 !important;
   color: black !important;
 }
-.overlay-user-icon{
+.overlay-user-icon {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  margin: 8px 0;
 }
-.overlay-delete-edit{
+.overlay-delete-edit {
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.overlay-delete{
+
+.overlay-delete {
   display: flex;
-  cursor: pointer;
+  align-items: center;
+  color: #2a3647;
 }
-.overlay-delete-edit-border{
+
+.overlay-delete img {
+  content: url("/assets/img/delete.svg");
+  margin-right: 8px;
+}
+
+.overlay-delete:hover {
+  color: #29abe2;
+  font-weight: 700;
+}
+
+.overlay-delete:hover img {
+  content: url("/assets/img/delete_blue.svg");
+}
+
+.delete-p:hover {
+  color: #29abe2;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.overlay-delete-edit-border {
   margin-left: 10px;
   margin-right: 15px;
   height: 24px;
   width: 1px;
   background-color: grey;
 }
-.overlay-edit{
+.overlay-edit {
   display: flex;
   cursor: pointer;
 }
-.overlay-delete:hover{
-color: red !important;
+
+.overlay-edit {
+  display: flex;
+  align-items: center;
+  color: #2a3647;
 }
-.overlay-edit:hover{
-  color: red !important;
+
+.overlay-edit img {
+  content: url("/assets/img/edit-icon.svg");
+  margin-right: 8px;
 }
-.overlay-dropdown{
+
+.overlay-edit:hover {
+  color: #29abe2;
+  font-weight: 700;
+}
+
+.overlay-edit:hover img {
+  content: url("/assets/img/edit_blue.svg");
+}
+
+.edit-p:hover {
+  color: #29abe2;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.overlay-dropdown {
   margin-bottom: 64px;
+}
+
+.user-initials {
+  font-weight: 400 !important;
+  font-size: 12px !important;
 }

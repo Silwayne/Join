@@ -145,7 +145,7 @@ function generateTaskBoxContent(task) {
                 <div><p>${contactsOverlayContent(task)}</p></div>
                 <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
                 <div class="overlay-delete-edit">
-                    <div onclick="deteleOverlay(${task.id})" class="overlay-delete"><img src="../assets/img/delete.svg"><p>Delete</p></div>
+                    <div onclick="deteleOverlay(${task.id})" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
                         <div class="overlay-delete-edit-border"></div>
                     <div onclick="editOverlay(${task.id})" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
                 </div>
@@ -154,14 +154,14 @@ function generateTaskBoxContent(task) {
 // 
 function subtaskOverlayContent(task) {
     if (task.subtasks) {
-        let html = `<h4>Subtasks</h4><div class="subtasks-list">`;
+        let html = `<h4 class="assigned-to">Subtasks</h4><div class="subtasks-list">`;
         for (let i = 0; i < task.subtasks.length; i++) {
             let subtask = task.subtasks[i];
             let checked = subtask.done ? "checked" : "";
             html += `
                 <div class="subtask-item">
                     <input type="checkbox" id="subtask-${i}" ${checked} onchange="toggleSubtask(${task.id}, ${i}, event)">
-                    <label for="subtask-${i}">${subtask.title}</label>
+                    <label class="subtask-class" for="subtask-${i}">${subtask.title}</label>
                 </div>
             `;
         }
@@ -189,13 +189,13 @@ function toggleSubtask(taskId, subtaskIndex, event) {
 
 function contactsOverlayContent(task) {
     if (task.contacts) {
-        let html = `<div class="overlay-contacts-list"><h4>Assigned to:</h4></div>`;
+        let html = `<div class="overlay-contacts-list"><h4 class="assigned-to">Assigned to:</h4></div>`;
         for (let i = 0; i < task.contacts.length; i++) {
             let contact = task.contacts[i];
             let color = contactColors[contact]
             let initials = getInitials(contact);
             html += `
-                    <div class="overlay-user-icon"><p class="user-icon" style="background-color:${color};">${initials}</p><h2>${contact}</h2></div>
+                    <div class="overlay-user-icon"><p class="user-icon" style="background-color:${color};">${initials}</p><h2 class="contact-name">${contact}</h2></div>
             `;
         }
         return html;
@@ -290,7 +290,7 @@ function editOverlay(id) {
 
         <div>
             <p>Description</p>
-            <input value="${description}" class="overlay-input-description">
+            <textarea value="${description}" class="overlay-input-description"></textarea>
         </div>
 
         <div>
@@ -316,7 +316,7 @@ function editOverlay(id) {
         <div class="dropdown overlay-dropdown">
             <p>Assigned to</p>
             <div id="contact-container_${id}" class="input-container" onclick="showContacts(${id})">
-                <input oninput="filterNames(${id})" type="text" id="dropdownInput_${id}" placeholder="Select contacts to assign"
+                <input class="filterNamesInput" oninput="filterNames(${id})" type="text" id="dropdownInput_${id}" placeholder="Select contacts to assign"
                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'">
                 <span class="arrow-drop-down" id="arrow-drop-down_${id}">
                     <img src="/assets/img/arrow_drop_down.svg">
@@ -347,7 +347,7 @@ function editOverlay(id) {
 
         <div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
 
-        <button onclick="saveEditedTask(${id})">Save</button>
+        <button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button>
     `;
 
     renderAssignedContacts(id);
