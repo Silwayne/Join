@@ -1,4 +1,3 @@
-/* ✅ Ab 900px: Sidebar nach unten verschieben */
 @media (max-width: 900px) {
   .d-none {
     display: none;
@@ -82,39 +81,16 @@
   }
 }
 
-/* ✅ Ab 600px: Noch mehr Optimierungen für kleinere Geräte */
 @media (max-width: 600px) {
-
   .logo-responsive {
     width: 40px;
   }
 
-  .headline{
+  .headline {
     display: none;
-  }
-
-  .summary-h1 {
-    font-size: 28px;
-  }
-
-  .summary-p {
-    font-size: 18px;
-  }
-
-  .span-headline {
-    font-size: 16px;
-  }
-
-  .card-text-number {
-    font-size: 40px;
-  }
-
-  .card-text {
-    font-size: 16px;
   }
 }
 
-/* ✅ Bis runter auf 300px */
 @media (max-width: 400px) {
   #header {
     height: 60px;
@@ -136,39 +112,8 @@
     height: 40px;
     font-size: 14px;
   }
-
-  .menu-button img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .summary-h1 {
-    font-size: 24px;
-  }
-
-  .summary-p {
-    font-size: 16px;
-  }
-
-  .span-headline {
-    font-size: 14px;
-  }
-
-  .card-text-number {
-    font-size: 32px;
-  }
-
-  .card-text {
-    font-size: 14px;
-  }
-
-  .summary-cards {
-    width: 95%;
-    gap: 16px;
-  }
 }
 
-/* ✅ Perfekte Darstellung auf Mini-Bildschirmen (300px) */
 @media (max-width: 300px) {
   #header {
     height: 50px;
@@ -189,35 +134,5 @@
     width: 30px;
     height: 30px;
     font-size: 12px;
-  }
-
-  .menu-button img {
-    width: 16px;
-    height: 16px;
-  }
-
-  .summary-h1 {
-    font-size: 20px;
-  }
-
-  .summary-p {
-    font-size: 14px;
-  }
-
-  .span-headline {
-    font-size: 12px;
-  }
-
-  .card-text-number {
-    font-size: 24px;
-  }
-
-  .card-text {
-    font-size: 12px;
-  }
-
-  .summary-cards {
-    width: 100%;
-    gap: 10px;
   }
 }

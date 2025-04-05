@@ -1,17 +1,40 @@
-@media (max-width: 900px) {
-  .summary-content {
-    margin-left: 0;
-    padding: 20px;
-    width: 100%;
-    text-align: center;
+@media (max-width: 1005px) {
+  .span-headline {
+    font-size: 3vw;
   }
 
-  .summary-cards {
-    margin-left: 10px;
+  .summary-h1 {
+    font-size: 4vw;
   }
 
   #right-sidebar {
     display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .summary-container {
+    display: grid;
+    gap: 0;
+    width: 60%;
+  }
+  .summary-content {
+    margin: 10px;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .summary-cards {
+    margin: 10px;
+    min-width: 100%;
   }
 
   .card-top-left,
@@ -19,18 +42,45 @@
   .card-middle,
   .card-bottom {
     width: 100%;
-    height: auto;
+    gap: 1vh;
   }
 
-  .summary-h1 {
-    font-size: 40px;
+  .middle-stroked img {
+    height: 50px;
   }
 
-  .summary-p {
-    font-size: 5vh;
+  .card-text-number {
+    font-size: 4vw;
+    font-weight: 600;
   }
 
-  .span-headline {
-    font-size: 3vh;
+  .card-text {
+    font-size: 2vw;
+  }
+
+  .card-icon-wrapper img {
+    width: 6vw;
+  }
+
+  .prio-icon {
+    width: 6vw;
+  }
+
+  .card-middle-date {
+    font-size: 3vw;
+  }
+
+  .card-middle-date-text {
+    font-size: 2vw;
+  }
+}
+
+@media (max-width: 550px) {
+  .summary-content {
+    min-width: 90vw;
+  }
+
+  .middle-stroked img {
+    height: 30px;
   }
 }
