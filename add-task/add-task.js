@@ -459,21 +459,35 @@ function filterNames(id) {
 
 
 
-function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {    
+function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {
+    let fontColor="";
+    let checkboxImage;
+    let backgroundClass = "";
+
+    if (isChecked === 'checked') {
+        checkboxImage = "../assets/img/checked.svg";
+        backgroundClass = "blue-background";
+        fontColor = "white-font"
+    } else {
+        checkboxImage = "../assets/img/unchecked.svg";
+        fontColor="normal-font"
+    }
+
+    let idNumber = contactName.replace(/\s+/g, '_'); // Sicherer ID-Name
+
     return `
-        <div>      
-            <label class="contact-list">
+        <div class="contact-list ${backgroundClass}" id="background_filtered_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${id}')">
+            <label class="contact-list-label">
                 <div class="user-icon" style="background-color: ${contactColors[contactName]};">
                     <span class="user-initials">${contactInitials}</span>
                 </div>
-                <span class="contact-name">${contactName}</span>
-                <input 
-                    class="contact-checkbox" 
-                    type="checkbox"
-                    ${isChecked}
-                    onclick="handleContactSelection('${contactName}', this.checked, '${id}')">
+                <span class="contact-name ${fontColor}">${contactName}</span>
+                <div class="custom-checkbox">
+                    <img src="${checkboxImage}" id="contact-checkbox-img-filtered-${idNumber}" class="checkbox-img">
+                </div>
             </label>
-        </div>`;
+        </div>
+    `;
 }
 
 

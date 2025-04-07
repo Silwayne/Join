@@ -181,12 +181,20 @@ input::placeholder {
     background-color: #2A3647;
     border: solid white 1px;
 }
+.blue-background img{
+    filter: brightness(0) invert(1);
+
+}
+
 
 .blue-background:hover {
     background-color: #091931
 }
 .white-font{
     color: white !important;
+}
+.normal-font{
+    color: #2A3647
 }
 
 .contact-list-label {
