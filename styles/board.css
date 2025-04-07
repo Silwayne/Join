@@ -486,3 +486,36 @@ textarea {
   height: 100%;
   background-color: #2626266b;
 }
+
+@media (max-width: 1440px) {
+  #the-board {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #alignment-board-div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .task-columns {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  #main {
+    margin-left: 0px;
+  }
+  .task-columns {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    overflow-x: auto; /* Ermöglicht horizontales Scrollen */
+    scroll-behavior: smooth; /* Sanftes Scrollen */
+  }
+
+  .task-columns:active {
+    cursor: grab; /* Zeigt eine Hand an, wenn der Bereich aktiv ist */
+  }
+}
