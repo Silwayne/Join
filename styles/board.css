@@ -19,7 +19,7 @@ h1 {
 
 #searchTasks {
   height: 48px;
-  width: 500px;
+  width: 312px;
   gap: 32px;
   margin-right: 250px;
 }
@@ -79,7 +79,6 @@ button {
   color: white;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 16px;
   font-size: 21px;
   font-weight: 700;
@@ -100,6 +99,8 @@ button {
 .add-task-button {
   margin-left: 48px;
   margin-right: 64px;
+  display: flex;
+  justify-content: center;
 }
 
 .small-add-task-btn {
@@ -113,6 +114,8 @@ button {
   width: 24px;
   height: 24px;
   padding: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .task-column {
@@ -150,6 +153,10 @@ button {
   box-shadow: 5px 5px #c4c4c41a;
   padding: 18px;
   cursor: pointer;
+}
+
+.task-columns {
+  height: calc(100vh - 400px);
 }
 
 .box-category-header-userstory {
@@ -203,7 +210,7 @@ button {
   justify-content: space-between;
   align-items: center;
 }
-.closeOverlay-x{
+.closeOverlay-x {
   display: flex;
   width: 25px;
   justify-content: center;
@@ -211,16 +218,15 @@ button {
   height: 25px;
   border-radius: 20px;
   cursor: pointer;
-
 }
-.closeOverlay-x img{
+.closeOverlay-x img {
   width: 13.5;
 }
 
 .closeOverlay-x:hover {
   background-color: rgb(217, 215, 215);
 }
-.closeEditOverlay-x{
+.closeEditOverlay-x {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -295,7 +301,6 @@ button {
   background-color: white;
   z-index: 110;
   width: 525px;
-  min-height: 650px;
   border-radius: 30px;
 }
 
@@ -318,7 +323,7 @@ button {
 .checkbox-img:active {
   transform: scale(0.95);
 }
-.cursor-pointer{
+.cursor-pointer {
   cursor: pointer;
 }
 
@@ -328,6 +333,10 @@ button {
 
 #task-content {
   padding: 48px 40px;
+  float: left;
+  overflow-y: auto;
+  width: 100%;
+  height: 100%;
 }
 
 .due-date {
@@ -357,13 +366,6 @@ textarea {
   border-color: lightgray;
   resize: vertical;
   height: 100px;
-}
-
-#task-content {
-  float: left;
-  overflow-y: auto;
-  width: 100%;
-  height: 70vh;
 }
 
 .description-p {
@@ -412,7 +414,7 @@ textarea {
 .overlay-delete:hover img {
   content: url("/assets/img/delete_blue.svg");
 }
-.delete-p{
+.delete-p {
   width: 62px;
 }
 
@@ -435,7 +437,6 @@ textarea {
   display: flex;
   cursor: pointer;
   width: 60px;
-  
 }
 
 .overlay-edit {
@@ -464,17 +465,24 @@ textarea {
   font-size: 16px;
 }
 
-
-.dropdown-menu-sticky{
+.dropdown-menu-sticky {
   position: sticky !important;
 }
-.dropdown{
-    margin-bottom: 32px !important;
-    margin-top: 32px !important;
-  
-
+.dropdown {
+  margin-bottom: 32px !important;
+  margin-top: 32px !important;
 }
 .user-initials {
   font-weight: 400 !important;
   font-size: 12px !important;
+}
+
+#outer-task-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #2626266b;
 }

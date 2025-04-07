@@ -1,117 +1,117 @@
-let todos = []
+let todos = [];
 let currentDraggedTask;
 
-function initAddTask(content){
-    initHTML(content);
-    selectContacts('dropdownMenu');
+function initAddTask(content) {
+  initHTML(content);
+  selectContacts("dropdownMenu");
 }
 
 function addTask(event) {
-    overlayContacts = []
-    event.stopPropagation();
-    priority = 'Medium'
-    document.getElementById('overlay-background').classList.add('overlay-background');
-    document.getElementById('add-task-overlay').classList.remove('d_none');
+  overlayContacts = [];
+  event.stopPropagation();
+  priority = "Medium";
+  document
+    .getElementById("overlay-background")
+    .classList.add("overlay-background");
+  document.getElementById("add-task-overlay").classList.remove("d_none");
 }
 
 function removeAddTask() {
-    document.getElementById('add-task-overlay').classList.add('d_none');
-    document.getElementById('overlay-background').classList.remove('overlay-background');
+  document.getElementById("add-task-overlay").classList.add("d_none");
+  document
+    .getElementById("overlay-background")
+    .classList.remove("overlay-background");
 }
 
 async function loadTasksFromFirebase() {
-    let response = await fetch(firebaseURL +'tasks.json')
-    let firebaseData  = await response.json()
-    let tasksBoxContent = [];
-    let index = 0;
-    
-    for (let key in firebaseData) {
-        let task = firebaseData[key];
-        task.id = index;
-        task.firebaseID = key; 
-        tasksBoxContent.push(task);
-        index++;
-    }
-    todos = tasksBoxContent;
+  let response = await fetch(firebaseURL + "tasks.json");
+  let firebaseData = await response.json();
+  let tasksBoxContent = [];
+  let index = 0;
 
+  for (let key in firebaseData) {
+    let task = firebaseData[key];
+    task.id = index;
+    task.firebaseID = key;
+    tasksBoxContent.push(task);
+    index++;
+  }
+  todos = tasksBoxContent;
 }
 
 function allowDrop(ev) {
-    ev.preventDefault();
+  ev.preventDefault();
 }
 
 async function updateBoardHTML() {
-    await loadTasksFromFirebase();
-    const statuses = ['todo', 'inprogress', 'await', 'done'];
+  await loadTasksFromFirebase();
+  const statuses = ["todo", "inprogress", "await", "done"];
 
-    for (let i = 0; i < statuses.length; i++) {
-        let status = statuses[i];
-        let taskDiv = document.getElementById('drag-and-drop-' + status);
-        let tasks = todos.filter(t => t.status === status);
+  for (let i = 0; i < statuses.length; i++) {
+    let status = statuses[i];
+    let taskDiv = document.getElementById("drag-and-drop-" + status);
+    let tasks = todos.filter((t) => t.status === status);
 
-        if (tasks.length > 0) {
-            taskDiv.innerHTML = '';
-            taskDiv.classList.remove('no-tasks-container');
+    if (tasks.length > 0) {
+      taskDiv.innerHTML = "";
+      taskDiv.classList.remove("no-tasks-container");
+      taskDiv.classList.add("task-columns");
 
-            for (let m = 0; m < tasks.length; m++) {
-                let taskHTML = await generateTodosHTML(tasks[m]);
-                taskDiv.innerHTML += taskHTML;
-            }
-        } else {
-            taskDiv.innerHTML = `<p class="no-tasks-text">No tasks for ${status}</p>`;
-            taskDiv.classList.add('no-tasks-container');
-        }
+      for (let m = 0; m < tasks.length; m++) {
+        let taskHTML = await generateTodosHTML(tasks[m]);
+        taskDiv.innerHTML += taskHTML;
+      }
+    } else {
+      taskDiv.innerHTML = `<p class="no-tasks-text">No tasks for ${status}</p>`;
+      taskDiv.classList.add("no-tasks-container");
     }
+  }
 }
 
-
 async function moveTo(status) {
-    let task = todos[currentDraggedTask];
-    task.status = status;
-    await updateFireBaseData(task.firebaseID, task);
-    updateBoardHTML();
+  let task = todos[currentDraggedTask];
+  task.status = status;
+  await updateFireBaseData(task.firebaseID, task);
+  updateBoardHTML();
 }
 
 function getSelectedContactsFromAddTask(task) {
-    let html = "";
-    if (task.contacts) {
-        for (let i = 0; i < task.contacts.length; i++) {
-
-            let name = task.contacts[i];
-            let color = contactColors[name]
-            let initials = getInitials(name);
-            if (color) {
-                html += `
+  let html = "";
+  if (task.contacts) {
+    for (let i = 0; i < task.contacts.length; i++) {
+      let name = task.contacts[i];
+      let color = contactColors[name];
+      let initials = getInitials(name);
+      if (color) {
+        html += `
                     <div class="user-icon user-icon-board-box" style="background-color: ${color};">
                         <p>${initials}</p>
                     </div>
                 `;
-            }
-        }
+      }
     }
-    return html;
+  }
+  return html;
 }
 
 async function getContactColorFromFirebase(contactName) {
-    let response = await fetch(firebaseURL + 'users.json')
-    let contacts = await response.json()
-    for (let key in contacts) {
-        if (contacts[key].name === contactName) {
-            return contacts[key].color
-        }
+  let response = await fetch(firebaseURL + "users.json");
+  let contacts = await response.json();
+  for (let key in contacts) {
+    if (contacts[key].name === contactName) {
+      return contacts[key].color;
     }
-    return ''
+  }
+  return "";
 }
 
-
-
 function generateTodosHTML(task) {
-    let subtask = checkIfSubtasks(task);
-    let progressBar = generateProgressBar(subtask, task);
-    let contacts = getSelectedContactsFromAddTask(task);
-    let img = filterPriorityImage(task);
+  let subtask = checkIfSubtasks(task);
+  let progressBar = generateProgressBar(subtask, task);
+  let contacts = getSelectedContactsFromAddTask(task);
+  let img = filterPriorityImage(task);
 
-    return `
+  return `
         <div draggable="true" onclick="openTaskBoxOverlay(${task.id})" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
             <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
             <div class="box-category-title">
@@ -127,52 +127,66 @@ function generateTodosHTML(task) {
     `;
 }
 function openTaskBoxOverlay(id) {
-    let task = todos.find(t => t.id === id);
-    let taskOverlay = document.getElementById('task-overlay')
-    generateTaskBoxContent(task)
-    taskOverlay.classList.remove('d_none')
+  let task = todos.find((t) => t.id === id);
+  let taskOverlay = document.getElementById("task-overlay");
+  let outerTaskOverlay = document.getElementById("outer-task-overlay");
+  generateTaskBoxContent(task);
+  outerTaskOverlay.style.display = "flex";
+  taskOverlay.classList.remove("d_none");
 }
-function closeOverlay() {
-    let taskOverlay = document.getElementById('task-overlay')
-    taskOverlay.classList.add('d_none')
 
+function closeOverlay() {
+  let taskOverlay = document.getElementById("task-overlay");
+  taskOverlay.classList.add("d_none");
+  let outerTaskOverlay = document.getElementById("outer-task-overlay");
+  outerTaskOverlay.style.display = "none";
 }
 function generateTaskBoxContent(task) {
-    let img = filterPriorityImage(task)
+  let img = filterPriorityImage(task);
 
-    document.getElementById('task-content').innerHTML = `
+  document.getElementById("task-content").innerHTML = `
       <div class="categorydiv"> 
-      <div> <p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
+      <div> <p class="box-category-header-userstory ${task.category}">${
+    task.category
+  }</p></div>
       <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
       </div>
         <div><p class="task-title-p">${task.title}</p></div>
-            <div class="description-div"><p class="description-p">${task.description}</p></div>
+            <div class="description-div"><p class="description-p">${
+              task.description
+            }</p></div>
             <div><p class="due-date">Due date: ${task.date}</p></div>
-                <div class="priority-div"><p class="priority">Priority:  ${task.priority}</p>${img}</div>
+                <div class="priority-div"><p class="priority">Priority:  ${
+                  task.priority
+                }</p>${img}</div>
                 <div><p>${contactsOverlayContent(task)}</p></div>
                 <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
                 <div class="overlay-delete-edit">
-                    <div onclick="deteleOverlay(${task.id})" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
+                    <div onclick="deteleOverlay(${
+                      task.id
+                    })" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
                         <div class="overlay-delete-edit-border"></div>
-                    <div onclick="editOverlay(${task.id})" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
+                    <div onclick="editOverlay(${
+                      task.id
+                    })" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
                 </div>
-    `
+    `;
 }
 function subtaskOverlayContent(task) {
-    if (task.subtasks) {
-        let html = `<h4 class="assigned-to">Subtasks</h4><div class="subtasks-list">`;
-        
-        for (let i = 0; i < task.subtasks.length; i++) {
-            let subtask = task.subtasks[i];
-            let imageSrc;
+  if (task.subtasks) {
+    let html = `<h4 class="assigned-to">Subtasks</h4><div class="subtasks-list">`;
 
-            if (subtask.done === true) {
-                imageSrc = "../assets/img/checked.svg";
-            } else {
-                imageSrc = "../assets/img/unchecked.svg";
-            }
+    for (let i = 0; i < task.subtasks.length; i++) {
+      let subtask = task.subtasks[i];
+      let imageSrc;
 
-            html += `
+      if (subtask.done === true) {
+        imageSrc = "../assets/img/checked.svg";
+      } else {
+        imageSrc = "../assets/img/unchecked.svg";
+      }
+
+      html += `
                 <div onclick="toggleCustomSubtask(${task.id}, ${i}, this)" class="subtask-item cursor-pointer">
                     <div class="custom-checkbox" >
                         <img src="${imageSrc}" class="checkbox-img" id="custom-subtask-${task.id}-${i}">
@@ -180,145 +194,133 @@ function subtaskOverlayContent(task) {
                     <label class="subtask-class">${subtask.title}</label>
                 </div>
             `;
-        }
-
-        html += `</div>`;
-        return html;
     }
-    return "";
-}
 
+    html += `</div>`;
+    return html;
+  }
+  return "";
+}
 
 function toggleCustomSubtask(taskId, subtaskIndex, element) {
-    let task = todos.find(t => t.id === taskId);
-    let img = element.querySelector('img');
-    if (task.subtasks[subtaskIndex].done === true) {
-        task.subtasks[subtaskIndex].done = false;
-        img.src = "../assets/img/unchecked.svg";
-    } else {
-        task.subtasks[subtaskIndex].done = true;
-        img.src = "../assets/img/checked.svg";
+  let task = todos.find((t) => t.id === taskId);
+  let img = element.querySelector("img");
+  if (task.subtasks[subtaskIndex].done === true) {
+    task.subtasks[subtaskIndex].done = false;
+    img.src = "../assets/img/unchecked.svg";
+  } else {
+    task.subtasks[subtaskIndex].done = true;
+    img.src = "../assets/img/checked.svg";
+  }
+  let doneCount = 0;
+  for (let i = 0; i < task.subtasks.length; i++) {
+    if (task.subtasks[i].done === true) {
+      doneCount++;
     }
-    let doneCount = 0;
-    for (let i = 0; i < task.subtasks.length; i++) {
-        if (task.subtasks[i].done === true) {
-            doneCount++;
-        }
-    }
-    let total = task.subtasks.length;
-    let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`);
-    let progressBar = document.getElementById(`progress-${taskId}`);
+  }
+  let total = task.subtasks.length;
+  let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`);
+  let progressBar = document.getElementById(`progress-${taskId}`);
 
-    if (subtaskCounter) {
-        subtaskCounter.innerHTML = doneCount + "/" + total + " Subtasks";
-    }
-    if (progressBar) {
-        let progress = (doneCount / total) * 100;
-        progressBar.style.width = progress + "%";
-    }
+  if (subtaskCounter) {
+    subtaskCounter.innerHTML = doneCount + "/" + total + " Subtasks";
+  }
+  if (progressBar) {
+    let progress = (doneCount / total) * 100;
+    progressBar.style.width = progress + "%";
+  }
 
-    updateFireBaseData(task.firebaseID, task);
+  updateFireBaseData(task.firebaseID, task);
 }
-
-
-
 
 function contactsOverlayContent(task) {
-    if (task.contacts) {
-        let html = `<div class="overlay-contacts-list"><h4 class="assigned-to">Assigned to:</h4></div>`;
-        for (let i = 0; i < task.contacts.length; i++) {
-            let contact = task.contacts[i];
-            let color = contactColors[contact]
-            let initials = getInitials(contact);
-            html += `
+  if (task.contacts) {
+    let html = `<div class="overlay-contacts-list"><h4 class="assigned-to">Assigned to:</h4></div>`;
+    for (let i = 0; i < task.contacts.length; i++) {
+      let contact = task.contacts[i];
+      let color = contactColors[contact];
+      let initials = getInitials(contact);
+      html += `
                     <div class="overlay-user-icon"><p class="user-icon" style="background-color:${color};">${initials}</p><h2 class="contact-name">${contact}</h2></div>
             `;
-        }
-        return html;
     }
-    return ""
-
-
+    return html;
+  }
+  return "";
 }
 
-
-
-
 function moveTask(id) {
-    currentDraggedTask = id
-
+  currentDraggedTask = id;
 }
 
 async function updateFireBaseData(firebaseID, taskObj) {
-    const url = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseID}.json`;
+  const url = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseID}.json`;
 
-    await fetch(url, {
-        method: 'PUT',
-        body: JSON.stringify(taskObj),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+  await fetch(url, {
+    method: "PUT",
+    body: JSON.stringify(taskObj),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 }
 function checkIfSubtasks(task) {
-    if (task.subtasks) {
-        let total = task.subtasks.length;
-        let done = 0;
-        for (let i = 0; i < total; i++) {
-            if (task.subtasks[i].done === true) {
-                done++;
-            }
-        }
-        return done + "/" + total + " Subtasks";
+  if (task.subtasks) {
+    let total = task.subtasks.length;
+    let done = 0;
+    for (let i = 0; i < total; i++) {
+      if (task.subtasks[i].done === true) {
+        done++;
+      }
     }
+    return done + "/" + total + " Subtasks";
+  }
 
-    return "";
+  return "";
 }
 
 function generateProgressBar(subtask, task) {
-    if (subtask) {
-        let progressBar;
-        let done = 0;
-        for (let i = 0; i < task.subtasks.length; i++) {
-            if (task.subtasks[i].done === true) {
-                done++;
-            }
-        }
-        let progress = (done / task.subtasks.length) * 100;
-        return progressBar = `
+  if (subtask) {
+    let progressBar;
+    let done = 0;
+    for (let i = 0; i < task.subtasks.length; i++) {
+      if (task.subtasks[i].done === true) {
+        done++;
+      }
+    }
+    let progress = (done / task.subtasks.length) * 100;
+    return (progressBar = `
             <div class="box-category-progress-subtasks-box">
                 <div class="box-category-progress-bar">
                     <div id="progress-${task.id}" class="progress" style="width: ${progress}%;"></div>
                 </div>
                 <p class="subtask-description" id="subtaskcounter-${task.id}">${subtask}</p>
             </div>
-        `;
-    }
-    return ""
-
+        `);
+  }
+  return "";
 }
 function filterPriorityImage(task) {
-    let priority = task.priority.toLowerCase();
+  let priority = task.priority.toLowerCase();
 
-    if (priority === "low") {
-        return '<img src="../assets/img/Prio-low-green.svg">';
-    } else if (priority === "medium") {
-        return '<img src="../assets/img/Prio-media-orange.svg">';
-    }
-    return '<img src="../assets/img/Prio-alta-red.svg">';
+  if (priority === "low") {
+    return '<img src="../assets/img/Prio-low-green.svg">';
+  } else if (priority === "medium") {
+    return '<img src="../assets/img/Prio-media-orange.svg">';
+  }
+  return '<img src="../assets/img/Prio-alta-red.svg">';
 }
 
 function deteleOverlay(id) {
-    console.log('GELÖSCHT' + id);
-
+  console.log("GELÖSCHT" + id);
 }
 function editOverlay(id) {
-    selectContacts(id)
-    let task = todos.find(t => t.id === id);
-    let { title, description, date, contacts = [], subtasks = [] } = task;
-    overlayContacts = contacts
+  selectContacts(id);
+  let task = todos.find((t) => t.id === id);
+  let { title, description, date, contacts = [], subtasks = [] } = task;
+  overlayContacts = contacts;
 
-    document.getElementById('task-content').innerHTML = `
+  document.getElementById("task-content").innerHTML = `
         <div class="closeEditOverlay-x">
           <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
           </div>
@@ -381,7 +383,9 @@ function editOverlay(id) {
         </div>
 
         <ul id="subtasks_${id}" class="subtask-list">
-            ${subtasks.map((s, i) => `<li id="task_${i}">${s.title}</li>`).join('')}
+            ${subtasks
+              .map((s, i) => `<li id="task_${i}">${s.title}</li>`)
+              .join("")}
         </ul>
 
         <div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
@@ -389,8 +393,8 @@ function editOverlay(id) {
         <button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button>
     `;
 
-    renderAssignedContacts(id);
-    updateIcons(id);
+  renderAssignedContacts(id);
+  updateIcons(id);
 }
 /*
 --------- von GPT geholt -> schaue ich mir morgen an!
@@ -426,3 +430,35 @@ function saveEditedTask(id) {
     });
 }
 */
+
+// Funktion zur Filterung der Aufgaben
+
+function filterTasks() {
+  let input = document.getElementById("searchTasks").value.toLowerCase();
+  const filteredTasks = todos.filter(
+    (task) =>
+      task.title.toLowerCase().includes(input) ||
+      task.description.toLowerCase().includes(input)
+  );
+
+  const statuses = ["todo", "inprogress", "await", "done"];
+
+  statuses.forEach((status) => {
+    let taskDiv = document.getElementById("drag-and-drop-" + status);
+    let tasks = filteredTasks.filter((t) => t.status === status);
+
+    if (tasks.length > 0) {
+      taskDiv.innerHTML = "";
+      taskDiv.classList.remove("no-tasks-container");
+      taskDiv.classList.add("task-columns");
+
+      tasks.forEach((task) => {
+        let taskHTML = generateTodosHTML(task);
+        taskDiv.innerHTML += taskHTML;
+      });
+    } else {
+      taskDiv.innerHTML = `<p class="no-tasks-text">No tasks for ${status}</p>`;
+      taskDiv.classList.add("no-tasks-container");
+    }
+  });
+}
