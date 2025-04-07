@@ -149,6 +149,7 @@ button {
   border-radius: 20px;
   box-shadow: 5px 5px #c4c4c41a;
   padding: 18px;
+  cursor: pointer;
 }
 
 .box-category-header-userstory {
@@ -185,10 +186,13 @@ button {
   font-size: 12px !important;
   font-weight: 400;
   color: #000000 !important;
+  margin: 0 !important;
 }
 
 .box-category-progress-subtasks-box {
   padding-top: 12px;
+  padding-bottom: 12px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -306,10 +310,15 @@ button {
   margin-bottom: 6px;
 }
 
-.subtask-item input[type="checkbox"] {
-  width: 16px;
-  height: 16px;
-  accent-color: #2d3e50;
+.checkbox-img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.1s ease;
+}
+.checkbox-img:active {
+  transform: scale(0.95);
+}
+.cursor-pointer{
   cursor: pointer;
 }
 
@@ -340,7 +349,7 @@ button {
 }
 
 textarea {
-  width: 445px;
+  width: 429px;
   border-radius: 9px;
   padding-left: 7px;
   font-size: 18px;
@@ -403,11 +412,15 @@ textarea {
 .overlay-delete:hover img {
   content: url("/assets/img/delete_blue.svg");
 }
+.delete-p{
+  width: 62px;
+}
 
 .delete-p:hover {
   color: #29abe2;
   font-weight: 700;
   font-size: 16px;
+  cursor: pointer;
 }
 
 .overlay-delete-edit-border {
@@ -421,6 +434,8 @@ textarea {
 .overlay-edit {
   display: flex;
   cursor: pointer;
+  width: 60px;
+  
 }
 
 .overlay-edit {
@@ -449,10 +464,16 @@ textarea {
   font-size: 16px;
 }
 
-.overlay-dropdown {
-  margin-bottom: 64px;
-}
 
+.dropdown-menu-sticky{
+  position: sticky !important;
+}
+.dropdown{
+    margin-bottom: 32px !important;
+    margin-top: 32px !important;
+  
+
+}
 .user-initials {
   font-weight: 400 !important;
   font-size: 12px !important;

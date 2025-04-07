@@ -5,13 +5,14 @@ body {
     font-family: "Inter", sans-serif;
     color: #2a3647 !important;
 }
+
 .red {
     color: #ff8190
 }
 
 .headline {
     margin-left: calc(300px - 232px) !important;
-  }
+}
 
 .display-splitter {
     display: flex;
@@ -55,7 +56,7 @@ body {
 p {
     font-size: 20px !important;
     margin: 8px !important;
-    margin-left:  0 !important;
+    margin-left: 0 !important;
 
 }
 
@@ -66,7 +67,8 @@ input {
     padding-left: 8px;
     font-size: 20px;
 }
-input::placeholder{
+
+input::placeholder {
     color: #D1D1D1;
 }
 
@@ -75,7 +77,8 @@ input::placeholder{
     padding-bottom: 60px;
 
 }
-.absolute{
+
+.absolute {
     position: absolute;
 }
 
@@ -139,6 +142,7 @@ input::placeholder{
     height: 32px;
     padding: 2px;
 }
+
 .user-icon {
     width: 42px;
     height: 42px;
@@ -150,38 +154,134 @@ input::placeholder{
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .user-initials {
+}
+
+.user-initials {
     color: white;
     font-size: 18px;
     font-weight: bold;
-  }
-.contact-list{
-        display: flex;
-        align-items: center;
-        justify-content: space-between; /* Schiebt die Checkbox nach rechts */
-        width: 100%; /* Nimmt die volle Breite */
-        border-bottom: 1px solid #ccc; /* Falls eine Trennlinie gewünscht ist */
-}  
-.contact-checkbox{
+}
+
+.contact-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 12px;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    gap: 12px;
+}
+
+.grey-contact-list:hover {
+    background-color: rgb(217, 215, 215);
+
+}
+
+.blue-background {
+    background-color: #2A3647;
+    border: solid white 1px;
+}
+
+.blue-background:hover {
+    background-color: #091931
+}
+.white-font{
+    color: white !important;
+}
+
+.contact-list-label {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.contact-checkbox {
     margin-right: 10px !important;
     width: 20px !important;
 }
-.contact-name{
-    flex-grow: 1;
+
+.contact-name {
+    flex: 1;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
 }
 
 .task:hover {
     background: #e0e0e0;
 
 }
-.task:hover ::marker{
+
+.task:hover ::marker {
     color: yellowgreen;
 }
-#subtaskInput{
+
+#subtaskInput {
     font-size: 20px;
 }
+
+.subtasks {
+    margin-top: 15px;
+    gap: 5px;
+    display: flex;
+    flex-direction: column;
+    width: 440px;
+    position: absolute;
+    height: 50px;
+}
+
+.subtask-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 6px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.subtask-item:hover {
+    background-color: #ebe9e9;
+}
+
+.subtask-value {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    flex-grow: 1;
+}
+
+.subtask-trash-img {
+    display: none;
+    margin-left: 12px;
+    cursor: pointer;
+}
+
+#task_0:hover .subtask-trash-img {
+    display: block;
+}
+
+#task_1:hover .subtask-trash-img {
+    display: block;
+}
+
+.dot {
+    width: 6px;
+    background-color: black;
+    border-radius: 20px;
+}
+
+
 
 .arrow-drop-down {
     width: 24px;
@@ -289,12 +389,6 @@ input::placeholder{
 
 }
 
-ul {
-    width: 440px;
-    position: absolute;
-    height: 50px;
-}
-
 .create-clear-button {
     height: 56px;
     border: none;
@@ -365,14 +459,30 @@ footer {
     margin-top: 0;
     padding-top: 0;
 }
-.selectedInitials{
+
+.selectedInitials {
     display: flex;
-    position: absolute;    
+    position: absolute;
     margin-top: 3px;
 }
-.selected-User-Initials{
+.selectedInitials-edit{
+    margin-top: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 3px;
+}
+.selected-User-Initials {
     padding-bottom: 3px;
 }
+.dropdown-menu-edit{
+    max-height: 120px;
+    overflow-y: auto;
+    border-radius: 5px;
+    background-color: white;
+    margin: 0;
+    margin-bottom: 50px;    
+}
+
 .input-error {
     border: 2px solid red !important;
 }

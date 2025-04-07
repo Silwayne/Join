@@ -86,10 +86,21 @@ function addSubTaskInput(taskId) {
         length++;
     }
 
-    let li = document.createElement('li');
+    let li = document.createElement('div');
     let subId = 'task_' + length;
     li.id = subId;
-    li.innerHTML = value + ' <img src="/assets/img/delete.svg" onclick="deleteSubTask(\'' + subId + '\', ' + taskId + ')">';
+    li.innerHTML = li.innerHTML = `
+    <div class="subtask-item">
+      <div class="subtask-value">
+        <img class="dot" src="/assets/img/Subtasks icons11.svg">
+        ${value}
+      </div>
+      <div class="subtask-trash-img">
+        <img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
+      </div>
+    </div>
+  `;
+  
 
     list.appendChild(li);
     input.value = '';
@@ -276,29 +287,55 @@ function handleContactSelection(name, checked, id) {
 
 
 function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id, isChecked) {
-    let taskId = "";
-    if (id !== "assignedContactsContainer") {
-        taskId = "_" + id;
+    let checkboxImage;
+    let backgroundClass = "";
+
+    if (isChecked === true) {
+        checkboxImage = "../assets/img/checked.svg";
+        backgroundClass = "blue-background";
+    } else {
+        checkboxImage = "../assets/img/unchecked.svg";
     }
 
     return `
-        <div>      
-            <label class="contact-list" for="contactID_${idNumber}">
+        <div class="grey-contact-list contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
+            <label class="contact-list-label">
                 <div class="user-icon" style="background-color: ${bgColor};">
                     <span class="user-initials">${contactInitials}</span>
                 </div>
-                <span class="contact-name">${contactName}</span>
-                <input 
-                    class="contact-checkbox" 
-                    type="checkbox" 
-                    id="contactID_${idNumber}" 
-                    name="${contactName}" 
-                    ${isChecked ? 'checked' : ''}
-                    onclick="handleContactSelection('${contactName}', this.checked, '${id}')">
+                <span class="contact-name ">${contactName}</span>
+                <div class="custom-checkbox">
+                    <img src="${checkboxImage}" id="contact-checkbox-img-${idNumber}" class="checkbox-img">
+                </div>
             </label>
         </div>
     `;
 }
+
+function toggleContactCheckbox(element, contactName, idNumber) {
+    let img = element.querySelector('img');
+    let isChecked = overlayContacts.includes(contactName);
+
+    if (isChecked) {
+        overlayContacts = overlayContacts.filter(name => name !== contactName);
+        img.src = "../assets/img/unchecked.svg";
+        element.classList.remove('blue-background');
+        element.classList.add('grey-contact-list');
+        element.classList.remove('white-font');
+
+    } else {
+        overlayContacts.push(contactName);
+        img.src = "../assets/img/checked.svg";
+        element.classList.add('blue-background');
+        element.classList.remove('grey-contact-list');
+        element.classList.add('white-font');
+
+
+    }
+
+    renderAssignedContacts(idNumber);
+}
+
 
 
 
@@ -539,13 +576,13 @@ function initHTML(content) {
             <input id="description-input" type="text" placeholder="Enter a Description">
         </div>
         
-        <div class="dropdown">
+        <div>
             <p>Assinged to</p>
             <div id="contact-container" class="input-container" onclick="showContacts('contact-container')">
             <input oninput="filterNames('assignedContactsContainer')" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
             </div>
             <div class="selectedInitials" id="assignedContactsContainer"></div>
-            <div class="dropdown-menu d_none" id="dropdownMenu">
+            <div class="dropdown-menu  d_none" id="dropdownMenu">
             </div>
         </div>
     </section>
@@ -589,7 +626,7 @@ function initHTML(content) {
             </div>
 
            
-    </div> <ul class="d_none subtasks" id="subtasks"></ul>
+    </div> <div class="d_none subtasks" id="subtasks"></div>
                           <div id="subtask-error" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
 
     </section>

@@ -161,36 +161,66 @@ function generateTaskBoxContent(task) {
 function subtaskOverlayContent(task) {
     if (task.subtasks) {
         let html = `<h4 class="assigned-to">Subtasks</h4><div class="subtasks-list">`;
+        
         for (let i = 0; i < task.subtasks.length; i++) {
             let subtask = task.subtasks[i];
-            let checked = subtask.done ? "checked" : "";
+            let imageSrc;
+
+            if (subtask.done === true) {
+                imageSrc = "../assets/img/checked.svg";
+            } else {
+                imageSrc = "../assets/img/unchecked.svg";
+            }
+
             html += `
-                <div class="subtask-item">
-                    <input type="checkbox" id="subtask-${i}" ${checked} onchange="toggleSubtask(${task.id}, ${i}, event)">
-                    <label class="subtask-class" for="subtask-${i}">${subtask.title}</label>
+                <div onclick="toggleCustomSubtask(${task.id}, ${i}, this)" class="subtask-item cursor-pointer">
+                    <div class="custom-checkbox" >
+                        <img src="${imageSrc}" class="checkbox-img" id="custom-subtask-${task.id}-${i}">
+                    </div>
+                    <label class="subtask-class">${subtask.title}</label>
                 </div>
             `;
         }
+
         html += `</div>`;
         return html;
     }
-    return ""
-
+    return "";
 }
-function toggleSubtask(taskId, subtaskIndex, event) {
+
+
+function toggleCustomSubtask(taskId, subtaskIndex, element) {
     let task = todos.find(t => t.id === taskId);
-    task.subtasks[subtaskIndex].done = event.target.checked;
-
-    let doneCount = task.subtasks.filter(st => st.done).length;
+    let img = element.querySelector('img');
+    if (task.subtasks[subtaskIndex].done === true) {
+        task.subtasks[subtaskIndex].done = false;
+        img.src = "../assets/img/unchecked.svg";
+    } else {
+        task.subtasks[subtaskIndex].done = true;
+        img.src = "../assets/img/checked.svg";
+    }
+    let doneCount = 0;
+    for (let i = 0; i < task.subtasks.length; i++) {
+        if (task.subtasks[i].done === true) {
+            doneCount++;
+        }
+    }
     let total = task.subtasks.length;
-    let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`)
-    let progress = (doneCount / total) * 100;
-
+    let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`);
     let progressBar = document.getElementById(`progress-${taskId}`);
-    progressBar.style.width = `${progress}%`;
-    subtaskCounter.innerHTML = `${doneCount}/${total} Subtasks`
+
+    if (subtaskCounter) {
+        subtaskCounter.innerHTML = doneCount + "/" + total + " Subtasks";
+    }
+    if (progressBar) {
+        let progress = (doneCount / total) * 100;
+        progressBar.style.width = progress + "%";
+    }
+
     updateFireBaseData(task.firebaseID, task);
 }
+
+
 
 
 function contactsOverlayContent(task) {
@@ -331,8 +361,8 @@ function editOverlay(id) {
                     <img src="/assets/img/arrow_drop_down.svg">
                 </span>
             </div>
-            <div class="selectedInitials" id="assignedContactsContainer_${id}"></div>
-            <div class="dropdown-menu d_none" id="dropdownMenu_${id}"></div>
+            <div class="selectedInitials-edit" id="assignedContactsContainer_${id}"></div>
+            <div class=" dropdown-menu-edit d_none" id="dropdownMenu_${id}"></div>
         </div>
 
         <div id="subtask-container_${id}" class="input-container">
@@ -381,7 +411,7 @@ function saveEditedTask(id) {
     let subtasks = task.subtasks;
 
     let updatedTask = {
-        ...task,
+        task,
         title,
         description,
         date,
