@@ -93,6 +93,29 @@ function getSelectedContactsFromAddTask(task) {
   }
   return html;
 }
+function getSubtaskHTML(taskId, subtasks) {
+  let html = '';
+  if (subtasks && subtasks.length > 0) {
+    for (let i = 0; i < subtasks.length; i++) {
+      let subId = 'task_' + i;
+      let subtask = subtasks[i];
+
+      html += `
+        <div class="subtask-item" id="${subId}">
+          <div class="subtask-value">
+            <img class="dot" src="/assets/img/Subtasks icons11.svg">
+            ${subtask.title}
+          </div>
+          <div class="subtask-trash-img">
+            <img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
+          </div>
+        </div>
+      `;
+    }
+  }
+  return html;
+}
+
 
 async function getContactColorFromFirebase(contactName) {
   let response = await fetch(firebaseURL + "users.json");
@@ -187,7 +210,7 @@ function subtaskOverlayContent(task) {
       }
 
       html += `
-                <div onclick="toggleCustomSubtask(${task.id}, ${i}, this)" class="subtask-item cursor-pointer">
+                <div onclick="toggleCustomSubtask(${task.id}, ${i}, this)" class="subtask-item overlay-subtasks cursor-pointer">
                     <div class="custom-checkbox" >
                         <img src="${imageSrc}" class="checkbox-img" id="custom-subtask-${task.id}-${i}">
                     </div>
@@ -331,7 +354,7 @@ function editOverlay(id) {
 
         <div>
             <p>Description</p>
-            <textarea value="${description}" class="overlay-input-description"></textarea>
+            <textarea class="overlay-input-description">${description}</textarea>
         </div>
 
         <div>
@@ -367,7 +390,7 @@ function editOverlay(id) {
             <div class=" dropdown-menu-edit d_none" id="dropdownMenu_${id}"></div>
         </div>
 
-        <div id="subtask-container_${id}" class="input-container">
+        <div id="subtask-container_${id}" class="input-container subtask-container-edit">
             <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
             <div class="icons">
                 <span id="plusIcon_${id}" class="icon">
@@ -380,15 +403,13 @@ function editOverlay(id) {
                     <img onclick="addSubTaskInput(${id})" src="/assets/img/check.svg">
                 </span>
             </div>
-        </div>
+          </div>
+            <div id="subtask-error_${id}" class="error-message d_none">Max. 2 Subtasks erlaubt</div>
 
-        <ul id="subtasks_${id}" class="subtask-list">
-            ${subtasks
-              .map((s, i) => `<li id="task_${i}">${s.title}</li>`)
-              .join("")}
-        </ul>
+    <div id="subtasks_${id}" class="subtask-list">
+  ${getSubtaskHTML(id, subtasks)}
+    </div>
 
-        <div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
 
         <button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button>
     `;

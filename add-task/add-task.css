@@ -176,6 +176,9 @@ input::placeholder {
     background-color: rgb(217, 215, 215);
 
 }
+.overlay-subtasks{
+justify-content: flex-start !important
+;}
 
 .blue-background {
     background-color: #2A3647;
