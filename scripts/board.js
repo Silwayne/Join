@@ -368,7 +368,7 @@ function editOverlay(id) {
         </div>
 
         <div id="subtask-container_${id}" class="input-container">
-            <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
+            <input class="subtasks-class" type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
             <div class="icons">
                 <span id="plusIcon_${id}" class="icon">
                     <img src="/assets/img/Subtasks icons11.svg">
@@ -390,7 +390,7 @@ function editOverlay(id) {
 
         <div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
 
-        <button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button>
+        <div class="button-div"><button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button></div>
     `;
 
   renderAssignedContacts(id);

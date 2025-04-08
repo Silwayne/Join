@@ -1,13 +1,13 @@
 #add-task-overlay {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color:white;
-    z-index: 10;
-    width: 75%;
-    height: 85%;
-    border-radius: 20px; 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  z-index: 10;
+  width: 75%;
+  height: 85%;
+  border-radius: 20px;
 }
 
 body {
@@ -19,7 +19,7 @@ body {
   height: 100vh;
 }
 .red {
-  color: #ff8190
+  color: #ff8190;
 }
 
 .headline {
@@ -68,7 +68,6 @@ body {
 p {
   font-size: 18px !important;
   margin: 7px !important;
-
 }
 
 input {
@@ -78,14 +77,13 @@ input {
   padding-left: 7px;
   font-size: 18px;
 }
-input::placeholder{
-  color: #D1D1D1;
+input::placeholder {
+  color: #d1d1d1;
 }
 
 #description-input {
   height: 108px !important;
   padding-bottom: 54px;
-
 }
 
 #category {
@@ -116,7 +114,6 @@ input::placeholder{
   height: 0;
   width: 396px;
 }
-
 
 .icons {
   display: flex;
@@ -165,29 +162,28 @@ input::placeholder{
   font-size: 16px;
   font-weight: bold;
 }
-.contact-list{
-      display: flex;
-      align-items: center;
-      justify-content: space-between; /* Schiebt die Checkbox nach rechts */
-      width: 100%; /* Nimmt die volle Breite */
-      border-bottom: 0px solid #ccc; /* Falls eine Trennlinie gewünscht ist */
-}  
-.contact-checkbox{
+.contact-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Schiebt die Checkbox nach rechts */
+  width: 100%; /* Nimmt die volle Breite */
+  border-bottom: 0px solid #ccc; /* Falls eine Trennlinie gewünscht ist */
+}
+.contact-checkbox {
   margin-right: 9px !important;
   width: 18px !important;
 }
-.contact-name{
+.contact-name {
   flex-grow: 1;
 }
 
 .task:hover {
   background: #e0e0e0;
-
 }
-.task:hover ::marker{
+.task:hover ::marker {
   color: yellowgreen;
 }
-#subtaskInput{
+#subtaskInput {
   font-size: 18px;
 }
 
@@ -202,7 +198,6 @@ input::placeholder{
   justify-content: center;
   border-radius: 50%;
   z-index: 9999 !important;
-
 }
 
 .arrow-drop-down:hover {
@@ -245,7 +240,6 @@ input::placeholder{
 }
 
 #prio-urgent img {
-
   height: 12px !important;
 }
 
@@ -295,15 +289,16 @@ input::placeholder{
   width: 396px;
   background-color: white;
   margin: 0;
-  position: absolute;  
+  position: absolute;
 }
-
-
 
 ul {
   width: 396px;
-  position: absolute;
   height: 45px;
+}
+
+.subtask-list {
+  margin: 20px 0;
 }
 
 .create-clear-button {
@@ -325,7 +320,6 @@ ul {
   background: white;
   color: black;
   border: 1px solid #ccc;
-
 }
 
 #clear-button img {
@@ -351,14 +345,13 @@ ul {
   width: 15.49;
   height: 11.19px;
   filter: brightness(0) saturate(100%) invert(1);
-
 }
 
 footer {
   padding-top: 135px;
   display: flex;
   justify-content: space-between;
-  align-items: center
+  align-items: center;
 }
 
 .buttons-bottom-right {
@@ -376,12 +369,12 @@ footer {
   margin-top: 0;
   padding-top: 0;
 }
-.selectedInitials{
+.selectedInitials {
   display: flex;
-  position: absolute;    
+  position: absolute;
   margin-top: 4px;
 }
-.selected-User-Initials{
+.selected-User-Initials {
   padding-bottom: 4px;
 }
 .input-error {
@@ -397,8 +390,8 @@ footer {
 .overlay-background {
   background-color: rgba(0, 0, 0, 0.4); /* <- Statt filter */
   filter: brightness(0.6);
-  transition: background-color 0.3s ease, filter 0.3s ease; 
+  transition: background-color 0.3s ease, filter 0.3s ease;
   width: 100vw;
   height: 100vh;
-  z-index: 9; 
+  z-index: 9;
 }

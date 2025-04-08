@@ -85,9 +85,13 @@ button {
   border-radius: 10px;
   border: none;
   padding: 12px 16px;
-  width: 160px;
   height: 48px;
   cursor: pointer;
+}
+
+.button-div {
+  display: flex;
+  justify-content: end;
 }
 
 #board-alignment-end {
@@ -357,8 +361,18 @@ button {
   flex-direction: row;
 }
 
+.filterNamesInput::placeholder {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.subtasks-class::placeholder {
+  font-size: 20px;
+  font-weight: 400;
+}
+
 textarea {
-  width: 429px;
+  width: 100%;
   border-radius: 9px;
   padding-left: 7px;
   font-size: 18px;
@@ -506,7 +520,9 @@ textarea {
 
   #main {
     margin-left: 0px;
+    padding-bottom: 150px;
   }
+
   .task-columns {
     display: flex;
     flex-direction: row;
@@ -517,5 +533,18 @@ textarea {
 
   .task-columns:active {
     cursor: grab; /* Zeigt eine Hand an, wenn der Bereich aktiv ist */
+  }
+
+  .task-columns {
+    height: auto;
+  }
+
+  #searchTasks {
+    width: 100% !important;
+  }
+
+  #alignment-board-div {
+    display: flex;
+    align-items: start;
   }
 }
