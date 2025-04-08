@@ -214,6 +214,7 @@ button {
   justify-content: space-between;
   align-items: center;
 }
+
 .closeOverlay-x {
   display: flex;
   width: 25px;
@@ -223,6 +224,7 @@ button {
   border-radius: 20px;
   cursor: pointer;
 }
+
 .closeOverlay-x img {
   width: 13.5;
 }
@@ -230,6 +232,7 @@ button {
 .closeOverlay-x:hover {
   background-color: rgb(217, 215, 215);
 }
+
 .closeEditOverlay-x {
   display: flex;
   justify-content: flex-end;
@@ -306,7 +309,38 @@ button {
   z-index: 110;
   width: 525px;
   border-radius: 30px;
+  overflow: hidden;
+
 }
+
+#task-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+#task-content::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 20px;
+}
+
+#task-content::-webkit-scrollbar-thumb {
+  background-color: #c7c7c7;
+  border-radius: 20px;
+  transition: background-color 0.3s ease;
+}
+
+#task-content::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}
+
+.saveEditedTaskClass {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+.subtask-list{
+  margin-top: 15px;
+}
+
 
 .subtasks-list {
   margin-top: 8px;
@@ -324,9 +358,11 @@ button {
   height: 20px;
   transition: transform 0.1s ease;
 }
+
 .checkbox-img:active {
   transform: scale(0.95);
 }
+
 .cursor-pointer {
   cursor: pointer;
 }
@@ -338,9 +374,10 @@ button {
 #task-content {
   padding: 48px 40px;
   float: left;
-  overflow-y: auto;
   width: 100%;
   height: 100%;
+  overflow-y: auto;
+  max-height: 820px;
 }
 
 .due-date {
@@ -428,6 +465,7 @@ textarea {
 .overlay-delete:hover img {
   content: url("/assets/img/delete_blue.svg");
 }
+
 .delete-p {
   width: 62px;
 }
@@ -482,10 +520,12 @@ textarea {
 .dropdown-menu-sticky {
   position: sticky !important;
 }
+
 .dropdown {
   margin-bottom: 32px !important;
   margin-top: 32px !important;
 }
+
 .user-initials {
   font-weight: 400 !important;
   font-size: 12px !important;
@@ -523,12 +563,15 @@ textarea {
     padding-bottom: 150px;
   }
 
+
   .task-columns {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    overflow-x: auto; /* Ermöglicht horizontales Scrollen */
-    scroll-behavior: smooth; /* Sanftes Scrollen */
+    overflow-x: auto;
+    /* Ermöglicht horizontales Scrollen */
+    scroll-behavior: smooth;
+    /* Sanftes Scrollen */
   }
 
   .task-columns:active {

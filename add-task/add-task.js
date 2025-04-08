@@ -287,14 +287,19 @@ function handleContactSelection(name, checked, id) {
 
 
 function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id, isChecked) {
+    let fontColor = ""
     let checkboxImage;
     let backgroundClass = "";
 
     if (isChecked === true) {
         checkboxImage = "../assets/img/checked.svg";
         backgroundClass = "blue-background";
+        fontColor = "white-font";
+
     } else {
         checkboxImage = "../assets/img/unchecked.svg";
+        fontColor = "normal-font";
+
     }
 
     return `
@@ -303,7 +308,7 @@ function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id,
                 <div class="user-icon" style="background-color: ${bgColor};">
                     <span class="user-initials">${contactInitials}</span>
                 </div>
-                <span class="contact-name ">${contactName}</span>
+                <span class="contact-name ${fontColor}">${contactName}</span>
                 <div class="custom-checkbox">
                     <img src="${checkboxImage}" id="contact-checkbox-img-${idNumber}" class="checkbox-img">
                 </div>
@@ -459,22 +464,36 @@ function filterNames(id) {
 
 
 
-function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {    
+function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {
+    let fontColor = "";
+    let checkboxImage = "../assets/img/unchecked.svg";
+    let backgroundClass = "";
+
+    if (isChecked === 'checked') {
+        checkboxImage = "../assets/img/checked.svg";
+        backgroundClass = "blue-background";
+        fontColor = "white-font";
+    } else {
+        fontColor = "normal-font";
+    }
+
+    let idNumber = contactName.replace(/\s+/g, '_');
+
     return `
-        <div>      
-            <label class="contact-list">
+        <div class="contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
+            <label class="contact-list-label">
                 <div class="user-icon" style="background-color: ${contactColors[contactName]};">
                     <span class="user-initials">${contactInitials}</span>
                 </div>
-                <span class="contact-name">${contactName}</span>
-                <input 
-                    class="contact-checkbox" 
-                    type="checkbox"
-                    ${isChecked}
-                    onclick="handleContactSelection('${contactName}', this.checked, '${id}')">
+                <span class="contact-name ${fontColor}">${contactName}</span>
+                <div class="custom-checkbox">
+                    <img src="${checkboxImage}" id="contact-checkbox-img-${idNumber}" class="checkbox-img">
+                </div>
             </label>
-        </div>`;
+        </div>
+    `;
 }
+
 
 
 
