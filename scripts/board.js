@@ -185,7 +185,7 @@ function generateTaskBoxContent(task) {
                 <div><p>${contactsOverlayContent(task)}</p></div>
                 <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
                 <div class="overlay-delete-edit">
-                    <div onclick="deteleOverlay(${
+                    <div onclick="deleteOverlay(${
                       task.id
                     })" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
                         <div class="overlay-delete-edit-border"></div>
@@ -334,9 +334,18 @@ function filterPriorityImage(task) {
   return '<img src="../assets/img/Prio-alta-red.svg">';
 }
 
-function deteleOverlay(id) {
-  console.log("GELÖSCHT" + id);
+async function deleteOverlay(id) {
+  const task = todos.find(t => t.id === id);
+  if (!task) return;
+
+  await fetch(`${firebaseURL}tasks/${task.firebaseID}.json`, {
+    method: "DELETE"
+  });
+
+  closeOverlay();
+  updateBoardHTML();
 }
+
 function editOverlay(id) {
   selectContacts(id);
   let task = todos.find((t) => t.id === id);
@@ -390,30 +399,25 @@ function editOverlay(id) {
             <div class=" dropdown-menu-edit d_none" id="dropdownMenu_${id}"></div>
         </div>
 
-        <div id="subtask-container_${id}" class="input-container">
-            <input class="subtasks-class" type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
-        <div id="subtask-container_${id}" class="input-container subtask-container-edit">
-            <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
-            <div class="icons">
-                <span id="plusIcon_${id}" class="icon">
-                    <img src="/assets/img/Subtasks icons11.svg">
-                </span>
-                <span id="checkIcon_${id}" class="icon d_none">
-                    <img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg">
-                </span>
-                <span id="cancelIcon_${id}" class="icon d_none">
-                    <img onclick="addSubTaskInput(${id})" src="/assets/img/check.svg">
-                </span>
-            </div>
-        </div>
+     <div id="subtask-container_${id}" class="input-container subtask-container-edit">
+  <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
+  <div class="icons">
+    <span id="plusIcon_${id}" class="icon">
+      <img src="/assets/img/Subtasks icons11.svg">
+    </span>
+    <span id="checkIcon_${id}" class="icon d_none">
+      <img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg">
+    </span>
+    <span id="cancelIcon_${id}" class="icon d_none">
+      <img onclick="addSubTaskInput(${id})" src="/assets/img/check.svg">
+    </span>
+  </div>
+  </div>
+  <div id="subtask-error_${id}" class="error-message d_none">Max. 2 Subtasks erlaubt</div>
+<div id="subtasks_${id}" class="subtask-list">
+  ${getSubtaskHTML(id, subtasks)}
+</div>
 
-        <ul id="subtasks_${id}" class="subtask-list">
-            ${subtasks
-              .map((s, i) => `<li id="task_${i}">${s.title}</li>`)
-              .join("")}
-        </ul>
-
-        <div id="subtask-error_${id}" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
 
         <div class="button-div"><button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button></div>
     `;
