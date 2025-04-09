@@ -425,42 +425,34 @@ function editOverlay(id) {
   renderAssignedContacts(id);
   updateIcons(id);
 }
-/*
---------- von GPT geholt -> schaue ich mir morgen an!
 
 function saveEditedTask(id) {
     let task = todos.find(t => t.id === id);
     let firebaseID = task.firebaseID;
-
-    // Neue Werte aus dem Overlay holen
     let title = document.querySelector('.overlay-input-title').value.trim();
     let description = document.querySelector('.overlay-input-description').value.trim();
     let date = document.querySelector('.overlay-input-date').value;
 
-    // Die aktuelle Priority hast du eh in der globalen `priority`-Variable!
-    // Und die Kontakte sind in overlayContacts
-
-    // Falls du Subtasks editierbar machst, müsstest du die auch lesen – hier nehmen wir einfach die alten
     let subtasks = task.subtasks;
 
     let updatedTask = {
-        task,
-        title,
-        description,
-        date,
-        priority,
-        contacts: overlayContacts,
-        subtasks,
-    };
+      title,
+      description,
+      date,
+      priority,
+      contacts: overlayContacts,
+      subtasks,
+      status: task.status,
+      category: task.category 
+  };
+  
 
     updateFireBaseData(firebaseID, updatedTask).then(() => {
         document.getElementById('task-overlay').classList.add('d_none');
-        updateBoardHTML(); // Aktualisiere Board nach Speichern
+        closeOverlay()
+        updateBoardHTML(); 
     });
 }
-*/
-
-// Funktion zur Filterung der Aufgaben
 
 function filterTasks() {
   let input = document.getElementById("searchTasks").value.toLowerCase();
