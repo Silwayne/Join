@@ -464,6 +464,7 @@ async function saveEditedTask(id) {
 
   updateFireBaseData(firebaseID, updatedTask);
   await closeOverlay();
+  window.location.reload()
 }
 
 function filterTasks() {

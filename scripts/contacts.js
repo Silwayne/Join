@@ -24,6 +24,7 @@ async function contactFirebase() {
   );
   firebaseAnswer = await firebaseUrl.json();
   fireBase = firebaseAnswer;
+  users = fireBase.users; 
   renderLeftColumnContacts();
 }
 
@@ -40,21 +41,30 @@ function renderLeftColumnContacts() {
     let user = users[keyObj];
     let initial = user.name.charAt(0).toUpperCase();
     if (initial !== lastInitial) {
-      leftContactsList.innerHTML += `
+      leftContactsList.innerHTML +=
+        renderLeftColumnContactsInitalsTemplate(initial);
+      lastInitial = initial;
+    }
+    renderLeftColumnPartTwo(user, indexOfUser, keyObj);
+  });
+}
+
+function renderLeftColumnContactsInitalsTemplate(initial) {
+  return `
         <div class="contact-separator">
           <span class="contact-initial">${initial}</span>
           <div class="contact-divider"></div>
         </div>`;
-      lastInitial = initial;
-    }
-    renderLeftColumnContactsTemplate(user, indexOfUser, keyObj);
-    createContactNameInitials(user, indexOfUser);
-    1;
-    let userImage = document.getElementById(`user-icon${indexOfUser}`);
-    if (userImage) {
-      userImage.style.backgroundColor = user.color;
-    }
-  });
+}
+
+function renderLeftColumnPartTwo(user, indexOfUser, keyObj) {
+  renderLeftColumnContactsTemplate(user, indexOfUser, keyObj);
+  createContactNameInitials(user, indexOfUser);
+  1;
+  let userImage = document.getElementById(`user-icon${indexOfUser}`);
+  if (userImage) {
+    userImage.style.backgroundColor = user.color;
+  }
 }
 
 function createContactNameInitials(user, indexOfUser) {
@@ -95,7 +105,7 @@ function createBigContactNameInitials(user) {
   }
 }
 
-function hideContactDetails() {
+function hideContactDetails(users) {
   let rightColumn = document.getElementById("right-contacts-page-column");
   let leftColumn = document.getElementById("left-contacts-page-column");
   rightColumn.style.display = "none";
@@ -104,35 +114,39 @@ function hideContactDetails() {
   overlayButton.style.display = "none";
 }
 
-function renderRightContactArea(name, email, phone, paramKey) {
+function renderRightContactArea(name, email, phone, paramKey, users) {
+  handleResponsiveView(paramKey, users);
+  updateContactDetails(name, email, phone, paramKey, users);
+  updateUserDetails(paramKey, users);
+}
+
+function handleResponsiveView(paramKey, users) {
   if (window.innerWidth < 1440) {
     let rightColumn = document.getElementById("right-contacts-page-column");
     let leftColumn = document.getElementById("left-contacts-page-column");
     let userContactHeader = document.getElementById("user-contact-header");
     rightColumn.style.display = "flex";
-    userContactHeader.innerHTML = `<button class="go-back-arrow" onclick="hideContactDetails()">
-                                  <img src="/assets/img/back-arrow.svg">
-                                 </button>`;
+    userContactHeader.innerHTML = `<button class="go-back-arrow" onclick="hideContactDetails(users)">
+                                    <img src="/assets/img/back-arrow.svg">
+                                   </button>`;
     leftColumn.style.display = "none";
     rightColumn.style.display = "block";
-    let contactDiv = document.getElementById("contact-div");
-    if (!document.getElementById("overlayButton")) {
-      contactDiv.innerHTML += `<div id="button-overlay-area">
-         <button onclick="mobileEditOptions(key)" id="overlayButton">
-            <img id="three-dots-options" src="/assets/img/three_dots.svg">
-         </button>
-      </div>`;
-    }
-    let overlayButton = document.getElementById("overlayButton");
-    let buttonOverlayArea = document.getElementById("button-overlay-area");
-    if (leftColumn) {
-      overlayButton.remove();
-    }
-    if (rightColumn) {
-      contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(key)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
-    }
-    key = paramKey;
+    handleOverlayButton(paramKey, users);
   }
+}
+
+function handleOverlayButton(paramKey, users) {
+  let contactDiv = document.getElementById("contact-div");
+  if (!document.getElementById("overlayButton")) {
+    contactDiv.innerHTML += `<div id="button-overlay-area">
+       <button onclick="mobileEditOptions('${paramKey}', users)" id="overlayButton">
+          <img id="three-dots-options" src="/assets/img/three_dots.svg">
+       </button>
+    </div>`;
+  }
+}
+
+function updateContactDetails(name, email, phone, paramKey, users) {
   contactDetailsAreaTemplate();
   hideContactOptionsForMobile();
   let rightContactNameArea = document.getElementById("big-user-name");
@@ -145,17 +159,20 @@ function renderRightContactArea(name, email, phone, paramKey) {
   rightEmailArea.href = `mailto:${email}`;
   rightContactNameArea.innerText = name;
   rightDeleteButton.onclick = function () {
-    deleteContactFromDatabase(paramKey);
+    deleteContactFromDatabase(paramKey, users);
   };
   rightEditButton.onclick = function () {
-    editContact(paramKey, { name, email, phone });
+    editContact(paramKey, users);
   };
+}
+
+function updateUserDetails(paramKey, users) {
   let user = users[paramKey];
   createBigContactNameInitials(user);
   bigRandomColour(user);
 }
 
-async function deleteContactFromDatabase(key) {
+async function deleteContactFromDatabase(key, users) {
   let deleteFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
   try {
     await fetch(deleteFirebaseUrl, { method: "DELETE" });
@@ -168,23 +185,9 @@ async function deleteContactFromDatabase(key) {
   }
 }
 
-function editContact(key) {
+function editContact(key, users) {
   let user = users[key];
-  editContactOverlay(key, user);
-}
-
-async function saveEditedContact(key) {
-  let name = document.getElementById("fullName").value;
-  let email = document.getElementById("new-email").value;
-  let phone = document.getElementById("new-phone").value;
-  let editFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
-  await fetch(editFirebaseUrl, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, email, phone }),
-  });
-  closeEditOverlay();
-  contactsuccessfullyEditedNotification();
+  editContactOverlay(key, users);
 }
 
 function stopPropagation(event) {
@@ -259,4 +262,18 @@ async function addContactToDatabase() {
   setTimeout(function () {
     window.location.reload();
   }, 2000);
+}
+
+function mobileEditOptions(key, users) {
+  let buttonOverlayArea = document.getElementById("button-overlay-area");
+  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+    <div id="small-responsive-overlay-options">
+      <button class="responsiveButton" onclick="editContactOverlay('${key}', users)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
+      <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}', users)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
+    </div>
+  </div>`;
+  let overlayButton = document.getElementById("overlayButton");
+  if (overlayButton) {
+    overlayButton.remove();
+  }
 }

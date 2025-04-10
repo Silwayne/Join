@@ -2,7 +2,7 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
   leftContactsList.innerHTML += `
       <div
         class="contact-list"
-        onclick='renderRightContactArea("${user.name}", "${user.email}", "${user.phone}", "${key}")'
+        onclick='renderRightContactArea("${user.name}", "${user.email}", "${user.phone}", "${key}", users)'
         id="user${indexOfUser}"
       >
         <div class="user-area">
@@ -67,28 +67,6 @@ function contactDetailsAreaTemplate() {
             </div>`;
 }
 
-function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
-  leftContactsList.innerHTML += `
-      <div
-        class="contact-list"
-        onclick='renderRightContactArea("${user.name}", "${user.email}", "${user.phone}", "${key}")'
-        id="user${indexOfUser}"
-      >
-        <div class="user-area">
-          <div class="user-picture">
-            <div
-              id="user-icon${indexOfUser}"
-              class="user-initials user-icon"
-            ></div>
-          </div>
-          <div class="user-info">
-            <p class="user-name">${user.name}</p>
-            <p class="user-email">${user.email}</p>
-          </div>
-        </div>
-      </div>`;
-}
-
 function displayAddContactOverlay() {
   let body = document.getElementById("overlayArea");
   let realBody = document.getElementById("body");
@@ -124,7 +102,7 @@ function displayAddContactOverlay() {
         </div>`;
 }
 
-function editContactOverlay(key) {
+function editContactOverlay(key, users) {
   let user = users[key];
   if (!user) {
     console.error("Benutzer nicht gefunden");
@@ -155,7 +133,7 @@ function editContactOverlay(key) {
                   <img class="icon" src="/assets/img/call.svg">
               </form>
               <div id="button-area">
-                <button onclick="deleteContactFromDatabase('${key}')" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
+                <button onclick="deleteContactFromDatabase('${key}', users)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
                   Delete</button
                 ><button onclick="saveEditedContact('${key}')" class="edit-contacts-overlay-btns">
                   Save ✓
@@ -166,11 +144,11 @@ function editContactOverlay(key) {
         </div>`;
 }
 
-function mobileEditOptions(key) {
+function mobileEditOptions(key, users) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
   buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
     <div id="small-responsive-overlay-options">
-      <button class="responsiveButton" onclick="editContactOverlay(key)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
+      <button class="responsiveButton" onclick="editContactOverlay(key, users)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
       <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}')"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
     </div>
   </div>`;
