@@ -158,7 +158,8 @@ function openTaskBoxOverlay(id) {
   taskOverlay.classList.remove("d_none");
 }
 
-function closeOverlay() {
+async function closeOverlay() {
+  await updateBoardHTML()
   let taskOverlay = document.getElementById("task-overlay");
   taskOverlay.classList.add("d_none");
   let outerTaskOverlay = document.getElementById("outer-task-overlay");
@@ -343,7 +344,6 @@ async function deleteOverlay(id) {
   });
 
   closeOverlay();
-  updateBoardHTML();
 }
 
 function editOverlay(id) {
@@ -426,43 +426,55 @@ function editOverlay(id) {
   updateIcons(id);
 }
 
-function saveEditedTask(id) {
-    let task = todos.find(t => t.id === id);
-    let firebaseID = task.firebaseID;
-    let title = document.querySelector('.overlay-input-title').value.trim();
-    let description = document.querySelector('.overlay-input-description').value.trim();
-    let date = document.querySelector('.overlay-input-date').value;
+async function saveEditedTask(id) {
+  let task = todos.find(function(t) {
+      return t.id === id;
+  });
+  let firebaseID = task.firebaseID;
 
-    let subtasks = task.subtasks;
+  let title = document.querySelector('.overlay-input-title').value.trim();
+  let description = document.querySelector('.overlay-input-description').value.trim();
+  let date = document.querySelector('.overlay-input-date').value;
 
-    let updatedTask = {
-      title,
-      description,
-      date,
-      priority,
+  let subtasks = [];
+  let subtaskContainer = document.getElementById('subtasks_' + id);
+  if (subtaskContainer) {
+      let subtaskElements = subtaskContainer.children;
+      for (let i = 0; i < subtaskElements.length; i++) {
+          let subtaskText = subtaskElements[i].innerText.trim();
+          if (subtaskText !== '') {
+              subtasks.push({
+                  title: subtaskText,
+                  done: false
+              });
+          }
+      }
+  }
+
+  let updatedTask = {
+      title: title,
+      description: description,
+      date: date,
+      priority: priority,
       contacts: overlayContacts,
-      subtasks,
+      subtasks: subtasks,
       status: task.status,
-      category: task.category 
+      category: task.category
   };
-  
 
-    updateFireBaseData(firebaseID, updatedTask).then(() => {
-        document.getElementById('task-overlay').classList.add('d_none');
-        closeOverlay()
-        updateBoardHTML(); 
-    });
+  updateFireBaseData(firebaseID, updatedTask);
+  await closeOverlay();
 }
 
 function filterTasks() {
   let input = document.getElementById("searchTasks").value.toLowerCase();
-  const filteredTasks = todos.filter(
+  let filteredTasks = todos.filter(
     (task) =>
       task.title.toLowerCase().includes(input) ||
       task.description.toLowerCase().includes(input)
   );
 
-  const statuses = ["todo", "inprogress", "await", "done"];
+  let statuses = ["todo", "inprogress", "await", "done"];
 
   statuses.forEach((status) => {
     let taskDiv = document.getElementById("drag-and-drop-" + status);

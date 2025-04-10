@@ -1,30 +1,36 @@
-function createTask() {
-    let isValid = checkValidations()
+async function createTask() {
+    let isValid = checkValidations();
     if (isValid) {
-        getTaskData()
-        clearTaskForm()
-    }
-    
+        getTaskData();
+        clearTaskForm();
+  await updateBoardHTML()
+        removeAddTask()
 }
-function getTaskData(){
-    let title = document.getElementById('add-task-title').value
-    let description = document.getElementById('description-input').value
-    let date = document.getElementById('due-date').value
-    let category = document.getElementById('category').value
+}
+    
+
+function getTaskData() {
+    let title = document.getElementById('add-task-title').value.trim();
+    let description = document.getElementById('description-input').value.trim();
+    let date = document.getElementById('due-date').value;
+    let category = document.getElementById('category').value;
     let subtasks = [];
-    let subTaskElement2 = document.getElementById('task_2')
-    let subTaskElement1 = document.getElementById('task_1')
-    if (subTaskElement1) {
-        let subtask1 = subTaskElement1.textContent.trim();
-        subtasks.push({ title: subtask1, done: false });
-    
-        if (subTaskElement2) {
-            let subtask2 = subTaskElement2.textContent.trim();
-            subtasks.push({ title: subtask2, done: false });
+  
+    let list = document.getElementById('subtasks');
+    if (list) {
+      let subtaskItems = list.querySelectorAll('.subtask-item');
+      subtaskItems.forEach(item => {
+        let value = item.querySelector('.subtask-value')?.innerText.trim(); 
+        if (value && value !== '') {
+          subtasks.push({ title: value, done: false });
         }
+      });
     }
-    postToFireBase(title, description, assignedContacts, date, priority, category, subtasks)
-}
+  
+    postToFireBase(title, description, assignedContacts, date, priority, category, subtasks);
+  }
+  
+
 
 async function postToFireBase(title, description, contacts, date, priority, category, subtasks) {
     let task = {
