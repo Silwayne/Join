@@ -42,8 +42,20 @@ async function loadTasksFromFirebase() {
 function allowDrop(ev) {
   ev.preventDefault();
 }
+async function loadContactColors() {
+  let response = await fetch(firebaseURL + "users.json");
+  let users = await response.json();
+  contactColors = {}; 
+
+  for (let key in users) {
+    let user = users[key];
+    contactColors[user.name] = user.color;
+  }
+}
+
 
 async function updateBoardHTML() {
+  await loadContactColors();
   await loadTasksFromFirebase();
   const statuses = ["todo", "inprogress", "await", "done"];
 
@@ -80,7 +92,7 @@ function getSelectedContactsFromAddTask(task) {
   if (task.contacts) {
     for (let i = 0; i < task.contacts.length; i++) {
       let name = task.contacts[i];
-      let color = contactColors[name];
+      let color = contactColors[name] || "#ccc"; // z. B. grau, damit wenigstens was angezeigt wird
       let initials = getInitials(name);
       if (color) {
         html += `
@@ -428,44 +440,65 @@ function editOverlay(id) {
 
 async function saveEditedTask(id) {
   let task = todos.find(function(t) {
-      return t.id === id;
+    return t.id === id;
   });
+
   let firebaseID = task.firebaseID;
 
   let title = document.querySelector('.overlay-input-title').value.trim();
   let description = document.querySelector('.overlay-input-description').value.trim();
   let date = document.querySelector('.overlay-input-date').value;
-
   let subtasks = [];
   let subtaskContainer = document.getElementById('subtasks_' + id);
+
   if (subtaskContainer) {
-      let subtaskElements = subtaskContainer.children;
-      for (let i = 0; i < subtaskElements.length; i++) {
-          let subtaskText = subtaskElements[i].innerText.trim();
-          if (subtaskText !== '') {
-              subtasks.push({
-                  title: subtaskText,
-                  done: false
-              });
-          }
+    let subtaskElements = subtaskContainer.children;
+
+    for (let i = 0; i < subtaskElements.length; i++) {
+      let element = subtaskElements[i];
+
+      let valueElement = element.querySelector('.subtask-value');
+      let subtaskText = "";
+      if (valueElement) {
+        subtaskText = valueElement.textContent.trim();
       }
+      if (subtaskText !== '') {
+        let foundOld = false;
+        let wasDone = false;
+
+        if (task.subtasks && task.subtasks.length > 0) {
+          for (let j = 0; j < task.subtasks.length; j++) {
+            if (task.subtasks[j].title.trim() === subtaskText) {
+              wasDone = task.subtasks[j].done;
+              foundOld = true;
+              break;
+            }
+          }
+        }
+
+        subtasks.push({
+          title: subtaskText,
+          done: foundOld ? wasDone : false
+        });
+      }
+    }
   }
-
   let updatedTask = {
-      title: title,
-      description: description,
-      date: date,
-      priority: priority,
-      contacts: overlayContacts,
-      subtasks: subtasks,
-      status: task.status,
-      category: task.category
+    title: title,
+    description: description,
+    date: date,
+    priority: priority,
+    contacts: overlayContacts,
+    subtasks: subtasks,
+    status: task.status,
+    category: task.category
   };
-
   updateFireBaseData(firebaseID, updatedTask);
+
   await closeOverlay();
-  window.location.reload()
+  await updateBoardHTML();
 }
+
 
 function filterTasks() {
   let input = document.getElementById("searchTasks").value.toLowerCase();
