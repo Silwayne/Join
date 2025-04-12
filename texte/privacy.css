@@ -1,14 +1,14 @@
 .privacy-content {
   max-width: 800px;
   padding: 20px;
-  margin-left: 15%;
+  margin-left: 300px;
   font-family: "Inter", sans-serif;
   line-height: 1.6;
   color: #333;
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 50px;
   font-weight: bold;
   color: #000;
   margin-bottom: 10px;
@@ -42,3 +42,20 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 900px) {
+  .privacy-content {
+    margin-left: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  h1 {
+    font-size: 38px}
+}
+
+@media (max-width: 320px) {
+  h1 {
+    font-size: 35px}
+}
+

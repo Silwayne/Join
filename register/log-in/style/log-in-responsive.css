@@ -1,0 +1,15 @@
+@media(max-width: 600px) {
+    .container-button {
+        justify-content: space-evenly;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+
+   .register-container {
+    justify-content: center;
+        top: 75%;
+        right: 0;
+   }
+}
+

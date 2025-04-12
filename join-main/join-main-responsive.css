@@ -47,6 +47,12 @@
     height: 80px;
   }
 
+  .sidbar-nav-responsive {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
   .menu-responsive {
     display: flex;
     align-items: center;
@@ -79,7 +85,51 @@
     font-family: "Inter", sans-serif;
     font-size: 2vw;
     font-weight: 400;
+    white-space: nowrap;
   }
+
+  .footer-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    gap: 10px;
+    padding: 0 10px 5px;
+  }
+  
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .footer-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .footer-btn {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #2a3647;
+    color: white;
+    border: none;
+    padding: 10px 0;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+  }
+  
+  .footer-btn:hover {
+    background-color: #091931;
+  }
+
 }
 
 @media (max-width: 600px) {

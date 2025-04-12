@@ -21,8 +21,8 @@ window.onload = function () {
   setTimeout(() => {
     logo.style.width = "100px";
     logo.style.height = "122px";
-    logo.style.top = "80px";
-    logo.style.left = "70px";
+    logo.style.top = "5%";
+    logo.style.left = "5%";
     logo.style.transform = "translate(0, 0)";
     loader.style.opacity = "0";
 

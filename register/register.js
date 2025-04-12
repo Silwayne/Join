@@ -1,10 +1,9 @@
 const firebaseURL =
   "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
-function showMessage(message, isSuccess = false) {
+function showMessage(message) {
   let messageBox = document.getElementById("message-box");
   messageBox.textContent = message;
-  messageBox.style.backgroundColor = isSuccess ? "#28a745" : "#dc3545";
   messageBox.classList.remove("d-none");
   messageBox.style.display = "block";
 
