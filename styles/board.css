@@ -310,7 +310,6 @@ button {
   width: 525px;
   border-radius: 30px;
   overflow: hidden;
-
 }
 
 #task-content::-webkit-scrollbar {
@@ -337,10 +336,9 @@ button {
   display: flex;
   justify-content: center;
 }
-.subtask-list{
+.subtask-list {
   margin-top: 15px;
 }
-
 
 .subtasks-list {
   margin-top: 8px;
@@ -563,12 +561,12 @@ textarea {
     padding-bottom: 150px;
   }
 
-
   .task-columns {
     display: flex;
     flex-direction: row;
     gap: 10px;
     overflow-x: auto;
+    height: auto;
     /* Ermöglicht horizontales Scrollen */
     scroll-behavior: smooth;
     /* Sanftes Scrollen */
@@ -578,8 +576,8 @@ textarea {
     cursor: grab; /* Zeigt eine Hand an, wenn der Bereich aktiv ist */
   }
 
-  .task-columns {
-    height: auto;
+  .task-column {
+    width: 100% !important;
   }
 
   #searchTasks {
@@ -590,4 +588,5 @@ textarea {
     display: flex;
     align-items: start;
   }
+  .no-tasks-container{width: 100%;}
 }
