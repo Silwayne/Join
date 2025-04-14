@@ -1,5 +1,6 @@
 function init(){
     renderHeader();
+    initDropdownEvents();
     renderSidebar();
     renderSidebarResponsive();
     updateDate();
