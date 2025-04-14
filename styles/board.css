@@ -31,6 +31,8 @@ input {
   gap: 10px;
   padding: 8px 16px;
   width: 312px;
+  font-family: "Inter", sans-serif;
+
 }
 
 #searchIcon {
@@ -55,6 +57,10 @@ input {
 .overlay-input-description {
   height: 120px;
   text-align: start;
+}
+.overlay-input-date{
+  font-family: "Inter", sans-serif;
+
 }
 
 #divider {
@@ -191,6 +197,11 @@ button {
   color: #a8a8a8;
   font-weight: 400;
   font-size: 16px;
+
+  word-wrap: break-word;      
+  overflow-wrap: break-word;   
+  white-space: normal;         
+  max-width: 100%;            
 }
 
 .subtask-description {
@@ -415,13 +426,17 @@ textarea {
   border-color: lightgray;
   resize: vertical;
   height: 100px;
-}
+  font-family: "Inter", sans-serif;
 
+}
 .description-p {
   font-size: 20px !important;
   font-weight: 400;
   margin-left: 0 !important;
   margin-top: 24px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
 }
 
 .task-title-p {
@@ -442,6 +457,7 @@ textarea {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  cursor: pointer;
 }
 
 .overlay-delete {

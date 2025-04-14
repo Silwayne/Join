@@ -27,7 +27,7 @@ function getTaskData() {
       });
     }
   
-    postToFireBase(title, description, assignedContacts, date, priority, category, subtasks);
+    postToFireBase(title, description, overlayContacts, date, priority, category, subtasks);
   }
   
 

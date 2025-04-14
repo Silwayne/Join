@@ -74,11 +74,21 @@ async function updateBoardHTML() {
         taskDiv.innerHTML += taskHTML;
       }
     } else {
-      taskDiv.innerHTML = `<p class="no-tasks-text">No tasks for ${status}</p>`;
+      if (status === "todo") {
+        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks to do</p>`;
+      } else if (status === "inprogress") {
+        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks in progress</p>`;
+      } else if (status === "await") {
+        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks to await</p>`;
+      } else if (status === "done") {
+        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks done</p>`;
+      }
+
       taskDiv.classList.add("no-tasks-container");
     }
   }
 }
+
 
 async function moveTo(status) {
   let task = todos[currentDraggedTask];
@@ -92,7 +102,7 @@ function getSelectedContactsFromAddTask(task) {
   if (task.contacts) {
     for (let i = 0; i < task.contacts.length; i++) {
       let name = task.contacts[i];
-      let color = contactColors[name] || "#ccc"; // z. B. grau, damit wenigstens was angezeigt wird
+      let color = contactColors[name] || "#ccc";
       let initials = getInitials(name);
       if (color) {
         html += `

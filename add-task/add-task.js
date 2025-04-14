@@ -7,7 +7,6 @@ function init(content) {
     renderHeader()
 
 }
-let assignedContacts = [];
 let countContactsID = 0
 let counter = 0
 let contactColors = {};
@@ -319,6 +318,7 @@ function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id,
 
 function toggleContactCheckbox(element, contactName, idNumber) {
     let img = element.querySelector('img');
+    let nameSpan = element.querySelector('.contact-name');
     let isChecked = overlayContacts.includes(contactName);
 
     if (isChecked) {
@@ -326,16 +326,16 @@ function toggleContactCheckbox(element, contactName, idNumber) {
         img.src = "../assets/img/unchecked.svg";
         element.classList.remove('blue-background');
         element.classList.add('grey-contact-list');
-        element.classList.remove('white-font');
+        nameSpan.classList.remove('white-font');
+        nameSpan.classList.add('normal-font');
 
     } else {
         overlayContacts.push(contactName);
         img.src = "../assets/img/checked.svg";
         element.classList.add('blue-background');
         element.classList.remove('grey-contact-list');
-        element.classList.add('white-font');
-
-
+        nameSpan.classList.add('white-font');
+        nameSpan.classList.remove('normal-font');
     }
 
     renderAssignedContacts(idNumber);
@@ -582,7 +582,10 @@ function resetValidation(element) {
 
 function initHTML(content) {
     document.getElementById(content).innerHTML = `
+    <div class="add-task-x">
     <h1 class="add-task-h1">Add Task</h1>
+    <div onclick="removeAddTask()" id="addtaskx"><img src="../assets/img/close.svg"></div>
+    </div>
     <div class="display-splitter">
     <section class="left-section">
         <div>
@@ -592,7 +595,7 @@ function initHTML(content) {
         </div>
         <div>
             <p>Description</p>
-            <input id="description-input" type="text" placeholder="Enter a Description">
+            <textarea id="description-input" type="text" placeholder="Enter a Description"></textarea>
         </div>
         
         <div>

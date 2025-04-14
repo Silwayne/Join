@@ -68,18 +68,35 @@ input {
     font-size: 20px;
 }
 
+
 input::placeholder {
     color: #D1D1D1;
 }
 
 #description-input {
-    height: 120px !important;
+    min-height: 120px;
     padding-bottom: 60px;
+    max-height: 190px;
+    min-width: 440px;
+    max-width: 440px;
+    border-radius: 10px;
+    height: 48px;
+    padding-left: 8px;
+    font-size: 20px;
+    border: solid black 1px;
+    font-family: "Inter", sans-serif;
+
+
 
 }
 
 .absolute {
     position: absolute;
+}
+
+#due-date {
+    font-family: "Inter", sans-serif;
+
 }
 
 #category {
@@ -176,15 +193,17 @@ input::placeholder {
     background-color: rgb(217, 215, 215);
 
 }
-.overlay-subtasks{
-justify-content: flex-start !important
-;}
+
+.overlay-subtasks {
+    justify-content: flex-start !important;
+}
 
 .blue-background {
     background-color: #2A3647;
     border: solid white 1px;
 }
-.blue-background img{
+
+.blue-background img {
     filter: brightness(0) invert(1);
 
 }
@@ -193,10 +212,12 @@ justify-content: flex-start !important
 .blue-background:hover {
     background-color: #091931
 }
-.white-font{
+
+.white-font {
     color: white !important;
 }
-.normal-font{
+
+.normal-font {
     color: #2A3647
 }
 
@@ -400,6 +421,10 @@ justify-content: flex-start !important
 
 }
 
+#addtaskx {
+    visibility: hidden;
+}
+
 .create-clear-button {
     height: 56px;
     border: none;
@@ -476,22 +501,25 @@ footer {
     position: absolute;
     margin-top: 3px;
 }
-.selectedInitials-edit{
+
+.selectedInitials-edit {
     margin-top: 10px;
     margin-bottom: 25px;
     display: flex;
     gap: 3px;
 }
+
 .selected-User-Initials {
     padding-bottom: 3px;
 }
-.dropdown-menu-edit{
+
+.dropdown-menu-edit {
     max-height: 120px;
     overflow-y: auto;
     border-radius: 5px;
     background-color: white;
     margin: 0;
-    margin-bottom: 50px;    
+    margin-bottom: 50px;
 }
 
 .input-error {
