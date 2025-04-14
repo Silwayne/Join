@@ -3,6 +3,7 @@
   <head>
     <script src="join-header.js"></script>
     <script src="side-bar.js"></script>
+    <script src="sidebar-right.js"></script>
     <script src="join-main.js"></script>
     <meta charset="UTF-16" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,11 +23,17 @@
     <title>Join Main</title>
   </head>
 
-  <body onload="init()">
+  <body onload="init(), renderRight()">
+
     <header id="header"></header>
     <aside id="sidbar"></aside>
     <section id="sidebar-responsive"></section>
-    <main>
+
+    <div id="greeting-overlay">
+      <h2 id="greeting-text" class="dynamic-text"></h2>
+      <p id="greeting-name" class="dynamic-name"></p>
+    </div>
+    
     <section class="summary-content" id="content">
       <div class="summary-headline">
         <h1 class="summary-h1">Join 360</h1>
@@ -34,6 +41,7 @@
         <span class="span-headline">Key Metrics at a Glance</span>
       </div>
     </section>
+    <main>
     <section class="summary-container">
       <section class="summary-cards">
         <section class="cards-top">
@@ -118,7 +126,7 @@
         </div>
       </section>
       <article id="right-sidebar"></article>
+    </main>
     </section>
-  </main>
   </body>
 </html>
