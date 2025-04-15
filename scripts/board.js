@@ -422,7 +422,7 @@ function editOverlay(id) {
         </div>
 
      <div id="subtask-container_${id}" class="input-container subtask-container-edit">
-  <input type="text" id="subtaskInput_${id}" placeholder="Add subtask..." oninput="updateIcons(${id})">
+  <input type="text" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
   <div class="icons">
     <span id="plusIcon_${id}" class="icon">
       <img src="/assets/img/Subtasks icons11.svg">

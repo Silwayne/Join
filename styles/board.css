@@ -32,7 +32,6 @@ input {
   padding: 8px 16px;
   width: 312px;
   font-family: "Inter", sans-serif;
-
 }
 
 #searchIcon {
@@ -58,9 +57,8 @@ input {
   height: 120px;
   text-align: start;
 }
-.overlay-input-date{
+.overlay-input-date {
   font-family: "Inter", sans-serif;
-
 }
 
 #divider {
@@ -198,10 +196,10 @@ button {
   font-weight: 400;
   font-size: 16px;
 
-  word-wrap: break-word;      
-  overflow-wrap: break-word;   
-  white-space: normal;         
-  max-width: 100%;            
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  max-width: 100%;
 }
 
 .subtask-description {
@@ -318,7 +316,8 @@ button {
   transform: translate(-50%, -50%);
   background-color: white;
   z-index: 110;
-  width: 525px;
+  width: 100%;
+  max-width: 525px;
   border-radius: 30px;
   overflow: hidden;
 }
@@ -343,10 +342,10 @@ button {
 }
 
 .saveEditedTaskClass {
-  margin-top: 50px;
   display: flex;
   justify-content: center;
 }
+
 .subtask-list {
   margin-top: 15px;
 }
@@ -427,8 +426,8 @@ textarea {
   resize: vertical;
   height: 100px;
   font-family: "Inter", sans-serif;
-
 }
+
 .description-p {
   font-size: 20px !important;
   font-weight: 400;
@@ -535,11 +534,6 @@ textarea {
   position: sticky !important;
 }
 
-.dropdown {
-  margin-bottom: 32px !important;
-  margin-top: 32px !important;
-}
-
 .user-initials {
   font-weight: 400 !important;
   font-size: 12px !important;
@@ -604,5 +598,7 @@ textarea {
     display: flex;
     align-items: start;
   }
-  .no-tasks-container{width: 100%;}
+  .no-tasks-container {
+    width: 100%;
+  }
 }

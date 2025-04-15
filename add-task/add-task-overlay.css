@@ -12,7 +12,6 @@
   animation: slideInFromRightToCenter 0.2s ease-out forwards;
 }
 
-
 @keyframes slideInFromRightToCenter {
   0% {
     transform: translate(100%, -50%);
@@ -23,9 +22,6 @@
     opacity: 1;
   }
 }
-
-
-
 
 body {
   margin: 0;
@@ -57,6 +53,7 @@ body {
   font-size: 54px;
   margin: 0;
   margin-left: 108px;
+  color: black;
 }
 
 .border {
@@ -92,7 +89,8 @@ input {
   border-radius: 9px;
   height: 43px;
   padding-left: 7px;
-  font-size: 18px;
+  font-size: 20x;
+  font-weight: 400;
 }
 input::placeholder {
   color: #d1d1d1;
@@ -101,20 +99,18 @@ input::placeholder {
 #description-input {
   height: 108px !important;
   padding-bottom: 54px;
-  min-width: 396px !important;
-  max-width: 396px !important;
+  width: 396px;
+  border-color: lightgray;
+  border-width: 2px;
 }
-.subtask-item{
-  width:396px ;
 
-}
-.add-task-x{
+.add-task-x {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-#addtaskx{
-  visibility: visible	;
+#addtaskx {
+  visibility: visible;
   padding-top: 50px;
   margin-right: 108px;
   display: flex;
@@ -125,7 +121,7 @@ input::placeholder {
   border-radius: 20px;
   cursor: pointer;
 }
-#addtaskx:hover img{
+#addtaskx:hover img {
   padding: 4px;
   border-radius: 30px;
   background-color: rgb(217, 215, 215);
@@ -439,4 +435,74 @@ footer {
   width: 100vw;
   height: 100vh;
   z-index: 9;
+}
+
+/* Responsive */
+
+@media (max-width: 1440px) {
+  #add-task-overlay {
+    width: 100%;
+    height: 90%;
+    overflow: scroll;
+    border-radius: 0px;
+    bottom: 0;
+    animation: slideInFromRightToCenter 0.2s ease-out forwards;
+  }
+
+  #addtaskx {
+    margin-right: 5%;
+  }
+
+  .add-task-h1 {
+    margin-left: 5% !important;
+  }
+
+  .display-splitter {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  .border {
+    display: none;
+  }
+
+  .left-section {
+    width: 90% !important;
+  }
+
+  #description-input {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .right-section {
+    width: 90%;
+  }
+
+  #category {
+    width: 100%;
+  }
+
+  .prio-box {
+    flex-wrap: wrap;
+  }
+
+  .bottom-add-task-overlay-section {
+    display: flex;
+    justify-content: space-around;
+    position: sticky;
+    bottom: 0;
+    padding: 40px 5%;
+    background-color: lightgrey;
+  }
+
+  .fiel-Is-Required-Div {
+    width: 90%;
+    padding-left: 0px;
+  }
+
+  .dropdown-menu {
+    width: 90%;
+  }
 }

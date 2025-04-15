@@ -656,7 +656,7 @@ function initHTML(content) {
 
     
 </span>
-<footer>
+<section class="bottom-add-task-overlay-section">
 <div class="fiel-Is-Required-Div">    
     <p><span class="red">*</span>This field is required</p>   
     </div>
@@ -665,5 +665,5 @@ function initHTML(content) {
     <button class="create-clear-button" onclick="createTask()" id="createtask-button">Create Task <img src="/assets/img/check.svg"</button>
         </div>
 
-</footer>`
+</section>`
 }
