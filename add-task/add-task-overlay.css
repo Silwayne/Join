@@ -493,10 +493,9 @@ footer {
   .bottom-add-task-overlay-section {
     display: flex;
     justify-content: space-around;
-    position: sticky;
     bottom: 0;
     padding: 40px 5%;
-    background-color: lightgrey;
+    background-color: white  !important;
   }
 
   .fiel-Is-Required-Div {

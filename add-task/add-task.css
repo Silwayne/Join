@@ -561,7 +561,7 @@ footer {
 
 
     #sidebar-responsive {
-        display: flex;
+        display: flex !important;
         justify-content: center;
         align-items: center;
         background-color: #2a3647;
