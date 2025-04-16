@@ -588,8 +588,7 @@ function initHTML(content) {
     </div>
     <div class="display-splitter">
     <section class="left-section">
-        <div>
-
+        <div class="add-task-title">
             <p>Title<span class="red title-p">*</span></p>
             <input id="add-task-title" type="text" placeholder="Enter a title">
         </div>
@@ -598,7 +597,7 @@ function initHTML(content) {
             <textarea id="description-input" type="text" placeholder="Enter a Description"></textarea>
         </div>
         
-        <div>
+        <div class="assigned-div">
             <p>Assinged to</p>
             <div id="contact-container" class="input-container" onclick="showContacts('contact-container')">
             <input oninput="filterNames('assignedContactsContainer')" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
@@ -610,7 +609,7 @@ function initHTML(content) {
     </section>
     <div class="border"></div>
     <section class="right-section">
-        <div>
+        <div class="date-div">
             <p for="due-date">Due date<span class="red">*</span></p>
             <input type="date" id="due-date" placeholder="Hallo" required>
         </div>
@@ -628,7 +627,7 @@ function initHTML(content) {
                 </div>
             </div>
         </div>
-        <div>
+        <div class="category-div">
             <p for="category">Category<span class="red">*</span></p>
             <select id="category" name="category" required>
                 <option value="">Select task category</option>

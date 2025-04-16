@@ -119,11 +119,12 @@
     <div id="add-task-overlay" class="d_none">
       <div id="add-task-content"></div>
     </div>
-    <div id="outer-task-overlay">
-      <div id="task-overlay" class="d_none">
+    <div id="outer-task-overlay" onclick="closeOverlay()">
+      <div id="task-overlay" class="d_none" onclick="event.stopPropagation()">
         <div id="task-content"></div>
       </div>
     </div>
+    
   </body>
   <!-- Scripts -->
   <script src="/join-main/side-bar.js"></script>

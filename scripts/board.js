@@ -181,11 +181,12 @@ function openTaskBoxOverlay(id) {
 }
 
 async function closeOverlay() {
-  await updateBoardHTML()
   let taskOverlay = document.getElementById("task-overlay");
   taskOverlay.classList.add("d_none");
   let outerTaskOverlay = document.getElementById("outer-task-overlay");
   outerTaskOverlay.style.display = "none";
+  await updateBoardHTML()
+
 }
 function generateTaskBoxContent(task) {
   let img = filterPriorityImage(task);
@@ -202,9 +203,9 @@ function generateTaskBoxContent(task) {
               task.description
             }</p></div>
             <div><p class="due-date">Due date: ${task.date}</p></div>
-                <div class="priority-div"><p class="priority">Priority:  ${
+                <div class="priority-div"><p class="priority">Priority:   ${
                   task.priority
-                }</p>${img}</div>
+                } </p>${img}</div>
                 <div><p>${contactsOverlayContent(task)}</p></div>
                 <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
                 <div class="overlay-delete-edit">
@@ -366,6 +367,7 @@ async function deleteOverlay(id) {
   });
 
   closeOverlay();
+  updateBoardHTML()
 }
 
 function editOverlay(id) {

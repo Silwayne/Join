@@ -99,7 +99,9 @@ input::placeholder {
 #description-input {
   height: 108px !important;
   padding-bottom: 54px;
-  width: 396px;
+  max-width: 396px !important;
+  min-width: 396px !important;
+
   border-color: lightgray;
   border-width: 2px;
 }
