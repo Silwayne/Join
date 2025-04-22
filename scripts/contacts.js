@@ -24,7 +24,7 @@ async function contactFirebase() {
   );
   firebaseAnswer = await firebaseUrl.json();
   fireBase = firebaseAnswer;
-  users = fireBase.users; 
+  users = fireBase.users;
   renderLeftColumnContacts();
 }
 
@@ -181,7 +181,6 @@ async function deleteContactFromDatabase(key, users) {
     renderLeftColumnContacts();
   } catch (error) {
     console.error("Error deleting contact:", error);
-    alert("Failed to delete contact. Please try again.");
   }
 }
 
@@ -275,5 +274,36 @@ function mobileEditOptions(key, users) {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();
+  }
+}
+
+async function saveEditedContact(key) {
+  // Werte aus den Eingabefeldern abrufen
+  let name = document.getElementById("fullName").value;
+  let email = document.getElementById("new-email").value;
+  let phone = document.getElementById("new-phone").value;
+
+  // URL für das spezifische Benutzerobjekt in der Firebase-Datenbank
+  let firebaseURL = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
+
+  // Aktualisierte Daten an die Firebase-Datenbank senden
+  try {
+    await fetch(firebaseURL, {
+      method: "PATCH", // PATCH wird verwendet, um nur die angegebenen Felder zu aktualisieren
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, phone }),
+    });
+
+    // Overlay schließen
+    closeEditOverlay();
+
+    // Erfolgsbenachrichtigung anzeigen
+    contactsuccessfullyEditedNotification();
+
+    // Kontaktliste neu rendern
+    contactFirebase();
+  } catch (error) {
+    console.error("Fehler beim Aktualisieren des Kontakts:", error);
+    alert("Beim Speichern des Kontakts ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.");
   }
 }
