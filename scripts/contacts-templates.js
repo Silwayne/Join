@@ -85,7 +85,7 @@ function displayAddContactOverlay() {
               <img src="/assets/img/new-contact-icon.svg" alt="" />
             </div>
             <div id="add-contact-options">
-              <form id="addContactForm" class="add-contact-form">
+             <form id="addContactForm" class="add-contact-form" onsubmit="return addContactToDatabase(event)">
                 <input required type="text" id="fullName" placeholder="First and second name" />
                 <img class="icon" src="/assets/img/person.svg">
                 <input type="email" id="new-email" placeholder="E-Mail" />
@@ -104,37 +104,6 @@ function displayAddContactOverlay() {
             </div>
           </div>
         </div>`;
-
-  // Event-Listener hinzufügen, nachdem das Formular generiert wurde
-  const form = document.getElementById("addContactForm");
-  if (form) {
-    form.addEventListener("submit", async function (event) {
-      if (!this.checkValidity()) {
-        event.preventDefault(); // Verhindert das Abschicken des Formulars
-        return;
-      }
-
-      // Wenn das Formular gültig ist, führe die Funktion aus
-      let firebaseURL =
-        "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-      let name = document.getElementById("fullName").value;
-      let email = document.getElementById("new-email").value;
-      let phone = document.getElementById("new-phone").value;
-      let color = colours[Math.floor(Math.random() * colours.length)];
-
-      await fetch(firebaseURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, color }),
-      });
-
-      closeAddContactOverlay();
-      contactsuccessfullyAddedNotification();
-      setTimeout(function () {
-        window.location.reload();
-      }, 2000);
-    });
-  }
 }
 
 function editContactOverlay(key, users) {
@@ -193,35 +162,3 @@ function mobileEditOptions(key, users) {
     overlayButton.remove();
   }
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-  const form = document.getElementById("addContactForm");
-  if (form) {
-    form.addEventListener("submit", async function (event) {
-      if (!this.checkValidity()) {
-        event.preventDefault();
-        return;
-      }
-
-      // Formularverarbeitung
-      let firebaseURL =
-        "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-      let name = document.getElementById("fullName").value;
-      let email = document.getElementById("new-email").value;
-      let phone = document.getElementById("new-phone").value;
-      let color = colours[Math.floor(Math.random() * colours.length)];
-
-      await fetch(firebaseURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, phone, color }),
-      });
-
-      closeAddContactOverlay();
-      contactsuccessfullyAddedNotification();
-      setTimeout(function () {
-        window.location.reload();
-      }, 2000);
-    });
-  }
-});

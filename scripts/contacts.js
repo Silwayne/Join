@@ -244,23 +244,41 @@ if (buttonOverlayArea) {
   buttonOverlayArea.remove();
 }
 
-async function addContactToDatabase() {
+function addContactToDatabase(event) {
+  // Verhindert das Standard-Submit-Verhalten
+  event.preventDefault();
+
+  // Überprüft, ob das Formular gültig ist
+  const form = document.getElementById("addContactForm");
+  if (!form.checkValidity()) {
+    return false; // Verhindert das Abschicken des Formulars
+  }
+
+  // Wenn das Formular gültig ist, führe die Funktion aus
   let firebaseURL =
     "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   let name = document.getElementById("fullName").value;
   let email = document.getElementById("new-email").value;
   let phone = document.getElementById("new-phone").value;
   let color = colours[Math.floor(Math.random() * colours.length)];
-  await fetch(firebaseURL, {
+
+  fetch(firebaseURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, phone, color }),
-  });
-  closeAddContactOverlay();
-  contactsuccessfullyAddedNotification();
-  setTimeout(function () {
-    window.location.reload();
-  }, 2000);
+  })
+    .then(() => {
+      closeAddContactOverlay();
+      contactsuccessfullyAddedNotification();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    })
+    .catch((error) => {
+      console.error("Fehler beim Hinzufügen des Kontakts:", error);
+    });
+
+  return false; // Verhindert das Standard-Submit-Verhalten
 }
 
 function mobileEditOptions(key, users) {

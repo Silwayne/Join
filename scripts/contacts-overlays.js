@@ -29,9 +29,9 @@ function contactsuccessfullyEditedNotification() {
 function contactsuccessfullyDeletedNotification() {
   let displayArea = document.getElementById("contact-details-area");
   displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully eliminated.</div>`;
-  setTimeout(function () {
-    window.location.reload();
-  }, 2000);
+  // setTimeout(function () {
+  //   window.location.reload();
+  // }, 2000);
 }
 
 function contactsuccessfullyAddedNotification() {
