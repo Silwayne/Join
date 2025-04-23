@@ -28,16 +28,27 @@ async function loadTasksFromFirebase() {
   let firebaseData = await response.json();
   let tasksBoxContent = [];
   let index = 0;
+  let validContactNames = Object.keys(contactColors);
 
   for (let key in firebaseData) {
     let task = firebaseData[key];
     task.id = index;
     task.firebaseID = key;
+    if (task.contacts && Array.isArray(task.contacts)) {
+      let originalContacts = [...task.contacts];
+      task.contacts = task.contacts.filter(name => validContactNames.includes(name));
+      if (task.contacts.length !== originalContacts.length) {
+        await updateFireBaseData(task.firebaseID, task);
+      }
+    }
+
     tasksBoxContent.push(task);
     index++;
   }
+
   todos = tasksBoxContent;
 }
+
 
 function allowDrop(ev) {
   ev.preventDefault();
@@ -46,12 +57,26 @@ async function loadContactColors() {
   let response = await fetch(firebaseURL + "users.json");
   let users = await response.json();
   contactColors = {}; 
+  const validNames = [];
 
   for (let key in users) {
     let user = users[key];
     contactColors[user.name] = user.color;
+    validNames.push(user.name);
+  }
+  for (let task of todos) {
+    if (Array.isArray(task.contacts)) {
+      let originalContacts = [...task.contacts];
+      let filteredContacts = task.contacts.filter(name => validNames.includes(name));
+
+      if (filteredContacts.length !== originalContacts.length) {
+        task.contacts = filteredContacts;
+        await updateFireBaseData(task.firebaseID, task);
+      }
+    }
   }
 }
+
 
 
 async function updateBoardHTML() {
