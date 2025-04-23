@@ -69,7 +69,7 @@ function saveUser(name, email, password) {
   })
     .then(() => {
       showMessage("Registration successful! Redirecting...", true);
-      setTimeout(() => (window.location.href = "./log-in.html"), 2000);
+      setTimeout(() => (window.location.href = "./index.html"), 2000);
     })
     .catch(console.error);
 }

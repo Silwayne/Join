@@ -22,7 +22,7 @@ function renderHeader() {
       <div id="user-dropdown" class="dropdown hidden">
         <a href="/texte/privacy.html">Privacy Policy</a>
         <a href="/texte/legal.html">Legal Notice</a>
-        <a href="/log-in.html">Log out</a>
+        <a href="/index.html">Log out</a>
       </div>
     </div>
   `;
