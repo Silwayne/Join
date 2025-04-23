@@ -64,12 +64,16 @@ body {
   font-weight: 700;
 }
 
+.user:hover {
+  transform: scale(1.2);
+}
+
 .dropdown {
-  padding:  15px 0;
+  padding: 15px 0;
   border-radius: 10px 0 10px 10px;
   display: flex;
   flex-direction: column;
-    z-index: 100;
+  z-index: 100;
 }
 
 #user-dropdown {
