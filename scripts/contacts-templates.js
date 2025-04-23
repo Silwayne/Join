@@ -75,7 +75,7 @@ function displayAddContactOverlay() {
       <div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
         <div onclick="stopPropagation(event)" id="add-contact-overlay">
           <div id="left-add-contact-column">
-            <button id="closeOverlayButton" onclick="closeOverlay()" onclick="closeOverlay()">X</button>
+            <button id="closeOverlayButton" onclick="closeOverlay()">X</button>
             <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
             <h1 id="add-contact-heading">Add contact</h1>
             <h2>Tasks are better with a team!</h2>
@@ -85,21 +85,56 @@ function displayAddContactOverlay() {
               <img src="/assets/img/new-contact-icon.svg" alt="" />
             </div>
             <div id="add-contact-options">
-              <form action="" class="add-contact-form">
-                <input type="text" id="fullName" placeholder="First and second name" />
-                <input type="email" id="new-email" placeholder="E-Mail" required />
+              <form id="addContactForm" class="add-contact-form">
+                <input required type="text" id="fullName" placeholder="First and second name" />
+                <img class="icon" src="/assets/img/person.svg">
+                <input type="email" id="new-email" placeholder="E-Mail" />
+                <img class="icon" src="/assets/img/mail.svg">
                 <input type="tel" id="new-phone" placeholder="Phone" />
+                <img class="icon" src="/assets/img/call.svg">
+                <div id="button-area">
+                  <button type="button" onclick="closeOverlay()" id="cancel-add-contact" class="add-contacts-overlay-btns">
+                    Cancel X
+                  </button>
+                  <button type="submit" id="create-contact" class="add-contacts-overlay-btns">
+                    Create contact ✓
+                  </button>
+                </div>
               </form>
-              <div id="button-area">
-                <button onclick="closeOverlay()" id="cancel-add-contact" class="add-contacts-overlay-btns">
-                  Cancel X</button
-                ><button onclick="addContactToDatabase()" class="add-contacts-overlay-btns">
-                  Create contact ✓
-                </button>
-              </div>
             </div>
           </div>
         </div>`;
+
+  // Event-Listener hinzufügen, nachdem das Formular generiert wurde
+  const form = document.getElementById("addContactForm");
+  if (form) {
+    form.addEventListener("submit", async function (event) {
+      if (!this.checkValidity()) {
+        event.preventDefault(); // Verhindert das Abschicken des Formulars
+        return;
+      }
+
+      // Wenn das Formular gültig ist, führe die Funktion aus
+      let firebaseURL =
+        "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+      let name = document.getElementById("fullName").value;
+      let email = document.getElementById("new-email").value;
+      let phone = document.getElementById("new-phone").value;
+      let color = colours[Math.floor(Math.random() * colours.length)];
+
+      await fetch(firebaseURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, color }),
+      });
+
+      closeAddContactOverlay();
+      contactsuccessfullyAddedNotification();
+      setTimeout(function () {
+        window.location.reload();
+      }, 2000);
+    });
+  }
 }
 
 function editContactOverlay(key, users) {
@@ -125,9 +160,9 @@ function editContactOverlay(key, users) {
             </div>
             <div id="edit-contact-options">
               <form action="" class="edit-contact-form">
-                <input type="text" id="fullName" value="${user.name}" placeholder="${user.name}" required />
+                <input required type="text" id="fullName" value="${user.name}" placeholder="${user.name}" />
                   <img class="icon" src="/assets/img/person.svg">
-                <input type="email" id="new-email" value="${user.email}" placeholder="${user.email}" required />
+                <input type="email" id="new-email" value="${user.email}" placeholder="${user.email}" />
                   <img class="icon" src="/assets/img/mail.svg">
                 <input type="tel" id="new-phone" value="${user.phone}" placeholder="${user.phone}" />
                   <img class="icon" src="/assets/img/call.svg">
@@ -146,7 +181,8 @@ function editContactOverlay(key, users) {
 
 function mobileEditOptions(key, users) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
-  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+  buttonOverlayArea.innerHTML = `
+  <div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
     <div id="small-responsive-overlay-options">
       <button class="responsiveButton" onclick="editContactOverlay('${key}', users)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
       <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}', users)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
@@ -157,3 +193,35 @@ function mobileEditOptions(key, users) {
     overlayButton.remove();
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("addContactForm");
+  if (form) {
+    form.addEventListener("submit", async function (event) {
+      if (!this.checkValidity()) {
+        event.preventDefault();
+        return;
+      }
+
+      // Formularverarbeitung
+      let firebaseURL =
+        "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+      let name = document.getElementById("fullName").value;
+      let email = document.getElementById("new-email").value;
+      let phone = document.getElementById("new-phone").value;
+      let color = colours[Math.floor(Math.random() * colours.length)];
+
+      await fetch(firebaseURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, color }),
+      });
+
+      closeAddContactOverlay();
+      contactsuccessfullyAddedNotification();
+      setTimeout(function () {
+        window.location.reload();
+      }, 2000);
+    });
+  }
+});

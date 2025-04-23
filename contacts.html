@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" type="image/x-icon" href="/assets/img/Capa 1.svg" />
     <!-- CSS -->
     <link rel="stylesheet" href="/styles/contacts.css" />
     <link rel="stylesheet" href="/styles/add-contact-overlay.css" />
@@ -21,7 +22,7 @@
   </head>
   <body
     id="body"
-    onload="rightContactDetailsHideOnLoad(), renderSidebar(), renderHeader(), renderSidebarResponsive()"
+    onload="rightContactDetailsHideOnLoad(), renderSidebar(), renderHeader(), renderSidebarResponsive(), initDropdownEvents()"
   >
     <div id="sidbar"></div>
     <section id="sidebar-responsive"></section>
