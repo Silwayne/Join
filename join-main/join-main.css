@@ -73,6 +73,7 @@ body {
 }
 
 #user-dropdown {
+  width: 170px;
   background-color: #2f3b50;
   border-radius: 12px;
   padding: 10px;

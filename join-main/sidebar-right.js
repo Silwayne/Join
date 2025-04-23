@@ -2,7 +2,6 @@ function renderRight() {
     renderRightSidebar();
 }
 
-
 function renderRightSidebar() {
     let greetingText = getGreetingText();
     let userName = sessionStorage.getItem("userName") || "Gast";
