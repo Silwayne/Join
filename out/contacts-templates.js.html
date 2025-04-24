@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: contacts-templates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: contacts-templates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @file contacts-templates.js
+ * @description This file contains the templates and rendering logic for managing the UI of the contacts section, including the left column contact list, contact details area, and overlays for adding or editing contacts.
+ */
+
+/**
+ * Renders a single contact in the left column contact list.
+ * @param {Object} user - The user object containing contact details.
+ * @param {number} indexOfUser - The index of the user in the list.
+ * @param {string} key - The unique key of the user.
+ */
+function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
+  leftContactsList.innerHTML += `
+      &lt;div
+        class="contact-list"
+        onclick='renderRightContactArea("${user.name}", "${user.email}", "${user.phone}", "${key}", users)'
+        id="user${indexOfUser}"
+      >
+        &lt;div class="user-area">
+          &lt;div class="user-picture">
+            &lt;div
+              id="user-icon${indexOfUser}"
+              class="user-initials user-icon"
+            >&lt;/div>
+          &lt;/div>
+          &lt;div class="user-info">
+            &lt;p class="user-name">${user.name}&lt;/p>
+            &lt;p class="user-email">${user.email}&lt;/p>
+          &lt;/div>
+        &lt;/div>
+      &lt;/div>`;
+}
+
+/**
+ * Displays the contact details area for a selected contact.
+ * Updates the UI with the contact's information.
+ */
+function contactDetailsAreaTemplate() {
+  let contactDetailsArea = document.getElementById("contact-details-area");
+  contactDetailsArea.classList.add("show");
+  contactDetailsArea.innerHTML = `            
+              &lt;div class="user-name-header">
+                &lt;div id="user-picture-big-index" class="user-picture-big">
+                  Userimage
+                &lt;/div>
+                &lt;div class="user-name-area">
+                  &lt;div id="big-user-name" class="big-user-name">User Name&lt;/div>
+                  &lt;div id="user-name-options" class="user-name-options">
+                    &lt;a
+                      id="contact-edit"
+                      onclick="editContact(key, user)"
+                      class="edit-options"
+                      >&lt;img
+                        class="option-icon"
+                        src="/assets/img/edit-icon.svg"
+                      />
+                      Edit&lt;/a
+                    >
+                    &lt;a
+                      id="contact-to-trash"
+                      class="edit-options"
+                      onclick="deleteContactFromDatabase(key)"
+                      >&lt;img
+                        class="option-icon"
+                        src="/assets/img/trash-icon.svg"
+                      />
+                      Delete&lt;/a
+                    >
+                  &lt;/div>
+                &lt;/div>
+              &lt;/div>
+              &lt;h3 class="contact-information">Contact Information&lt;/h3>
+              &lt;div class="contact-details">
+                &lt;h4>E-Mail&lt;/h4>
+                &lt;br />
+                &lt;a id="user-email" class="user-email">user@name.com&lt;/a>
+                &lt;h4 class="phone-number">Phone&lt;/h4>
+                &lt;br />
+                &lt;p id="user-phone-number" class="user-phone-number">&lt;/p>
+                &lt;br />
+              &lt;/div>
+            &lt;/div>`;
+}
+
+/**
+ * Displays the overlay for adding a new contact.
+ * Dynamically generates the HTML for the overlay and appends it to the DOM.
+ */
+function displayAddContactOverlay() {
+  let body = document.getElementById("overlayArea");
+  let realBody = document.getElementById("body");
+  realBody.style.overflow = "hidden";
+  body.innerHTML += `
+      &lt;div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
+        &lt;div onclick="stopPropagation(event)" id="add-contact-overlay">
+          &lt;div id="left-add-contact-column">
+            &lt;button id="closeOverlayButton" onclick="closeOverlay()">X&lt;/button>
+            &lt;img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
+            &lt;h1 id="add-contact-heading">Add contact&lt;/h1>
+            &lt;h2>Tasks are better with a team!&lt;/h2>
+          &lt;/div>
+          &lt;div id="right-add-contact-column">
+            &lt;div class="new-contact-icon">
+              &lt;img src="/assets/img/new-contact-icon.svg" alt="" />
+            &lt;/div>
+            &lt;div id="add-contact-options">
+             &lt;form id="addContactForm" class="add-contact-form" onsubmit="return addContactToDatabase(event)">
+                &lt;input required type="text" id="fullName" placeholder="First and second name" />
+                &lt;img class="icon" src="/assets/img/person.svg">
+                &lt;input type="email" id="new-email" placeholder="E-Mail" />
+                &lt;img class="icon" src="/assets/img/mail.svg">
+                &lt;input type="tel" id="new-phone" placeholder="Phone" />
+                &lt;img class="icon" src="/assets/img/call.svg">
+                &lt;div id="button-area">
+                  &lt;button type="button" onclick="closeOverlay()" id="cancel-add-contact" class="add-contacts-overlay-btns">
+                    Cancel X
+                  &lt;/button>
+                  &lt;button type="submit" id="create-contact" class="add-contacts-overlay-btns">
+                    Create contact ✓
+                  &lt;/button>
+                &lt;/div>
+              &lt;/form>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>`;
+}
+
+/**
+ * Displays the overlay for editing an existing contact.
+ * Dynamically generates the HTML for the overlay and populates it with the contact's current details.
+ * @param {string} key - The unique key of the contact to edit.
+ * @param {Object} users - The list of all users.
+ */
+function editContactOverlay(key, users) {
+  let user = users[key];
+  if (!user) {
+    console.error("User not found");
+    return;
+  }
+  let realBody = document.getElementById("body");
+  realBody.style.overflow = "hidden";
+  let body = document.getElementById("overlayArea");
+  body.innerHTML = `
+      &lt;div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
+        &lt;div onclick="stopPropagation(event)" id="edit-contact-overlay">
+          &lt;div id="closeEditOverlay" id="left-edit-contact-column">
+            &lt;button id="closeEditOverlay" onclick="closeEditOverlay()">X&lt;/button>
+            &lt;img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
+            &lt;h1 id="edit-contact-heading">Edit contact&lt;/h1>
+          &lt;/div>
+          &lt;div id="right-edit-contact-column">
+            &lt;div class="new-contact-icon">
+              &lt;img src="/assets/img/new-contact-icon.svg"/>
+            &lt;/div>
+            &lt;div id="edit-contact-options">
+              &lt;form action="" class="edit-contact-form">
+                &lt;input required type="text" id="fullName" value="${user.name}" placeholder="${user.name}" />
+                  &lt;img class="icon" src="/assets/img/person.svg">
+                &lt;input type="email" id="new-email" value="${user.email}" placeholder="${user.email}" />
+                  &lt;img class="icon" src="/assets/img/mail.svg">
+                &lt;input type="tel" id="new-phone" value="${user.phone}" placeholder="${user.phone}" />
+                  &lt;img class="icon" src="/assets/img/call.svg">
+              &lt;/form>
+              &lt;div id="button-area">
+                &lt;button onclick="deleteContactFromDatabase('${key}', users)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
+                  Delete&lt;/button
+                >&lt;button onclick="saveEditedContact('${key}')" class="edit-contacts-overlay-btns">
+                  Save ✓
+                &lt;/button>
+              &lt;/div>
+            &lt;/div>
+          &lt;/div>
+        &lt;/div>`;
+}
+
+/**
+ * Displays the mobile edit options overlay for a contact.
+ * Dynamically generates the HTML for the overlay and appends it to the DOM.
+ * @param {string} key - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
+function mobileEditOptions(key, users) {
+  let buttonOverlayArea = document.getElementById("button-overlay-area");
+  buttonOverlayArea.innerHTML = `
+  &lt;div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+    &lt;div id="small-responsive-overlay-options">
+      &lt;button class="responsiveButton" onclick="editContactOverlay('${key}', users)">&lt;img id="edit-icon" src="/assets/img/edit-icon.svg">Edit&lt;/button>
+      &lt;button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}', users)">&lt;img id="trash-icon" src="/assets/img/trash-icon.svg">Delete&lt;/button>
+    &lt;/div>
+  &lt;/div>`;
+  let overlayButton = document.getElementById("overlayButton");
+  if (overlayButton) {
+    overlayButton.remove();
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addContactToDatabase">addContactToDatabase</a></li><li><a href="global.html#closeAddContactOverlay">closeAddContactOverlay</a></li><li><a href="global.html#closeEditOverlay">closeEditOverlay</a></li><li><a href="global.html#closeOverlay">closeOverlay</a></li><li><a href="global.html#colours">colours</a></li><li><a href="global.html#contactDetailsAreaTemplate">contactDetailsAreaTemplate</a></li><li><a href="global.html#contactFirebase">contactFirebase</a></li><li><a href="global.html#contactsuccessfullyAddedNotification">contactsuccessfullyAddedNotification</a></li><li><a href="global.html#contactsuccessfullyDeletedNotification">contactsuccessfullyDeletedNotification</a></li><li><a href="global.html#contactsuccessfullyEditedNotification">contactsuccessfullyEditedNotification</a></li><li><a href="global.html#createContactNameInitials">createContactNameInitials</a></li><li><a href="global.html#deleteContactFromDatabase">deleteContactFromDatabase</a></li><li><a href="global.html#displayAddContactOverlay">displayAddContactOverlay</a></li><li><a href="global.html#editContactOverlay">editContactOverlay</a></li><li><a href="global.html#hideSuccessMessage">hideSuccessMessage</a></li><li><a href="global.html#mobileEditOptions">mobileEditOptions</a></li><li><a href="global.html#renderLeftColumnContacts">renderLeftColumnContacts</a></li><li><a href="global.html#renderLeftColumnContactsInitalsTemplate">renderLeftColumnContactsInitalsTemplate</a></li><li><a href="global.html#renderLeftColumnContactsTemplate">renderLeftColumnContactsTemplate</a></li><li><a href="global.html#renderLeftColumnPartTwo">renderLeftColumnPartTwo</a></li><li><a href="global.html#rightContactDetailsHideOnLoad">rightContactDetailsHideOnLoad</a></li><li><a href="global.html#saveEditedContact">saveEditedContact</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Thu Apr 24 2025 10:14:50 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
