@@ -1,6 +1,6 @@
-body{
+body {
   max-height: 100vh;
- 
+
 }
 
 #main {
@@ -62,6 +62,7 @@ input {
   height: 120px;
   text-align: start;
 }
+
 .overlay-input-date {
   font-family: "Inter", sans-serif;
 }
@@ -546,13 +547,25 @@ textarea {
 
 #outer-task-overlay {
   display: none;
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background-color: #2626266b;
-  z-index: 100; 
+  z-index: 100;
+}
+
+.add-task-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 48px;
+  margin-right: 64px;
+}
+
+.add-task-img-button {
+  display: none;
 }
 
 
@@ -561,6 +574,32 @@ textarea {
     display: flex;
     flex-direction: column;
   }
+
+  .add-task-button {
+    display: none;
+  }
+
+  .add-task-img-button {
+    display: flex;
+    padding: 8px;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-right: 64px;
+  }
+
+  .responsive-button-board-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .headline {
+    margin: 0;
+    padding: 0;
+  }
+
 
   #alignment-board-div {
     display: flex;
@@ -584,13 +623,18 @@ textarea {
     gap: 10px;
     overflow-x: auto;
     height: auto;
-    /* Ermöglicht horizontales Scrollen */
     scroll-behavior: smooth;
-    /* Sanftes Scrollen */
+  }
+
+  #board-alignment-end {
+    width: 100%;
+    padding-top: 15px;
+    padding-left: 47px;
+    padding-right: 80px;
   }
 
   .task-columns:active {
-    cursor: grab; /* Zeigt eine Hand an, wenn der Bereich aktiv ist */
+    cursor: grab;
   }
 
   .task-column {
@@ -605,7 +649,108 @@ textarea {
     display: flex;
     align-items: start;
   }
+
   .no-tasks-container {
     width: 100%;
+  }
+
+
+  body {
+    padding-left: 0 !important;
+  }
+
+
+
+  #sidbar {
+    display: none !important;
+  }
+
+  .sidbar-logo {
+    display: none;
+  }
+
+
+  #sidebar-responsive {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    background-color: #2a3647;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+  }
+
+  .sidbar-nav-responsive {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .menu-responsive {
+    display: flex;
+    align-items: center;
+    gap: 15vw;
+  }
+
+  .menu-button-responsive {
+    background-color: #2a3647;
+    border: none;
+    color: white;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-button-design-responsive {
+    width: 12vw;
+    gap: 8px;
+    border-radius: 15px;
+    padding: 10px 0;
+  }
+
+  .menu-button-design-responsive:hover {
+    cursor: pointer;
+    background-color: #091931;
+  }
+}
+@media (max-width: 650px) {
+  #task-overlay{
+    width: 80% !important;
+  }
+  .task-title-p{
+    font-size: 30px !important;
+  }
+
+}
+
+@media (max-width: 500px) {
+  .responsive-button-board-div h1 {
+    font-size: 45px;
+    margin-left: 20px;
+
+  }
+
+  .responsive-button-board-div img {
+    height: 20px;
+    width: 20px;
+  }
+
+  .responsive-button-board-div button {
+    height: 35px;
+    width: 35px;
+  }
+
+  #the-board{
+    margin-left: 20px;
+    margin-right:20px ;
+  }
+  .add-task-img-button{
+    margin-right:20px ;
+  }
+  #board-alignment-end {
+  padding-left: 0;
+  padding-right: 30px;
   }
 }

@@ -127,7 +127,7 @@ function getSelectedContactsFromAddTask(task) {
   if (task.contacts) {
     for (let i = 0; i < task.contacts.length; i++) {
       let name = task.contacts[i];
-      let color = contactColors[name] || "#ccc";
+      let color = contactColors[name] || "#29abe2";
       let initials = getInitials(name);
       if (color) {
         html += `
@@ -545,7 +545,13 @@ function filterTasks() {
       task.description.toLowerCase().includes(input)
   );
 
-  let statuses = ["todo", "inprogress", "await", "done"];
+  const statuses = ["todo", "inprogress", "await", "done"];
+  const statusMessages = {
+    todo: "No tasks to do",
+    inprogress: "No tasks in progress",
+    await: "No tasks to await",
+    done: "No tasks done"
+  };
 
   statuses.forEach((status) => {
     let taskDiv = document.getElementById("drag-and-drop-" + status);
@@ -557,11 +563,12 @@ function filterTasks() {
       taskDiv.classList.add("task-columns");
 
       tasks.forEach((task) => {
-        let taskHTML = generateTodosHTML(task);
+        let taskHTML = generateTodosHTML(task); // KEIN await, wenn generateTodosHTML nicht async ist!
         taskDiv.innerHTML += taskHTML;
       });
     } else {
-      taskDiv.innerHTML = `<p class="no-tasks-text">No tasks for ${status}</p>`;
+      taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
+      taskDiv.classList.remove("task-columns");
       taskDiv.classList.add("no-tasks-container");
     }
   });

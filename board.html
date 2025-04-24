@@ -1,135 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-16" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/join-main/join-main.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <!-- CSS -->
-    <link rel="stylesheet" href="join-main/join-main.css" />
-    <link rel="stylesheet" href="styles/board.css" />
-    <link rel="stylesheet" href="add-task/add-task.css" />
-    <link rel="stylesheet" href="add-task/add-task-overlay.css" />
-    <link rel="stylesheet" href="/join-main/join-main-responsive.css" />
-    <title>Board</title>
-  </head>
+<head>
+  <meta charset="UTF-16" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/join-main/join-main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <body
-    id="body"
-    onload="renderSidebar(), renderHeader(), initAddTask('add-task-overlay'), renderSidebarResponsive(), updateBoardHTML(), initDropdownEvents()"
-  >
-    <div id="overlay-background" onclick="removeAddTask()">
-      <div id="sidbar"></div>
-      <section id="sidebar-responsive"></section>
-      <div id="header"></div>
-      <div id="main">
-        <div id="board-header-div">
-          <div id="alignment-board-div">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="join-main/join-main.css" />
+  <link rel="stylesheet" href="styles/board.css" />
+  <link rel="stylesheet" href="add-task/add-task.css" />
+  <link rel="stylesheet" href="add-task/add-task-overlay.css" />
+  <link rel="stylesheet" href="/join-main/join-main-responsive.css" />
+  <title>Board</title>
+</head>
+
+<body id="body"
+  onload="renderSidebar(), renderHeader(), initAddTask('add-task-overlay'), renderSidebarResponsive(), updateBoardHTML(), initDropdownEvents()">
+  <div id="overlay-background" onclick="removeAddTask()">
+    <div id="sidbar"></div>
+    <section id="sidebar-responsive"></section>
+    <div id="header"></div>
+    <div id="main">
+      <div id="board-header-div">
+        <div id="alignment-board-div">
+          <div class="responsive-button-board-div">
             <h1>Board</h1>
-            <div id="board-alignment-end">
-              <input oninput="filterTasks()" id="searchTasks" type="text" placeholder="Find Task" />
-              <hr id="divider" />
-              <img id="searchIcon" src="/assets/img/search.svg" alt="" />
-              <button
-                class="add-task-button"
-                id="add-task-button"
-                onclick="addTask(event)"
-              >
-                Add task +
-              </button>
-            </div>
+            <button class="add-task-img-button" onclick="addTask(event)">
+              <img src="./assets/img/Group 11.svg">
+            </button>
+          </div>
+          <div id="board-alignment-end">
+            <input oninput="filterTasks()" id="searchTasks" type="text" placeholder="Find Task" />
+            <hr id="divider" />
+            <img id="searchIcon" src="/assets/img/search.svg" alt="" />
+            <button class="add-task-button" id="add-task-button" onclick="addTask(event)">
+              Add task +
+            </button>
           </div>
         </div>
-        <div id="the-board">
-          <div>
-            <div class="task-column" id="to-do-column">
-              To do<button onclick="addTask(event)" class="small-add-task-btn">
-                +
-              </button>
-            </div>
-            <div
-              id="drag-and-drop-todo"
-              ondrop="moveTo('todo')"
-              ondragover="allowDrop(event)"
-              class="no-tasks-container"
-            >
-              <p class="no-tasks-text">No tasks to Await</p>
-            </div>
+      </div>
+      <div id="the-board">
+        <div>
+          <div class="task-column" id="to-do-column">
+            To do<button onclick="addTask(event)" class="small-add-task-btn">
+              +
+            </button>
           </div>
-
-          <div>
-            <div class="task-column" id="in-progress-column">
-              In progress<button
-                onclick="addTask(event)"
-                class="small-add-task-btn"
-              >
-                +
-              </button>
-            </div>
-            <div
-              id="drag-and-drop-inprogress"
-              ondrop="moveTo('inprogress')"
-              ondragover="allowDrop(event)"
-              class="no-tasks-container"
-            >
-              <p class="no-tasks-text">No tasks to Await</p>
-            </div>
-            <div></div>
+          <div id="drag-and-drop-todo" ondrop="moveTo('todo')" ondragover="allowDrop(event)" class="no-tasks-container">
+            <p class="no-tasks-text">No tasks to Await</p>
           </div>
+        </div>
 
-          <div>
-            <div class="task-column" id="await feedback-column">
-              Await feedback<button
-                onclick="addTask(event)"
-                class="small-add-task-btn"
-              >
-                +
-              </button>
-            </div>
-            <div
-              id="drag-and-drop-await"
-              ondrop="moveTo('await')"
-              ondragover="allowDrop(event)"
-              class="no-tasks-container"
-            >
-              <p class="no-tasks-text">No tasks to Await</p>
-            </div>
+        <div>
+          <div class="task-column" id="in-progress-column">
+            In progress<button onclick="addTask(event)" class="small-add-task-btn">
+              +
+            </button>
           </div>
+          <div id="drag-and-drop-inprogress" ondrop="moveTo('inprogress')" ondragover="allowDrop(event)"
+            class="no-tasks-container">
+            <p class="no-tasks-text">No tasks to Await</p>
+          </div>
+          <div></div>
+        </div>
 
-          <div>
-            <div class="task-column" id="done-column">Done</div>
-            <div
-              id="drag-and-drop-done"
-              ondrop="moveTo('done')"
-              ondragover="allowDrop(event)"
-              class="no-tasks-container"
-            >
-              <p class="no-tasks-text">No tasks done</p>
-            </div>
+        <div>
+          <div class="task-column" id="await feedback-column">
+            Await feedback<button onclick="addTask(event)" class="small-add-task-btn">
+              +
+            </button>
+          </div>
+          <div id="drag-and-drop-await" ondrop="moveTo('await')" ondragover="allowDrop(event)"
+            class="no-tasks-container">
+            <p class="no-tasks-text">No tasks to Await</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="task-column" id="done-column">Done</div>
+          <div id="drag-and-drop-done" ondrop="moveTo('done')" ondragover="allowDrop(event)" class="no-tasks-container">
+            <p class="no-tasks-text">No tasks done</p>
           </div>
         </div>
       </div>
     </div>
-    <div id="add-task-overlay" class="d_none">
-      <div id="add-task-content"></div>
+  </div>
+  <div id="add-task-overlay" class="d_none">
+    <div id="add-task-content"></div>
+  </div>
+  <div id="outer-task-overlay" onclick="closeOverlay()">
+    <div id="task-overlay" class="d_none" onclick="event.stopPropagation()">
+      <div id="task-content"></div>
     </div>
-    <div id="outer-task-overlay" onclick="closeOverlay()">
-      <div id="task-overlay" class="d_none" onclick="event.stopPropagation()">
-        <div id="task-content"></div>
-      </div>
-    </div>
-    
-  </body>
-  <!-- Scripts -->
-  <script src="/join-main/side-bar.js"></script>
-  <script src="/join-main/join-header.js"></script>
-  <script src="/add-task/add-task.js"></script>
-  <script src="/Scripts/board.js"></script>
-  <script src="/add-task/create-task.js"></script>
+  </div>
+
+</body>
+<!-- Scripts -->
+<script src="/join-main/side-bar.js"></script>
+<script src="/join-main/join-header.js"></script>
+<script src="/add-task/add-task.js"></script>
+<script src="/Scripts/board.js"></script>
+<script src="/add-task/create-task.js"></script>
+
 </html>

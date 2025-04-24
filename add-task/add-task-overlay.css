@@ -8,8 +8,9 @@
   width: 75%;
   height: 85%;
   border-radius: 20px;
-
   animation: slideInFromRightToCenter 0.2s ease-out forwards;
+  overflow-x: hidden;
+
 }
 
 @keyframes slideInFromRightToCenter {
@@ -17,6 +18,7 @@
     transform: translate(100%, -50%);
     opacity: 0;
   }
+
   100% {
     transform: translate(-50%, -50%);
     opacity: 1;
@@ -31,6 +33,7 @@ body {
   color: #2a3647 !important;
   height: 100vh;
 }
+
 .red {
   color: #ff8190;
 }
@@ -92,6 +95,7 @@ input {
   font-size: 20x;
   font-weight: 400;
 }
+
 input::placeholder {
   color: #d1d1d1;
 }
@@ -111,6 +115,7 @@ input::placeholder {
   justify-content: space-between;
   align-items: center;
 }
+
 #addtaskx {
   visibility: visible;
   padding-top: 50px;
@@ -123,6 +128,7 @@ input::placeholder {
   border-radius: 20px;
   cursor: pointer;
 }
+
 #addtaskx:hover img {
   padding: 4px;
   border-radius: 30px;
@@ -187,6 +193,7 @@ input::placeholder {
   height: 45px;
   padding: 1px;
 }
+
 .user-icon {
   width: 37px;
   height: 37px;
@@ -205,17 +212,23 @@ input::placeholder {
   font-size: 16px;
   font-weight: bold;
 }
+
 .contact-list {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Schiebt die Checkbox nach rechts */
-  width: 100%; /* Nimmt die volle Breite */
-  border-bottom: 0px solid #ccc; /* Falls eine Trennlinie gewünscht ist */
+  justify-content: space-between;
+  /* Schiebt die Checkbox nach rechts */
+  width: 100%;
+  /* Nimmt die volle Breite */
+  border-bottom: 0px solid #ccc;
+  /* Falls eine Trennlinie gewünscht ist */
 }
+
 .contact-checkbox {
   margin-right: 9px !important;
   width: 18px !important;
 }
+
 .contact-name {
   flex-grow: 1;
 }
@@ -223,9 +236,11 @@ input::placeholder {
 .task:hover {
   background: #e0e0e0;
 }
+
 .task:hover ::marker {
   color: yellowgreen;
 }
+
 #subtaskInput {
   font-size: 18px;
 }
@@ -412,14 +427,17 @@ footer {
   margin-top: 0;
   padding-top: 0;
 }
+
 .selectedInitials {
   display: flex;
   position: absolute;
   margin-top: 4px;
 }
+
 .selected-User-Initials {
   padding-bottom: 4px;
 }
+
 .input-error {
   border: 1px solid red !important;
 }
@@ -431,7 +449,8 @@ footer {
 }
 
 .overlay-background {
-  background-color: rgba(0, 0, 0, 0.4); /* <- Statt filter */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* <- Statt filter */
   filter: brightness(0.6);
   transition: background-color 0.3s ease, filter 0.3s ease;
   width: 100vw;
@@ -442,13 +461,13 @@ footer {
 /* Responsive */
 
 @media (max-width: 1440px) {
+
   #add-task-overlay {
-    width: 100%;
-    height: 90%;
     overflow: scroll;
-    border-radius: 0px;
-    bottom: 0;
-    animation: slideInFromRightToCenter 0.2s ease-out forwards;
+    overflow-x: hidden;
+  }
+  .subtasks {
+    width: 90%;
   }
 
   #addtaskx {
@@ -492,10 +511,10 @@ footer {
 
   .bottom-add-task-overlay-section {
     display: flex;
-    justify-content: space-around;
-    bottom: 0;
-    padding: 40px 5%;
-    background-color: white  !important;
+    padding-left: 128px;
+    justify-content: center;
+    background-color: white !important;
+    padding-bottom: 100px;
   }
 
   .fiel-Is-Required-Div {
@@ -505,5 +524,31 @@ footer {
 
   .dropdown-menu {
     width: 90%;
+  }
+  .fiel-Is-Required-Div{
+    display: none;
+  }
+}
+@media (max-width:1000px) {
+  #add-task-overlay {
+  width: 90%;
+  padding: 5%;
+  }
+}
+@media (max-width:650px) {
+  .add-task-h1 {
+    font-size: 40px;
+  }
+  .bottom-add-task-overlay-section{
+    padding: 0;
+  }
+  #description-input{
+    max-width:100% !important;
+    min-width:100% !important;
+  }
+
+  .bottom-add-task-overlay-section {
+    padding-bottom: 75px !important;
+    padding-top: 25px !important;
   }
 }

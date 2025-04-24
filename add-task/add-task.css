@@ -543,13 +543,7 @@ footer {
         padding-left: 0 !important;
     }
 
-    #header {
-        justify-content: start;
-        width: 100%;
-        margin-left: 0;
-        padding: 10px;
-        height: 80px;
-    }
+
 
     #sidbar {
         display: none !important;
@@ -605,11 +599,21 @@ footer {
         background-color: #091931;
     }
 
+    .add-task-h1 {
+        padding-top: 40px;
+    }
+
 }
 
 @media(max-width: 950px) {
     .display-splitter {
         flex-direction: column;
+    }
+
+    .logo-responsive {
+        display: flex !important;
+        width: 50px;
+        margin-right: 15vw;
     }
 
     .border {
@@ -634,7 +638,7 @@ footer {
     .bottom-add-task-overlay-section {
         display: flex;
         justify-content: center;
-        padding-bottom: 50px !important;
+        padding-bottom: 150px !important;
         align-items: center;
     }
 
@@ -648,27 +652,34 @@ footer {
         margin: 0 !important;
     }
 
+    .headline {
+        display: none;
+    }
+
+
 }
 
 @media (max-width: 500px) {
     #content {
         padding-left: 50px;
-        padding-right: 50px; 
+        padding-right: 50px;
         overflow-x: hidden;
     }
+
     #description-input,
     #category,
     .dropdown-menu,
     .input-container,
     .subtasks {
-      width: 100% !important;
-      max-width: 100% !important;
-      min-width: unset !important;
-      box-sizing: border-box;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: unset !important;
+        box-sizing: border-box;
     }
+
     .subtasks {
-        position: relative; 
-      }
+        position: relative;
+    }
 
     .left-section,
     .right-section,
@@ -727,17 +738,20 @@ footer {
         width: 90%;
         gap: 12px;
     }
-    .date-div{
-        padding-top: 20px;
-        padding-bottom: 40px;
 
-        }
-    .category-div{
+    .date-div {
         padding-top: 20px;
         padding-bottom: 40px;
 
     }
-    .assigned-div{
+
+    .category-div {
+        padding-top: 20px;
+        padding-bottom: 40px;
+
+    }
+
+    .assigned-div {
         padding-top: 10px;
     }
 
@@ -758,17 +772,19 @@ footer {
         flex-direction: column;
         gap: 12px;
     }
-    .error-message{
+
+    .error-message {
         margin-top: -64px !important;
     }
 }
+
 @media (max-width: 380px) {
     .add-task-h1 {
-      font-size: 36px;
-      padding-top: 40px;
-      padding-bottom: 15px;
+        font-size: 36px;
+        padding-top: 40px;
+        padding-bottom: 15px;
     }
-  
+
     .add-task-title p,
     .assigned-div label,
     .category-div label,
@@ -776,42 +792,43 @@ footer {
     .prio-box label,
     label,
     p {
-      font-size: 14px !important;
+        font-size: 14px !important;
     }
-  
+
     .headline {
-      font-size: 15px !important;
+        font-size: 15px !important;
     }
-  
+
     input,
     textarea,
     select,
     .prio,
     .dropdown-menu {
-      font-size: 16px;
+        font-size: 16px;
     }
-  
+
     #dropdownInput,
     #subtaskInput {
-      font-size: 16px;
+        font-size: 16px;
     }
-  
+
     .create-clear-button {
-      font-size: 16px;
+        font-size: 16px;
     }
+
     #category {
         font-size: 14.5px;
-      }
+    }
+
     .user-initials {
-      font-size: 16px;
+        font-size: 16px;
     }
-  
+
     .contact-name {
-      font-size: 14px;
+        font-size: 14px;
     }
-  
+
     .error-message {
-      font-size: 11px;
+        font-size: 11px;
     }
-  }
-  
+}
