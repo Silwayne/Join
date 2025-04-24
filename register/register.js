@@ -1,5 +1,5 @@
-const firebaseURL =
-  "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+// const firebaseURL =
+//   "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 function showMessage(message) {
   let messageBox = document.getElementById("message-box");
@@ -47,7 +47,7 @@ function validatePasswords(password, confirmPassword, privacyChecked) {
 }
 
 function isEmailTaken(email, callback) {
-  fetch(firebaseURL)
+  fetch(firebaseURLUser)
     .then((response) => response.json())
     .then((users) => {
       let exists = Object.values(users || {}).some(
@@ -62,7 +62,7 @@ function isEmailTaken(email, callback) {
 
 function saveUser(name, email, password) {
   let color = getRandomColor();
-  fetch(firebaseURL, {
+  fetch(firebaseURLUser, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password, color }),
