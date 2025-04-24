@@ -1,3 +1,21 @@
+@media (max-width: 1250px) {
+  .summary-content {
+    margin: 2% 0 2% 0;
+  }
+
+  .summary-headline {
+    justify-content: center;
+  }
+
+  .summary-container {
+    justify-content: center;
+  }
+
+  .summary-cards {
+    margin-left: 0;
+  }
+}
+
 @media (max-width: 1005px) {
   .span-headline {
     font-size: 3vw;
@@ -20,7 +38,6 @@
   }
 
   .summary-container {
-    display: grid;
     gap: 0;
     width: 60%;
   }
@@ -50,34 +67,37 @@
   }
 
   .card-text-number {
-    font-size: 4vw;
-    font-weight: 600;
+    font-size: 53px;
   }
 
   .card-text {
-    font-size: 2vw;
+    font-size: 13px;
   }
 
   .card-icon-wrapper img {
-    width: 6vw;
+    width: 53px;
   }
 
   .prio-icon {
-    width: 6vw;
+    width: 53px;
   }
 
   .card-middle-date {
-    font-size: 3vw;
+    font-size: 16px;
   }
 
   .card-middle-date-text {
-    font-size: 2vw;
+    font-size: 13px;
   }
 }
 
 @media (max-width: 550px) {
   .summary-content {
     min-width: 90vw;
+  }
+
+  .summary-container {
+    width: 85%;
   }
 
   .middle-stroked img {

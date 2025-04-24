@@ -73,7 +73,7 @@
     width: 12vw;
     gap: 8px;
     border-radius: 15px;
-    padding: 10px 0;
+    padding: 5px 0;
   }
 
   .menu-button-design-responsive:hover {
@@ -98,19 +98,19 @@
     gap: 10px;
     padding: 0 10px 5px;
   }
-  
+
   .footer-left {
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  
+
   .footer-buttons {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
   }
-  
+
   .footer-btn {
     display: flex;
     align-items: center;
@@ -125,11 +125,10 @@
     transition: background-color 0.3s;
     white-space: nowrap;
   }
-  
+
   .footer-btn:hover {
     background-color: #091931;
   }
-
 }
 
 @media (max-width: 600px) {

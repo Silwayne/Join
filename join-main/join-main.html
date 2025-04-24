@@ -21,12 +21,15 @@
     <script src="sidebar-right.js"></script>
     <script src="join-main.js"></script>
 
-    <link rel="shortcut icon" href="/assets/img/Capa 1.svg" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="/assets/img/Capa 1.svg"
+      type="image/x-icon"
+    />
     <title>Join Main</title>
   </head>
 
   <body onload="init(), renderRight()">
-
     <header id="header"></header>
     <aside id="sidbar"></aside>
     <section id="sidebar-responsive"></section>
@@ -35,7 +38,7 @@
       <h2 id="greeting-text" class="dynamic-text"></h2>
       <p id="greeting-name" class="dynamic-name"></p>
     </div>
-    
+
     <section class="summary-content" id="content">
       <div class="summary-headline">
         <h1 class="summary-h1">Join 360</h1>
@@ -43,92 +46,95 @@
         <span class="span-headline">Key Metrics at a Glance</span>
       </div>
     </section>
+
     <main>
-    <section class="summary-container">
-      <section class="summary-cards">
-        <section class="cards-top">
-          <div class="card-top-left">
-            <div class="card-icon-wrapper">
-              <img
-                class="pen-black-icon"
-                src="/assets/img/Frame 59.svg"
-                alt="Penciel Black"
-              />
-              <img
-                class="pen-white-icon"
-                src="/assets/img/Frame 59-white.svg"
-                alt="Penciel White"
-              />
-            </div>
-            <div class="cards-text">
-              <p id="count-todo" class="card-text-number">-</p>
-              <span class="card-text">To-do</span>
-            </div>
-          </div>
-          <div class="card-top-right">
-            <div class="card-icon-wrapper">
-              <img
-                class="done-back-icon"
-                src="/assets/img/done.svg"
-                alt="Done"
-              />
-              <img
-                class="done-white-icon"
-                src="/assets/img/done_white.svg"
-                alt="Done White"
-              />
-            </div>
-            <div class="cards-text">
-              <p id="count-done" class="card-text-number">-</p>
-              <span class="card-text">Done</span>
-            </div>
-          </div>
+      <section class="summary-container">
+        <section class="summary-cards">
+          <a href="/board.html">
+            <section class="cards-top">
+              <div class="card-top-left">
+                <div class="card-icon-wrapper">
+                  <img
+                    class="pen-black-icon"
+                    src="/assets/img/Frame 59.svg"
+                    alt="Penciel Black"
+                  />
+                  <img
+                    class="pen-white-icon"
+                    src="/assets/img/Frame 59-white.svg"
+                    alt="Penciel White"
+                  />
+                </div>
+                <div class="cards-text">
+                  <p id="count-todo" class="card-text-number">-</p>
+                  <span class="card-text">To-do</span>
+                </div>
+              </div>
+              <div class="card-top-right">
+                <div class="card-icon-wrapper">
+                  <img
+                    class="done-back-icon"
+                    src="/assets/img/done.svg"
+                    alt="Done"
+                  />
+                  <img
+                    class="done-white-icon"
+                    src="/assets/img/done_white.svg"
+                    alt="Done White"
+                  />
+                </div>
+                <div class="cards-text">
+                  <p id="count-done" class="card-text-number">-</p>
+                  <span class="card-text">Done</span>
+                </div>
+              </div>
+            </section>
+            <section class="card-middle">
+              <div class="middle-container">
+                <div class="card-icon">
+                  <img
+                    class="prio-icon"
+                    src="/assets/img/red-prio.svg"
+                    alt="Red Arrow"
+                  />
+                </div>
+                <div class="cards-text">
+                  <p id="count-urgent" class="card-text-number">-</p>
+                  <span class="card-text">Urgent</span>
+                </div>
+                <div class="middle-stroked">
+                  <img src="/assets/img/stroked.svg" alt="Stroked" />
+                </div>
+                <div class="middle-date-text" style="align-items: flex-start">
+                  <p class="card-middle-date"></p>
+                  <span class="card-middle-date-text">Upcoming Deadline</span>
+                </div>
+              </div>
+            </section>
+            <section class="cards-bottom">
+              <div class="card-bottom">
+                <div class="cards-text">
+                  <p id="count-total" class="card-text-number">-</p>
+                  <span class="card-text">Tasks in<br />Board</span>
+                </div>
+              </div>
+              <div class="card-bottom">
+                <div class="cards-text">
+                  <p id="count-progress" class="card-text-number">-</p>
+                  <span class="card-text">Tasks in<br />Progress</span>
+                </div>
+              </div>
+              <div class="card-bottom">
+                <div class="cards-text">
+                  <p id="count-feedback" class="card-text-number">-</p>
+                  <span class="card-text">Awaiting<br />Feedback</span>
+                </div>
+              </div>
+            </section>
+          </a>
         </section>
-        <section class="card-middle">
-          <div class="middle-container">
-            <div class="card-icon">
-              <img
-                class="prio-icon"
-                src="/assets/img/red-prio.svg"
-                alt="Red Arrow"
-              />
-            </div>
-            <div class="cards-text">
-              <p id="count-urgent" class="card-text-number">-</p>
-              <span class="card-text">Urgent</span>
-            </div>
-            <div class="middle-stroked">
-              <img src="/assets/img/stroked.svg" alt="Stroked" />
-            </div>
-            <div class="middle-date-text" style="align-items: flex-start">
-              <p class="card-middle-date"></p>
-              <span class="card-middle-date-text">Upcoming Deadline</span>
-            </div>
-          </div>
-        </section>
-        <div class="cards-bottom">
-          <div class="card-bottom">
-            <div class="cards-text">
-              <p id="count-total" class="card-text-number">-</p>
-              <span class="card-text">Tasks in<br />Board</span>
-            </div>
-          </div>
-          <div class="card-bottom">
-            <div class="cards-text">
-              <p id="count-progress" class="card-text-number">-</p>
-              <span class="card-text">Tasks in<br />Progress</span>
-            </div>
-          </div>
-          <div class="card-bottom">
-            <div class="cards-text">
-              <p id="count-feedback" class="card-text-number">-</p>
-              <span class="card-text">Awaiting<br />Feedback</span>
-            </div>
-          </div>
-        </div>
+        <article id="right-sidebar"></article>
       </section>
-      <article id="right-sidebar"></article>
     </main>
-    </section>
   </body>
 </html>
