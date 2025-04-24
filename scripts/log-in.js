@@ -1,5 +1,5 @@
-const firebaseURL =
-  "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+// const firebaseURL =
+//   "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
 
 function showMessage(message, isSuccess = false) {
   let messageBox = document.getElementById("message-box");
@@ -39,7 +39,7 @@ function login() {
 }
 
 function fetchUsers(email, password) {
-  fetch(firebaseURL)
+  fetch(firebaseURLUser)
     .then((response) => response.json())
     .then((users) => checkLogin(users, email, password))
     .catch(console.error);
