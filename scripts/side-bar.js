@@ -4,7 +4,7 @@ function renderSidebar() {
         <div class="sidbar-top">
               <img class="sidbar-logo" src="/assets/img/Capa 2.svg" alt="Logo">
                 <div class="menu">
-                <a href="/join-main/join-main.html">
+                <a href="/join-main.html">
                     <button class="menu-button menu-button-design font-size">
                       <img src="/assets/img/summary-icon.svg" alt="Summary">
                       <span>Summary</span>
@@ -49,7 +49,7 @@ function renderSidebar() {
 function renderSidebarResponsive() {
     document.getElementById("sidebar-responsive").innerHTML = `
     <div class="menu-responsive">
-        <button href="join-main/join-main.html" class="menu-button-responsive menu-button-design-responsive font-size-responsive">
+        <button href="/join-main.html" class="menu-button-responsive menu-button-design-responsive font-size-responsive">
           <img src="/assets/img/summary-icon.svg" alt="Summary">
           <span>Summary</span>
         </button>
