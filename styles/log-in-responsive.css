@@ -1,8 +1,4 @@
 @media (max-width: 600px) {
-  .log-in-container {
-    height: 65%;
-  }
-
   .container-button {
     justify-content: space-evenly;
     flex-direction: column;
@@ -12,7 +8,7 @@
 
   .register-container {
     justify-content: center;
-    top: 75%;
+    top: 85%;
     right: 0;
     gap: 5px;
   }
