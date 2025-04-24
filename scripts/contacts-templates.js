@@ -1,3 +1,14 @@
+/**
+ * @file contacts-templates.js
+ * @description This file contains the templates and rendering logic for managing the UI of the contacts section, including the left column contact list, contact details area, and overlays for adding or editing contacts.
+ */
+
+/**
+ * Renders a single contact in the left column contact list.
+ * @param {Object} user - The user object containing contact details.
+ * @param {number} indexOfUser - The index of the user in the list.
+ * @param {string} key - The unique key of the user.
+ */
 function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
   leftContactsList.innerHTML += `
       <div
@@ -20,6 +31,10 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
       </div>`;
 }
 
+/**
+ * Displays the contact details area for a selected contact.
+ * Updates the UI with the contact's information.
+ */
 function contactDetailsAreaTemplate() {
   let contactDetailsArea = document.getElementById("contact-details-area");
   contactDetailsArea.classList.add("show");
@@ -67,6 +82,10 @@ function contactDetailsAreaTemplate() {
             </div>`;
 }
 
+/**
+ * Displays the overlay for adding a new contact.
+ * Dynamically generates the HTML for the overlay and appends it to the DOM.
+ */
 function displayAddContactOverlay() {
   let body = document.getElementById("overlayArea");
   let realBody = document.getElementById("body");
@@ -106,10 +125,16 @@ function displayAddContactOverlay() {
         </div>`;
 }
 
+/**
+ * Displays the overlay for editing an existing contact.
+ * Dynamically generates the HTML for the overlay and populates it with the contact's current details.
+ * @param {string} key - The unique key of the contact to edit.
+ * @param {Object} users - The list of all users.
+ */
 function editContactOverlay(key, users) {
   let user = users[key];
   if (!user) {
-    console.error("Benutzer nicht gefunden");
+    console.error("User not found");
     return;
   }
   let realBody = document.getElementById("body");
@@ -148,6 +173,12 @@ function editContactOverlay(key, users) {
         </div>`;
 }
 
+/**
+ * Displays the mobile edit options overlay for a contact.
+ * Dynamically generates the HTML for the overlay and appends it to the DOM.
+ * @param {string} key - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
 function mobileEditOptions(key, users) {
   let buttonOverlayArea = document.getElementById("button-overlay-area");
   buttonOverlayArea.innerHTML = `

@@ -1,3 +1,8 @@
+/**
+ * @file contacts.js
+ * @description This file contains the logic for managing contacts, including rendering contact lists, adding, editing, and deleting contacts, as well as handling UI interactions for mobile and desktop views.
+ */
+
 let leftContactsList = document.getElementById("left-contact-list");
 let firebaseAnswer;
 let fireBase;
@@ -5,6 +10,11 @@ let users;
 let user;
 let contactDetailsArea;
 let key;
+
+/**
+ * List of colors used for contact avatars.
+ * @type {string[]}
+ */
 let colours = [
   "#FF7A00",
   "#9327FF",
@@ -18,6 +28,11 @@ let colours = [
   "#FF7A00",
 ];
 
+/**
+ * Fetches contact data from Firebase and renders the left column contact list.
+ * @async
+ * @function contactFirebase
+ */
 async function contactFirebase() {
   let firebaseUrl = await fetch(
     "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/.json"
@@ -30,6 +45,11 @@ async function contactFirebase() {
 
 contactFirebase();
 
+/**
+ * Renders the left column contact list.
+ * Groups contacts by their initials and sorts them alphabetically.
+ * @function renderLeftColumnContacts
+ */
 function renderLeftColumnContacts() {
   leftContactsList.innerHTML = "";
   users = fireBase.users;
@@ -49,6 +69,11 @@ function renderLeftColumnContacts() {
   });
 }
 
+/**
+ * Generates the HTML template for contact initials in the left column.
+ * @param {string} initial - The initial of the contact group.
+ * @returns {string} The HTML template for the contact initials.
+ */
 function renderLeftColumnContactsInitalsTemplate(initial) {
   return `
         <div class="contact-separator">
@@ -57,16 +82,26 @@ function renderLeftColumnContactsInitalsTemplate(initial) {
         </div>`;
 }
 
+/**
+ * Renders individual contact details in the left column.
+ * @param {Object} user - The user object containing contact details.
+ * @param {number} indexOfUser - The index of the user in the list.
+ * @param {string} keyObj - The unique key of the user.
+ */
 function renderLeftColumnPartTwo(user, indexOfUser, keyObj) {
   renderLeftColumnContactsTemplate(user, indexOfUser, keyObj);
   createContactNameInitials(user, indexOfUser);
-  1;
   let userImage = document.getElementById(`user-icon${indexOfUser}`);
   if (userImage) {
     userImage.style.backgroundColor = user.color;
   }
 }
 
+/**
+ * Creates initials for a contact's avatar.
+ * @param {Object} user - The user object containing contact details.
+ * @param {number} indexOfUser - The index of the user in the list.
+ */
 function createContactNameInitials(user, indexOfUser) {
   let userName = user.name;
   let userImage = document.getElementById(`user-icon${indexOfUser}`);
@@ -85,6 +120,10 @@ function createContactNameInitials(user, indexOfUser) {
   userImage.classList.add("user-initials");
 }
 
+/**
+ * Hides the right contact details area on page load.
+ * @function rightContactDetailsHideOnLoad
+ */
 function rightContactDetailsHideOnLoad() {
   contactDetailsArea = document.getElementById("contact-details-area");
   contactDetailsArea.classList.add("hide");
@@ -172,6 +211,12 @@ function updateUserDetails(paramKey, users) {
   bigRandomColour(user);
 }
 
+/**
+ * Deletes a contact from the Firebase database.
+ * @async
+ * @param {string} key - The unique key of the contact to delete.
+ * @param {Object} users - The list of all users.
+ */
 async function deleteContactFromDatabase(key, users) {
   let deleteFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
   try {
@@ -244,17 +289,18 @@ if (buttonOverlayArea) {
   buttonOverlayArea.remove();
 }
 
+/**
+ * Adds a new contact to the Firebase database.
+ * @param {Event} event - The submit event from the form.
+ */
 function addContactToDatabase(event) {
-  // Verhindert das Standard-Submit-Verhalten
   event.preventDefault();
 
-  // Überprüft, ob das Formular gültig ist
   const form = document.getElementById("addContactForm");
   if (!form.checkValidity()) {
-    return false; // Verhindert das Abschicken des Formulars
+    return false;
   }
 
-  // Wenn das Formular gültig ist, führe die Funktion aus
   let firebaseURL =
     "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
   let name = document.getElementById("fullName").value;
@@ -275,10 +321,56 @@ function addContactToDatabase(event) {
       }, 2000);
     })
     .catch((error) => {
-      console.error("Fehler beim Hinzufügen des Kontakts:", error);
+      console.error("Error adding contact:", error);
     });
 
-  return false; // Verhindert das Standard-Submit-Verhalten
+  return false;
+}
+
+/**
+ * Deletes a contact from the Firebase database.
+ * @async
+ * @param {string} key - The unique key of the contact to delete.
+ * @param {Object} users - The list of all users.
+ */
+async function deleteContactFromDatabase(key, users) {
+  let deleteFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
+  try {
+    await fetch(deleteFirebaseUrl, { method: "DELETE" });
+    contactsuccessfullyDeletedNotification();
+    delete users[key];
+    renderLeftColumnContacts();
+  } catch (error) {
+    console.error("Error deleting contact:", error);
+  }
+}
+
+/**
+ * Saves edited contact details to the Firebase database.
+ * @async
+ * @param {string} key - The unique key of the contact to edit.
+ */
+async function saveEditedContact(key) {
+  let name = document.getElementById("fullName").value;
+  let email = document.getElementById("new-email").value;
+  let phone = document.getElementById("new-phone").value;
+
+  let firebaseURL = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
+
+  try {
+    await fetch(firebaseURL, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, phone }),
+    });
+
+    closeEditOverlay();
+    contactsuccessfullyEditedNotification();
+    contactFirebase();
+  } catch (error) {
+    console.error("Error updating contact:", error);
+    alert("An error occurred while saving the contact. Please try again.");
+  }
 }
 
 function mobileEditOptions(key, users) {
@@ -292,36 +384,5 @@ function mobileEditOptions(key, users) {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();
-  }
-}
-
-async function saveEditedContact(key) {
-  // Werte aus den Eingabefeldern abrufen
-  let name = document.getElementById("fullName").value;
-  let email = document.getElementById("new-email").value;
-  let phone = document.getElementById("new-phone").value;
-
-  // URL für das spezifische Benutzerobjekt in der Firebase-Datenbank
-  let firebaseURL = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
-
-  // Aktualisierte Daten an die Firebase-Datenbank senden
-  try {
-    await fetch(firebaseURL, {
-      method: "PATCH", // PATCH wird verwendet, um nur die angegebenen Felder zu aktualisieren
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, phone }),
-    });
-
-    // Overlay schließen
-    closeEditOverlay();
-
-    // Erfolgsbenachrichtigung anzeigen
-    contactsuccessfullyEditedNotification();
-
-    // Kontaktliste neu rendern
-    contactFirebase();
-  } catch (error) {
-    console.error("Fehler beim Aktualisieren des Kontakts:", error);
-    alert("Beim Speichern des Kontakts ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.");
   }
 }
