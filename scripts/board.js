@@ -36,7 +36,9 @@ async function loadTasksFromFirebase() {
     task.firebaseID = key;
     if (task.contacts && Array.isArray(task.contacts)) {
       let originalContacts = [...task.contacts];
-      task.contacts = task.contacts.filter(name => validContactNames.includes(name));
+      task.contacts = task.contacts.filter((name) =>
+        validContactNames.includes(name)
+      );
       if (task.contacts.length !== originalContacts.length) {
         await updateFireBaseData(task.firebaseID, task);
       }
@@ -49,14 +51,13 @@ async function loadTasksFromFirebase() {
   todos = tasksBoxContent;
 }
 
-
 function allowDrop(ev) {
   ev.preventDefault();
 }
 async function loadContactColors() {
   let response = await fetch(firebaseURL + "users.json");
   let users = await response.json();
-  contactColors = {}; 
+  contactColors = {};
   const validNames = [];
 
   for (let key in users) {
@@ -67,7 +68,9 @@ async function loadContactColors() {
   for (let task of todos) {
     if (Array.isArray(task.contacts)) {
       let originalContacts = [...task.contacts];
-      let filteredContacts = task.contacts.filter(name => validNames.includes(name));
+      let filteredContacts = task.contacts.filter((name) =>
+        validNames.includes(name)
+      );
 
       if (filteredContacts.length !== originalContacts.length) {
         task.contacts = filteredContacts;
@@ -76,8 +79,6 @@ async function loadContactColors() {
     }
   }
 }
-
-
 
 async function updateBoardHTML() {
   await loadContactColors();
@@ -114,7 +115,6 @@ async function updateBoardHTML() {
   }
 }
 
-
 async function moveTo(status) {
   let task = todos[currentDraggedTask];
   task.status = status;
@@ -141,10 +141,10 @@ function getSelectedContactsFromAddTask(task) {
   return html;
 }
 function getSubtaskHTML(taskId, subtasks) {
-  let html = '';
+  let html = "";
   if (subtasks && subtasks.length > 0) {
     for (let i = 0; i < subtasks.length; i++) {
-      let subId = 'task_' + i;
+      let subId = "task_" + i;
       let subtask = subtasks[i];
 
       html += `
@@ -162,7 +162,6 @@ function getSubtaskHTML(taskId, subtasks) {
   }
   return html;
 }
-
 
 async function getContactColorFromFirebase(contactName) {
   let response = await fetch(firebaseURL + "users.json");
@@ -210,8 +209,7 @@ async function closeOverlay() {
   taskOverlay.classList.add("d_none");
   let outerTaskOverlay = document.getElementById("outer-task-overlay");
   outerTaskOverlay.style.display = "none";
-  await updateBoardHTML()
-
+  await updateBoardHTML();
 }
 function generateTaskBoxContent(task) {
   let img = filterPriorityImage(task);
@@ -326,7 +324,7 @@ function moveTask(id) {
 }
 
 async function updateFireBaseData(firebaseID, taskObj) {
-  const url = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/tasks/${firebaseID}.json`;
+  const url = `${firbaseForTasks}${firebaseID}.json`;
 
   await fetch(url, {
     method: "PUT",
@@ -384,15 +382,15 @@ function filterPriorityImage(task) {
 }
 
 async function deleteOverlay(id) {
-  const task = todos.find(t => t.id === id);
+  const task = todos.find((t) => t.id === id);
   if (!task) return;
 
   await fetch(`${firebaseURL}tasks/${task.firebaseID}.json`, {
-    method: "DELETE"
+    method: "DELETE",
   });
 
   closeOverlay();
-  updateBoardHTML()
+  updateBoardHTML();
 }
 
 function editOverlay(id) {
@@ -476,17 +474,19 @@ function editOverlay(id) {
 }
 
 async function saveEditedTask(id) {
-  let task = todos.find(function(t) {
+  let task = todos.find(function (t) {
     return t.id === id;
   });
 
   let firebaseID = task.firebaseID;
 
-  let title = document.querySelector('.overlay-input-title').value.trim();
-  let description = document.querySelector('.overlay-input-description').value.trim();
-  let date = document.querySelector('.overlay-input-date').value;
+  let title = document.querySelector(".overlay-input-title").value.trim();
+  let description = document
+    .querySelector(".overlay-input-description")
+    .value.trim();
+  let date = document.querySelector(".overlay-input-date").value;
   let subtasks = [];
-  let subtaskContainer = document.getElementById('subtasks_' + id);
+  let subtaskContainer = document.getElementById("subtasks_" + id);
 
   if (subtaskContainer) {
     let subtaskElements = subtaskContainer.children;
@@ -494,12 +494,12 @@ async function saveEditedTask(id) {
     for (let i = 0; i < subtaskElements.length; i++) {
       let element = subtaskElements[i];
 
-      let valueElement = element.querySelector('.subtask-value');
+      let valueElement = element.querySelector(".subtask-value");
       let subtaskText = "";
       if (valueElement) {
         subtaskText = valueElement.textContent.trim();
       }
-      if (subtaskText !== '') {
+      if (subtaskText !== "") {
         let foundOld = false;
         let wasDone = false;
 
@@ -515,7 +515,7 @@ async function saveEditedTask(id) {
 
         subtasks.push({
           title: subtaskText,
-          done: foundOld ? wasDone : false
+          done: foundOld ? wasDone : false,
         });
       }
     }
@@ -528,14 +528,13 @@ async function saveEditedTask(id) {
     contacts: overlayContacts,
     subtasks: subtasks,
     status: task.status,
-    category: task.category
+    category: task.category,
   };
   updateFireBaseData(firebaseID, updatedTask);
 
   await closeOverlay();
   await updateBoardHTML();
 }
-
 
 function filterTasks() {
   let input = document.getElementById("searchTasks").value.toLowerCase();
@@ -550,7 +549,7 @@ function filterTasks() {
     todo: "No tasks to do",
     inprogress: "No tasks in progress",
     await: "No tasks to await",
-    done: "No tasks done"
+    done: "No tasks done",
   };
 
   statuses.forEach((status) => {

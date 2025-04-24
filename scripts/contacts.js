@@ -34,9 +34,7 @@ let colours = [
  * @function contactFirebase
  */
 async function contactFirebase() {
-  let firebaseUrl = await fetch(
-    "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/.json"
-  );
+  let firebaseUrl = await fetch(firebaseApp);
   firebaseAnswer = await firebaseUrl.json();
   fireBase = firebaseAnswer;
   users = fireBase.users;
@@ -218,7 +216,7 @@ function updateUserDetails(paramKey, users) {
  * @param {Object} users - The list of all users.
  */
 async function deleteContactFromDatabase(key, users) {
-  let deleteFirebaseUrl = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
+  let deleteFirebaseUrl = `${firebaseForDeletion}${key}.json`;
   try {
     await fetch(deleteFirebaseUrl, { method: "DELETE" });
     contactsuccessfullyDeletedNotification();
@@ -301,8 +299,7 @@ function addContactToDatabase(event) {
     return false;
   }
 
-  let firebaseURL =
-    "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+  let firebaseURL = firebaseURLUser;
   let name = document.getElementById("fullName").value;
   let email = document.getElementById("new-email").value;
   let phone = document.getElementById("new-phone").value;
@@ -337,7 +334,7 @@ async function saveEditedContact(key) {
   let email = document.getElementById("new-email").value;
   let phone = document.getElementById("new-phone").value;
 
-  let firebaseURL = `https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/${key}.json`;
+  let firebaseURL = `${firebaseForDeletion}${key}.json`;
 
   try {
     await fetch(firebaseURL, {
