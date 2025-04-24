@@ -49,10 +49,12 @@ function renderSidebar() {
 function renderSidebarResponsive() {
     document.getElementById("sidebar-responsive").innerHTML = `
     <div class="menu-responsive">
-        <button href="/join-main.html" class="menu-button-responsive menu-button-design-responsive font-size-responsive">
+        <a href="/join-main.html">
+        <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
           <img src="/assets/img/summary-icon.svg" alt="Summary">
           <span>Summary</span>
         </button>
+        </a>
         <a href="/add-task/add-task.html">
         <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
             <img src="/assets/img/add_task_icon.svg" alt="Add Task">

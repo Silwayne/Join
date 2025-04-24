@@ -77,14 +77,14 @@ a {
   position: fixed;
   max-width: 500px;
   width: 90%;
-  height: 40%;
-  top: 25%;
+  height: 50%;
+  top: 20%;
   border-radius: 30px;
   gap: 32px;
   padding: 35px 30px 35px 30px;
   flex-direction: column;
   box-shadow: 0px 0px 14px 3px #0000000a;
-  background-color: white;
+  background-color: white
 }
 
 .register-container {
@@ -101,7 +101,6 @@ a {
 .no-user {
   font-size: 20px;
   font-weight: 400;
-  line-height: 24px;
   text-align: left;
 }
 

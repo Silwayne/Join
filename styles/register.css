@@ -46,7 +46,7 @@ a {
 
 .logo-black {
   width: 100px;
-  height: 122px;
+  height: 100px;
 }
 
 .login-page {
@@ -60,7 +60,7 @@ a {
   position: fixed;
   max-width: 500px;
   width: 90%;
-  top: 25%;
+  top: 20%;
   border-radius: 30px;
   gap: 32px;
   padding: 35px 30px 35px 30px;
@@ -187,7 +187,7 @@ footer {
   justify-content: center;
   display: flex;
   position: absolute;
-  bottom: 60px;
+  bottom: 5px;
   width: 246px;
   height: 35px;
   gap: 16px;

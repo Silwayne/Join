@@ -1,15 +1,23 @@
-@media(max-width: 600px) {
-    .container-button {
-        justify-content: space-evenly;
-        flex-direction: column;
-        align-items: center;
-        height: auto;
-    }
+@media (max-width: 600px) {
+  .log-in-container {
+    height: 65%;
+  }
 
-   .register-container {
+  .container-button {
+    justify-content: space-evenly;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .register-container {
     justify-content: center;
-        top: 75%;
-        right: 0;
-   }
-}
+    top: 75%;
+    right: 0;
+    gap: 5px;
+  }
 
+  .no-user {
+    font-size: 18px;
+  }
+}
