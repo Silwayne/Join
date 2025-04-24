@@ -1,6 +1,3 @@
-// const firebaseURL =
-//   "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
-
 function showMessage(message, isSuccess = false) {
   let messageBox = document.getElementById("message-box");
   messageBox.textContent = message;
@@ -54,7 +51,7 @@ function checkLogin(users, email, password) {
   if (userFound) {
     sessionStorage.setItem("userName", userFound.name);
     sessionStorage.setItem("userColor", userFound.color);
-    window.location.href = "./join-main/join-main.html";
+    window.location.href = "./join-main.html";
   } else {
     showMessage("Incorrect email or password!");
   }
@@ -68,5 +65,5 @@ function guestLogin() {
   sessionStorage.setItem("password", guestPassword);
 
   showMessage("You are logged in as a guest!", true);
-  setTimeout(() => (window.location.href = "./join-main/join-main.html"), 2000);
+  setTimeout(() => (window.location.href = "./join-main.html"), 2000);
 }

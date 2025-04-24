@@ -17,12 +17,12 @@ function renderHeader() {
     <img class="logo-responsive" src="/assets/img/Capa 1.svg" alt="Logo">
     <span class="headline">Kanban Project Management Tool</span>
     <div class="header-right">
-      <a href="/texte/help.html"><img class="help-button" src="/assets/img/help.svg" alt="Help"></a>
+      <a href="./help.html"><img class="help-button" src="/assets/img/help.svg" alt="Help"></a>
       <span id="current-user-initials" class="user">G</span>
       <div id="user-dropdown" class="dropdown hidden">
-        <a href="/texte/privacy.html">Privacy Policy</a>
-        <a href="/texte/legal.html">Legal Notice</a>
-        <a href="/index.html">Log out</a>
+        <a href="./privacy.html">Privacy Policy</a>
+        <a href="./legal.html">Legal Notice</a>
+        <a href="./index.html">Log out</a>
       </div>
     </div>
   `;

@@ -31,12 +31,12 @@ function renderSidebar() {
                 </div>
           </div>
           <div class="sidbar-bottom d-none">
-            <a href="/texte/privacy.html">
+            <a href="/privacy.html">
                 <button class="menu-button menu-button-lower-design font-size">
                     Privacy Policy
                 </button>
             </a>
-            <a href="/texte/legal.html">
+            <a href="/legal.html">
                 <button class="menu-button menu-button-lower-design font-size">
                     Legal Notice
                 </button>
@@ -59,7 +59,7 @@ function renderSidebarResponsive() {
             <span style="white-space: nowrap;">Add Task</span>
         </button>
         </a>
-        <a href="board.html">
+        <a href="/board.html">
         <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
           <img src="/assets/img/board-icon.svg" alt="Board">
           <span>Board</span>
