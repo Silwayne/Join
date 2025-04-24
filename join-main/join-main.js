@@ -12,29 +12,21 @@ function init(){
   async function updateTaskCounters() {
     const response = await fetch(firebaseURL + "tasks.json");
     const data = await response.json();
-  
     const counts = {todo: 0, done: 0, urgent: 0, total: 0, progress: 0, feedback: 0};
   
-    for (let key in data) {
-      const task = data[key];
-  
+    for (let tasks of Object.values(data)) {
       counts.total++;
-  
-      if (task.status === "todo") counts.todo++;
-      if (task.status === "done") counts.done++;
-      if (task.status === "inprogress") counts.progress++;
-      if (task.status === "await") counts.feedback++;
-      if (task.priority?.toLowerCase() === "urgent") counts.urgent++;
+      if (tasks.status === "todo") counts.todo++;
+      if (tasks.status === "done") counts.done++;
+      if (tasks.status === "inprogress") counts.progress++;
+      if (tasks.status === "await") counts.feedback++;
+      if (tasks.priority?.toLowerCase() === "urgent") counts.urgent++;
     }
   
-    document.getElementById("count-todo").textContent = counts.todo;
-    document.getElementById("count-done").textContent = counts.done;
-    document.getElementById("count-urgent").textContent = counts.urgent;
-    document.getElementById("count-total").textContent = counts.total;
-    document.getElementById("count-progress").textContent = counts.progress;
-    document.getElementById("count-feedback").textContent = counts.feedback;
-  }  
-
+    ["todo","done","urgent","total","progress","feedback"]
+      .forEach(key => document.getElementById(`count-${key}`).textContent = counts[key]);
+  }
+  
   function getGreetingText() {
     let hours = new Date().getHours();
     let greetingText;
@@ -54,38 +46,26 @@ function init(){
     return date.toLocaleDateString('en-US', options); 
 }
 
-
 function updateDate() {
     const formattedDate = getFormattedDate(); 
     document.querySelector('.card-middle-date').textContent = formattedDate; 
 }
 
 window.addEventListener("DOMContentLoaded", () => {
-    if (window.innerWidth < 1005) {
-      const overlay = document.getElementById("greeting-overlay");
-      const greetingTextEl = document.getElementById("greeting-text");
-      const nameEl = document.getElementById("greeting-name");
-  
-      const greeting = getGreetingText();
-      const userName = sessionStorage.getItem("userName") || "Gast";
-      const userColor = sessionStorage.getItem("userColor") || "black";
-  
-      greetingTextEl.textContent = greeting + ",";
-      nameEl.textContent = userName;
-      nameEl.style.color = userColor;
-  
-      greetingTextEl.classList.add("show-greeting");
-      nameEl.classList.add("show-name");
-  
-      setTimeout(() => {
-        overlay.style.opacity = "0";
-        setTimeout(() => {
-          overlay.style.display = "none";
-        }, 1000); 
-      }, 3000);
-    } else {
-     
-      const overlay = document.getElementById("greeting-overlay");
-      overlay.style.display = "none";
-    }
-  });
+  const overlay = document.getElementById("greeting-overlay");
+  if (window.innerWidth >= 1005) return overlay.style.display = "none";
+
+  const greetEl = document.getElementById("greeting-text");
+  const nameEl = document.getElementById("greeting-name");
+  const name = sessionStorage.getItem("userName") || "Gast";
+  const color = sessionStorage.getItem("userColor") || "black";
+
+  greetEl.textContent = getGreetingText() + ",";
+  nameEl.textContent = name;
+  nameEl.style.color = color;
+  greetEl.classList.add("show-greeting");
+  nameEl.classList.add("show-name");
+
+  setTimeout(() => {overlay.style.opacity = "0"; setTimeout(() => overlay.style.display = "none", 1000);}, 3000);
+
+});
