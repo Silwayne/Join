@@ -568,4 +568,10 @@ textarea {
   display: none;
 }
 
+.arrow-dropdown {
+  visibility: hidden;
+}
 
+.tooltip-container {
+  display: none;
+}
