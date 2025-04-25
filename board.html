@@ -19,12 +19,16 @@
   <link rel="stylesheet" href="add-task/add-task.css" />
   <link rel="stylesheet" href="add-task/add-task-overlay.css" />
   <link rel="stylesheet" href="/styles/join-main-responsive.css" />
+  <link rel="stylesheet" href="styles/rotate.css" />
   <title>Board</title>
 </head>
 
 <body id="body"
   onload="renderSidebar(), renderHeader(), initAddTask('add-task-overlay'), renderSidebarResponsive(), updateBoardHTML(), initDropdownEvents()">
   <div id="overlay-background" onclick="removeAddTask()">
+    <div id="landscape-blocker">
+      <p id="rotate">Please rotate your device to portrait mode.</p>
+    </div>
     <div id="sidbar"></div>
     <section id="sidebar-responsive"></section>
     <div id="header"></div>

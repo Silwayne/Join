@@ -1,0 +1,37 @@
+/* Standardmäßig ist das Overlay unsichtbar */
+@media (max-width: 1250px) {
+  #landscape-blocker {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1);
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  #rotate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  /* Zeige das Overlay im Landscape-Modus */
+  @media (orientation: landscape) {
+    #landscape-blocker {
+      display: block;
+    }
+
+    /* Verstecke den Rest der Seite */
+    body {
+      overflow: hidden;
+    }
+  }
+}

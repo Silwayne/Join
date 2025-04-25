@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="/styles/cards.css" />
     <link rel="stylesheet" href="/styles/cards-responsive.css" />
     <link rel="stylesheet" href="/styles/join-main-responsive.css" />
+    <link rel="stylesheet" href="styles/rotate.css" />
     <!-- JS -->
     <script src="/scripts/join-header.js"></script>
     <script src="/scripts/side-bar.js"></script>
@@ -31,6 +32,9 @@
   </head>
 
   <body onload="init(), renderRight()">
+    <div id="landscape-blocker">
+      <p id="rotate">Please rotate your device to portrait mode.</p>
+    </div>
     <header id="header"></header>
     <aside id="sidbar"></aside>
     <section id="sidebar-responsive"></section>
