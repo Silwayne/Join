@@ -626,6 +626,9 @@ footer {
         justify-content: center;
         margin-left: 0px !important;
     }
+    .dropdown-menu{
+        position: relative;
+    }
 
     .add-task-h1 h1 {
         text-align: center;

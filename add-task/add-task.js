@@ -458,6 +458,17 @@ function filterNames(id) {
         resultsContainer.innerHTML += getFilteredContactHTML(contactInitials, contactName, isChecked, id);
     }
 }
+function setupSubtaskEnterKey(taskId = '') {
+    let input = document.getElementById('subtaskInput' + taskId);
+    if (!input) return;
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            addSubTaskInput(taskId);
+        }
+    });
+}
 
 
 
@@ -663,4 +674,6 @@ function initHTML(content) {
         </div>
 
 </section>`
+setupSubtaskEnterKey();
+
 }

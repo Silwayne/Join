@@ -173,6 +173,18 @@ async function getContactColorFromFirebase(contactName) {
   }
   return "";
 }
+function setupSubtaskEnterKeyEdit(taskId) {
+  let input = document.getElementById('subtaskInput_' + taskId);
+  if (!input) return;
+
+  input.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+          event.preventDefault();
+          addSubTaskInput(taskId);
+      }
+  });
+}
+
 
 function generateTodosHTML(task) {
   let subtask = checkIfSubtasks(task);
@@ -471,6 +483,7 @@ function editOverlay(id) {
 
   renderAssignedContacts(id);
   updateIcons(id);
+  setupSubtaskEnterKeyEdit(id)
 }
 
 async function saveEditedTask(id) {
