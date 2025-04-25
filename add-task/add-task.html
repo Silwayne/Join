@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="add-task.css" />
+    <link rel="stylesheet" href="/styles/join-main.css" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="add-task.css">
-  <link rel="stylesheet" href="/styles/join-main.css">
+    <script src="/scripts/firebase-log-in.js"></script>
+    <script src="/add-task/add-task.js"></script>
+    <script src="/scripts/side-bar.js"></script>
+    <script src="/scripts/join-header.js"></script>
+    <script src="/add-task/create-task.js"></script>
+    <script src="../scripts/board.js"></script>
 
-  <script src="/add-task/add-task.js"></script>
-  <script src="/scripts/side-bar.js"></script>
-  <script src="/scripts/join-header.js"></script>
-  <script src="/add-task/create-task.js"></script>
-  <script src="../scripts/board.js"></script>
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-  <title>Document</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <body
+    style="padding-left: 232px"
+    onload="init('content'), renderSidebarResponsive(), initDropdownEvents()"
+  >
+    <header id="header"></header>
 
-</head>
-
-<body style="padding-left: 232px;" onload="init('content'), renderSidebarResponsive(), initDropdownEvents()">
-   <header id="header">
-  </header>
-
-  <div id="content">
-  </div>
-  <aside id="sidbar">
-  </aside>
-  <section id="sidebar-responsive"></section>
-
-</body>
-
+    <div id="content"></div>
+    <aside id="sidbar"></aside>
+    <section id="sidebar-responsive"></section>
+  </body>
 </html>

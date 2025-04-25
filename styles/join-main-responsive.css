@@ -32,10 +32,6 @@
     display: none;
   }
 
-  .sidbar-logo {
-    display: none;
-  }
-
   #sidebar-responsive {
     display: flex;
     justify-content: center;
@@ -45,6 +41,7 @@
     bottom: 0;
     width: 100%;
     height: 80px;
+    z-index: 99;
   }
 
   .sidbar-nav-responsive {

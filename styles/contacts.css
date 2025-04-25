@@ -289,7 +289,9 @@ seperator {
 
 @keyframes slideInFromRight {
   from {
-    transform: translateX(100%); /* Startposition: außerhalb des Bildschirms rechts */
+    transform: translateX(
+      100%
+    ); /* Startposition: außerhalb des Bildschirms rechts */
   }
   to {
     transform: translateX(0); /* Endposition: an der Zielposition */

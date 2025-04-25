@@ -241,7 +241,36 @@
     top: 0;
   }
 
+  #contacts-header {
+    padding-right: 0px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: start;
+    padding-left: 10px;
+  }
+
+  seperator {
+    display: none;
+  }
+
+  seperator-bottom {
+    width: 59px;
+    height: 3px;
+    background-color: #29abe2;
+    border-radius: 5px;
+  }
+
+  .user-name-header {
+    padding-left: 10px;
+  }
+
+  #contact-header-without-arrow {
+    display: flex;
+    flex-direction: column;
+  }
+
   #contact-details-area {
+    padding-bottom: 50px;
     animation: slideInFromLeft 1s ease-out forwards;
   }
 
@@ -257,5 +286,14 @@
 @media (max-width: 600px) {
   #left-contacts-page-column {
     padding: 0;
+  }
+
+  .user-area {
+    padding-left: 5px;
+    gap: 8px;
+  }
+
+  .user-name-header {
+    gap: 10px;
   }
 }
