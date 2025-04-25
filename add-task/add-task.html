@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="add-task.css" />
     <link rel="stylesheet" href="/styles/join-main.css" />
+    <link rel="stylesheet" href="/styles/rotate.css" />
 
     <script src="/scripts/firebase-log-in.js"></script>
     <script src="/add-task/add-task.js"></script>
@@ -26,6 +27,9 @@
     style="padding-left: 232px"
     onload="init('content'), renderSidebarResponsive(), initDropdownEvents()"
   >
+    <div id="landscape-blocker">
+      <p id="rotate">Please rotate your device to portrait mode.</p>
+    </div>
     <header id="header"></header>
 
     <div id="content"></div>

@@ -177,11 +177,11 @@ function setupSubtaskEnterKeyEdit(taskId) {
   let input = document.getElementById('subtaskInput_' + taskId);
   if (!input) return;
 
-  input.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
-          event.preventDefault();
-          addSubTaskInput(taskId);
-      }
+  input.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      addSubTaskInput(taskId);
+    }
   });
 }
 
@@ -193,20 +193,97 @@ function generateTodosHTML(task) {
   let img = filterPriorityImage(task);
 
   return `
-        <div draggable="true" onclick="openTaskBoxOverlay(${task.id})" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
-            <div><p class="box-category-header-userstory ${task.category}">${task.category}</p></div>
-            <div class="box-category-title">
-                <p>${task.title}</p>
-                <div class="box-category-descrition"><p>${task.description}</p></div>
-            </div>
-            ${progressBar}
-            <div class="box-contacts-prio">
-                <div class="user-icon-box">${contacts}</div>
-                <div class="box-category-prio">${img}</div>                    
-            </div>
-        </div>
-    `;
+    <div draggable="true" onclick="openTaskBoxOverlay(${task.id})" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
+      <div class="box-category-header">
+        <p class="box-category-header-userstory ${task.category}">${task.category}</p>
+        <div class="tooltip-container" onclick="editTaskPosition(event, ${task.id})">
+       <img class="arrow-dropdown" src="./assets/img/dropdownarrows.svg">
+      <div id="tooltip_${task.id}" class="tooltip-wrapper d_none"></div>
+      </div>
+
+      </div>
+      <div class="box-category-title">
+        <p>${task.title}</p>
+        <div class="box-category-descrition"><p>${task.description}</p></div>
+      </div>
+      ${progressBar}
+      <div class="box-contacts-prio">
+        <div class="user-icon-box">${contacts}</div>
+        <div class="box-category-prio">${img}</div>                    
+      </div>
+    </div>
+  `;
+
 }
+function editTaskPosition(event, id) {
+  event.stopPropagation();
+  let tooltip = document.getElementById("tooltip_" + id);
+  let task = todos.find(t => t.id === id);
+  
+
+  let html = `
+    <div class="tooltip-box">
+      <p class="tooltip-title">Move to</p>
+  `;
+
+  if (task.status === 'todo') {
+    html += `
+      <div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
+        <img src="./assets/img/arrow_downward.svg"> In Progress
+      </div>
+    `;
+  } 
+  else if (task.status === 'inprogress') {
+    html += `
+      <div class="tooltip-item" onclick="moveToStatus(${id}, 'todo')">
+        <img src="./assets/img/arrow_upward.svg"> To Do
+      </div>
+      <div class="tooltip-item" onclick="moveToStatus(${id}, 'await')">
+        <img src="./assets/img/arrow_downward.svg"> Await feedback
+      </div>
+    `;
+  } 
+  else if (task.status === 'await') {
+    html += `
+      <div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
+        <img src="./assets/img/arrow_upward.svg"> In Progress
+      </div>
+      <div class="tooltip-item" onclick="moveToStatus(${id}, 'done')">
+        <img src="./assets/img/arrow_downward.svg"> Done
+      </div>
+    `;
+  } 
+  else if (task.status === 'done') {
+    html += `
+      <div class="tooltip-item" onclick="moveToStatus(${id}, 'await')">
+        <img src="./assets/img/arrow_upward.svg"> Await
+      </div>
+    `;
+  }
+
+  html += `</div>`; 
+  tooltip.innerHTML = html;
+  tooltip.classList.toggle("d_none");
+}
+async function moveToStatus(id, newStatus) {
+  let task = todos.find(t => t.id === id);
+  if (!task) return;
+
+  task.status = newStatus;
+  await updateFireBaseData(task.firebaseID, task);
+  updateBoardHTML();
+}
+function closeAllTooltips() {
+  let tooltips = document.querySelectorAll('.tooltip-wrapper');
+  for (let i = 0; i < tooltips.length; i++) {
+    tooltips[i].classList.add('d_none');
+  }
+}
+
+
+
+
+
 function openTaskBoxOverlay(id) {
   let task = todos.find((t) => t.id === id);
   let taskOverlay = document.getElementById("task-overlay");
@@ -228,29 +305,24 @@ function generateTaskBoxContent(task) {
 
   document.getElementById("task-content").innerHTML = `
       <div class="categorydiv"> 
-      <div> <p class="box-category-header-userstory ${task.category}">${
-    task.category
-  }</p></div>
+      <div> <p class="box-category-header-userstory ${task.category}">${task.category
+    }</p></div>
       <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
       </div>
         <div><p class="task-title-p">${task.title}</p></div>
-            <div class="description-div"><p class="description-p">${
-              task.description
-            }</p></div>
+            <div class="description-div"><p class="description-p">${task.description
+    }</p></div>
             <div><p class="due-date">Due date: ${task.date}</p></div>
-                <div class="priority-div"><p class="priority">Priority:   ${
-                  task.priority
-                } </p>${img}</div>
+                <div class="priority-div"><p class="priority">Priority:   ${task.priority
+    } </p>${img}</div>
                 <div><p>${contactsOverlayContent(task)}</p></div>
                 <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
                 <div class="overlay-delete-edit">
-                    <div onclick="deleteOverlay(${
-                      task.id
-                    })" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
+                    <div onclick="deleteOverlay(${task.id
+    })" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
                         <div class="overlay-delete-edit-border"></div>
-                    <div onclick="editOverlay(${
-                      task.id
-                    })" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
+                    <div onclick="editOverlay(${task.id
+    })" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
                 </div>
     `;
 }

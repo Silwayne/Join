@@ -158,8 +158,65 @@
     .responsive-button-board-div h1 {
       font-size: 45px;
       margin-left: 20px;
-  
     }
+    .box-category-header{
+      display: flex;
+      justify-content: space-between;
+    }
+    .arrow-dropdown{
+      visibility: visible;
+    }
+    .tooltip-wrapper {
+      position: absolute;
+      top: 0;
+      left: 110%; /* nach rechts verschoben */
+      z-index: 10;
+    }
+    .tooltip-box {
+      background-color: #2c3e50;
+      color: white;
+      padding: 10px;
+      border-radius: 18px;
+      width: 150px;
+      font-size: 14px;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      right: 30px;
+    }
+    .tooltip-item{
+      display: flex;
+    }
+    
+    .tooltip-box::before {
+      content: "";
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 0;
+      height: 0;
+      border-bottom: 18px solid transparent;
+      border-right: 18px solid #2c3e50;
+      border-left: 18px solid #2c3e50;
+    }
+    
+    .tooltip-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    
+    .tooltip-item {
+      cursor: pointer;
+      padding: 4px 0;
+    }
+    
+    .tooltip-item:hover {
+      text-decoration: underline;
+    }
+    .tooltip-container {
+      position: relative; /* ← wichtig für absolute Positionierung des Tooltips */
+      display: inline-block;
+    }
+        
   
     .responsive-button-board-div img {
       height: 20px;
