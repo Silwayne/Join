@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="/styles/contact-responsive.css" />
     <link rel="stylesheet" href="styles/join-main.css" />
     <link rel="stylesheet" href="/styles/join-main-responsive.css" />
+    <link rel="stylesheet" href="styles/rotate.css" />
 
     <title>Contacts</title>
   </head>
@@ -24,6 +25,9 @@
     id="body"
     onload="rightContactDetailsHideOnLoad(), renderSidebar(), renderHeader(), renderSidebarResponsive(), initDropdownEvents()"
   >
+    <div id="landscape-blocker">
+      <p id="rotate">Please rotate your device to portrait mode.</p>
+    </div>
     <div id="sidbar"></div>
     <section id="sidebar-responsive"></section>
     <div id="contact-page-area">

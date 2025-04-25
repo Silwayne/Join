@@ -182,3 +182,31 @@ input {
 #edit-contact-heading {
   color: white;
 }
+
+@media (max-width: 1250px) {
+  #button-area {
+    padding-top: 0;
+  }
+
+  #add-contact-heading {
+    font-size: 47px;
+  }
+
+  #cancel-add-contact {
+    display: none;
+  }
+
+  #add-contact-overlay {
+    width: 90% !important;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .add-contact-form {
+    justify-content: space-between;
+    display: flex
+;
+  }
+}
