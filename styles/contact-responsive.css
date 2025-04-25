@@ -223,7 +223,7 @@
     transform: translateX(-50%);
     width: 90%;
     background: lightgray;
-    animation: slideInFromLeft 1s ease-out forwards;
+    animation: slideInFromLeft 125ms ease-out forwards;
     justify-content: center;
     margin-left: 0 !important;
     display: flex;
@@ -270,6 +270,7 @@
   }
 
   #contact-details-area {
+    max-height: 100vh;
     padding-bottom: 50px;
     animation: slideInFromLeft 1s ease-out forwards;
   }
@@ -286,6 +287,7 @@
 @media (max-width: 600px) {
   #left-contacts-page-column {
     padding: 0;
+    height: 100vh;
   }
 
   .user-area {
@@ -295,5 +297,13 @@
 
   .user-name-header {
     gap: 10px;
+  }
+
+  .contact-details {
+    margin: 5px;
+  }
+
+  .contact-information {
+    padding-left: 5px;
   }
 }
