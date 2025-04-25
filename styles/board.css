@@ -540,11 +540,6 @@ textarea {
   position: sticky !important;
 }
 
-.user-initials {
-  font-weight: 400 !important;
-  font-size: 12px !important;
-}
-
 #outer-task-overlay {
   display: none;
   position: fixed;
