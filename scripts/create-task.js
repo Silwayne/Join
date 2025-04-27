@@ -4,12 +4,19 @@ async function createTask() {
       getTaskData();
       clearTaskForm();
       if (typeof updateBoardHTML === "function") {
-          await updateBoardHTML();
-          removeAddTask();
-      }
-      
-  }
-}
+        await updateBoardHTML();
+        removeAddTask();
+      }      
+    }
+    const success = document.getElementById('success');
+
+    success.style.display = 'block';
+    setTimeout(() => success.style.opacity = '1', 10);
+    setTimeout(() => {
+      success.style.opacity = '0';
+      setTimeout(() => success.style.display = 'none', 500);
+    }, 1000);
+    }
 
 function getTaskData() {
   let title = document.getElementById('add-task-title').value.trim();
@@ -47,7 +54,7 @@ async function postToFireBase(title, description, contacts, date, priority, cate
     };
     
 
-  const response = await fetch(firebaseURL +'tasks.json', {
+  let response = await fetch(firebaseURL +'tasks.json', {
       method: 'POST',
       body: JSON.stringify(task),
       headers: {
@@ -55,6 +62,5 @@ async function postToFireBase(title, description, contacts, date, priority, cate
       }
   });
 
-  const data = await response.json();
-  console.log('Gespeichert:', data);
+  let data = await response.json();
 }

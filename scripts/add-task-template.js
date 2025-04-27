@@ -1,5 +1,7 @@
 function initHTML(content) {
     document.getElementById(content).innerHTML = `
+
+    <div><img id="success" src ="/assets/img/Added to back log V1.svg"></div>
     <div class="add-task-x">
     <h1 class="add-task-h1">Add Task</h1>
     <div onclick="removeAddTask()" id="addtaskx"><img src="../assets/img/close.svg"></div>
