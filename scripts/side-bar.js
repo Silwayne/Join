@@ -1,3 +1,8 @@
+/**
+ * Renders the sidebar for the application.
+ * Updates the inner HTML of the element with the ID "sidbar" to display the navigation menu,
+ * including links for "Summary", "Add Task", "Board", "Contacts", "Privacy Policy", and "Legal Notice".
+ */
 function renderSidebar() {
   document.getElementById("sidbar").innerHTML = `
     <nav class="sidbar-nav">
@@ -46,6 +51,11 @@ function renderSidebar() {
 `;
 }
 
+/**
+ * Renders the responsive sidebar for the application.
+ * Updates the inner HTML of the element with the ID "sidebar-responsive" to display the navigation menu
+ * in a responsive layout, including links for "Summary", "Add Task", "Board", and "Contacts".
+ */
 function renderSidebarResponsive() {
     document.getElementById("sidebar-responsive").innerHTML = `
     <div class="menu-responsive">

@@ -1,3 +1,8 @@
+/**
+ * Renders the sidebar for the login page.
+ * Updates the inner HTML of the element with the ID "sidbar" to display the navigation menu,
+ * including links for "Log in", "Privacy Policy", and "Legal Notice".
+ */
 function renderSidebar() {
   document.getElementById("sidbar").innerHTML = `
   
@@ -29,6 +34,11 @@ function renderSidebar() {
   `;
 }
 
+/**
+ * Renders the responsive sidebar for the login page.
+ * Updates the inner HTML of the element with the ID "sidebar-responsive" to display the footer navigation menu,
+ * including links for "Log in", "Privacy Policy", and "Legal Notice".
+ */
 function renderSidebarResponsive() {
   document.getElementById("sidebar-responsive").innerHTML = `
     <footer class="footer-nav">
