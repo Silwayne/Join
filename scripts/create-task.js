@@ -1,13 +1,13 @@
 async function createTask() {
   let isValid = checkValidations();
   if (isValid) {
-    getTaskData();
-    clearTaskForm();
-    await updateBoardHTML()
-    removeAddTask()
-  }
+      getTaskData();
+      clearTaskForm();
+await updateBoardHTML()
+      removeAddTask()
 }
-
+}
+  
 
 function getTaskData() {
   let title = document.getElementById('add-task-title').value.trim();
@@ -20,18 +20,9 @@ function getTaskData() {
   if (list) {
     let subtaskItems = list.querySelectorAll('.subtask-item');
     subtaskItems.forEach(item => {
-      let valueElement = item.querySelector('.subtask-value');
-      let text = '';
-
-      if (valueElement) {
-        text = Array.from(valueElement.childNodes)
-                    .filter(node => node.nodeType === Node.TEXT_NODE)
-                    .map(node => node.textContent.trim())
-                    .join('');
-      }
-
-      if (text && text !== '') {
-        subtasks.push({ title: text, done: false });
+      let value = item.querySelector('.subtask-value')?.innerText.trim(); 
+      if (value && value !== '') {
+        subtasks.push({ title: value, done: false });
       }
     });
   }
@@ -43,23 +34,23 @@ function getTaskData() {
 
 async function postToFireBase(title, description, contacts, date, priority, category, subtasks) {
   let task = {
-    'title': title,
-    'description': description,
-    'contacts': contacts,
-    'date': date,
-    'priority': priority,
-    'category': category,
-    'subtasks': subtasks,
-    'status': 'todo'
-  };
+      'title': title,
+      'description': description,
+      'contacts': contacts,
+      'date': date,
+      'priority': priority,
+      'category': category,
+      'subtasks' :subtasks,
+      'status': 'todo'
+    };
+    
 
-
-  const response = await fetch(firebaseURL + 'tasks.json', {
-    method: 'POST',
-    body: JSON.stringify(task),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+  const response = await fetch(firebaseURL +'tasks.json', {
+      method: 'POST',
+      body: JSON.stringify(task),
+      headers: {
+          'Content-Type': 'application/json'
+      }
   });
 
   const data = await response.json();
