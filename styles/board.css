@@ -343,3 +343,12 @@ button {
   transition: background-color 0.3s ease;
 }
 
+.success {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: none;
+  position: absolute; /* <-- Wichtig! */
+  top: 15%; /* Abstand von oben */
+  left: 15%; /* Abstand von links */
+  z-index: 1000; /* damit es über allem liegt */
+}
