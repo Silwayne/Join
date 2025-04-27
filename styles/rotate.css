@@ -1,7 +1,11 @@
+#landscape-blocker {
+  display: none;
+}
+
 /* Standardmäßig ist das Overlay unsichtbar */
-@media (max-width: 1250px) {
+@media (max-height: 500px) {
   #landscape-blocker {
-    display: none;
+    display: block;
     position: fixed;
     top: 0;
     left: 0;

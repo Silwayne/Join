@@ -66,7 +66,7 @@ h2 {
 
 #contacts-header {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   gap: 30px;
   background-color: #f6f7f8;
@@ -230,6 +230,7 @@ seperator {
 }
 
 .contact-details {
+  margin-top: 0 !important;
   margin: 50px;
 }
 
@@ -335,6 +336,14 @@ seperator {
   margin-left: 96%;
   display: flex;
   justify-content: end;
+}
+
+h1 {
+  font-size: 47px;
+}
+
+#big-user-name {
+  font-size: 36px;
 }
 
 #button-overlay-area {

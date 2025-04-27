@@ -90,3 +90,29 @@ function hideSuccessMessage() {
     message.remove();
   }, 2500);
 }
+
+/**
+ * Closes the responsive overlay and restores the mobile edit options button.
+ * Removes the overlay button and area, then re-adds the button to the contact div.
+ * @param {string} paramKey - The parameter key for the mobile edit options.
+ * @param {Array} users - The list of users.
+ */
+function closeResponsiveOverlay(paramKey, users) {
+  let overlayButton = document.getElementById("overlayButton");
+  if (overlayButton) {
+    overlayButton.remove();
+  }
+
+  let overlayArea = document.getElementById("mobileEditOptions");
+  if (overlayArea) {
+    overlayArea.remove();
+  }
+
+  let contactDiv = document.getElementById("contact-div");
+  contactDiv.innerHTML += `
+    <div id="button-overlay-area">
+      <button onclick="mobileEditOptions('${paramKey}', users)" id="overlayButton">
+        <img id="three-dots-options" src="/assets/img/three_dots.svg">
+      </button>
+    </div>`;
+}

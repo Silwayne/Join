@@ -34,8 +34,10 @@ function renderLeftColumnContactsTemplate(user, indexOfUser, key) {
 /**
  * Displays the contact details area for a selected contact.
  * Updates the UI with the contact's information.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
  */
-function contactDetailsAreaTemplate() {
+function contactDetailsAreaTemplate(paramKey, users) {
   let contactDetailsArea = document.getElementById("contact-details-area");
   contactDetailsArea.classList.add("show");
   contactDetailsArea.innerHTML = `            
@@ -48,7 +50,7 @@ function contactDetailsAreaTemplate() {
                   <div id="user-name-options" class="user-name-options">
                     <a
                       id="contact-edit"
-                      onclick="editContact(key, user)"
+                      onclick="editContactOverlay('${paramKey}', users)"
                       class="edit-options"
                       ><img
                         class="option-icon"
@@ -59,7 +61,7 @@ function contactDetailsAreaTemplate() {
                     <a
                       id="contact-to-trash"
                       class="edit-options"
-                      onclick="deleteContactFromDatabase(key)"
+                      onclick="deleteContactFromDatabase('${paramKey}', users)"
                       ><img
                         class="option-icon"
                         src="/assets/img/trash-icon.svg"
@@ -94,10 +96,12 @@ function displayAddContactOverlay() {
       <div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
         <div onclick="stopPropagation(event)" id="add-contact-overlay">
           <div id="left-add-contact-column">
-            <button id="closeOverlayButton" onclick="closeOverlay()">X</button>
+          <div id="add-contact-header-area">
             <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
             <h1 id="add-contact-heading">Add contact</h1>
             <h2>Tasks are better with a team!</h2>
+          </div>
+          <div><button id="closeOverlayButton" onclick="closeOverlay()">X</button></div>
           </div>
           <div id="right-add-contact-column">
             <div class="new-contact-icon">
@@ -111,7 +115,7 @@ function displayAddContactOverlay() {
                 <img class="icon" src="/assets/img/mail.svg">
                 <input type="tel" id="new-phone" placeholder="Phone" />
                 <img class="icon" src="/assets/img/call.svg">
-                <div id="button-area">
+                <div class="create-contact-btn" id="button-area">
                   <button type="button" onclick="closeOverlay()" id="cancel-add-contact" class="add-contacts-overlay-btns">
                     Cancel X
                   </button>
@@ -132,11 +136,30 @@ function displayAddContactOverlay() {
  * @param {Object} users - The list of all users.
  */
 function editContactOverlay(key, users) {
-  let user = users[key];
-  if (!user) {
-    console.error("User not found");
+  console.log("editContactOverlay called with key:", key); // Debug-Ausgabe
+  console.log("Users object:", users); // Debug-Ausgabe
+
+  if (!key) {
+    alert("The selected contact could not be found. Please try again.");
+    console.error("Key is undefined or invalid");
     return;
   }
+
+  if (!users || Object.keys(users).length === 0) {
+    console.error("Users data not loaded yet");
+    alert("User data is not available. Please try again later.");
+    return;
+  }
+
+  let user = users[key];
+  if (!user) {
+    alert("The selected contact could not be found. Please try again.");
+    console.error("User not found for key:", key);
+    return;
+  }
+
+  console.log("User found:", user); // Debug-Ausgabe
+
   let realBody = document.getElementById("body");
   realBody.style.overflow = "hidden";
   let body = document.getElementById("overlayArea");
@@ -176,20 +199,41 @@ function editContactOverlay(key, users) {
 /**
  * Displays the mobile edit options overlay for a contact.
  * Dynamically generates the HTML for the overlay and appends it to the DOM.
- * @param {string} key - The unique key of the contact.
+ * @param {string} paramKey - The unique key of the contact.
  * @param {Object} users - The list of all users.
  */
-function mobileEditOptions(key, users) {
-  let buttonOverlayArea = document.getElementById("button-overlay-area");
-  buttonOverlayArea.innerHTML = `
-  <div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
-    <div id="small-responsive-overlay-options">
-      <button class="responsiveButton" onclick="editContactOverlay('${key}', users)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
-      <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}', users)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
-    </div>
-  </div>`;
-  let overlayButton = document.getElementById("overlayButton");
-  if (overlayButton) {
-    overlayButton.remove();
+function mobileEditOptions(paramKey, users) {
+  console.log("mobileEditOptions called with paramKey:", paramKey); // Debug-Ausgabe
+  console.log("Users object:", users); // Debug-Ausgabe
+
+  if (!paramKey || !users || !users[paramKey]) {
+    console.error("Invalid paramKey or users data");
+    alert("The selected contact could not be found. Please try again.");
+    return;
   }
+
+  let buttonOverlayArea = document.getElementById("button-overlay-area");
+  if (!buttonOverlayArea) {
+    console.error("Button overlay area not found");
+    return;
+  }
+
+  // Entferne vorherige Overlays, falls vorhanden
+  let existingOverlay = document.getElementById("mobileEditOptions");
+  if (existingOverlay) {
+    existingOverlay.remove();
+  }
+
+  // Füge das Overlay hinzu
+  buttonOverlayArea.innerHTML = `
+    <div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+      <div id="small-responsive-overlay-options">
+        <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
+          <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit
+        </button>
+        <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${paramKey}', users)">
+          <img id="trash-icon" src="/assets/img/trash-icon.svg">Delete
+        </button>
+      </div>
+    </div>`;
 }

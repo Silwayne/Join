@@ -152,6 +152,11 @@ function hideContactDetails(users) {
 }
 
 function renderRightContactArea(name, email, phone, paramKey, users) {
+  let overlayButton = document.getElementById("overlayButton");
+  if (overlayButton) {
+    overlayButton.style.display = "block";
+  }
+
   handleResponsiveView(paramKey, users);
   updateContactDetails(name, email, phone, paramKey, users);
   updateUserDetails(paramKey, users);
@@ -174,32 +179,45 @@ function handleResponsiveView(paramKey, users) {
 
 function handleOverlayButton(paramKey, users) {
   let contactDiv = document.getElementById("contact-div");
-  if (!document.getElementById("overlayButton")) {
-    contactDiv.innerHTML += `<div id="button-overlay-area">
-       <button onclick="mobileEditOptions('${paramKey}', users)" id="overlayButton">
-          <img id="three-dots-options" src="/assets/img/three_dots.svg">
-       </button>
-    </div>`;
+  if (!contactDiv) {
+    console.error("Contact div not found");
+    return;
   }
+
+  // Entferne vorherige Buttons, falls vorhanden
+  let existingButton = document.getElementById("overlayButton");
+  if (existingButton) {
+    existingButton.remove();
+  }
+
+  // Füge den neuen Button hinzu
+  contactDiv.innerHTML += `
+    <div id="button-overlay-area">
+      <button onclick="mobileEditOptions('${paramKey}', users)" id="overlayButton">
+        <img id="three-dots-options" src="/assets/img/three_dots.svg">
+      </button>
+    </div>`;
 }
 
 function updateContactDetails(name, email, phone, paramKey, users) {
-  contactDetailsAreaTemplate();
+  contactDetailsAreaTemplate(paramKey, users);
   hideContactOptionsForMobile();
   let rightContactNameArea = document.getElementById("big-user-name");
   let rightEmailArea = document.getElementById("user-email");
   let rightPhoneArea = document.getElementById("user-phone-number");
   let rightDeleteButton = document.getElementById("contact-to-trash");
   let rightEditButton = document.getElementById("contact-edit");
+
   rightPhoneArea.innerText = phone;
   rightEmailArea.innerHTML = `${email}<br>`;
   rightEmailArea.href = `mailto:${email}`;
   rightContactNameArea.innerText = name;
+
   rightDeleteButton.onclick = function () {
     deleteContactFromDatabase(paramKey, users);
   };
   rightEditButton.onclick = function () {
-    editContact(paramKey, users);
+    editContact(paramKey, users); // Übergabe von paramKey
   };
 }
 
@@ -227,9 +245,8 @@ async function deleteContactFromDatabase(key, users) {
   }
 }
 
-function editContact(key, users) {
-  let user = users[key];
-  editContactOverlay(key, users);
+function editContact(paramKey, users) {
+  editContactOverlay(paramKey, users);
 }
 
 function stopPropagation(event) {
@@ -259,12 +276,12 @@ function bigRandomColour(user) {
 
 function hideContactOptionsForMobile() {
   let userNameOptions = document.getElementById("user-name-options");
-  if (window.innerWidth < 1440) {
+  if (window.innerWidth > 1440) {
     userNameOptions.style.display = "none";
   }
 }
 
-function closeResponsiveOverlay() {
+function closeResponsiveOverlay(key) {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();
@@ -352,14 +369,39 @@ async function saveEditedContact(key) {
   }
 }
 
-function mobileEditOptions(key, users) {
+function mobileEditOptions(paramKey, users) {
+  if (!paramKey || !users || !users[paramKey]) {
+    console.error("Invalid paramKey or users data");
+    alert("The selected contact could not be found. Please try again.");
+    return;
+  }
+
   let buttonOverlayArea = document.getElementById("button-overlay-area");
-  buttonOverlayArea.innerHTML = `<div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
-    <div id="small-responsive-overlay-options">
-      <button class="responsiveButton" onclick="editContactOverlay('${key}', users)"><img id="edit-icon" src="/assets/img/edit-icon.svg">Edit</button>
-      <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${key}', users)"><img id="trash-icon" src="/assets/img/trash-icon.svg">Delete</button>
-    </div>
-  </div>`;
+  if (!buttonOverlayArea) {
+    console.error("Button overlay area not found");
+    return;
+  }
+
+  // Entferne vorherige Overlays, falls vorhanden
+  let existingOverlay = document.getElementById("mobileEditOptions");
+  if (existingOverlay) {
+    existingOverlay.remove();
+  }
+
+  // Füge das Overlay hinzu
+  buttonOverlayArea.innerHTML = `
+    <div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+      <div id="small-responsive-overlay-options">
+        <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
+          <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit
+        </button>
+        <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${paramKey}', users)">
+          <img id="trash-icon" src="/assets/img/trash-icon.svg">Delete
+        </button>
+      </div>
+    </div>`;
+
+  // Entferne den Overlay-Button, um doppelte Klicks zu vermeiden
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();

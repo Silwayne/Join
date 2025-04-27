@@ -1,6 +1,10 @@
 /* Responsive Styles */
 
 @media (max-width: 1250px) {
+  h3 {
+    padding-left: 10px !important;
+  }
+
   #right-contacts-page-column {
     display: none;
   }
@@ -16,6 +20,12 @@
 
   #contact-page-area {
     margin-left: 0;
+  }
+
+  .user-picture-big {
+    width: 80px;
+    height: 80px;
+    font-size: 27px;
   }
 
   .add-contact-btn {
@@ -38,6 +48,7 @@
   .go-back-arrow {
     background-color: #f6f7f8;
   }
+
   .go-back-arrow:hover {
     background-color: #eeeeee;
     gap: 0 !important;
@@ -123,9 +134,10 @@
 
   #left-add-contact-column {
     height: 50vh;
-    justify-content: center;
+    justify-content: space-between;
     align-items: start;
     width: 90% !important;
+    flex-direction: row;
   }
 
   #add-contact-options {
@@ -135,9 +147,9 @@
   }
 
   #closeOverlayButton {
-    margin-top: -50px;
     display: flex;
     justify-content: end;
+    width: auto;
   }
 
   #closeOverlayButton:hover {
@@ -223,7 +235,7 @@
   #edit-contact-overlay {
     position: fixed;
     transform: translateX(-50%);
-    width: 90%;
+    width: 90vw !important;
     background: lightgray;
     animation: slideInFromLeft 125ms ease-out forwards;
     justify-content: center;
@@ -271,9 +283,33 @@
     flex-direction: column;
   }
 
+  .user-name-options {
+    margin-top: 0;
+  }
+
+  #contact-to-trash {
+    display: none;
+  }
+
+  #contact-edit {
+    display: none;
+  }
+
+  .contact-details {
+    margin-left: 10px !important;
+  }
+
+  .contacts-page-div {
+    width: 100%;
+  }
+
+  #contact-page-area {
+    width: 100%;
+  }
+
   #contact-details-area {
     max-height: 100vh;
-    padding-bottom: 50px;
+    padding-bottom: 80px;
     animation: slideInFromLeft 1s ease-out forwards;
   }
 
@@ -297,8 +333,28 @@
     gap: 8px;
   }
 
+  #right-add-contact-column {
+    padding-bottom: 10px;
+  }
+
+  #add-contact-heading {
+    font-size: 28px;
+  }
+
+  #left-add-contact-column {
+    height: 30vh;
+  }
+
   .user-name-header {
     gap: 10px;
+  }
+
+  #add-contact-overlay {
+    height: 80vh !important;
+  }
+
+  #add-contact-header-area {
+    margin-top: 10px;
   }
 
   #add-contact-options {
