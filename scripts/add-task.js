@@ -237,23 +237,6 @@ function clearDropDownMenu(dropDownMenu) {
     dropDownMenu.innerHTML = '';
 }
 
-function renderContacts(firebaseAnswer, dropDownMenu, id) {
-    let localCounter = 0;
-    for (let key in firebaseAnswer) {
-        let contact = firebaseAnswer[key];
-        let contactName = contact.name;
-        let contactColor = contact.color;
-        let contactInitials = getInitials(contactName);
-        
-        saveContactLocally(contactName, contactColor);
-        let isChecked = overlayContacts.includes(contactName);
-        dropDownMenu.innerHTML += getContactListHTML(contactInitials, contactName, localCounter, contactColor, id, isChecked);
-        
-        addCheckboxListener(contactName, localCounter, id);
-        localCounter++;
-    }
-}
-
 function saveContactLocally(contactName, contactColor) {
     contactColors[contactName] = contactColor;
     if (!names.includes(contactName)) {
@@ -269,7 +252,6 @@ function addCheckboxListener(contactName, counter, id) {
         });
     }
 }
-
 
 function handleContactSelection(name, checked, id) {
     if (checked) {
@@ -351,7 +333,6 @@ function hideContacts(event, id) {
         renderAssignedContacts(id);
 }
 
-
 function renderAssignedContacts(id) {        
     let taskId = '';
     if (id !== "contact-container") {
@@ -385,48 +366,6 @@ function setupSubtaskEnterKey(taskId = '') {
             addSubTaskInput(taskId);
         }
     });
-}
-
-function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {
-    let fontColor = "";
-    let checkboxImage = "../assets/img/unchecked.svg";
-    let backgroundClass = "";
-
-    if (isChecked === 'checked') {
-        checkboxImage = "../assets/img/checked.svg";
-        backgroundClass = "blue-background";
-        fontColor = "white-font";
-    } else {
-        fontColor = "normal-font";
-    }
-
-    let idNumber = contactName.replace(/\s+/g, '_');
-
-    return contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName, contactColors, contactInitials, fontColor, checkboxImage)
-
-}
-
-function clearTaskForm() {
-    overlayContacts= [];
-    let subTaskInput = document.getElementById('subtaskInput');
-    let titleInput = document.getElementById('add-task-title');
-    let descriptionInput = document.getElementById('description-input');
-    let checkboxes = document.querySelectorAll('.contact-checkbox');
-    let dueDateInput = document.getElementById('due-date');
-
-        subTaskInput.value = '';
-        updateIcons()
-        titleInput.value = '';
-        descriptionInput.value = '';
-    for (let checkbox of checkboxes) {
-        checkbox.checked = false;
-    }
-    renderAssignedContacts('assignedContactsContainer', []);
-    
-    if (dueDateInput) {
-        dueDateInput.value = '';
-    }
-    resetValue();
 }
 
 function checkValidations() {
