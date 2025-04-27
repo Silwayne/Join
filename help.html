@@ -20,13 +20,12 @@
     />
     <title>Help</title>
   </head>
-  <body onload="init()">
+  <body onload="renderHeader(), initDropdownEvents(), renderSidebar(), renderSidebarResponsive()">
     <div id="landscape-blocker">
       <p id="rotate">Please rotate your device to portrait mode.</p>
     </div>
     <header id="header"></header>
     <aside id="sidbar"></aside>
-    <section id="sidebar-responsive"></section>
 
     <section id="content" class="content-help">
       <section class="back-main-arrow">
@@ -130,9 +129,9 @@
         <h2>Enjoy using Join!</h2>
       </div>
     </section>
+    <section id="sidebar-responsive"></section>
 
     <script src="./scripts/join-header.js"></script>
     <script src="./scripts/side-bar.js"></script>
-    <script src="./scripts/join-main.js"></script>
   </body>
 </html>

@@ -43,6 +43,13 @@ a:hover {
   text-decoration: underline;
 }
 
+@media (max-width: 1250px) {
+  .legal-content {
+    margin-bottom: 80px;
+  }
+}
+
+
 @media (max-width: 900px) {
   .legal-content {
     margin-left: 20px;

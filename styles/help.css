@@ -49,6 +49,12 @@ a:hover {
   text-decoration: underline;
 }
 
+@media (max-width: 1250px) {
+  .help-container {
+    margin-bottom: 80px;
+  }
+}
+
 @media (max-width: 900px) {
   .help-container {
     margin-left: 20px;

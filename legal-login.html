@@ -20,13 +20,12 @@
     />
     <title>Legal Notice Login</title>
   </head>
-  <body onload="init()">
+  <body onload="renderHeader(), initDropdownEvents(), renderSidebar(), renderSidebarResponsive()">
     <div id="landscape-blocker">
       <p id="rotate">Please rotate your device to portrait mode.</p>
     </div>
     <header id="header"></header>
     <aside id="sidbar"></aside>
-    <section id="sidebar-responsive"></section>
 
     <section id="content">
       <div class="legal-content">
@@ -128,6 +127,7 @@
         <p>[25.02.2025]</p>
       </div>
     </section>
+    <section class="sidebar-responsive" id="sidebar-responsive"></section>
 
     <script src="./scripts/join-header-login.js"></script>
     <script src="./scripts/join-main-login.js"></script>
