@@ -394,7 +394,7 @@ footer {
   transition: opacity 0.3s ease;
   display: none;
   position: absolute; /* <-- Wichtig! */
-  top: 50px; /* Abstand von oben */
-  left: 50px; /* Abstand von links */
+  top: 15%; /* Abstand von oben */
+  left: 15%; /* Abstand von links */
   z-index: 1000; /* damit es über allem liegt */
 }

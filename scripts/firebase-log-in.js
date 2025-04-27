@@ -1,0 +1,16 @@
+// Top secret, so please make pssshhhht!
+
+const firebaseURL = "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/";
+
+const firebaseURLUser =
+  "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users.json";
+
+const firebaseApp =
+  "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/.json";
+
+const firebaseForDeletion =
+  "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/users/";
+
+const firbaseForTasks =
+  "https://join-log-in-1761a-default-rtdb.europe-west1.firebasedatabase.app/tasks/";
+  

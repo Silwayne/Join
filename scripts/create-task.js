@@ -9,18 +9,30 @@ async function createTask() {
     getTaskData();
     clearTaskForm();
     const success = document.getElementById('success');
-    success.style.display = 'block';
-    setTimeout(() => success.style.opacity = '1', 10);
-    setTimeout(() => {
-      success.style.opacity = '0';
+    const successBoard = document.getElementById('success-board');
+
+    if (success) {
+      success.style.display = 'block';
+      setTimeout(() => success.style.opacity = '1', 10);
       setTimeout(() => {
-        success.style.display = 'none';
-        removeAddTask(); // <-- Jetzt erst nach dem Ausblenden!
-      }, 500);
-    }, 1000);
+        success.style.opacity = '0';
+        setTimeout(() => {
+          success.style.display = 'none';
+        }, 500);
+      }, 1000);
+    }   if (successBoard) {
+      successBoard.style.display = 'block';
+      setTimeout(() => successBoard.style.opacity = '1', 10);
+      setTimeout(() => {
+        successBoard.style.opacity = '0';
+        setTimeout(() => {
+          successBoard.style.display = 'none';
+        }, 500);
+      }, 1000);
+    }
     if (typeof updateBoardHTML === "function") {
       await updateBoardHTML();
-
+      removeAddTask();       
     }      
   }
 }
