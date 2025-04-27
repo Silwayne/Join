@@ -573,3 +573,11 @@ textarea {
 .tooltip-container {
   display: none;
 }
+
+.drag-and-drop-box {
+  transition: transform 0.2s ease; /* Sanfte Übergänge */
+}
+
+.drag-and-drop-box:active {
+  transform: rotate(15deg); /* Dreht das Element um 30 Grad */
+}
