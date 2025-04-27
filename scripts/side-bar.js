@@ -10,7 +10,7 @@ function renderSidebar() {
                       <span>Summary</span>
                     </button>
                 </a>
-                    <a href="/add-task/add-task.html">
+                    <a href="/add-task.html">
                     <button class="menu-button menu-button-design font-size">
                         <img src="/assets/img/add_task_icon.svg" alt="Add Task">
                         <span style="white-space: nowrap;">Add Task</span>
