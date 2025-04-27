@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: board-template.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: board-template.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Updates the board HTML by loading tasks and rendering them into their respective columns.
+ * @async
+ */
+async function updateBoardHTML() {
+  await loadContactColors();
+  await loadTasksFromFirebase();
+  const statuses = ["todo", "inprogress", "await", "done"];
+
+  for (let i = 0; i &lt; statuses.length; i++) {
+    let status = statuses[i];
+    let taskDiv = document.getElementById("drag-and-drop-" + status);
+    let tasks = todos.filter((t) => t.status === status);
+
+    if (tasks.length > 0) {
+      taskDiv.innerHTML = "";
+      taskDiv.classList.remove("no-tasks-container");
+      taskDiv.classList.add("task-columns");
+
+      for (let m = 0; m &lt; tasks.length; m++) {
+        let taskHTML = await generateTodosHTML(tasks[m]);
+        taskDiv.innerHTML += taskHTML;
+      }
+    } else {
+      if (status === "todo") {
+        taskDiv.innerHTML = `&lt;p class="no-tasks-text">No tasks to do&lt;/p>`;
+      } else if (status === "inprogress") {
+        taskDiv.innerHTML = `&lt;p class="no-tasks-text">No tasks in progress&lt;/p>`;
+      } else if (status === "await") {
+        taskDiv.innerHTML = `&lt;p class="no-tasks-text">No tasks to await&lt;/p>`;
+      } else if (status === "done") {
+        taskDiv.innerHTML = `&lt;p class="no-tasks-text">No tasks done&lt;/p>`;
+      }
+
+      taskDiv.classList.add("no-tasks-container");
+    }
+  }
+}
+
+/**
+ * Generates the HTML for the selected contacts in a task.
+ * @param {Object} task - The task object containing contact information.
+ * @returns {string} - The HTML string for the selected contacts.
+ */
+function getSelectedContactsFromAddTask(task) {
+  let html = "";
+  if (task.contacts) {
+    for (let i = 0; i &lt; task.contacts.length; i++) {
+      let name = task.contacts[i];
+      let color = contactColors[name] || "#29abe2";
+      let initials = getInitials(name);
+      if (color) {
+        html += `
+                    &lt;div class="user-icon user-icon-board-box" style="background-color: ${color};">
+                        &lt;p>${initials}&lt;/p>
+                    &lt;/div>
+                `;
+      }
+    }
+  }
+  return html;
+}
+
+/**
+ * Edits the position of a task by displaying a tooltip with move options.
+ * @param {Event} event - The event object.
+ * @param {number} id - The ID of the task to edit.
+ */
+function editTaskPosition(event, id) {
+  event.stopPropagation();
+  let tooltip = document.getElementById("tooltip_" + id);
+  let task = todos.find(t => t.id === id);
+
+
+  let html = `
+    &lt;div class="tooltip-box">
+      &lt;p class="tooltip-title">Move to&lt;/p>
+  `;
+
+  if (task.status === 'todo') {
+    html += `
+      &lt;div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
+        &lt;img src="./assets/img/arrow_downward.svg"> In Progress
+      &lt;/div>
+    `;
+  }
+  else if (task.status === 'inprogress') {
+    html += `
+      &lt;div class="tooltip-item" onclick="moveToStatus(${id}, 'todo')">
+        &lt;img src="./assets/img/arrow_upward.svg"> To Do
+      &lt;/div>
+      &lt;div class="tooltip-item" onclick="moveToStatus(${id}, 'await')">
+        &lt;img src="./assets/img/arrow_downward.svg"> Await feedback
+      &lt;/div>
+    `;
+  }
+  else if (task.status === 'await') {
+    html += `
+      &lt;div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
+        &lt;img src="./assets/img/arrow_upward.svg"> In Progress
+      &lt;/div>
+      &lt;div class="tooltip-item" onclick="moveToStatus(${id}, 'done')">
+        &lt;img src="./assets/img/arrow_downward.svg"> Done
+      &lt;/div>
+    `;
+  }
+  else if (task.status === 'done') {
+    html += `
+      &lt;div class="tooltip-item" onclick="moveToStatus(${id}, 'await')">
+        &lt;img src="./assets/img/arrow_upward.svg"> Await
+      &lt;/div>
+    `;
+  }
+
+  html += `&lt;/div>`;
+  tooltip.innerHTML = html;
+  tooltip.classList.toggle("d_none");
+}
+
+/**
+ * Generates the HTML for a task card in the board.
+ * @param {Object} task - The task object containing task details.
+ * @returns {string} - The HTML string for the task card.
+ */
+function generateTodosHTML(task) {
+  let subtask = checkIfSubtasks(task);
+  let progressBar = generateProgressBar(subtask, task);
+  let contacts = getSelectedContactsFromAddTask(task);
+  let img = filterPriorityImage(task);
+
+  return `
+    &lt;div draggable="true" onclick="openTaskBoxOverlay(${task.id})" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
+      &lt;div class="box-category-header">
+        &lt;p class="box-category-header-userstory ${task.category}">${task.category}&lt;/p>
+        &lt;div class="tooltip-container" onclick="editTaskPosition(event, ${task.id})">
+       &lt;img class="arrow-dropdown" src="./assets/img/dropdownarrows.svg">
+      &lt;div id="tooltip_${task.id}" class="tooltip-wrapper d_none">&lt;/div>
+      &lt;/div>
+
+      &lt;/div>
+      &lt;div class="box-category-title">
+        &lt;p>${task.title}&lt;/p>
+        &lt;div class="box-category-descrition">&lt;p>${task.description}&lt;/p>&lt;/div>
+      &lt;/div>
+      ${progressBar}
+      &lt;div class="box-contacts-prio">
+        &lt;div class="user-icon-box">${contacts}&lt;/div>
+        &lt;div class="box-category-prio">${img}&lt;/div>                    
+      &lt;/div>
+    &lt;/div>
+  `;
+
+}
+
+/**
+ * Generates the content for the task box overlay.
+ * @param {Object} task - The task object containing task details.
+ */
+function generateTaskBoxContent(task) {
+  let img = filterPriorityImage(task);
+
+  document.getElementById("task-content").innerHTML = `
+      &lt;div class="categorydiv"> 
+      &lt;div> &lt;p class="box-category-header-userstory ${task.category}">${task.category
+    }&lt;/p>&lt;/div>
+      &lt;div onclick="closeOverlay()"class="closeOverlay-x">&lt;img src="../assets/img/close.svg">&lt;/div>
+      &lt;/div>
+        &lt;div>&lt;p class="task-title-p">${task.title}&lt;/p>&lt;/div>
+            &lt;div class="description-div">&lt;p class="description-p">${task.description
+    }&lt;/p>&lt;/div>
+            &lt;div>&lt;p class="due-date">Due date: ${task.date}&lt;/p>&lt;/div>
+                &lt;div class="priority-div">&lt;p class="priority">Priority:   ${task.priority
+    } &lt;/p>${img}&lt;/div>
+                &lt;div>&lt;p>${contactsOverlayContent(task)}&lt;/p>&lt;/div>
+                &lt;div id="overlay-subtasks">${subtaskOverlayContent(task)}&lt;/div>
+                &lt;div class="overlay-delete-edit">
+                    &lt;div onclick="deleteOverlay(${task.id
+    })" class="overlay-delete">&lt;img src="../assets/img/delete.svg">&lt;p class="delete-p">Delete&lt;/p>&lt;/div>
+                        &lt;div class="overlay-delete-edit-border">&lt;/div>
+                    &lt;div onclick="editOverlay(${task.id
+    })" class="overlay-edit">&lt;img src="../assets/img/edit-icon.svg">&lt;p>Edit&lt;/p>&lt;/div>
+                &lt;/div>
+    `;
+}
+
+/**
+ * Generates the HTML for the progress bar of a task.
+ * @param {string} subtask - The subtask description.
+ * @param {Object} task - The task object containing subtasks.
+ * @returns {string} - The HTML string for the progress bar.
+ */
+function generateProgressBar(subtask, task) {
+  if (subtask) {
+    let progressBar;
+    let done = 0;
+    for (let i = 0; i &lt; task.subtasks.length; i++) {
+      if (task.subtasks[i].done === true) {
+        done++;
+      }
+    }
+    let progress = (done / task.subtasks.length) * 100;
+    return (progressBar = `
+            &lt;div class="box-category-progress-subtasks-box">
+                &lt;div class="box-category-progress-bar">
+                    &lt;div id="progress-${task.id}" class="progress" style="width: ${progress}%;">&lt;/div>
+                &lt;/div>
+                &lt;p class="subtask-description" id="subtaskcounter-${task.id}">${subtask}&lt;/p>
+            &lt;/div>
+        `);
+  }
+  return "";
+}
+
+/**
+ * Opens the edit overlay for a task and populates it with task details.
+ * @param {number} id - The ID of the task to edit.
+ */
+function editOverlay(id) {
+  selectContacts(id);
+  let task = todos.find((t) => t.id === id);
+  let { title, description, date, contacts = [], subtasks = [] } = task;
+  overlayContacts = contacts;
+
+  document.getElementById("task-content").innerHTML = `
+        &lt;div class="closeEditOverlay-x">
+          &lt;div onclick="closeOverlay()"class="closeOverlay-x">&lt;img src="../assets/img/close.svg">&lt;/div>
+          &lt;/div>
+        &lt;div>
+            &lt;p>Title&lt;/p>
+            &lt;input value="${title}" class="overlay-input-title">
+        &lt;/div>
+
+        &lt;div>
+            &lt;p>Description&lt;/p>
+            &lt;textarea class="overlay-input-description">${description}&lt;/textarea>
+        &lt;/div>
+
+        &lt;div>
+            &lt;p>Date&lt;/p>
+            &lt;input type="date" value="${date}" class="overlay-input-date">
+        &lt;/div>
+
+        &lt;div>
+            &lt;p>Prio&lt;/p>
+            &lt;div class="prio-box">
+                &lt;div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
+                    &lt;p>Urgent &lt;img src="/assets/img/Prio-alta-red.svg">&lt;/p>
+                &lt;/div>
+                &lt;div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
+                    &lt;p>Medium &lt;img src="/assets/img/Prio-media-white.svg">&lt;/p>
+                &lt;/div>
+                &lt;div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
+                    &lt;p>Low &lt;img src="/assets/img/Prio-low-green.svg">&lt;/p>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+
+        &lt;div class="dropdown overlay-dropdown">
+            &lt;p>Assigned to&lt;/p>
+            &lt;div id="contact-container_${id}" class="input-container" onclick="showContacts(${id})">
+                &lt;input class="filterNamesInput" oninput="filterNames(${id})" type="text" id="dropdownInput_${id}" placeholder="Select contacts to assign"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'">
+                &lt;span class="arrow-drop-down" id="arrow-drop-down_${id}">
+                    &lt;img src="/assets/img/arrow_drop_down.svg">
+                &lt;/span>
+            &lt;/div>
+            &lt;div class="selectedInitials-edit" id="assignedContactsContainer_${id}">&lt;/div>
+            &lt;div class=" dropdown-menu-edit d_none" id="dropdownMenu_${id}">&lt;/div>
+        &lt;/div>
+
+     &lt;div id="subtask-container_${id}" class="input-container subtask-container-edit">
+  &lt;input type="text" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
+  &lt;div class="icons">
+    &lt;span id="plusIcon_${id}" class="icon">
+      &lt;img src="/assets/img/Subtasks icons11.svg">
+    &lt;/span>
+    &lt;span id="checkIcon_${id}" class="icon d_none">
+      &lt;img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg">
+    &lt;/span>
+    &lt;span id="cancelIcon_${id}" class="icon d_none">
+      &lt;img onclick="addSubTaskInput(${id})" src="/assets/img/check.svg">
+    &lt;/span>
+  &lt;/div>
+  &lt;/div>
+  &lt;div id="subtask-error_${id}" class="error-message d_none">Max. 2 Subtasks erlaubt&lt;/div>
+&lt;div id="subtasks_${id}" class="subtask-list">
+  ${getSubtaskHTML(id, subtasks)}
+&lt;/div>
+
+
+        &lt;div class="button-div">&lt;button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save&lt;/button>&lt;/div>
+    `;
+
+  renderAssignedContacts(id);
+  updateIcons(id);
+  setupSubtaskEnterKeyEdit(id)
+}
+
+/**
+ * Generates the HTML for a subtask item in the overlay.
+ * @param {number} id - The ID of the task.
+ * @param {number} i - The index of the subtask.
+ * @param {string} imageSrc - The source URL of the checkbox image.
+ * @param {string} title - The title of the subtask.
+ * @returns {string} - The HTML string for the subtask item.
+ */
+function subtaskOverlayContentHTML(id, i, imageSrc, title) {
+  return `
+&lt;div onclick="toggleCustomSubtask(${id}, ${i}, this)" class="subtask-item overlay-subtasks cursor-pointer">
+                    &lt;div class="custom-checkbox" >
+                        &lt;img src="${imageSrc}" class="checkbox-img" id="custom-subtask-${id}-${i}">
+                    &lt;/div>
+                    &lt;label class="subtask-class">${title}&lt;/label>
+                &lt;/div>
+            `;
+}
+
+/**
+ * Allows a drop event to occur by preventing the default behavior.
+ * @param {DragEvent} ev - The drag event object.
+ */
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+/**
+ * Generates the HTML for the subtasks of a task.
+ * @param {number} taskId - The ID of the task.
+ * @param {Array} subtasks - The array of subtasks.
+ * @returns {string} - The HTML string for the subtasks.
+ */
+function getSubtaskHTML(taskId, subtasks) {
+  let html = "";
+  if (subtasks &amp;&amp; subtasks.length > 0) {
+    for (let i = 0; i &lt; subtasks.length; i++) {
+      let subId = "task_" + i;
+      let subtask = subtasks[i];
+
+      html += `
+        &lt;div class="subtask-item" id="${subId}">
+          &lt;div class="subtask-value">
+            &lt;img class="dot" src="/assets/img/Subtasks icons11.svg">
+            ${subtask.title}
+          &lt;/div>
+          &lt;div class="subtask-trash-img">
+            &lt;img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
+          &lt;/div>
+        &lt;/div>
+      `;
+    }
+  }
+  return html;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addCheckboxListener">addCheckboxListener</a></li><li><a href="global.html#addContactToDatabase">addContactToDatabase</a></li><li><a href="global.html#addSubTaskInput">addSubTaskInput</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#buildUpdatedTask">buildUpdatedTask</a></li><li><a href="global.html#checkIfSubtasks">checkIfSubtasks</a></li><li><a href="global.html#checkLogin">checkLogin</a></li><li><a href="global.html#checkValidations">checkValidations</a></li><li><a href="global.html#clearDropDownMenu">clearDropDownMenu</a></li><li><a href="global.html#clearPriorityStyles">clearPriorityStyles</a></li><li><a href="global.html#clearSubTaskInput">clearSubTaskInput</a></li><li><a href="global.html#clearTaskForm">clearTaskForm</a></li><li><a href="global.html#closeAddContactOverlay">closeAddContactOverlay</a></li><li><a href="global.html#closeAllTooltips">closeAllTooltips</a></li><li><a href="global.html#closeEditOverlay">closeEditOverlay</a></li><li><a href="global.html#closeOverlay">closeOverlay</a></li><li><a href="global.html#closeResponsiveOverlay">closeResponsiveOverlay</a></li><li><a href="global.html#collectEditedSubtasks">collectEditedSubtasks</a></li><li><a href="global.html#colours">colours</a></li><li><a href="global.html#contactDetailsAreaTemplate">contactDetailsAreaTemplate</a></li><li><a href="global.html#contactFirebase">contactFirebase</a></li><li><a href="global.html#contactListHTMLFilteredTemplate">contactListHTMLFilteredTemplate</a></li><li><a href="global.html#contactsOverlayContent">contactsOverlayContent</a></li><li><a href="global.html#contactsuccessfullyAddedNotification">contactsuccessfullyAddedNotification</a></li><li><a href="global.html#contactsuccessfullyDeletedNotification">contactsuccessfullyDeletedNotification</a></li><li><a href="global.html#contactsuccessfullyEditedNotification">contactsuccessfullyEditedNotification</a></li><li><a href="global.html#createContactNameInitials">createContactNameInitials</a></li><li><a href="global.html#createCurrentUserInitials">createCurrentUserInitials</a></li><li><a href="global.html#createSubtaskHTML">createSubtaskHTML</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#currentDraggedTask">currentDraggedTask</a></li><li><a href="global.html#deleteContactFromDatabase">deleteContactFromDatabase</a></li><li><a href="global.html#deleteOverlay">deleteOverlay</a></li><li><a href="global.html#deleteSubTask">deleteSubTask</a></li><li><a href="global.html#displayAddContactOverlay">displayAddContactOverlay</a></li><li><a href="global.html#editContactOverlay">editContactOverlay</a></li><li><a href="global.html#editOverlay">editOverlay</a></li><li><a href="global.html#editSubTask">editSubTask</a></li><li><a href="global.html#editTaskPosition">editTaskPosition</a></li><li><a href="global.html#extractSubtaskText">extractSubtaskText</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#filterNames">filterNames</a></li><li><a href="global.html#filterPriorityImage">filterPriorityImage</a></li><li><a href="global.html#filterTasks">filterTasks</a></li><li><a href="global.html#filterTodos">filterTodos</a></li><li><a href="global.html#findSubtaskDoneStatus">findSubtaskDoneStatus</a></li><li><a href="global.html#formatSubtaskId">formatSubtaskId</a></li><li><a href="global.html#formatTaskId">formatTaskId</a></li><li><a href="global.html#generateProgressBar">generateProgressBar</a></li><li><a href="global.html#generateTaskBoxContent">generateTaskBoxContent</a></li><li><a href="global.html#generateTodosHTML">generateTodosHTML</a></li><li><a href="global.html#generateUniqueSubtaskId">generateUniqueSubtaskId</a></li><li><a href="global.html#getContactColorFromFirebase">getContactColorFromFirebase</a></li><li><a href="global.html#getContactListHTML">getContactListHTML</a></li><li><a href="global.html#getFilteredContactHTML">getFilteredContactHTML</a></li><li><a href="global.html#getFormattedDate">getFormattedDate</a></li><li><a href="global.html#getGreetingText">getGreetingText</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSearchInputValue">getSearchInputValue</a></li><li><a href="global.html#getSelectedContactsFromAddTask">getSelectedContactsFromAddTask</a></li><li><a href="global.html#getSiblingId">getSiblingId</a></li><li><a href="global.html#getSubtaskHTML">getSubtaskHTML</a></li><li><a href="global.html#getTaskData">getTaskData</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleContactSelection">handleContactSelection</a></li><li><a href="global.html#hideContacts">hideContacts</a></li><li><a href="global.html#hideSubtaskError">hideSubtaskError</a></li><li><a href="global.html#hideSuccessMessage">hideSuccessMessage</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initAddTask">initAddTask</a></li><li><a href="global.html#initDropdownEvents">initDropdownEvents</a></li><li><a href="global.html#initHTML">initHTML</a></li><li><a href="global.html#isEmailTaken">isEmailTaken</a></li><li><a href="global.html#isSubtaskLimitReached">isSubtaskLimitReached</a></li><li><a href="global.html#loadContactColors">loadContactColors</a></li><li><a href="global.html#loadTasksFromFirebase">loadTasksFromFirebase</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#mobileEditOptions">mobileEditOptions</a></li><li><a href="global.html#moveTask">moveTask</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#moveToStatus">moveToStatus</a></li><li><a href="global.html#openTaskBoxOverlay">openTaskBoxOverlay</a></li><li><a href="global.html#postToFireBase">postToFireBase</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#removeAddTask">removeAddTask</a></li><li><a href="global.html#renderAssignedContacts">renderAssignedContacts</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderEmptyStatusMessage">renderEmptyStatusMessage</a></li><li><a href="global.html#renderHeader">renderHeader</a></li><li><a href="global.html#renderLeftColumnContacts">renderLeftColumnContacts</a></li><li><a href="global.html#renderLeftColumnContactsInitalsTemplate">renderLeftColumnContactsInitalsTemplate</a></li><li><a href="global.html#renderLeftColumnContactsTemplate">renderLeftColumnContactsTemplate</a></li><li><a href="global.html#renderLeftColumnPartTwo">renderLeftColumnPartTwo</a></li><li><a href="global.html#renderRight">renderRight</a></li><li><a href="global.html#renderRightSidebar">renderRightSidebar</a></li><li><a href="global.html#renderSidebar">renderSidebar</a></li><li><a href="global.html#renderSidebarResponsive">renderSidebarResponsive</a></li><li><a href="global.html#renderTasksInColumn">renderTasksInColumn</a></li><li><a href="global.html#resetValidation">resetValidation</a></li><li><a href="global.html#rightContactDetailsHideOnLoad">rightContactDetailsHideOnLoad</a></li><li><a href="global.html#saveContactLocally">saveContactLocally</a></li><li><a href="global.html#saveEditedContact">saveEditedContact</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveSubTask">saveSubTask</a></li><li><a href="global.html#saveUser">saveUser</a></li><li><a href="global.html#setupSubtaskEnterKey">setupSubtaskEnterKey</a></li><li><a href="global.html#setupSubtaskEnterKeyEdit">setupSubtaskEnterKeyEdit</a></li><li><a href="global.html#showContacts">showContacts</a></li><li><a href="global.html#showMessage">showMessage</a></li><li><a href="global.html#showSubtaskLimitError">showSubtaskLimitError</a></li><li><a href="global.html#showValidationError">showValidationError</a></li><li><a href="global.html#subtaskOverlayContent">subtaskOverlayContent</a></li><li><a href="global.html#subtaskOverlayContentHTML">subtaskOverlayContentHTML</a></li><li><a href="global.html#swapToLow">swapToLow</a></li><li><a href="global.html#swapToMedium">swapToMedium</a></li><li><a href="global.html#swapToUrgent">swapToUrgent</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#toggleContactCheckbox">toggleContactCheckbox</a></li><li><a href="global.html#toggleCustomSubtask">toggleCustomSubtask</a></li><li><a href="global.html#toggleSubtaskDone">toggleSubtaskDone</a></li><li><a href="global.html#updateBoardHTML">updateBoardHTML</a></li><li><a href="global.html#updateDate">updateDate</a></li><li><a href="global.html#updateFireBaseData">updateFireBaseData</a></li><li><a href="global.html#updateIcons">updateIcons</a></li><li><a href="global.html#updateSubtaskProgress">updateSubtaskProgress</a></li><li><a href="global.html#updateTaskColumn">updateTaskColumn</a></li><li><a href="global.html#updateTaskCounters">updateTaskCounters</a></li><li><a href="global.html#validatePasswords">validatePasswords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Apr 27 2025 23:25:39 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

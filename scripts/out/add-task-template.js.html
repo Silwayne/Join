@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: add-task-template.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: add-task-template.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Initializes the HTML content for the Add Task overlay.
+ * @param {string} content - The ID of the container where the HTML will be rendered.
+ */
+function initHTML(content) {
+    document.getElementById(content).innerHTML = `
+    &lt;div class="add-task-x">
+    &lt;h1 class="add-task-h1">Add Task&lt;/h1>
+    &lt;div onclick="removeAddTask()" id="addtaskx">&lt;img src="../assets/img/close.svg">&lt;/div>
+    &lt;/div>
+    &lt;div class="display-splitter">
+    &lt;section class="left-section">
+        &lt;div class="add-task-title">
+            &lt;p>Title&lt;span class="red title-p">*&lt;/span>&lt;/p>
+            &lt;input id="add-task-title" type="text" placeholder="Enter a title">
+        &lt;/div>
+        &lt;div>
+            &lt;p>Description&lt;/p>
+            &lt;textarea id="description-input" type="text" placeholder="Enter a Description">&lt;/textarea>
+        &lt;/div>
+        
+        &lt;div class="assigned-div">
+            &lt;p>Assinged to&lt;/p>
+            &lt;div id="contact-container" class="input-container" onclick="showContacts('contact-container')">
+            &lt;input oninput="filterNames('assignedContactsContainer')" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> &lt;span class="arrow-drop-down" id="arrow-drop-down">&lt;img src="/assets/img/arrow_drop_down.svg">&lt;/span>
+            &lt;/div>
+            &lt;div class="selectedInitials" id="assignedContactsContainer">&lt;/div>
+            &lt;div class="dropdown-menu  d_none" id="dropdownMenu">
+            &lt;/div>
+        &lt;/div>
+    &lt;/section>
+    &lt;div class="border">&lt;/div>
+    &lt;section class="right-section">
+        &lt;div class="date-div">
+            &lt;p for="due-date">Due date&lt;span class="red">*&lt;/span>&lt;/p>
+            &lt;input type="date" id="due-date" placeholder="Hallo" required>
+        &lt;/div>
+        &lt;div>
+            &lt;p>Prio&lt;/p>
+            &lt;div class="prio-box">
+                &lt;div onclick="swapToUrgent('prio-urgent')" class="prio" id="prio-urgent">
+                    &lt;p>Urgent &lt;img src="/assets/img/Prio-alta-red.svg">&lt;/p>
+                &lt;/div>
+                &lt;div onclick="swapToMedium('prio-medium')" class="prio prio-medium bold" id="prio-medium">
+                    &lt;p>Medium &lt;img src="/assets/img/Prio-media-white.svg">&lt;/p>
+                &lt;/div>
+                &lt;div onclick="swapToLow('prio-low')" class="prio" id="prio-low">
+                    &lt;p>Low &lt;img src="/assets/img/Prio-low-green.svg">&lt;/p>
+                &lt;/div>
+            &lt;/div>
+        &lt;/div>
+        &lt;div class="category-div">
+            &lt;p for="category">Category&lt;span class="red">*&lt;/span>&lt;/p>
+            &lt;select id="category" name="category" required>
+                &lt;option value="">Select task category&lt;/option>
+                &lt;option value="Technical Task">Technical Task&lt;/option>
+                &lt;option value="User Story">User Story&lt;/option>
+            &lt;/select>
+        &lt;/div>
+
+        &lt;div>
+        &lt;div id="subtask-container" class="input-container">
+            &lt;input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
+            &lt;div class="icons">
+                &lt;span id="plusIcon" class="icon">&lt;img src="/assets/img/Subtasks icons11.svg">&lt;/span>
+                &lt;span id="checkIcon" class="icon d_none">&lt;img onclick="clearSubTaskInput()" src="/assets/img/close.svg">&lt;/span>
+                &lt;span id="cancelIcon" class="icon d_none">&lt;img onclick="addSubTaskInput()" src="/assets/img/check.svg">&lt;/span>
+
+            &lt;/div>
+
+           
+    &lt;/div> &lt;div class="d_none subtasks" id="subtasks">&lt;/div>
+                          &lt;div id="subtask-error" class="error-message d_none absolute">Max. 2 Subtasks erlaubt&lt;/div>
+
+    &lt;/section>
+    &lt;/div>
+
+    
+&lt;/span>
+&lt;section class="bottom-add-task-overlay-section">
+&lt;div class="fiel-Is-Required-Div">    
+    &lt;p>&lt;span class="red">*&lt;/span>This field is required&lt;/p>   
+    &lt;/div>
+    &lt;div class="buttons-bottom-right">    
+    &lt;button class="create-clear-button" onclick="clearTaskForm()" id="clear-button">Clear &lt;img src="/assets/img/Vector.svg">&lt;/button>
+    &lt;button class="create-clear-button" onclick="createTask()" id="createtask-button">Create Task &lt;img src="/assets/img/check.svg"&lt;/button>
+        &lt;/div>
+
+&lt;/section>`
+setupSubtaskEnterKey();
+
+}
+
+/**
+ * Creates the HTML for a subtask item.
+ * @param {string} subId - The unique ID of the subtask.
+ * @param {string} value - The value or name of the subtask.
+ * @param {string} taskId - The ID of the task the subtask belongs to.
+ * @returns {string} - The HTML string for the subtask item.
+ */
+function createSubtaskHTML(subId, value, taskId) {
+    return `
+    &lt;div class="subtask-item">
+        &lt;div class="subtask-value">
+            &lt;img class="dot" src="/assets/img/Subtasks icons11.svg">
+            ${value}
+        &lt;/div>
+        &lt;div class="subtask-trash-img">
+            &lt;img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
+        &lt;/div>
+    &lt;/div>
+    `;
+}
+
+
+function contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials,bgColor, fontColor, checkboxImage){
+
+    return `
+    &lt;div class="grey-contact-list contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
+        &lt;label class="contact-list-label">
+            &lt;div class="user-icon" style="background-color: ${bgColor};">
+                &lt;span class="user-initials">${contactInitials}&lt;/span>
+            &lt;/div>
+            &lt;span class="contact-name ${fontColor}">${contactName}&lt;/span>
+            &lt;div class="custom-checkbox">
+                &lt;img src="${checkboxImage}" id="contact-checkbox-img-${idNumber}" class="checkbox-img">
+            &lt;/div>
+        &lt;/label>
+    &lt;/div>
+`;
+}
+
+/**
+ * Filters the contact names based on the input value.
+ * @param {string} id - The ID of the container where the filtered results will be displayed.
+ */
+function filterNames(id) {
+    let taskId = '';
+    if (id !== 'assignedContactsContainer') {
+        taskId = '_' + id;
+    }
+
+    let assignedContainer = document.getElementById('assignedContactsContainer' + taskId);
+    if (assignedContainer) assignedContainer.classList.add('d_none');
+
+    let inputField = document.getElementById('dropdownInput' + taskId);
+    if (!inputField) return;
+
+    let input = inputField.value.toLowerCase();
+    let resultsContainer = document.getElementById('dropdownMenu' + taskId);
+    if (!resultsContainer) return;
+
+    resultsContainer.innerHTML = '';
+
+    let assigned = overlayContacts;
+    let filteredNames = names.filter(name => name.toLowerCase().includes(input));
+    if (filteredNames.length === 0) {
+        showContacts(id); 
+        return;
+    }
+    for (let contactName of filteredNames) {
+        let contactInitials = getInitials(contactName);
+        let isChecked = assigned.includes(contactName) ? 'checked' : '';
+
+        resultsContainer.innerHTML += getFilteredContactHTML(contactInitials, contactName, isChecked, id);
+    }
+}
+
+/**
+ * Generates the HTML template for a filtered contact list item.
+ * @param {string} backgroundClass - The CSS class for the background.
+ * @param {string} idNumber - The unique ID for the contact.
+ * @param {string} contactName - The name of the contact.
+ * @param {Object} contactColors - An object mapping contact names to their colors.
+ * @param {string} contactInitials - The initials of the contact.
+ * @param {string} fontColor - The font color for the contact name.
+ * @param {string} checkboxImage - The URL of the checkbox image.
+ * @returns {string} - The HTML string for the filtered contact list item.
+ */
+function contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName, contactColors, contactInitials, fontColor, checkboxImage) {
+    return `
+    &lt;div class="contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
+        &lt;label class="contact-list-label">
+            &lt;div class="user-icon" style="background-color: ${contactColors[contactName]};">
+                &lt;span class="user-initials">${contactInitials}&lt;/span>
+            &lt;/div>
+            &lt;span class="contact-name ${fontColor}">${contactName}&lt;/span>
+            &lt;div class="custom-checkbox">
+                &lt;img src="${checkboxImage}" id="contact-checkbox-img-${idNumber}" class="checkbox-img">
+            &lt;/div>
+        &lt;/label>
+    &lt;/div>
+`;
+}
+
+function resetValue(){
+    document.getElementById('category').value = '';
+    document.getElementById('subtask-container').classList.remove('input-error');
+    document.getElementById('subtask-error').classList.add('d_none');
+    document.getElementById('subtasks').innerHTML = '';
+    resetValidation(document.getElementById('add-task-title'));
+    resetValidation(document.getElementById('due-date'));
+    resetValidation(document.getElementById('category'));
+    swapToMedium('prio-medium')
+}
+
+/**
+ * Displays a validation error message for a specific input element.
+ * @param {HTMLElement} element - The input element to display the error for.
+ * @param {string} message - The error message to display.
+ */
+function showValidationError(element, message) {
+    element.classList.add('input-error');
+    let errorMessage = document.createElement('div');
+    errorMessage.className = 'error-message';
+    errorMessage.innerText = message;
+    if (!element.nextElementSibling || !element.nextElementSibling.classList.contains('error-message')) {
+        element.parentNode.insertBefore(errorMessage, element.nextSibling);
+    }
+}
+
+/**
+ * Resets the validation state for a specific input element.
+ * @param {HTMLElement} element - The input element to reset the validation for.
+ */
+function resetValidation(element) {
+    element.classList.remove('input-error');
+
+    let nextElem = element.nextElementSibling;
+    if (nextElem &amp;&amp; nextElem.classList.contains('error-message')) {
+        nextElem.remove();
+    }
+}
+
+/**
+ * Toggles the selection state of a contact checkbox.
+ * @param {HTMLElement} element - The contact list item element.
+ * @param {string} contactName - The name of the contact.
+ * @param {string} idNumber - The unique ID for the contact.
+ */
+function toggleContactCheckbox(element, contactName, idNumber) {
+    let img = element.querySelector('img');
+    let nameSpan = element.querySelector('.contact-name');
+    let isChecked = overlayContacts.includes(contactName);
+
+    if (isChecked) {
+        overlayContacts = overlayContacts.filter(name => name !== contactName);
+        img.src = "../assets/img/unchecked.svg";
+        element.classList.remove('blue-background');
+        element.classList.add('grey-contact-list');
+        nameSpan.classList.remove('white-font');
+        nameSpan.classList.add('normal-font');
+
+    } else {
+        overlayContacts.push(contactName);
+        img.src = "../assets/img/checked.svg";
+        element.classList.add('blue-background');
+        element.classList.remove('grey-contact-list');
+        nameSpan.classList.add('white-font');
+        nameSpan.classList.remove('normal-font');
+    }
+
+    renderAssignedContacts(idNumber);
+}
+
+/**
+ * Renders the contact list in the dropdown menu.
+ * @param {Object} firebaseAnswer - The data fetched from Firebase containing contact information.
+ * @param {HTMLElement} dropDownMenu - The dropdown menu container element.
+ * @param {string} id - The ID of the dropdown menu.
+ */
+function renderContacts(firebaseAnswer, dropDownMenu, id) {
+    let localCounter = 0;
+    for (let key in firebaseAnswer) {
+        let contact = firebaseAnswer[key];
+        let contactName = contact.name;
+        let contactColor = contact.color;
+        let contactInitials = getInitials(contactName);
+        
+        saveContactLocally(contactName, contactColor);
+        let isChecked = overlayContacts.includes(contactName);
+        dropDownMenu.innerHTML += getContactListHTML(contactInitials, contactName, localCounter, contactColor, id, isChecked);
+        
+        addCheckboxListener(contactName, localCounter, id);
+        localCounter++;
+    }
+}
+
+/**
+ * Generates the HTML for a filtered contact list item.
+ * @param {string} contactInitials - The initials of the contact.
+ * @param {string} contactName - The name of the contact.
+ * @param {string} isChecked - Indicates whether the contact is selected.
+ * @param {string} id - The ID of the dropdown menu.
+ * @returns {string} - The HTML string for the filtered contact list item.
+ */
+function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {
+    let fontColor = "";
+    let checkboxImage = "../assets/img/unchecked.svg";
+    let backgroundClass = "";
+
+    if (isChecked === 'checked') {
+        checkboxImage = "../assets/img/checked.svg";
+        backgroundClass = "blue-background";
+        fontColor = "white-font";
+    } else {
+        fontColor = "normal-font";
+    }
+
+    let idNumber = contactName.replace(/\s+/g, '_');
+
+    return contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName, contactColors, contactInitials, fontColor, checkboxImage)
+
+}
+
+/**
+ * Clears the Add Task form and resets all fields and states.
+ */
+function clearTaskForm() {
+    overlayContacts= [];
+    let subTaskInput = document.getElementById('subtaskInput');
+    let titleInput = document.getElementById('add-task-title');
+    let descriptionInput = document.getElementById('description-input');
+    let checkboxes = document.querySelectorAll('.contact-checkbox');
+    let dueDateInput = document.getElementById('due-date');
+
+        subTaskInput.value = '';
+        updateIcons()
+        titleInput.value = '';
+        descriptionInput.value = '';
+    for (let checkbox of checkboxes) {
+        checkbox.checked = false;
+    }
+    renderAssignedContacts('assignedContactsContainer', []);
+    
+    if (dueDateInput) {
+        dueDateInput.value = '';
+    }
+    resetValue();
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addCheckboxListener">addCheckboxListener</a></li><li><a href="global.html#addContactToDatabase">addContactToDatabase</a></li><li><a href="global.html#addSubTaskInput">addSubTaskInput</a></li><li><a href="global.html#addTask">addTask</a></li><li><a href="global.html#allowDrop">allowDrop</a></li><li><a href="global.html#buildUpdatedTask">buildUpdatedTask</a></li><li><a href="global.html#checkIfSubtasks">checkIfSubtasks</a></li><li><a href="global.html#checkLogin">checkLogin</a></li><li><a href="global.html#checkValidations">checkValidations</a></li><li><a href="global.html#clearDropDownMenu">clearDropDownMenu</a></li><li><a href="global.html#clearPriorityStyles">clearPriorityStyles</a></li><li><a href="global.html#clearSubTaskInput">clearSubTaskInput</a></li><li><a href="global.html#clearTaskForm">clearTaskForm</a></li><li><a href="global.html#closeAddContactOverlay">closeAddContactOverlay</a></li><li><a href="global.html#closeAllTooltips">closeAllTooltips</a></li><li><a href="global.html#closeEditOverlay">closeEditOverlay</a></li><li><a href="global.html#closeOverlay">closeOverlay</a></li><li><a href="global.html#closeResponsiveOverlay">closeResponsiveOverlay</a></li><li><a href="global.html#collectEditedSubtasks">collectEditedSubtasks</a></li><li><a href="global.html#colours">colours</a></li><li><a href="global.html#contactDetailsAreaTemplate">contactDetailsAreaTemplate</a></li><li><a href="global.html#contactFirebase">contactFirebase</a></li><li><a href="global.html#contactListHTMLFilteredTemplate">contactListHTMLFilteredTemplate</a></li><li><a href="global.html#contactsOverlayContent">contactsOverlayContent</a></li><li><a href="global.html#contactsuccessfullyAddedNotification">contactsuccessfullyAddedNotification</a></li><li><a href="global.html#contactsuccessfullyDeletedNotification">contactsuccessfullyDeletedNotification</a></li><li><a href="global.html#contactsuccessfullyEditedNotification">contactsuccessfullyEditedNotification</a></li><li><a href="global.html#createContactNameInitials">createContactNameInitials</a></li><li><a href="global.html#createCurrentUserInitials">createCurrentUserInitials</a></li><li><a href="global.html#createSubtaskHTML">createSubtaskHTML</a></li><li><a href="global.html#createTask">createTask</a></li><li><a href="global.html#currentDraggedTask">currentDraggedTask</a></li><li><a href="global.html#deleteContactFromDatabase">deleteContactFromDatabase</a></li><li><a href="global.html#deleteOverlay">deleteOverlay</a></li><li><a href="global.html#deleteSubTask">deleteSubTask</a></li><li><a href="global.html#displayAddContactOverlay">displayAddContactOverlay</a></li><li><a href="global.html#editContactOverlay">editContactOverlay</a></li><li><a href="global.html#editOverlay">editOverlay</a></li><li><a href="global.html#editSubTask">editSubTask</a></li><li><a href="global.html#editTaskPosition">editTaskPosition</a></li><li><a href="global.html#extractSubtaskText">extractSubtaskText</a></li><li><a href="global.html#fetchUsers">fetchUsers</a></li><li><a href="global.html#filterNames">filterNames</a></li><li><a href="global.html#filterPriorityImage">filterPriorityImage</a></li><li><a href="global.html#filterTasks">filterTasks</a></li><li><a href="global.html#filterTodos">filterTodos</a></li><li><a href="global.html#findSubtaskDoneStatus">findSubtaskDoneStatus</a></li><li><a href="global.html#formatSubtaskId">formatSubtaskId</a></li><li><a href="global.html#formatTaskId">formatTaskId</a></li><li><a href="global.html#generateProgressBar">generateProgressBar</a></li><li><a href="global.html#generateTaskBoxContent">generateTaskBoxContent</a></li><li><a href="global.html#generateTodosHTML">generateTodosHTML</a></li><li><a href="global.html#generateUniqueSubtaskId">generateUniqueSubtaskId</a></li><li><a href="global.html#getContactColorFromFirebase">getContactColorFromFirebase</a></li><li><a href="global.html#getContactListHTML">getContactListHTML</a></li><li><a href="global.html#getFilteredContactHTML">getFilteredContactHTML</a></li><li><a href="global.html#getFormattedDate">getFormattedDate</a></li><li><a href="global.html#getGreetingText">getGreetingText</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getInputValue">getInputValue</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#getSearchInputValue">getSearchInputValue</a></li><li><a href="global.html#getSelectedContactsFromAddTask">getSelectedContactsFromAddTask</a></li><li><a href="global.html#getSiblingId">getSiblingId</a></li><li><a href="global.html#getSubtaskHTML">getSubtaskHTML</a></li><li><a href="global.html#getTaskData">getTaskData</a></li><li><a href="global.html#guestLogin">guestLogin</a></li><li><a href="global.html#handleContactSelection">handleContactSelection</a></li><li><a href="global.html#hideContacts">hideContacts</a></li><li><a href="global.html#hideSubtaskError">hideSubtaskError</a></li><li><a href="global.html#hideSuccessMessage">hideSuccessMessage</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initAddTask">initAddTask</a></li><li><a href="global.html#initDropdownEvents">initDropdownEvents</a></li><li><a href="global.html#initHTML">initHTML</a></li><li><a href="global.html#isEmailTaken">isEmailTaken</a></li><li><a href="global.html#isSubtaskLimitReached">isSubtaskLimitReached</a></li><li><a href="global.html#loadContactColors">loadContactColors</a></li><li><a href="global.html#loadTasksFromFirebase">loadTasksFromFirebase</a></li><li><a href="global.html#login">login</a></li><li><a href="global.html#mobileEditOptions">mobileEditOptions</a></li><li><a href="global.html#moveTask">moveTask</a></li><li><a href="global.html#moveTo">moveTo</a></li><li><a href="global.html#moveToStatus">moveToStatus</a></li><li><a href="global.html#openTaskBoxOverlay">openTaskBoxOverlay</a></li><li><a href="global.html#postToFireBase">postToFireBase</a></li><li><a href="global.html#registerUser">registerUser</a></li><li><a href="global.html#removeAddTask">removeAddTask</a></li><li><a href="global.html#renderAssignedContacts">renderAssignedContacts</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderEmptyStatusMessage">renderEmptyStatusMessage</a></li><li><a href="global.html#renderHeader">renderHeader</a></li><li><a href="global.html#renderLeftColumnContacts">renderLeftColumnContacts</a></li><li><a href="global.html#renderLeftColumnContactsInitalsTemplate">renderLeftColumnContactsInitalsTemplate</a></li><li><a href="global.html#renderLeftColumnContactsTemplate">renderLeftColumnContactsTemplate</a></li><li><a href="global.html#renderLeftColumnPartTwo">renderLeftColumnPartTwo</a></li><li><a href="global.html#renderRight">renderRight</a></li><li><a href="global.html#renderRightSidebar">renderRightSidebar</a></li><li><a href="global.html#renderSidebar">renderSidebar</a></li><li><a href="global.html#renderSidebarResponsive">renderSidebarResponsive</a></li><li><a href="global.html#renderTasksInColumn">renderTasksInColumn</a></li><li><a href="global.html#resetValidation">resetValidation</a></li><li><a href="global.html#rightContactDetailsHideOnLoad">rightContactDetailsHideOnLoad</a></li><li><a href="global.html#saveContactLocally">saveContactLocally</a></li><li><a href="global.html#saveEditedContact">saveEditedContact</a></li><li><a href="global.html#saveEditedTask">saveEditedTask</a></li><li><a href="global.html#saveSubTask">saveSubTask</a></li><li><a href="global.html#saveUser">saveUser</a></li><li><a href="global.html#setupSubtaskEnterKey">setupSubtaskEnterKey</a></li><li><a href="global.html#setupSubtaskEnterKeyEdit">setupSubtaskEnterKeyEdit</a></li><li><a href="global.html#showContacts">showContacts</a></li><li><a href="global.html#showMessage">showMessage</a></li><li><a href="global.html#showSubtaskLimitError">showSubtaskLimitError</a></li><li><a href="global.html#showValidationError">showValidationError</a></li><li><a href="global.html#subtaskOverlayContent">subtaskOverlayContent</a></li><li><a href="global.html#subtaskOverlayContentHTML">subtaskOverlayContentHTML</a></li><li><a href="global.html#swapToLow">swapToLow</a></li><li><a href="global.html#swapToMedium">swapToMedium</a></li><li><a href="global.html#swapToUrgent">swapToUrgent</a></li><li><a href="global.html#todos">todos</a></li><li><a href="global.html#toggleContactCheckbox">toggleContactCheckbox</a></li><li><a href="global.html#toggleCustomSubtask">toggleCustomSubtask</a></li><li><a href="global.html#toggleSubtaskDone">toggleSubtaskDone</a></li><li><a href="global.html#updateBoardHTML">updateBoardHTML</a></li><li><a href="global.html#updateDate">updateDate</a></li><li><a href="global.html#updateFireBaseData">updateFireBaseData</a></li><li><a href="global.html#updateIcons">updateIcons</a></li><li><a href="global.html#updateSubtaskProgress">updateSubtaskProgress</a></li><li><a href="global.html#updateTaskColumn">updateTaskColumn</a></li><li><a href="global.html#updateTaskCounters">updateTaskCounters</a></li><li><a href="global.html#validatePasswords">validatePasswords</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sun Apr 27 2025 23:25:39 GMT+0200 (Mitteleuropäische Sommerzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
