@@ -647,7 +647,7 @@ function filterTasks() {
       taskDiv.classList.add("task-columns");
 
       tasks.forEach((task) => {
-        let taskHTML = generateTodosHTML(task); // KEIN await, wenn generateTodosHTML nicht async ist!
+        let taskHTML = generateTodosHTML(task); 
         taskDiv.innerHTML += taskHTML;
       });
     } else {

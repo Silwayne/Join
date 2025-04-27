@@ -449,6 +449,9 @@ textarea {
   font-weight: 700;
   margin-left: 0 !important;
   color: black !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .overlay-user-icon {
