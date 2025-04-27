@@ -6,22 +6,25 @@
 async function createTask() {
   let isValid = checkValidations();
   if (isValid) {
-      getTaskData();
-      clearTaskForm();
-      if (typeof updateBoardHTML === "function") {
-        await updateBoardHTML();
-        removeAddTask();
-        const success = document.getElementById('success');
-    
-        success.style.display = 'block';
-        setTimeout(() => success.style.opacity = '1', 10);
-        setTimeout(() => {
-          success.style.opacity = '0';
-          setTimeout(() => success.style.display = 'none', 500);
-        }, 1000);
-      }      
-    }
-    }
+    getTaskData();
+    clearTaskForm();
+    const success = document.getElementById('success');
+    success.style.display = 'block';
+    setTimeout(() => success.style.opacity = '1', 10);
+    setTimeout(() => {
+      success.style.opacity = '0';
+      setTimeout(() => {
+        success.style.display = 'none';
+        removeAddTask(); // <-- Jetzt erst nach dem Ausblenden!
+      }, 500);
+    }, 1000);
+    if (typeof updateBoardHTML === "function") {
+      await updateBoardHTML();
+
+    }      
+  }
+}
+
   
 /**
  * Collects task data from the form, including title, description, due date, category, and subtasks.
