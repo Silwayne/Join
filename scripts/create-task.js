@@ -3,11 +3,13 @@ async function createTask() {
   if (isValid) {
       getTaskData();
       clearTaskForm();
-await updateBoardHTML()
-      removeAddTask()
+      if (typeof updateBoardHTML === "function") {
+          await updateBoardHTML();
+          removeAddTask();
+      }
+      
+  }
 }
-}
-  
 
 function getTaskData() {
   let title = document.getElementById('add-task-title').value.trim();
