@@ -38,9 +38,7 @@ function addTask(event) {
  */
 function removeAddTask() {
   document.getElementById("add-task-overlay").classList.add("d_none");
-  document
-    .getElementById("overlay-background")
-    .classList.remove("overlay-background");
+  document.getElementById("overlay-background").classList.remove("overlay-background");
 }
 
 /**
