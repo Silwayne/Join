@@ -1,3 +1,8 @@
+/**
+ * Displays a message in a message box.
+ * The message box is shown for 2 seconds before being hidden.
+ * @param {string} message - The message to display.
+ */
 function showMessage(message) {
   let messageBox = document.getElementById("message-box");
   messageBox.textContent = message;
@@ -10,6 +15,10 @@ function showMessage(message) {
   }, 2000);
 }
 
+/**
+ * Generates a random color from a predefined list of colors.
+ * @returns {string} - A randomly selected color in hexadecimal format.
+ */
 function getRandomColor() {
   let colors = ["#FF7A00", "#FF5EB3", "#6E52FF", "#9327FF", "#00BEE8", "#1FD7C1", "#FF745E", "#FFA35E", "#FC71FF", "#FFC701", "#0038FF", "#C3FF2B", "#FFE62B", "#FF4646", "#FFBB2B"];
 
@@ -17,6 +26,11 @@ function getRandomColor() {
   return colors[randomIndex];
 }
 
+/**
+ * Handles the user registration process.
+ * Validates the input fields, checks if the email is already registered,
+ * and saves the user data to Firebase if valid.
+ */
 function registerUser() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
@@ -31,6 +45,14 @@ function registerUser() {
   });
 }
 
+/**
+ * Validates the password fields and the privacy policy checkbox.
+ * Ensures that the passwords match and the privacy policy is accepted.
+ * @param {string} password - The password entered by the user.
+ * @param {string} confirmPassword - The confirmation password entered by the user.
+ * @param {boolean} privacyChecked - Whether the privacy policy checkbox is checked.
+ * @returns {boolean} - True if the validation passes, otherwise false.
+ */
 function validatePasswords(password, confirmPassword, privacyChecked) {
   if (!privacyChecked) {
     showMessage("Please accept the privacy policy!", false);
@@ -43,6 +65,12 @@ function validatePasswords(password, confirmPassword, privacyChecked) {
   return true;
 }
 
+/**
+ * Checks if the provided email is already registered in Firebase.
+ * Displays an error message if the email is taken.
+ * @param {string} email - The email to check.
+ * @param {Function} callback - A callback function that receives a boolean indicating if the email exists.
+ */
 function isEmailTaken(email, callback) {
   fetch(firebaseURLUser)
     .then((response) => response.json())
@@ -57,6 +85,14 @@ function isEmailTaken(email, callback) {
     .catch(console.error);
 }
 
+/**
+ * Saves the user data to Firebase.
+ * Generates a random color for the user and posts the data to Firebase.
+ * Displays a success message and redirects to the login page upon successful registration.
+ * @param {string} name - The name of the user.
+ * @param {string} email - The email of the user.
+ * @param {string} password - The password of the user.
+ */
 function saveUser(name, email, password) {
   let color = getRandomColor();
   fetch(firebaseURLUser, {

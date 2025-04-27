@@ -1,3 +1,6 @@
+/**
+ * Initializes the main page by rendering the header, sidebar, and updating the date and task counters.
+ */
 function init() {
     renderHeader();
     initDropdownEvents();
@@ -5,9 +8,15 @@ function init() {
     renderSidebarResponsive();
     updateDate();
     updateTaskCounters();
-  }
+}
 
-  async function updateTaskCounters() {
+/**
+ * Updates the task counters on the dashboard by fetching tasks from Firebase.
+ * Counts tasks based on their status (e.g., "todo", "done", "urgent").
+ * Updates the corresponding HTML elements with the counts.
+ * @async
+ */
+async function updateTaskCounters() {
     const response = await fetch(firebaseURL + "tasks.json");
     const data = await response.json();
     const counts = {todo: 0, done: 0, urgent: 0, total: 0, progress: 0, feedback: 0};
@@ -23,9 +32,13 @@ function init() {
   
     ["todo","done","urgent","total","progress","feedback"]
       .forEach(key => document.getElementById(`count-${key}`).textContent = counts[key]);
-  }
-  
-  function getGreetingText() {
+}
+
+/**
+ * Returns a greeting text based on the current time of day.
+ * @returns {string} - The greeting text ("Good Morning", "Good Afternoon", or "Good Evening").
+ */
+function getGreetingText() {
     let hours = new Date().getHours();
     let greetingText;
     if (hours >= 5 && hours < 12)  {
@@ -36,19 +49,30 @@ function init() {
         greetingText = 'Good Evening';
     }
     return greetingText;
-  }
+}
 
-  function getFormattedDate() {
+/**
+ * Formats the current date into a readable string.
+ * @returns {string} - The formatted date (e.g., "April 27, 2025").
+ */
+function getFormattedDate() {
     const date = new Date(); 
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return date.toLocaleDateString('en-US', options); 
 }
 
+/**
+ * Updates the date displayed on the dashboard with the current formatted date.
+ */
 function updateDate() {
     const formattedDate = getFormattedDate(); 
     document.querySelector('.card-middle-date').textContent = formattedDate; 
 }
 
+/**
+ * Displays a greeting overlay with the user's name and a greeting message.
+ * The overlay is hidden after a short delay.
+ */
 window.addEventListener("DOMContentLoaded", () => {
   const overlay = document.getElementById("greeting-overlay");
   if (window.innerWidth >= 1005) return overlay.style.display = "none";
