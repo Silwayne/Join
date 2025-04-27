@@ -1,14 +1,25 @@
+/**
+ * Creates a new task by validating the form, collecting task data, and posting it to Firebase.
+ * Clears the form, updates the board, and closes the Add Task overlay upon success.
+ * @async
+ */
 async function createTask() {
   let isValid = checkValidations();
   if (isValid) {
       getTaskData();
       clearTaskForm();
-await updateBoardHTML()
-      removeAddTask()
-}
+      if (typeof updateBoardHTML === "function") {
+          await updateBoardHTML();
+          removeAddTask();
+      }
+
+  }
 }
   
-
+/**
+ * Collects task data from the form, including title, description, due date, category, and subtasks.
+ * Posts the collected data to Firebase.
+ */
 function getTaskData() {
   let title = document.getElementById('add-task-title').value.trim();
   let description = document.getElementById('description-input').value.trim();
@@ -30,8 +41,17 @@ function getTaskData() {
   postToFireBase(title, description, overlayContacts, date, priority, category, subtasks);
 }
 
-
-
+/**
+ * Posts a new task to Firebase.
+ * @async
+ * @param {string} title - The title of the task.
+ * @param {string} description - The description of the task.
+ * @param {Array<string>} contacts - The list of contacts assigned to the task.
+ * @param {string} date - The due date of the task in YYYY-MM-DD format.
+ * @param {string} priority - The priority level of the task (e.g., "High", "Medium", "Low").
+ * @param {string} category - The category of the task.
+ * @param {Array<Object>} subtasks - The list of subtasks, each containing a title and a "done" status.
+ */
 async function postToFireBase(title, description, contacts, date, priority, category, subtasks) {
   let task = {
       'title': title,

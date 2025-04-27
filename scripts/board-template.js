@@ -1,3 +1,7 @@
+/**
+ * Updates the board HTML by loading tasks and rendering them into their respective columns.
+ * @async
+ */
 async function updateBoardHTML() {
   await loadContactColors();
   await loadTasksFromFirebase();
@@ -33,6 +37,11 @@ async function updateBoardHTML() {
   }
 }
 
+/**
+ * Generates the HTML for the selected contacts in a task.
+ * @param {Object} task - The task object containing contact information.
+ * @returns {string} - The HTML string for the selected contacts.
+ */
 function getSelectedContactsFromAddTask(task) {
   let html = "";
   if (task.contacts) {
@@ -52,6 +61,11 @@ function getSelectedContactsFromAddTask(task) {
   return html;
 }
 
+/**
+ * Edits the position of a task by displaying a tooltip with move options.
+ * @param {Event} event - The event object.
+ * @param {number} id - The ID of the task to edit.
+ */
 function editTaskPosition(event, id) {
   event.stopPropagation();
   let tooltip = document.getElementById("tooltip_" + id);
@@ -103,7 +117,11 @@ function editTaskPosition(event, id) {
   tooltip.classList.toggle("d_none");
 }
 
-
+/**
+ * Generates the HTML for a task card in the board.
+ * @param {Object} task - The task object containing task details.
+ * @returns {string} - The HTML string for the task card.
+ */
 function generateTodosHTML(task) {
   let subtask = checkIfSubtasks(task);
   let progressBar = generateProgressBar(subtask, task);
@@ -134,6 +152,10 @@ function generateTodosHTML(task) {
 
 }
 
+/**
+ * Generates the content for the task box overlay.
+ * @param {Object} task - The task object containing task details.
+ */
 function generateTaskBoxContent(task) {
   let img = filterPriorityImage(task);
 
@@ -161,6 +183,12 @@ function generateTaskBoxContent(task) {
     `;
 }
 
+/**
+ * Generates the HTML for the progress bar of a task.
+ * @param {string} subtask - The subtask description.
+ * @param {Object} task - The task object containing subtasks.
+ * @returns {string} - The HTML string for the progress bar.
+ */
 function generateProgressBar(subtask, task) {
   if (subtask) {
     let progressBar;
@@ -183,6 +211,10 @@ function generateProgressBar(subtask, task) {
   return "";
 }
 
+/**
+ * Opens the edit overlay for a task and populates it with task details.
+ * @param {number} id - The ID of the task to edit.
+ */
 function editOverlay(id) {
   selectContacts(id);
   let task = todos.find((t) => t.id === id);
@@ -264,6 +296,14 @@ function editOverlay(id) {
   setupSubtaskEnterKeyEdit(id)
 }
 
+/**
+ * Generates the HTML for a subtask item in the overlay.
+ * @param {number} id - The ID of the task.
+ * @param {number} i - The index of the subtask.
+ * @param {string} imageSrc - The source URL of the checkbox image.
+ * @param {string} title - The title of the subtask.
+ * @returns {string} - The HTML string for the subtask item.
+ */
 function subtaskOverlayContentHTML(id, i, imageSrc, title) {
   return `
 <div onclick="toggleCustomSubtask(${id}, ${i}, this)" class="subtask-item overlay-subtasks cursor-pointer">
@@ -275,10 +315,20 @@ function subtaskOverlayContentHTML(id, i, imageSrc, title) {
             `;
 }
 
+/**
+ * Allows a drop event to occur by preventing the default behavior.
+ * @param {DragEvent} ev - The drag event object.
+ */
 function allowDrop(ev) {
   ev.preventDefault();
 }
 
+/**
+ * Generates the HTML for the subtasks of a task.
+ * @param {number} taskId - The ID of the task.
+ * @param {Array} subtasks - The array of subtasks.
+ * @returns {string} - The HTML string for the subtasks.
+ */
 function getSubtaskHTML(taskId, subtasks) {
   let html = "";
   if (subtasks && subtasks.length > 0) {

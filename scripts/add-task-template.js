@@ -1,3 +1,7 @@
+/**
+ * Initializes the HTML content for the Add Task overlay.
+ * @param {string} content - The ID of the container where the HTML will be rendered.
+ */
 function initHTML(content) {
     document.getElementById(content).innerHTML = `
     <div class="add-task-x">
@@ -86,6 +90,14 @@ function initHTML(content) {
 setupSubtaskEnterKey();
 
 }
+
+/**
+ * Creates the HTML for a subtask item.
+ * @param {string} subId - The unique ID of the subtask.
+ * @param {string} value - The value or name of the subtask.
+ * @param {string} taskId - The ID of the task the subtask belongs to.
+ * @returns {string} - The HTML string for the subtask item.
+ */
 function createSubtaskHTML(subId, value, taskId) {
     return `
     <div class="subtask-item">
@@ -118,6 +130,10 @@ function contactListHTMLTemplate(backgroundClass, idNumber, contactName, contact
 `;
 }
 
+/**
+ * Filters the contact names based on the input value.
+ * @param {string} id - The ID of the container where the filtered results will be displayed.
+ */
 function filterNames(id) {
     let taskId = '';
     if (id !== 'assignedContactsContainer') {
@@ -150,6 +166,17 @@ function filterNames(id) {
     }
 }
 
+/**
+ * Generates the HTML template for a filtered contact list item.
+ * @param {string} backgroundClass - The CSS class for the background.
+ * @param {string} idNumber - The unique ID for the contact.
+ * @param {string} contactName - The name of the contact.
+ * @param {Object} contactColors - An object mapping contact names to their colors.
+ * @param {string} contactInitials - The initials of the contact.
+ * @param {string} fontColor - The font color for the contact name.
+ * @param {string} checkboxImage - The URL of the checkbox image.
+ * @returns {string} - The HTML string for the filtered contact list item.
+ */
 function contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName, contactColors, contactInitials, fontColor, checkboxImage) {
     return `
     <div class="contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
@@ -177,6 +204,11 @@ function resetValue(){
     swapToMedium('prio-medium')
 }
 
+/**
+ * Displays a validation error message for a specific input element.
+ * @param {HTMLElement} element - The input element to display the error for.
+ * @param {string} message - The error message to display.
+ */
 function showValidationError(element, message) {
     element.classList.add('input-error');
     let errorMessage = document.createElement('div');
@@ -187,6 +219,10 @@ function showValidationError(element, message) {
     }
 }
 
+/**
+ * Resets the validation state for a specific input element.
+ * @param {HTMLElement} element - The input element to reset the validation for.
+ */
 function resetValidation(element) {
     element.classList.remove('input-error');
 
@@ -196,6 +232,12 @@ function resetValidation(element) {
     }
 }
 
+/**
+ * Toggles the selection state of a contact checkbox.
+ * @param {HTMLElement} element - The contact list item element.
+ * @param {string} contactName - The name of the contact.
+ * @param {string} idNumber - The unique ID for the contact.
+ */
 function toggleContactCheckbox(element, contactName, idNumber) {
     let img = element.querySelector('img');
     let nameSpan = element.querySelector('.contact-name');
@@ -221,6 +263,12 @@ function toggleContactCheckbox(element, contactName, idNumber) {
     renderAssignedContacts(idNumber);
 }
 
+/**
+ * Renders the contact list in the dropdown menu.
+ * @param {Object} firebaseAnswer - The data fetched from Firebase containing contact information.
+ * @param {HTMLElement} dropDownMenu - The dropdown menu container element.
+ * @param {string} id - The ID of the dropdown menu.
+ */
 function renderContacts(firebaseAnswer, dropDownMenu, id) {
     let localCounter = 0;
     for (let key in firebaseAnswer) {
@@ -238,6 +286,14 @@ function renderContacts(firebaseAnswer, dropDownMenu, id) {
     }
 }
 
+/**
+ * Generates the HTML for a filtered contact list item.
+ * @param {string} contactInitials - The initials of the contact.
+ * @param {string} contactName - The name of the contact.
+ * @param {string} isChecked - Indicates whether the contact is selected.
+ * @param {string} id - The ID of the dropdown menu.
+ * @returns {string} - The HTML string for the filtered contact list item.
+ */
 function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {
     let fontColor = "";
     let checkboxImage = "../assets/img/unchecked.svg";
@@ -257,6 +313,9 @@ function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {
 
 }
 
+/**
+ * Clears the Add Task form and resets all fields and states.
+ */
 function clearTaskForm() {
     overlayContacts= [];
     let subTaskInput = document.getElementById('subtaskInput');
