@@ -7,6 +7,7 @@
 
   #right-contacts-page-column {
     display: none;
+    width: 100%;
   }
 
   #left-contacts-page-column {
@@ -118,8 +119,7 @@
   #add-contact-overlay {
     display: flex;
     flex-direction: column;
-    max-height: 90vh !important;
-    min-height: 75vh !important;
+    height: fit-content !important;
     margin-left: 0 !important;
   }
 
@@ -133,7 +133,8 @@
   }
 
   #left-add-contact-column {
-    height: 50vh;
+    height: 40vh;
+    max-height: 250px;
     justify-content: space-between;
     align-items: start;
     width: 90% !important;
@@ -307,6 +308,11 @@
     width: 100%;
   }
 
+  #add-contact-header-area {
+    margin-top: 5vh;
+    margin-bottom: 10vh;
+  }
+
   #contact-details-area {
     max-height: 100vh;
     padding-bottom: 80px;
@@ -342,19 +348,11 @@
   }
 
   #left-add-contact-column {
-    height: 30vh;
+    height: 20vh;
   }
 
   .user-name-header {
     gap: 10px;
-  }
-
-  #add-contact-overlay {
-    height: 80vh !important;
-  }
-
-  #add-contact-header-area {
-    margin-top: 10px;
   }
 
   #add-contact-options {
@@ -367,5 +365,23 @@
 
   .contact-information {
     padding-left: 5px;
+  }
+}
+
+@media (min-width: 1250px) {
+  .user-name-options {
+    display: flex !important;
+  }
+
+  #overlayButton {
+    display: none;
+  }
+
+  .go-back-arrow {
+    display: none;
+  }
+
+  #closeOverlayButton {
+    display: none;
   }
 }

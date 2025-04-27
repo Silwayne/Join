@@ -55,7 +55,7 @@ function renderSidebarResponsive() {
           <span>Summary</span>
         </button>
         </a>
-        <a href="/add-task/add-task.html">
+        <a href="/add-task.html">
         <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
             <img src="/assets/img/add_task_icon.svg" alt="Add Task">
             <span style="white-space: nowrap;">Add Task</span>

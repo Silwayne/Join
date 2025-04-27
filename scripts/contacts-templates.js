@@ -136,9 +136,6 @@ function displayAddContactOverlay() {
  * @param {Object} users - The list of all users.
  */
 function editContactOverlay(key, users) {
-  console.log("editContactOverlay called with key:", key); // Debug-Ausgabe
-  console.log("Users object:", users); // Debug-Ausgabe
-
   if (!key) {
     alert("The selected contact could not be found. Please try again.");
     console.error("Key is undefined or invalid");
@@ -157,8 +154,6 @@ function editContactOverlay(key, users) {
     console.error("User not found for key:", key);
     return;
   }
-
-  console.log("User found:", user); // Debug-Ausgabe
 
   let realBody = document.getElementById("body");
   realBody.style.overflow = "hidden";
@@ -203,9 +198,6 @@ function editContactOverlay(key, users) {
  * @param {Object} users - The list of all users.
  */
 function mobileEditOptions(paramKey, users) {
-  console.log("mobileEditOptions called with paramKey:", paramKey); // Debug-Ausgabe
-  console.log("Users object:", users); // Debug-Ausgabe
-
   if (!paramKey || !users || !users[paramKey]) {
     console.error("Invalid paramKey or users data");
     alert("The selected contact could not be found. Please try again.");
@@ -226,7 +218,7 @@ function mobileEditOptions(paramKey, users) {
 
   // Füge das Overlay hinzu
   buttonOverlayArea.innerHTML = `
-    <div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+    <div onclick="closeResponsiveOverlay('${paramKey}')" class="mobileOverlay" id="mobileEditOptions">
       <div id="small-responsive-overlay-options">
         <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
           <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit

@@ -276,12 +276,12 @@ function bigRandomColour(user) {
 
 function hideContactOptionsForMobile() {
   let userNameOptions = document.getElementById("user-name-options");
-  if (window.innerWidth > 1440) {
+  if (window.innerWidth < 1440) {
     userNameOptions.style.display = "none";
   }
 }
 
-function closeResponsiveOverlay(key) {
+function closeResponsiveOverlay(paramKey) {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.remove();
@@ -292,7 +292,7 @@ function closeResponsiveOverlay(key) {
     overlayArea.remove();
   }
   let contactDiv = document.getElementById("contact-div");
-  contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions(key, user)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
+  contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions('${paramKey}', user)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
 }
 let leftColumn = document.getElementById("left-contacts-page-column");
 let buttonOverlayArea = document.getElementById("button-overlay-area");
@@ -390,7 +390,7 @@ function mobileEditOptions(paramKey, users) {
 
   // Füge das Overlay hinzu
   buttonOverlayArea.innerHTML = `
-    <div onclick="closeResponsiveOverlay()" class="mobileOverlay" id="mobileEditOptions">
+    <div onclick="closeResponsiveOverlay('${paramKey}')" class="mobileOverlay" id="mobileEditOptions">
       <div id="small-responsive-overlay-options">
         <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
           <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit
@@ -403,7 +403,5 @@ function mobileEditOptions(paramKey, users) {
 
   // Entferne den Overlay-Button, um doppelte Klicks zu vermeiden
   let overlayButton = document.getElementById("overlayButton");
-  if (overlayButton) {
-    overlayButton.remove();
-  }
+  overlayButton.remove();
 }

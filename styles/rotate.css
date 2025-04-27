@@ -3,7 +3,7 @@
 }
 
 /* Standardmäßig ist das Overlay unsichtbar */
-@media (max-height: 500px) {
+@media (max-height: 660px) {
   #landscape-blocker {
     display: block;
     position: fixed;
