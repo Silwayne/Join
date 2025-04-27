@@ -51,14 +51,11 @@ async function loadTasksFromFirebase() {
   todos = tasksBoxContent;
 }
 
-function allowDrop(ev) {
-  ev.preventDefault();
-}
 async function loadContactColors() {
   let response = await fetch(firebaseURL + "users.json");
   let users = await response.json();
   contactColors = {};
-  const validNames = [];
+  let validNames = [];
 
   for (let key in users) {
     let user = users[key];
@@ -80,41 +77,6 @@ async function loadContactColors() {
   }
 }
 
-async function updateBoardHTML() {
-  await loadContactColors();
-  await loadTasksFromFirebase();
-  const statuses = ["todo", "inprogress", "await", "done"];
-
-  for (let i = 0; i < statuses.length; i++) {
-    let status = statuses[i];
-    let taskDiv = document.getElementById("drag-and-drop-" + status);
-    let tasks = todos.filter((t) => t.status === status);
-
-    if (tasks.length > 0) {
-      taskDiv.innerHTML = "";
-      taskDiv.classList.remove("no-tasks-container");
-      taskDiv.classList.add("task-columns");
-
-      for (let m = 0; m < tasks.length; m++) {
-        let taskHTML = await generateTodosHTML(tasks[m]);
-        taskDiv.innerHTML += taskHTML;
-      }
-    } else {
-      if (status === "todo") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks to do</p>`;
-      } else if (status === "inprogress") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks in progress</p>`;
-      } else if (status === "await") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks to await</p>`;
-      } else if (status === "done") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks done</p>`;
-      }
-
-      taskDiv.classList.add("no-tasks-container");
-    }
-  }
-}
-
 async function moveTo(status) {
   let task = todos[currentDraggedTask];
   task.status = status;
@@ -122,46 +84,7 @@ async function moveTo(status) {
   updateBoardHTML();
 }
 
-function getSelectedContactsFromAddTask(task) {
-  let html = "";
-  if (task.contacts) {
-    for (let i = 0; i < task.contacts.length; i++) {
-      let name = task.contacts[i];
-      let color = contactColors[name] || "#29abe2";
-      let initials = getInitials(name);
-      if (color) {
-        html += `
-                    <div class="user-icon user-icon-board-box" style="background-color: ${color};">
-                        <p>${initials}</p>
-                    </div>
-                `;
-      }
-    }
-  }
-  return html;
-}
-function getSubtaskHTML(taskId, subtasks) {
-  let html = "";
-  if (subtasks && subtasks.length > 0) {
-    for (let i = 0; i < subtasks.length; i++) {
-      let subId = "task_" + i;
-      let subtask = subtasks[i];
 
-      html += `
-        <div class="subtask-item" id="${subId}">
-          <div class="subtask-value">
-            <img class="dot" src="/assets/img/Subtasks icons11.svg">
-            ${subtask.title}
-          </div>
-          <div class="subtask-trash-img">
-            <img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
-          </div>
-        </div>
-      `;
-    }
-  }
-  return html;
-}
 
 async function getContactColorFromFirebase(contactName) {
   let response = await fetch(firebaseURL + "users.json");
@@ -185,86 +108,6 @@ function setupSubtaskEnterKeyEdit(taskId) {
   });
 }
 
-
-function generateTodosHTML(task) {
-  let subtask = checkIfSubtasks(task);
-  let progressBar = generateProgressBar(subtask, task);
-  let contacts = getSelectedContactsFromAddTask(task);
-  let img = filterPriorityImage(task);
-
-  return `
-    <div draggable="true" onclick="openTaskBoxOverlay(${task.id})" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
-      <div class="box-category-header">
-        <p class="box-category-header-userstory ${task.category}">${task.category}</p>
-        <div class="tooltip-container" onclick="editTaskPosition(event, ${task.id})">
-       <img class="arrow-dropdown" src="./assets/img/dropdownarrows.svg">
-      <div id="tooltip_${task.id}" class="tooltip-wrapper d_none"></div>
-      </div>
-
-      </div>
-      <div class="box-category-title">
-        <p>${task.title}</p>
-        <div class="box-category-descrition"><p>${task.description}</p></div>
-      </div>
-      ${progressBar}
-      <div class="box-contacts-prio">
-        <div class="user-icon-box">${contacts}</div>
-        <div class="box-category-prio">${img}</div>                    
-      </div>
-    </div>
-  `;
-
-}
-function editTaskPosition(event, id) {
-  event.stopPropagation();
-  let tooltip = document.getElementById("tooltip_" + id);
-  let task = todos.find(t => t.id === id);
-  
-
-  let html = `
-    <div class="tooltip-box">
-      <p class="tooltip-title">Move to</p>
-  `;
-
-  if (task.status === 'todo') {
-    html += `
-      <div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
-        <img src="./assets/img/arrow_downward.svg"> In Progress
-      </div>
-    `;
-  } 
-  else if (task.status === 'inprogress') {
-    html += `
-      <div class="tooltip-item" onclick="moveToStatus(${id}, 'todo')">
-        <img src="./assets/img/arrow_upward.svg"> To Do
-      </div>
-      <div class="tooltip-item" onclick="moveToStatus(${id}, 'await')">
-        <img src="./assets/img/arrow_downward.svg"> Await feedback
-      </div>
-    `;
-  } 
-  else if (task.status === 'await') {
-    html += `
-      <div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
-        <img src="./assets/img/arrow_upward.svg"> In Progress
-      </div>
-      <div class="tooltip-item" onclick="moveToStatus(${id}, 'done')">
-        <img src="./assets/img/arrow_downward.svg"> Done
-      </div>
-    `;
-  } 
-  else if (task.status === 'done') {
-    html += `
-      <div class="tooltip-item" onclick="moveToStatus(${id}, 'await')">
-        <img src="./assets/img/arrow_upward.svg"> Await
-      </div>
-    `;
-  }
-
-  html += `</div>`; 
-  tooltip.innerHTML = html;
-  tooltip.classList.toggle("d_none");
-}
 async function moveToStatus(id, newStatus) {
   let task = todos.find(t => t.id === id);
   if (!task) return;
@@ -279,10 +122,6 @@ function closeAllTooltips() {
     tooltips[i].classList.add('d_none');
   }
 }
-
-
-
-
 
 function openTaskBoxOverlay(id) {
   let task = todos.find((t) => t.id === id);
@@ -300,32 +139,7 @@ async function closeOverlay() {
   outerTaskOverlay.style.display = "none";
   await updateBoardHTML();
 }
-function generateTaskBoxContent(task) {
-  let img = filterPriorityImage(task);
 
-  document.getElementById("task-content").innerHTML = `
-      <div class="categorydiv"> 
-      <div> <p class="box-category-header-userstory ${task.category}">${task.category
-    }</p></div>
-      <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
-      </div>
-        <div><p class="task-title-p">${task.title}</p></div>
-            <div class="description-div"><p class="description-p">${task.description
-    }</p></div>
-            <div><p class="due-date">Due date: ${task.date}</p></div>
-                <div class="priority-div"><p class="priority">Priority:   ${task.priority
-    } </p>${img}</div>
-                <div><p>${contactsOverlayContent(task)}</p></div>
-                <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
-                <div class="overlay-delete-edit">
-                    <div onclick="deleteOverlay(${task.id
-    })" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
-                        <div class="overlay-delete-edit-border"></div>
-                    <div onclick="editOverlay(${task.id
-    })" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
-                </div>
-    `;
-}
 function subtaskOverlayContent(task) {
   if (task.subtasks) {
     let html = `<h4 class="assigned-to">Subtasks</h4><div class="subtasks-list">`;
@@ -339,17 +153,8 @@ function subtaskOverlayContent(task) {
       } else {
         imageSrc = "../assets/img/unchecked.svg";
       }
-
-      html += `
-                <div onclick="toggleCustomSubtask(${task.id}, ${i}, this)" class="subtask-item overlay-subtasks cursor-pointer">
-                    <div class="custom-checkbox" >
-                        <img src="${imageSrc}" class="checkbox-img" id="custom-subtask-${task.id}-${i}">
-                    </div>
-                    <label class="subtask-class">${subtask.title}</label>
-                </div>
-            `;
+      html += subtaskOverlayContentHTML(task.id, i, imageSrc, subtask.title)
     }
-
     html += `</div>`;
     return html;
   }
@@ -357,34 +162,35 @@ function subtaskOverlayContent(task) {
 }
 
 function toggleCustomSubtask(taskId, subtaskIndex, element) {
-  let task = todos.find((t) => t.id === taskId);
-  let img = element.querySelector("img");
-  if (task.subtasks[subtaskIndex].done === true) {
-    task.subtasks[subtaskIndex].done = false;
-    img.src = "../assets/img/unchecked.svg";
-  } else {
-    task.subtasks[subtaskIndex].done = true;
-    img.src = "../assets/img/checked.svg";
-  }
-  let doneCount = 0;
-  for (let i = 0; i < task.subtasks.length; i++) {
-    if (task.subtasks[i].done === true) {
-      doneCount++;
+    let task = todos.find(t => t.id === taskId);
+    if (!task) return;
+
+    toggleSubtaskDone(task, subtaskIndex, element);
+    updateSubtaskProgress(task);
+    updateFireBaseData(task.firebaseID, task);
+}
+
+function toggleSubtaskDone(task, subtaskIndex, element) {
+    let img = element.querySelector("img");
+    let subtask = task.subtasks[subtaskIndex];
+
+    subtask.done = !subtask.done;
+    img.src = subtask.done ? "../assets/img/checked.svg" : "../assets/img/unchecked.svg";
+}
+
+function updateSubtaskProgress(task) {
+    let doneCount = task.subtasks.filter(subtask => subtask.done).length;
+    let total = task.subtasks.length;
+    let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`);
+    let progressBar = document.getElementById(`progress-${task.id}`);
+
+    if (subtaskCounter) {
+        subtaskCounter.innerHTML = `${doneCount}/${total} Subtasks`;
     }
-  }
-  let total = task.subtasks.length;
-  let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`);
-  let progressBar = document.getElementById(`progress-${taskId}`);
-
-  if (subtaskCounter) {
-    subtaskCounter.innerHTML = doneCount + "/" + total + " Subtasks";
-  }
-  if (progressBar) {
-    let progress = (doneCount / total) * 100;
-    progressBar.style.width = progress + "%";
-  }
-
-  updateFireBaseData(task.firebaseID, task);
+    if (progressBar) {
+        let progress = (doneCount / total) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
 }
 
 function contactsOverlayContent(task) {
@@ -433,27 +239,7 @@ function checkIfSubtasks(task) {
   return "";
 }
 
-function generateProgressBar(subtask, task) {
-  if (subtask) {
-    let progressBar;
-    let done = 0;
-    for (let i = 0; i < task.subtasks.length; i++) {
-      if (task.subtasks[i].done === true) {
-        done++;
-      }
-    }
-    let progress = (done / task.subtasks.length) * 100;
-    return (progressBar = `
-            <div class="box-category-progress-subtasks-box">
-                <div class="box-category-progress-bar">
-                    <div id="progress-${task.id}" class="progress" style="width: ${progress}%;"></div>
-                </div>
-                <p class="subtask-description" id="subtaskcounter-${task.id}">${subtask}</p>
-            </div>
-        `);
-  }
-  return "";
-}
+
 function filterPriorityImage(task) {
   let priority = task.priority.toLowerCase();
 
@@ -466,7 +252,7 @@ function filterPriorityImage(task) {
 }
 
 async function deleteOverlay(id) {
-  const task = todos.find((t) => t.id === id);
+  let task = todos.find((t) => t.id === id);
   if (!task) return;
 
   await fetch(`${firebaseURL}tasks/${task.firebaseID}.json`, {
@@ -477,183 +263,128 @@ async function deleteOverlay(id) {
   updateBoardHTML();
 }
 
-function editOverlay(id) {
-  selectContacts(id);
-  let task = todos.find((t) => t.id === id);
-  let { title, description, date, contacts = [], subtasks = [] } = task;
-  overlayContacts = contacts;
-
-  document.getElementById("task-content").innerHTML = `
-        <div class="closeEditOverlay-x">
-          <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
-          </div>
-        <div>
-            <p>Title</p>
-            <input value="${title}" class="overlay-input-title">
-        </div>
-
-        <div>
-            <p>Description</p>
-            <textarea class="overlay-input-description">${description}</textarea>
-        </div>
-
-        <div>
-            <p>Date</p>
-            <input type="date" value="${date}" class="overlay-input-date">
-        </div>
-
-        <div>
-            <p>Prio</p>
-            <div class="prio-box">
-                <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
-                    <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
-                </div>
-                <div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
-                    <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
-                </div>
-                <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
-                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="dropdown overlay-dropdown">
-            <p>Assigned to</p>
-            <div id="contact-container_${id}" class="input-container" onclick="showContacts(${id})">
-                <input class="filterNamesInput" oninput="filterNames(${id})" type="text" id="dropdownInput_${id}" placeholder="Select contacts to assign"
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'">
-                <span class="arrow-drop-down" id="arrow-drop-down_${id}">
-                    <img src="/assets/img/arrow_drop_down.svg">
-                </span>
-            </div>
-            <div class="selectedInitials-edit" id="assignedContactsContainer_${id}"></div>
-            <div class=" dropdown-menu-edit d_none" id="dropdownMenu_${id}"></div>
-        </div>
-
-     <div id="subtask-container_${id}" class="input-container subtask-container-edit">
-  <input type="text" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
-  <div class="icons">
-    <span id="plusIcon_${id}" class="icon">
-      <img src="/assets/img/Subtasks icons11.svg">
-    </span>
-    <span id="checkIcon_${id}" class="icon d_none">
-      <img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg">
-    </span>
-    <span id="cancelIcon_${id}" class="icon d_none">
-      <img onclick="addSubTaskInput(${id})" src="/assets/img/check.svg">
-    </span>
-  </div>
-  </div>
-  <div id="subtask-error_${id}" class="error-message d_none">Max. 2 Subtasks erlaubt</div>
-<div id="subtasks_${id}" class="subtask-list">
-  ${getSubtaskHTML(id, subtasks)}
-</div>
-
-
-        <div class="button-div"><button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button></div>
-    `;
-
-  renderAssignedContacts(id);
-  updateIcons(id);
-  setupSubtaskEnterKeyEdit(id)
-}
-
 async function saveEditedTask(id) {
-  let task = todos.find(function (t) {
-    return t.id === id;
-  });
+    let task = todos.find(t => t.id === id);
+    if (!task) return;
 
-  let firebaseID = task.firebaseID;
+    let firebaseID = task.firebaseID;
+    let updatedTask = buildUpdatedTask(id, task);
 
-  let title = document.querySelector(".overlay-input-title").value.trim();
-  let description = document
-    .querySelector(".overlay-input-description")
-    .value.trim();
-  let date = document.querySelector(".overlay-input-date").value;
-  let subtasks = [];
-  let subtaskContainer = document.getElementById("subtasks_" + id);
-
-  if (subtaskContainer) {
-    let subtaskElements = subtaskContainer.children;
-
-    for (let i = 0; i < subtaskElements.length; i++) {
-      let element = subtaskElements[i];
-
-      let valueElement = element.querySelector(".subtask-value");
-      let subtaskText = "";
-      if (valueElement) {
-        subtaskText = valueElement.textContent.trim();
-      }
-      if (subtaskText !== "") {
-        let foundOld = false;
-        let wasDone = false;
-
-        if (task.subtasks && task.subtasks.length > 0) {
-          for (let j = 0; j < task.subtasks.length; j++) {
-            if (task.subtasks[j].title.trim() === subtaskText) {
-              wasDone = task.subtasks[j].done;
-              foundOld = true;
-              break;
-            }
-          }
-        }
-
-        subtasks.push({
-          title: subtaskText,
-          done: foundOld ? wasDone : false,
-        });
-      }
-    }
-  }
-  let updatedTask = {
-    title: title,
-    description: description,
-    date: date,
-    priority: priority,
-    contacts: overlayContacts,
-    subtasks: subtasks,
-    status: task.status,
-    category: task.category,
-  };
-  updateFireBaseData(firebaseID, updatedTask);
-
-  await closeOverlay();
-  await updateBoardHTML();
+    await updateFireBaseData(firebaseID, updatedTask);
+    await closeOverlay();
+    await updateBoardHTML();
 }
+
+function buildUpdatedTask(id, oldTask) {
+    return {
+        title: getInputValue(".overlay-input-title"),
+        description: getInputValue(".overlay-input-description"),
+        date: getInputValue(".overlay-input-date"),
+        priority: priority,
+        contacts: overlayContacts,
+        subtasks: collectEditedSubtasks(id, oldTask),
+        status: oldTask.status,
+        category: oldTask.category,
+    };
+}
+
+function getInputValue(selector) {
+    let input = document.querySelector(selector);
+    return input ? input.value.trim() : '';
+}
+
+function collectEditedSubtasks(id, oldTask) {
+    let subtasks = [];
+    let subtaskContainer = document.getElementById("subtasks_" + id);
+
+    if (!subtaskContainer) return subtasks;
+
+    let subtaskElements = subtaskContainer.children;
+    for (let element of subtaskElements) {
+        let valueElement = element.querySelector(".subtask-value");
+        let subtaskText = extractSubtaskText(valueElement);
+
+        if (subtaskText) {
+            let wasDone = findSubtaskDoneStatus(oldTask, subtaskText);
+            subtasks.push({ title: subtaskText, done: wasDone });
+        }
+    }
+    return subtasks;
+}
+
+function extractSubtaskText(valueElement) {
+    if (!valueElement) return '';
+    return Array.from(valueElement.childNodes)
+        .filter(node => node.nodeType === Node.TEXT_NODE)
+        .map(node => node.textContent.trim())
+        .join('');
+}
+
+function findSubtaskDoneStatus(oldTask, subtaskText) {
+    if (!oldTask.subtasks) return false;
+
+    let matchingSubtask = oldTask.subtasks.find(
+        t => t.title.trim() === subtaskText
+    );
+    return matchingSubtask ? matchingSubtask.done : false;
+}
+
 
 function filterTasks() {
-  let input = document.getElementById("searchTasks").value.toLowerCase();
-  let filteredTasks = todos.filter(
-    (task) =>
-      task.title.toLowerCase().includes(input) ||
-      task.description.toLowerCase().includes(input)
-  );
+    let input = getSearchInputValue();
+    let filteredTasks = filterTodos(input);
+    let statuses = ["todo", "inprogress", "await", "done"];
 
-  const statuses = ["todo", "inprogress", "await", "done"];
-  const statusMessages = {
-    todo: "No tasks to do",
-    inprogress: "No tasks in progress",
-    await: "No tasks to await",
-    done: "No tasks done",
-  };
+    statuses.forEach(status => {
+        updateTaskColumn(status, filteredTasks);
+    });
+}
 
-  statuses.forEach((status) => {
+function getSearchInputValue() {
+    let input = document.getElementById("searchTasks");
+    return input ? input.value.toLowerCase() : '';
+}
+
+function filterTodos(input) {
+    return todos.filter(task =>
+        task.title.toLowerCase().includes(input) ||
+        task.description.toLowerCase().includes(input)
+    );
+}
+
+function updateTaskColumn(status, filteredTasks) {
     let taskDiv = document.getElementById("drag-and-drop-" + status);
-    let tasks = filteredTasks.filter((t) => t.status === status);
+    let tasks = filteredTasks.filter(t => t.status === status);
+
+    if (!taskDiv) return;
 
     if (tasks.length > 0) {
-      taskDiv.innerHTML = "";
-      taskDiv.classList.remove("no-tasks-container");
-      taskDiv.classList.add("task-columns");
-
-      tasks.forEach((task) => {
-        let taskHTML = generateTodosHTML(task); 
-        taskDiv.innerHTML += taskHTML;
-      });
+        renderTasksInColumn(taskDiv, tasks);
     } else {
-      taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
-      taskDiv.classList.remove("task-columns");
-      taskDiv.classList.add("no-tasks-container");
+        renderEmptyStatusMessage(taskDiv, status);
     }
-  });
+}
+
+function renderTasksInColumn(taskDiv, tasks) {
+    taskDiv.innerHTML = "";
+    taskDiv.classList.remove("no-tasks-container");
+    taskDiv.classList.add("task-columns");
+
+    tasks.forEach(task => {
+        let taskHTML = generateTodosHTML(task);
+        taskDiv.innerHTML += taskHTML;
+    });
+}
+
+function renderEmptyStatusMessage(taskDiv, status) {
+    let statusMessages = {
+        todo: "No tasks to do",
+        inprogress: "No tasks in progress",
+        await: "No tasks to await",
+        done: "No tasks done",
+    };
+
+    taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
+    taskDiv.classList.remove("task-columns");
+    taskDiv.classList.add("no-tasks-container");
 }
