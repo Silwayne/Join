@@ -56,7 +56,7 @@ h2 {
   flex-direction: column;
 }
 
-/* Contacts */
+
 .contacts-page-div {
   display: flex;
   flex-direction: row;
@@ -285,17 +285,17 @@ seperator {
   visibility: visible;
   transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
   position: relative;
-  animation: slideInFromRight 0.8s ease-out forwards; /* Animation hinzufügen */
+  animation: slideInFromRight 0.8s ease-out forwards; 
 }
 
 @keyframes slideInFromRight {
   from {
     transform: translateX(
       100%
-    ); /* Startposition: außerhalb des Bildschirms rechts */
+    ); 
   }
   to {
-    transform: translateX(0); /* Endposition: an der Zielposition */
+    transform: translateX(0); 
   }
 }
 

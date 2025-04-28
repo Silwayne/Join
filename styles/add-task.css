@@ -801,12 +801,13 @@ footer {
     font-size: 11px;
   }
 }
+
 #success {
   opacity: 0;
   transition: opacity 0.3s ease;
   display: none;
-  position: absolute; /* <-- Wichtig! */
-  top: 15%; /* Abstand von oben */
-  left: 15%; /* Abstand von links */
-  z-index: 1000; /* damit es über allem liegt */
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  z-index: 1000;
 }

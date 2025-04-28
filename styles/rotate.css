@@ -2,7 +2,6 @@
   display: none;
 }
 
-/* Standardmäßig ist das Overlay unsichtbar */
 @media (max-height: 660px) {
   #landscape-blocker {
     display: block;
@@ -27,13 +26,11 @@
     height: 100%;
   }
 
-  /* Zeige das Overlay im Landscape-Modus */
   @media (orientation: landscape) {
     #landscape-blocker {
       display: block;
     }
 
-    /* Verstecke den Rest der Seite */
     body {
       overflow: hidden;
     }

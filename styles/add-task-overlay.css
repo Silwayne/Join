@@ -10,7 +10,6 @@
   border-radius: 20px;
   animation: slideInFromRightToCenter 0.2s ease-out forwards;
   overflow-x: hidden;
-
 }
 
 @keyframes slideInFromRightToCenter {
@@ -217,11 +216,8 @@ input::placeholder {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* Schiebt die Checkbox nach rechts */
   width: 100%;
-  /* Nimmt die volle Breite */
   border-bottom: 0px solid #ccc;
-  /* Falls eine Trennlinie gewünscht ist */
 }
 
 .contact-checkbox {
@@ -450,7 +446,6 @@ footer {
 
 .overlay-background {
   background-color: rgba(0, 0, 0, 0.4);
-  /* <- Statt filter */
   filter: brightness(0.6);
   transition: background-color 0.3s ease, filter 0.3s ease;
   width: 100vw;
@@ -461,11 +456,16 @@ footer {
 /* Responsive */
 
 @media (max-width: 1440px) {
-
   #add-task-overlay {
     overflow: scroll;
     overflow-x: hidden;
   }
+
+  .overlay-background {
+    overflow: hidden;
+    overflow-y: hidden;
+  }
+
   .subtasks {
     width: 90%;
   }
@@ -525,26 +525,27 @@ footer {
   .dropdown-menu {
     width: 90%;
   }
-  .fiel-Is-Required-Div{
+  .fiel-Is-Required-Div {
     display: none;
   }
 }
-@media (max-width:1000px) {
+@media (max-width: 1000px) {
   #add-task-overlay {
-  width: 90%;
-  padding: 5%;
+    width: 90%;
+    padding: 5%;
   }
 }
-@media (max-width:650px) {
+@media (max-width: 650px) {
   .add-task-h1 {
     font-size: 40px;
   }
-  .bottom-add-task-overlay-section{
+  
+  .bottom-add-task-overlay-section {
     padding: 0;
   }
-  #description-input{
-    max-width:100% !important;
-    min-width:100% !important;
+  #description-input {
+    max-width: 100% !important;
+    min-width: 100% !important;
   }
 
   .bottom-add-task-overlay-section {

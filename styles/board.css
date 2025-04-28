@@ -116,6 +116,11 @@ button {
   justify-content: center;
 }
 
+.add-task-button:hover {
+  background-color: #29abe2;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
 .small-add-task-btn {
   background-color: rgba(255, 255, 255, 0);
   border: solid;
