@@ -179,10 +179,7 @@ body {
 .menu-button-design:hover {
   cursor: pointer;
   background-color: #091931;
-}
-
-.active {
-  background-color: #091931;
+  border-radius: 10px;
 }
 
 .sidbar-bottom {
@@ -217,4 +214,9 @@ a:hover {
 
 #sidebar-responsive {
   display: none;
+}
+
+.active-button {
+  background-color: #091931; /* dunklere Farbe */
+  border-radius: 10px;
 }

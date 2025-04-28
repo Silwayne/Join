@@ -32,6 +32,7 @@ function renderSidebar() {
             </div>
         </nav>
   `;
+  highlightActiveSidebarButton();
 }
 
 /**
@@ -46,19 +47,34 @@ function renderSidebarResponsive() {
             <a href="./index.html">
                 <button class="footer-btn">
                     <i class="fa-solid fa-right-to-bracket"></i>
-                    <img style="width: 30px;" src="/assets/img/Icons.svg" alt="Log in Icon" />
+                    <img src="/assets/img/Icons.svg" alt="Log in Icon" />
                     <span>Log In</span>
                 </button>
             </a>
         </div>
         <div class="footer-buttons">
             <a href="./privacy-login.html">
-                <button style="padding: 25px 0;" class="footer-btn">Privacy Policy</button>
+                <button class="footer-btn">Privacy Policy</button>
             </a>
             <a href="./legal-login.html">
-                <button style="padding: 25px 0;" class="footer-btn">Legal Notice</button>
+                <button class="footer-btn">Legal Notice</button>
             </a>
         </div>
     </footer>
     `;
+  highlightActiveSidebarButton();
+}
+
+function highlightActiveSidebarButton() {
+  const currentPage = window.location.pathname.split("/").pop();
+  const allLinks = document.querySelectorAll(
+    ".menu a, .sidbar-bottom a, .menu-responsive a, .footer-buttons a, .footer-left a"
+  );
+  allLinks.forEach((link) => {
+    const href = link.getAttribute("href").split("/").pop();
+    if (href === currentPage) {
+      const button = link.querySelector("button");
+      if (button) button.classList.add("active-button");
+    }
+  });
 }

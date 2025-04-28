@@ -78,6 +78,11 @@
     background-color: #091931;
   }
 
+  .active-button {
+    background-color: #091931; /* dunklere Farbe */
+    border-radius: 10px;
+  }
+
   .font-size-responsive {
     font-family: "Inter", sans-serif;
     font-size: 2vw;
