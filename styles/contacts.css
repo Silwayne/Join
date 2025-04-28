@@ -56,6 +56,20 @@ h2 {
   flex-direction: column;
 }
 
+.input-group {
+  gap: 35px;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+}
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: flex;
+  justify-content: start;
+}
 
 .contacts-page-div {
   display: flex;
@@ -78,20 +92,21 @@ h2 {
 #left-contacts-page-column {
   display: block;
   padding-left: 50px;
-  padding-right: 50px;
   width: 550px;
   background-color: white;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 140px);
 }
 
 #left-contact-list {
   overflow-y: scroll;
-  height: 80vh;
+  height: calc(100vh - 180px);
 }
 
 .add-contact-btn {
   display: flex;
   justify-content: center;
+  margin-right: 50px;
+  width: 90%;
 }
 
 seperator {
@@ -227,6 +242,7 @@ seperator {
 #right-contacts-page-column {
   background-color: #f6f7f8;
   height: auto;
+  width: 100%;
 }
 
 .contact-details {
@@ -235,11 +251,20 @@ seperator {
 }
 
 .contact-list:hover {
-  background-color: #2a3647;
-  color: white;
+  background-color: #f9f9f9;
   border-radius: 10px;
   border: none;
   cursor: pointer;
+}
+
+.contact-list:active {
+  background-color: #2a3647;
+  color: white;
+}
+
+.contact-list.active {
+  background-color: #2a3647;
+  color: white;
 }
 
 #contact-page-area {
@@ -251,6 +276,7 @@ seperator {
   flex-direction: column;
   align-items: flex-start;
   margin: 20px 0;
+  margin-right: 30px;
 }
 
 .contact-initial {
@@ -268,7 +294,7 @@ seperator {
 }
 
 #contact-div {
-  height: calc(80vh - 150px);
+  overflow: hidden;
 }
 
 .phone-number {
@@ -285,17 +311,15 @@ seperator {
   visibility: visible;
   transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
   position: relative;
-  animation: slideInFromRight 0.8s ease-out forwards; 
+  animation: slideInFromRight 0.8s ease-out forwards;
 }
 
 @keyframes slideInFromRight {
   from {
-    transform: translateX(
-      100%
-    ); 
+    transform: translateX(100%);
   }
   to {
-    transform: translateX(0); 
+    transform: translateX(0);
   }
 }
 
@@ -327,13 +351,14 @@ seperator {
 
 #edit-contact-overlay {
   animation: slideIn 1s forwards;
+  max-width: 1200px !important;
 }
 
 .icon {
   height: 16px;
   width: 16px;
-  margin-top: -85px;
-  margin-left: 96%;
+  margin-top: -70px;
+  margin-left: 70%;
   display: flex;
   justify-content: end;
 }

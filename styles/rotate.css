@@ -2,7 +2,7 @@
   display: none;
 }
 
-@media (max-height: 660px) {
+@media (max-height: 480px) {
   #landscape-blocker {
     display: block;
     position: fixed;

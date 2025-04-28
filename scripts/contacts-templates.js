@@ -87,6 +87,7 @@ function contactDetailsAreaTemplate(paramKey, users) {
 /**
  * Displays the overlay for adding a new contact.
  * Dynamically generates the HTML for the overlay and appends it to the DOM.
+ * Includes JavaScript validation for form inputs with feedback messages.
  */
 function displayAddContactOverlay() {
   let body = document.getElementById("overlayArea");
@@ -96,25 +97,34 @@ function displayAddContactOverlay() {
       <div onclick="closeAddContactOverlay()" id="outer-add-contact-overlay">
         <div onclick="stopPropagation(event)" id="add-contact-overlay">
           <div id="left-add-contact-column">
-          <div id="add-contact-header-area">
-            <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
-            <h1 id="add-contact-heading">Add contact</h1>
-            <h2>Tasks are better with a team!</h2>
-          </div>
-          <div><button id="closeOverlayButton" onclick="closeOverlay()">X</button></div>
+            <div id="add-contact-header-area">
+              <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
+              <h1 id="add-contact-heading">Add contact</h1>
+              <h2>Tasks are better with a team!</h2>
+            </div>
+            <div><button id="closeOverlayButton" onclick="closeOverlay()">X</button></div>
           </div>
           <div id="right-add-contact-column">
             <div class="new-contact-icon">
               <img src="/assets/img/new-contact-icon.svg" alt="" />
             </div>
             <div id="add-contact-options">
-             <form id="addContactForm" class="add-contact-form" onsubmit="return addContactToDatabase(event)">
-                <input required type="text" id="fullName" placeholder="First and second name" />
-                <img class="icon" src="/assets/img/person.svg">
-                <input type="email" id="new-email" placeholder="E-Mail" />
-                <img class="icon" src="/assets/img/mail.svg">
-                <input type="tel" id="new-phone" placeholder="Phone" />
-                <img class="icon" src="/assets/img/call.svg">
+              <form id="addContactForm" class="add-contact-form" onsubmit="return validateAndSubmitForm(event)">
+                <div class="input-group">
+                  <input type="text" id="fullName" placeholder="First and second name" />
+                  <img class="icon" src="/assets/img/person.svg">
+                  <small class="error-message"></small>
+                </div>
+                <div class="input-group">
+                  <input type="email" id="new-email" placeholder="E-Mail" />
+                  <img class="icon" src="/assets/img/mail.svg">
+                  <small class="error-message"></small>
+                </div>
+                <div class="input-group">
+                  <input type="tel" id="new-phone" placeholder="Phone" />
+                  <img class="icon" src="/assets/img/call.svg">
+                  <small class="error-message"></small>
+                </div>
                 <div class="create-contact-btn" id="button-area">
                   <button type="button" onclick="closeOverlay()" id="cancel-add-contact" class="add-contacts-overlay-btns">
                     Cancel X
@@ -126,7 +136,98 @@ function displayAddContactOverlay() {
               </form>
             </div>
           </div>
-        </div>`;
+        </div>
+      </div>`;
+}
+
+/**
+ * Validates the form inputs and provides feedback for invalid fields.
+ * If all inputs are valid, the form is submitted.
+ * @param {Event} event - The submit event from the form.
+ * @returns {boolean} - Returns false to prevent default form submission if validation fails.
+ */
+function validateAndSubmitForm(event) {
+  event.preventDefault();
+
+  const fullName = document.getElementById("fullName");
+  const email = document.getElementById("new-email");
+  const phone = document.getElementById("new-phone");
+
+  let isValid = true;
+
+  // Validate full name
+  if (!fullName.value.trim()) {
+    showError(fullName, "Full name is required.");
+    isValid = false;
+  } else {
+    clearError(fullName);
+  }
+
+  // Validate email
+  if (!validateEmail(email.value.trim())) {
+    showError(email, "Please enter a valid email address.");
+    isValid = false;
+  } else {
+    clearError(email);
+  }
+
+  // Validate phone
+  if (!validatePhone(phone.value.trim())) {
+    showError(phone, "Please enter a valid phone number.");
+    isValid = false;
+  } else {
+    clearError(phone);
+  }
+
+  // If all inputs are valid, submit the form
+  if (isValid) {
+    addContactToDatabase(event);
+  }
+
+  return false;
+}
+
+/**
+ * Displays an error message and highlights the input field with a red border.
+ * @param {HTMLElement} input - The input element to highlight.
+ * @param {string} message - The error message to display.
+ */
+function showError(input, message) {
+  const inputGroup = input.parentElement;
+  const errorMessage = inputGroup.querySelector(".error-message");
+  errorMessage.textContent = message;
+  input.style.border = "2px solid red";
+}
+
+/**
+ * Clears the error message and removes the red border from the input field.
+ * @param {HTMLElement} input - The input element to clear.
+ */
+function clearError(input) {
+  const inputGroup = input.parentElement;
+  const errorMessage = inputGroup.querySelector(".error-message");
+  errorMessage.textContent = "";
+  input.style.border = "2px solid #ccc";
+}
+
+/**
+ * Validates an email address using a regular expression.
+ * @param {string} email - The email address to validate.
+ * @returns {boolean} - Returns true if the email is valid, otherwise false.
+ */
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+/**
+ * Validates a phone number using a regular expression.
+ * @param {string} phone - The phone number to validate.
+ * @returns {boolean} - Returns true if the phone number is valid, otherwise false.
+ */
+function validatePhone(phone) {
+  const phoneRegex = /^[0-9]{10,15}$/; // Accepts 10 to 15 digits
+  return phoneRegex.test(phone);
 }
 
 /**
