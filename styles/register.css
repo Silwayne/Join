@@ -109,6 +109,19 @@ a {
   gap: 35px;
 }
 
+#register-btn:disabled {
+  background-color: #d1d1d1;
+  color: #8a8a8a;
+  cursor: not-allowed;
+}
+
+#register-btn:not(:disabled) {
+  background-color: #2a3647;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
 .log-in-button {
   width: 125px;
   height: 80%;

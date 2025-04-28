@@ -45,6 +45,27 @@ function registerUser() {
   });
 }
 
+function checkFormValidity() {
+  const name = document.getElementById("first-name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const confirmPassword = document.getElementById("confirm-password").value.trim();
+  const privacyChecked = document.getElementById("privacy-policy").checked;
+  const registerBtn = document.getElementById("register-btn");
+
+  if (name && email && password && confirmPassword && privacyChecked) {
+    registerBtn.disabled = false;
+  } else {
+    registerBtn.disabled = true;
+  }
+}
+
+document.getElementById("first-name").addEventListener("input", checkFormValidity);
+document.getElementById("email").addEventListener("input", checkFormValidity);
+document.getElementById("password").addEventListener("input", checkFormValidity);
+document.getElementById("confirm-password").addEventListener("input", checkFormValidity);
+document.getElementById("privacy-policy").addEventListener("change", checkFormValidity);
+
 /**
  * Validates the password fields and the privacy policy checkbox.
  * Ensures that the passwords match and the privacy policy is accepted.
