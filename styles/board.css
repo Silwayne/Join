@@ -1,6 +1,5 @@
 body {
   max-height: 100vh;
-
 }
 
 #main {
@@ -580,4 +579,14 @@ textarea {
 
 .drag-and-drop-box:active {
   transform: rotate(15deg);
+}
+
+#success-board {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: none;
+  position: fixed;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1000;
 }

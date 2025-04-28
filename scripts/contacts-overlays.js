@@ -66,13 +66,13 @@ function contactsuccessfullyDeletedNotification() {
  * For larger screens, the message is displayed in the contact details area.
  */
 function contactsuccessfullyAddedNotification() {
-  if (window.innerWidth < 1440) {
+  if (window.innerWidth < 1250) {
     let displayAreaMobile = document.getElementById(
       "left-contacts-page-column"
     );
     displayAreaMobile.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully born.</div>`;
   }
-  if (window.innerWidth > 1440) {
+  if (window.innerWidth > 1250) {
     let displayArea = document.getElementById("contact-details-area");
     displayArea.style.display = "flex";
     displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully born.</div>`;

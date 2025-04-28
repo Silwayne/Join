@@ -163,7 +163,7 @@ function renderRightContactArea(name, email, phone, paramKey, users) {
 }
 
 function handleResponsiveView(paramKey, users) {
-  if (window.innerWidth < 1440) {
+  if (window.innerWidth < 1250) {
     let rightColumn = document.getElementById("right-contacts-page-column");
     let leftColumn = document.getElementById("left-contacts-page-column");
     let userContactHeader = document.getElementById("user-contact-header");
@@ -276,7 +276,7 @@ function bigRandomColour(user) {
 
 function hideContactOptionsForMobile() {
   let userNameOptions = document.getElementById("user-name-options");
-  if (window.innerWidth < 1440) {
+  if (window.innerWidth < 1250) {
     userNameOptions.style.display = "none";
   }
 }

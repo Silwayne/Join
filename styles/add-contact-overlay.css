@@ -182,15 +182,6 @@ input {
 #edit-contact-heading {
   color: white;
 }
-.success-board{
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  display: none;
-  position: absolute; /* <-- Wichtig! */
-  top: 0 !important; /* Abstand von oben */
-  left: 0 !important; /* Abstand von links */
-  z-index: 1000; /* damit es über allem liegt */
-}
 
 @media (max-width: 1250px) {
   #add-contact-heading {

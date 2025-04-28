@@ -1,4 +1,9 @@
 @media (max-width: 1440px) {
+ 
+  .drag-and-drop-box:active {
+    transform: none;
+  }
+
     #the-board {
       display: flex;
       flex-direction: column;
