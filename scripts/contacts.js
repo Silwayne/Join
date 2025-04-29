@@ -381,46 +381,6 @@ async function saveEditedContact(key) {
   }
 }
 
-function mobileEditOptions(paramKey, users) {
-  if (!paramKey || !users || !users[paramKey]) {
-    console.error("Invalid paramKey or users data");
-    alert("The selected contact could not be found. Please try again.");
-    return;
-  }
-
-  let buttonOverlayArea = document.getElementById("button-overlay-area");
-  if (buttonOverlayArea) {
-    buttonOverlayArea.remove();
-  }
-  if (!buttonOverlayArea) {
-    console.error("Button overlay area not found");
-    return;
-  }
-
-  let mobileOverlayButton = document.getElementById("overlayButton");
-  mobileOverlayButton.style.display = "none !important";
-  mobileOverlayButton.remove();
-
-  // Entferne vorherige Overlays, falls vorhanden
-  let existingOverlay = document.getElementById("mobileEditOptions");
-  if (existingOverlay) {
-    existingOverlay.remove();
-  }
-}
-
-// // Füge das Overlay hinzu
-// buttonOverlayArea.innerHTML = `
-//     <div onclick="closeResponsiveOverlay('${paramKey}')" class="mobileOverlay" id="mobileEditOptions">
-//       <div id="small-responsive-overlay-options">
-//         <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
-//           <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit
-//         </button>
-//         <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${paramKey}', users)">
-//           <img id="trash-icon" src="/assets/img/trash-icon.svg">Delete
-//         </button>
-//       </div>
-//     </div>`;
-
 // Entferne den Overlay-Button, um doppelte Klicks zu vermeiden
 let overlayButton = document.getElementById("overlayButton");
 if (overlayButton) {
