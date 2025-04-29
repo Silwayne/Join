@@ -311,6 +311,9 @@ function mobileEditOptions(paramKey, users) {
     return;
   }
 
+  let mobileOverlayButton = document.getElementById("overlayButton");
+  mobileOverlayButton.remove();
+
   // Entferne vorherige Overlays, falls vorhanden
   let existingOverlay = document.getElementById("mobileEditOptions");
   if (existingOverlay) {
