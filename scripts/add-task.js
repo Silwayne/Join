@@ -88,6 +88,8 @@ function addSubTaskInput(taskId) {
     li.id = subtaskId;
     li.innerHTML = subtaskHTML;
     list.appendChild(li);
+    list.classList.remove('d_none');
+
 
     input.value = '';
     updateIcons(taskId);

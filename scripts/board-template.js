@@ -220,7 +220,8 @@ function editOverlay(id) {
   let task = todos.find((t) => t.id === id);
   let { title, description, date, contacts = [], subtasks = [] } = task;
   overlayContacts = contacts;
-
+  priority = task.priority
+  handlePriority()
   document.getElementById("task-content").innerHTML = `
         <div class="closeEditOverlay-x">
           <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
@@ -239,21 +240,16 @@ function editOverlay(id) {
             <p>Date</p>
             <input type="date" value="${date}" class="overlay-input-date">
         </div>
-
-        <div>
-            <p>Prio</p>
+            <div>
+    <p>Prio</p>
             <div class="prio-box">
-                <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
-                    <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
-                </div>
-                <div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
-                    <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
-                </div>
-                <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
-                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
-                </div>
+               
+                   ${handlePriority(id)}
+               
+               
             </div>
         </div>
+        
 
         <div class="dropdown overlay-dropdown">
             <p>Assigned to</p>
@@ -287,13 +283,57 @@ function editOverlay(id) {
   ${getSubtaskHTML(id, subtasks)}
 </div>
 
-
         <div class="button-div"><button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button></div>
-    `;
-
+    `
+  handlePriority(id)
   renderAssignedContacts(id);
   updateIcons(id);
   setupSubtaskEnterKeyEdit(id)
+}
+
+function handlePriority(id) {
+  let html = "" 
+  if (priority === 'Urgent') {
+  html =   `
+              <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio prio-urgent bold" id="prio-urgent_${id}">
+              <div>
+                    <p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p></div></div>
+              <div onclick="swapToMedium('prio-medium_${id}')" class="prio" id="prio-medium_${id}">
+                    <p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>
+                </div>
+                    <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
+                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+                </div>
+  
+  `
+  }
+  if (priority === 'Medium') {
+    html =   `
+    <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
+    <div>
+          <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p></div></div>
+    <div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
+          <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
+      </div>
+          <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
+          <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+      </div>
+
+`  }
+  if (priority === 'Low') {
+    html =   `
+    <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
+    <div>
+          <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p></div></div>
+    <div onclick="swapToMedium('prio-medium_${id}')" class="prio" id="prio-medium_${id}">
+          <p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>
+      </div>
+          <div onclick="swapToLow('prio-low_${id}')" class="prio prio-low bold" id="prio-low_${id}">
+          <p>Low <img src="/assets/img/Prio-low-white.svg"></p>
+      </div>
+
+`  };
+return html
 }
 
 /**
