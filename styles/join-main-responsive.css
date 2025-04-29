@@ -79,8 +79,8 @@
   }
 
   .active-button {
-    background-color: #091931; /* dunklere Farbe */
-    border-radius: 10px;
+    background-color: #091931 !important;
+    border-radius: 10px !important;
   }
 
   .font-size-responsive {
