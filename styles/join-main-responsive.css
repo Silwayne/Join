@@ -53,7 +53,7 @@
   .menu-responsive {
     display: flex;
     align-items: center;
-    gap: 15vw;
+    gap: 12vw;
   }
 
   .menu-button-responsive {
@@ -85,7 +85,7 @@
 
   .font-size-responsive {
     font-family: "Inter", sans-serif;
-    font-size: 2vw;
+    font-size: 14px;
     font-weight: 400;
     white-space: nowrap;
   }

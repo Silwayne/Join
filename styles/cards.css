@@ -16,7 +16,7 @@
 
 .summary-p {
   color: #29abe2;
-  margin: 0 1vh 0 1vh;
+  margin: 0 5px 0 5px;
   font-size: 4vw;
 }
 
@@ -222,7 +222,7 @@
 }
 
 .show-name {
-  animation: fadeInName 1s 1.2s forwards; 
+  animation: fadeInName 1s 1.2s forwards;
 }
 
 @keyframes fadeInGreeting {
