@@ -149,13 +149,16 @@ function displayAddContactOverlay() {
 function validateAndSubmitForm(event) {
   event.preventDefault();
 
+  const formId = event.target.id;
+  const key = event.target.getAttribute("data-key"); // Schlüssel aus dem Formular holen
+
+  let isValid = true;
+
+  // Validierung der Eingabefelder
   const fullName = document.getElementById("fullName");
   const email = document.getElementById("new-email");
   const phone = document.getElementById("new-phone");
 
-  let isValid = true;
-
-  // Validate full name
   if (!fullName.value.trim()) {
     showError(fullName, "Full name is required.");
     isValid = false;
@@ -163,7 +166,6 @@ function validateAndSubmitForm(event) {
     clearError(fullName);
   }
 
-  // Validate email
   if (!validateEmail(email.value.trim())) {
     showError(email, "Please enter a valid email address.");
     isValid = false;
@@ -171,7 +173,6 @@ function validateAndSubmitForm(event) {
     clearError(email);
   }
 
-  // Validate phone
   if (!validatePhone(phone.value.trim())) {
     showError(phone, "Please enter a valid phone number.");
     isValid = false;
@@ -179,13 +180,12 @@ function validateAndSubmitForm(event) {
     clearError(phone);
   }
 
-  // If all inputs are valid, determine the action
+  // Wenn die Eingaben gültig sind, Aktion ausführen
   if (isValid) {
-    const formId = event.target.id;
     if (formId === "addContactForm") {
       addContactToDatabase(event);
     } else if (formId === "editContactForm") {
-      saveEditedContact(); // Funktion zum Speichern der Änderungen
+      saveEditedContact(key); // Schlüssel an die Funktion übergeben
     }
   }
 
@@ -249,24 +249,7 @@ function validatePhone(phone) {
  * @param {Object} users - The list of all users.
  */
 function editContactOverlay(key, users) {
-  if (!key) {
-    alert("The selected contact could not be found. Please try again.");
-    console.error("Key is undefined or invalid");
-    return;
-  }
-
-  if (!users || Object.keys(users).length === 0) {
-    console.error("Users data not loaded yet");
-    alert("User data is not available. Please try again later.");
-    return;
-  }
-
   let user = users[key];
-  if (!user) {
-    alert("The selected contact could not be found. Please try again.");
-    console.error("User not found for key:", key);
-    return;
-  }
 
   let realBody = document.getElementById("body");
   realBody.style.overflow = "hidden";
@@ -284,7 +267,7 @@ function editContactOverlay(key, users) {
               <img src="/assets/img/new-contact-icon.svg"/>
             </div>
             <div id="edit-contact-options">
-              <form id="editContactForm" class="edit-contact-form" onsubmit="return validateAndSubmitForm(event)">
+              <form id="editContactForm" data-key="${key}" class="edit-contact-form" onsubmit="return validateAndSubmitForm(event)">
                 <div class="input-group">
                   <input type="text" id="fullName" value="${user.name}" placeholder="First and second name" />
                   <img class="icon" src="/assets/img/person.svg">
@@ -323,7 +306,6 @@ function editContactOverlay(key, users) {
 function mobileEditOptions(paramKey, users) {
   if (!paramKey || !users || !users[paramKey]) {
     console.error("Invalid paramKey or users data");
-    alert("The selected contact could not be found. Please try again.");
     return;
   }
 

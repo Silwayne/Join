@@ -369,17 +369,16 @@ async function saveEditedContact(key) {
 
   try {
     await fetch(firebaseURL, {
-      method: "PATCH",
+      method: "PATCH", // PATCH wird verwendet, um bestehende Daten zu aktualisieren
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, phone }),
     });
 
     closeEditOverlay();
     contactsuccessfullyEditedNotification();
-    contactFirebase();
+    contactFirebase(); // Kontakte neu laden
   } catch (error) {
     console.error("Error updating contact:", error);
-    alert("An error occurred while saving the contact. Please try again.");
   }
 }
 
