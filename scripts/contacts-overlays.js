@@ -53,7 +53,7 @@ function contactsuccessfullyEditedNotification() {
  */
 function contactsuccessfullyDeletedNotification() {
   let displayArea = document.getElementById("contact-details-area");
-  displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully eliminated.</div>`;
+  displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully deleted.</div>`;
   // setTimeout(function () {
   //   window.location.reload();
   // }, 2000);
@@ -70,12 +70,12 @@ function contactsuccessfullyAddedNotification() {
     let displayAreaMobile = document.getElementById(
       "left-contacts-page-column"
     );
-    displayAreaMobile.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully born.</div>`;
+    displayAreaMobile.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully created.</div>`;
   }
   if (window.innerWidth > 1250) {
     let displayArea = document.getElementById("contact-details-area");
     displayArea.style.display = "flex";
-    displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully born.</div>`;
+    displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully created.</div>`;
   }
   hideSuccessMessage();
 }

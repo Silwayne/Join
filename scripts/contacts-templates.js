@@ -179,9 +179,14 @@ function validateAndSubmitForm(event) {
     clearError(phone);
   }
 
-  // If all inputs are valid, submit the form
+  // If all inputs are valid, determine the action
   if (isValid) {
-    addContactToDatabase(event);
+    const formId = event.target.id;
+    if (formId === "addContactForm") {
+      addContactToDatabase(event);
+    } else if (formId === "editContactForm") {
+      saveEditedContact(); // Funktion zum Speichern der Änderungen
+    }
   }
 
   return false;
@@ -196,7 +201,13 @@ function showError(input, message) {
   const inputGroup = input.parentElement;
   const errorMessage = inputGroup.querySelector(".error-message");
   errorMessage.textContent = message;
+  errorMessage.classList.add("visible");
   input.style.border = "2px solid red";
+
+  // Entferne die Fehlermeldung und den roten Rahmen bei Eingabe
+  input.addEventListener("input", () => {
+    clearError(input);
+  });
 }
 
 /**
@@ -207,6 +218,7 @@ function clearError(input) {
   const inputGroup = input.parentElement;
   const errorMessage = inputGroup.querySelector(".error-message");
   errorMessage.textContent = "";
+  errorMessage.classList.remove("visible");
   input.style.border = "2px solid #ccc";
 }
 
@@ -262,31 +274,41 @@ function editContactOverlay(key, users) {
   body.innerHTML = `
       <div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
         <div onclick="stopPropagation(event)" id="edit-contact-overlay">
-          <div id="closeEditOverlay" id="left-edit-contact-column">
+          <div id="left-edit-contact-column" onclick="stopPropagation(event)">
             <button id="closeEditOverlay" onclick="closeEditOverlay()">X</button>
-            <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
             <h1 id="edit-contact-heading">Edit contact</h1>
+            <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
           </div>
           <div id="right-edit-contact-column">
             <div class="new-contact-icon">
               <img src="/assets/img/new-contact-icon.svg"/>
             </div>
             <div id="edit-contact-options">
-              <form action="" class="edit-contact-form">
-                <input required type="text" id="fullName" value="${user.name}" placeholder="${user.name}" />
+              <form id="editContactForm" class="edit-contact-form" onsubmit="return validateAndSubmitForm(event)">
+                <div class="input-group">
+                  <input type="text" id="fullName" value="${user.name}" placeholder="First and second name" />
                   <img class="icon" src="/assets/img/person.svg">
-                <input type="email" id="new-email" value="${user.email}" placeholder="${user.email}" />
+                  <small class="error-message"></small>
+                </div>
+                <div class="input-group">
+                  <input type="email" id="new-email" value="${user.email}" placeholder="E-Mail" />
                   <img class="icon" src="/assets/img/mail.svg">
-                <input type="tel" id="new-phone" value="${user.phone}" placeholder="${user.phone}" />
+                  <small class="error-message"></small>
+                </div>
+                <div class="input-group">
+                  <input type="tel" id="new-phone" value="${user.phone}" placeholder="Phone" />
                   <img class="icon" src="/assets/img/call.svg">
+                  <small class="error-message"></small>
+                </div>
+                <div id="button-area">
+                  <button type="button" onclick="deleteContactFromDatabase('${key}', users)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
+                    Delete
+                  </button>
+                  <button type="submit" class="edit-contacts-overlay-btns">
+                    Save ✓
+                  </button>
+                </div>
               </form>
-              <div id="button-area">
-                <button onclick="deleteContactFromDatabase('${key}', users)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
-                  Delete</button
-                ><button onclick="saveEditedContact('${key}')" class="edit-contacts-overlay-btns">
-                  Save ✓
-                </button>
-              </div>
             </div>
           </div>
         </div>`;

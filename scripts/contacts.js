@@ -1,15 +1,3 @@
-// Wähle alle .contact-list-Elemente aus
-const contactListItems = document.querySelectorAll(".contact-list");
-
-contactListItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    // Entferne die 'active'-Klasse von allen Elementen
-    contactListItems.forEach((el) => el.classList.remove("active"));
-    // Füge die 'active'-Klasse zum angeklickten Element hinzu
-    item.classList.add("active");
-  });
-});
-
 /**
  * @file contacts.js
  * @description This file contains the logic for managing contacts, including rendering contact lists, adding, editing, and deleting contacts, as well as handling UI interactions for mobile and desktop views.
@@ -76,6 +64,7 @@ function renderLeftColumnContacts() {
       lastInitial = initial;
     }
     renderLeftColumnPartTwo(user, indexOfUser, keyObj);
+    makeLeftContactActive();
   });
 }
 
@@ -163,12 +152,25 @@ function hideContactDetails(users) {
   overlayButton.style.display = "none";
 }
 
+function makeLeftContactActive() {
+  const contactListItems = document.querySelectorAll(".contact-list");
+
+  contactListItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      // Entferne die 'active'-Klasse von allen Elementen
+      contactListItems.forEach((el) => el.classList.remove("active"));
+      // Füge die 'active'-Klasse zum angeklickten Element hinzu
+      item.classList.add("active");
+    });
+  });
+}
+
 function renderRightContactArea(name, email, phone, paramKey, users) {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.style.display = "block";
   }
-
+  makeLeftContactActive();
   handleResponsiveView(paramKey, users);
   updateContactDetails(name, email, phone, paramKey, users);
   updateUserDetails(paramKey, users);
