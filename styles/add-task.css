@@ -553,7 +553,7 @@ footer {
   .menu-responsive {
     display: flex;
     align-items: center;
-    gap: 12vw;
+    gap: 8vw;
   }
 
   .menu-button-responsive {
