@@ -390,7 +390,14 @@ input::placeholder {
   border: solid #ddd 1px;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   height: 56px;
+  transition: box-shadow 0.1s ease-in-out;
+
 }
+.prio:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
 
 .prio img {
   height: 10px;
