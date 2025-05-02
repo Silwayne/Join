@@ -111,12 +111,12 @@ function displayAddContactOverlay() {
             <div id="add-contact-options">
               <form id="addContactForm" class="add-contact-form" onsubmit="return validateAndSubmitForm(event)">
                 <div class="input-group">
-                  <input type="text" id="fullName" placeholder="First and second name" />
+                  <input type="text" id="fullName" placeholder="Name" />
                   <img class="icon" src="/assets/img/person.svg">
                   <small class="error-message"></small>
                 </div>
                 <div class="input-group">
-                  <input type="email" id="new-email" placeholder="E-Mail" />
+                  <input id="new-email" placeholder="E-Mail" />
                   <img class="icon" src="/assets/img/mail.svg">
                   <small class="error-message"></small>
                 </div>
@@ -160,7 +160,7 @@ function validateAndSubmitForm(event) {
   const phone = document.getElementById("new-phone");
 
   if (!fullName.value.trim()) {
-    showError(fullName, "Full name is required.");
+    showError(fullName, "Name is required.");
     isValid = false;
   } else {
     clearError(fullName);
@@ -173,7 +173,7 @@ function validateAndSubmitForm(event) {
     clearError(email);
   }
 
-  if (!validatePhone(phone.value.trim())) {
+  if (phone.value.trim() && !validatePhone(phone.value.trim())) {
     showError(phone, "Please enter a valid phone number.");
     isValid = false;
   } else {
@@ -269,12 +269,12 @@ function editContactOverlay(key, users) {
             <div id="edit-contact-options">
               <form id="editContactForm" data-key="${key}" class="edit-contact-form" onsubmit="return validateAndSubmitForm(event)">
                 <div class="input-group">
-                  <input type="text" id="fullName" value="${user.name}" placeholder="First and second name" />
+                  <input type="text" id="fullName" value="${user.name}" placeholder="Name" />
                   <img class="icon" src="/assets/img/person.svg">
                   <small class="error-message"></small>
                 </div>
                 <div class="input-group">
-                  <input type="email" id="new-email" value="${user.email}" placeholder="E-Mail" />
+                  <input id="new-email" value="${user.email}" placeholder="E-Mail" />
                   <img class="icon" src="/assets/img/mail.svg">
                   <small class="error-message"></small>
                 </div>

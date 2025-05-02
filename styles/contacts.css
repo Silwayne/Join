@@ -75,7 +75,9 @@ h2 {
   display: flex;
   flex-direction: row;
   margin-top: 10px;
-  max-height: calc(100vh - 100px);
+  margin-bottom: 80px;
+  height: 100%;
+  overflow: hidden;
 }
 
 #contacts-header {
@@ -92,9 +94,9 @@ h2 {
 #left-contacts-page-column {
   display: block;
   padding-left: 50px;
-  width: 550px;
+  width: 900px;
   background-color: white;
-  height: calc(100vh - 110px);
+  height: 100%;
 }
 
 #left-contact-list {

@@ -54,9 +54,11 @@ function contactsuccessfullyEditedNotification() {
 function contactsuccessfullyDeletedNotification() {
   let displayArea = document.getElementById("contact-details-area");
   displayArea.innerHTML = `<div class="success-notifications" id="success-notification">Contact was successfully deleted.</div>`;
-  // setTimeout(function () {
-  //   window.location.reload();
-  // }, 2000);
+  if (window.innerWidth < 1250) {
+    setTimeout(function () {
+      window.location.reload();
+    }, 2000);
+  }
 }
 
 /**

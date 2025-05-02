@@ -1,8 +1,4 @@
 @media (max-width: 1250px) {
-  #contact-div {
-    overflow: auto;
-  }
-
   .success-notifications {
     margin-left: 10px;
     margin-right: 10px;
@@ -28,7 +24,6 @@
 
   #left-contacts-page-column {
     width: 100vw;
-    margin-bottom: 150px;
   }
 
   #sidbar {
@@ -151,7 +146,7 @@
   }
 
   .add-contact-form {
-    gap: 3px;
+    gap: 40px;
   }
 
   #right-add-contact-column {
@@ -174,7 +169,7 @@
 
   #add-contact-options {
     padding-left: 0 !important;
-    margin-top: 50px;
+    margin-top: 10px;
     width: 80% !important;
   }
 
@@ -341,8 +336,12 @@
   }
 
   #add-contact-header-area {
-    margin-top: 5vh;
-    margin-bottom: 10vh;
+    margin-top: 10px;
+    margin-bottom: 60px;
+  }
+
+  #left-add-contact-column > div:nth-child(2) {
+    margin-top: 10px;
   }
 
   #contact-details-area {
@@ -366,7 +365,7 @@
 @media (max-width: 600px) {
   #left-contacts-page-column {
     padding: 0;
-    height: 100vh;
+    height: 100%;
   }
 
   #edit-contact-heading {
@@ -398,7 +397,7 @@
   }
 
   #left-add-contact-column {
-    height: 25vh;
+    height: auto;
   }
 
   .user-name-header {
