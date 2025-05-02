@@ -67,20 +67,18 @@
   }
 
   .menu-button-design-responsive {
-    width: 10vw;
+    width: 12vw;
     gap: 8px;
     border-radius: 15px;
-    padding: 5px 0;
+    padding: 10px;
   }
 
   .menu-button-design-responsive:hover {
-    width: 70px;
     cursor: pointer;
     background-color: #091931;
   }
 
   .active-button {
-    width: 70px;
     background-color: #091931 !important;
     border-radius: 10px !important;
   }

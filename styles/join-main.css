@@ -217,7 +217,6 @@ a:hover {
 }
 
 .active-button {
-  width: 100%;
   background-color: #091931; 
   border-radius: 10px;
 }
