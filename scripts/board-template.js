@@ -168,7 +168,7 @@ function generateTaskBoxContent(task) {
         <div><p class="task-title-p">${task.title}</p></div>
             <div class="description-div"><p class="description-p">${task.description
     }</p></div>
-            <div><p class="due-date">Due date: ${task.date}</p></div>
+            <div class="overlay-date"><p class="due-date">Due date: ${task.date}</p></div>
                 <div class="priority-div"><p class="priority">Priority:   ${task.priority
     } </p>${img}</div>
                 <div><p>${contactsOverlayContent(task)}</p></div>
@@ -238,7 +238,7 @@ function editOverlay(id) {
 
         <div>
             <p>Date</p>
-            <input type="date" value="${date}" class="overlay-input-date">
+            <input type="date" value="${date}" id="edit-date" class="overlay-input-date">
         </div>
             <div>
     <p>Prio</p>
@@ -278,7 +278,6 @@ function editOverlay(id) {
     </span>
   </div>
   </div>
-  <div id="subtask-error_${id}" class="error-message d_none">Max. 2 Subtasks erlaubt</div>
 <div id="subtasks_${id}" class="subtask-list">
   ${getSubtaskHTML(id, subtasks)}
 </div>
@@ -289,7 +288,22 @@ function editOverlay(id) {
   renderAssignedContacts(id);
   updateIcons(id);
   setupSubtaskEnterKeyEdit(id)
+  editDate(date)
+  hideDropDownContacts()
+  
 }
+function hideDropDownContacts() {
+  setTimeout(() => {
+    document.getElementById('outer-task-overlay')?.addEventListener('click', closeOverlay, { once: true });
+  }, 0);
+}
+
+function editDate(date){
+    const formatted = new Date(date).toISOString().split("T")[0];
+    document.getElementById("edit-date").min = formatted;
+}
+
+
 
 function handlePriority(id) {
   let html = "" 
@@ -382,6 +396,7 @@ function getSubtaskHTML(taskId, subtasks) {
             <img class="dot" src="/assets/img/Subtasks icons11.svg">
             ${subtask.title}
           </div>
+                      <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${subtask.title}')">
           <div class="subtask-trash-img">
             <img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
           </div>

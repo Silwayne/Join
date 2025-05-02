@@ -18,7 +18,7 @@ let overlayContacts = [];
 let names = [];
 
 function minDateOfToday(){
-    const today = new Date().toISOString().split("T")[0];
+    let today = new Date().toISOString().split("T")[0];
     document.getElementById("due-date").min = today;
 }
 /**
@@ -435,7 +435,54 @@ function showContacts(id) {
     `;
 
     dropDownMenu.classList.remove('d_none');
+    addContactCloser(id)
+      
 }
+function addContactCloser(id) {
+    setTimeout(() => {
+      let taskId = id !== 'contact-container' ? '_' + id : '';
+  
+      let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
+      let arrow = document.getElementById('arrow-drop-down' + taskId);
+      let inputContainer = document.getElementById('contact-container' + taskId);
+  
+      let clickOutsideHandler = function (e) {
+        console.log('Click detected on:', e.target);
+  
+        if (!dropDownMenu?.contains(e.target)) {
+          console.log('Outside dropdownMenu');
+        } else {
+          console.log('Inside dropdownMenu');
+        }
+  
+        if (!arrow?.contains(e.target)) {
+          console.log('Outside arrow');
+        } else {
+          console.log('Inside arrow');
+        }
+  
+        if (!inputContainer?.contains(e.target)) {
+          console.log('Outside inputContainer');
+        } else {
+          console.log('Inside inputContainer');
+        }
+  
+        if (
+          dropDownMenu && !dropDownMenu.contains(e.target) &&
+          arrow && !arrow.contains(e.target) &&
+          inputContainer && !inputContainer.contains(e.target)
+        ) {
+          console.log('Calling hideContacts()...');
+          hideContacts(e, id);
+          document.removeEventListener('pointerdown', clickOutsideHandler);
+        } else {
+          console.log('Click was inside allowed area. Not closing.');
+        }
+      };
+        document.addEventListener('pointerdown', clickOutsideHandler);
+    }, 0);
+  }
+  
 
 /**
  * Hides the contact dropdown menu.

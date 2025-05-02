@@ -50,6 +50,9 @@ function initHTML(content) {
             </div>
         </div>
 <div class="custom-select">
+<div>
+            <p>Category<span class="red">*</span></p>
+        </div>
     <select id="category" name="category" required>
         <option value="">Select task category</option>
         <option value="Technical Task">Technical Task</option>

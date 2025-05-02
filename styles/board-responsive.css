@@ -214,6 +214,12 @@
 }
 
 @media (max-width: 500px) {
+  #task-content{
+    padding: 20px 16px;
+  }
+  #add-task-overlay{
+    width: 75% !important;
+  }
   .responsive-button-board-div h1 {
     font-size: 45px;
     margin-left: 20px;

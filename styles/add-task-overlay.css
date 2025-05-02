@@ -57,7 +57,38 @@ body {
   margin-left: 108px;
   color: black;
 }
+.overlay-subtasks{
+  max-height: 250px;
+  overflow-y: auto;
+}
+.overlay-subtasks::-webkit-scrollbar {
+  width: 6px;
+}
 
+.overlay-subtasks::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overlay-subtasks::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+.subtask-list{
+  max-height: 150px;
+  overflow-y: auto;
+}
+.subtask-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.subtask-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.subtask-list::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
 .border {
   background-color: #d1d1d1;
   width: 1px;
@@ -481,7 +512,6 @@ footer {
   .display-splitter {
     display: flex;
     flex-direction: column;
-    margin-bottom: 40px;
   }
 
   .border {
@@ -525,31 +555,47 @@ footer {
   .dropdown-menu {
     width: 90%;
   }
+
   .fiel-Is-Required-Div {
     display: none;
   }
-}
-@media (max-width: 1000px) {
-  #add-task-overlay {
-    width: 90%;
-    padding: 5%;
+
+  .contact-container {
+    padding-bottom: 175px;
   }
 }
-@media (max-width: 650px) {
-  .add-task-h1 {
-    font-size: 40px;
-  }
-  
-  .bottom-add-task-overlay-section {
-    padding: 0;
-  }
-  #description-input {
-    max-width: 100% !important;
-    min-width: 100% !important;
+
+  @media (max-width: 1000px) {
+    #add-task-overlay {
+      width: 90%;
+      padding: 5%;
+    }
+
+    .dropdown-menu {
+      width: 80%;
+    }
   }
 
-  .bottom-add-task-overlay-section {
-    padding-bottom: 75px !important;
-    padding-top: 25px !important;
+  @media (max-width: 650px) {
+    .add-task-h1 {
+      font-size: 40px;
+    }
+
+    .dropdown-menu {
+      width: 80% !important;
+    }
+
+    .bottom-add-task-overlay-section {
+      padding: 0;
+    }
+
+    #description-input {
+      max-width: 100% !important;
+      min-width: 100% !important;
+    }
+
+    .bottom-add-task-overlay-section {
+      padding-bottom: 75px !important;
+      padding-top: 25px !important;
+    }
   }
-}
