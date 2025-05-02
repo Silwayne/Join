@@ -796,17 +796,7 @@ footer {
     position: relative;
   }
 
-  .left-section,
-  .right-section,
-  .add-task-title,
-  .input-container,
-  input,
-  textarea,
-  select,
-  .prio,
-  .dropdown-menu,
-  .subtasks,
-  #description-input {
+  .prio {
     width: 100% !important;
     max-width: 100% !important;
     box-sizing: border-box;

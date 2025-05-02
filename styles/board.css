@@ -17,6 +17,17 @@ h1 {
   align-items: end;
 }
 
+.no-box {
+  width: 246px;
+  height: 48px;
+  border: 1px dashed #a8a8a8;
+  border-radius: 10px;
+  background-color: #e7e7e7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .headline {
   padding-left: 232px;
 }
@@ -277,16 +288,12 @@ button {
 }
 
 .no-tasks-container {
-  width: 246px;
-  height: 48px;
   margin-top: 24px;
-
-  border: 1px dashed #a8a8a8;
+  height: 65vh;
   border-radius: 10px;
-  background-color: #e7e7e7;
 
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: center;
 }
 

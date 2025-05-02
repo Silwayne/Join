@@ -23,13 +23,13 @@ async function updateBoardHTML() {
       }
     } else {
       if (status === "todo") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks to do</p>`;
+        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks to do</p></div>`;
       } else if (status === "inprogress") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks in progress</p>`;
+        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks in progress</p></div>`;
       } else if (status === "await") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks to await</p>`;
+        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks to await</p></div>`;
       } else if (status === "done") {
-        taskDiv.innerHTML = `<p class="no-tasks-text">No tasks done</p>`;
+        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks done</p></div>`;
       }
 
       taskDiv.classList.add("no-tasks-container");
@@ -228,12 +228,12 @@ function editOverlay(id) {
           </div>
         <div>
             <p>Title</p>
-            <input value="${title}" class="overlay-input-title">
+            <input maxlength="20" value="${title}" class="overlay-input-title">
         </div>
 
         <div>
             <p>Description</p>
-            <textarea class="overlay-input-description">${description}</textarea>
+            <textarea maxlength="250" class="overlay-input-description">${description}</textarea>
         </div>
 
         <div>
@@ -265,7 +265,7 @@ function editOverlay(id) {
         </div>
 
      <div id="subtask-container_${id}" class="input-container subtask-container-edit">
-  <input type="text" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
+  <input type="text" maxlength="30" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
   <div class="icons">
     <span id="plusIcon_${id}" class="icon">
       <img src="/assets/img/Subtasks icons11.svg">

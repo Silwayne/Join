@@ -12,11 +12,11 @@ function initHTML(content) {
     <section class="left-section">
         <div class="add-task-title">
             <p>Title<span class="red title-p">*</span></p>
-            <input id="add-task-title" type="text" placeholder="Enter a title">
+            <input id="add-task-title" type="text" maxlength="20" placeholder="Enter a title">
         </div>
         <div>
             <p>Description</p>
-            <textarea id="description-input" type="text" placeholder="Enter a Description"></textarea>
+            <textarea maxlength="250" id="description-input" type="text" placeholder="Enter a Description"></textarea>
         </div>
         
         <div class="assigned-div">
@@ -66,7 +66,7 @@ function initHTML(content) {
 
         <div>
         <div id="subtask-container" class="input-container">
-            <input type="text" id="subtaskInput" placeholder="Add new subtask" oninput="updateIcons()">
+            <input type="text" id="subtaskInput" maxlength="30" placeholder="Add new subtask" oninput="updateIcons()">
             <div class="icons">
                 <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
                 <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()" src="/assets/img/close.svg"></span>

@@ -162,6 +162,7 @@ function editSubTask(subId, value) {
 
     let input = document.createElement('input');
     input.type = 'text';
+    input.maxLength = '30'
     input.className = 'subtask-edit-input';
     input.value = oldText;
 
