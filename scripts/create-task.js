@@ -7,7 +7,6 @@ async function createTask() {
   let isValid = checkValidations();
   if (isValid) {
     getTaskData();
-    clearTaskForm();
     const success = document.getElementById('success');
     const successBoard = document.getElementById('success-board');
 
@@ -33,6 +32,9 @@ async function createTask() {
     if (typeof updateBoardHTML === "function") {
       await updateBoardHTML();
       removeAddTask();       
+    }
+    else{
+      window.location.href = "board.html"; 
     }      
   }
 }

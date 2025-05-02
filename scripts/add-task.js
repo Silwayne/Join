@@ -7,8 +7,9 @@ function init(content) {
     renderSidebar();
     initHTML(content);
     renderHeader();
+    minDateOfToday()
 }
-
+let subtaskCounter = 0
 let countContactsID = 0;
 let counter = 0;
 let contactColors = {};
@@ -16,10 +17,16 @@ let priority = 'Medium';
 let overlayContacts = [];
 let names = [];
 
+function minDateOfToday(){
+    const today = new Date().toISOString().split("T")[0];
+    document.getElementById("due-date").min = today;
+}
 /**
  * Updates the visibility of icons (plus, check, cancel) based on the input value.
  * @param {string|number} taskId - The ID of the task or subtask.
  */
+
+
 function updateIcons(taskId) {
     let id = '';
     if (taskId === 0 || taskId) {
@@ -67,25 +74,18 @@ function addSubTaskInput(taskId) {
     let id = formatSubtaskId(taskId);
     let input = document.getElementById('subtaskInput' + id);
     let list = document.getElementById('subtasks' + id);
-    let errorMsg = document.getElementById('subtask-error' + id);
     let container = document.getElementById('subtask-container' + id);
 
-    if (!input || !list || !errorMsg || !container) return;
+    if (!input || !list || !container) return;
 
     let value = input.value.trim();
     if (!value) return;
-
-    if (isSubtaskLimitReached(list)) {
-        showSubtaskLimitError(container, errorMsg);
-        return;
-    }
-
-    hideSubtaskError(container, errorMsg);
     let subtaskId = generateUniqueSubtaskId();
     let subtaskHTML = createSubtaskHTML(subtaskId, value, taskId);
 
     let li = document.createElement('div');
     li.id = subtaskId;
+    li.className = "subtask-entry";
     li.innerHTML = subtaskHTML;
     list.appendChild(li);
     list.classList.remove('d_none');
@@ -109,42 +109,25 @@ function formatSubtaskId(taskId) {
  * @param {HTMLElement} list - The list element containing subtasks.
  * @returns {boolean} - True if the limit is reached, otherwise false.
  */
-function isSubtaskLimitReached(list) {
-    return list.children.length >= 2;
-}
 
 /**
  * Displays an error message when the subtask limit is reached.
  * @param {HTMLElement} container - The container element for the subtask input.
- * @param {HTMLElement} errorMsg - The error message element.
  */
-function showSubtaskLimitError(container, errorMsg) {
-    container.classList.add('input-error');
-    errorMsg.classList.remove('d_none');
-}
+
 
 /**
  * Hides the subtask error message and resets the container state.
  * @param {HTMLElement} container - The container element for the subtask input.
- * @param {HTMLElement} errorMsg - The error message element.
  */
-function hideSubtaskError(container, errorMsg) {
-    container.classList.remove('input-error');
-    errorMsg.classList.add('d_none');
-    container.classList.remove('d_none');
-}
 
 /**
  * Generates a unique ID for a new subtask.
  * @returns {string} - The unique subtask ID.
  */
 function generateUniqueSubtaskId() {
-    let i = 0;
-    while (document.getElementById('task_' + i)) {
-        i++;
-    }
-    return 'task_' + i;
-}
+    return 'task_' + (subtaskCounter++);
+  }
 
 /**
  * Deletes a subtask from the task list.
@@ -158,54 +141,77 @@ function deleteSubTask(subtaskId, taskId) {
     if (taskId === 0 || taskId) {
         id = '_' + taskId;
     }
-    let list = document.getElementById('subtasks' + id);
-    let container = document.getElementById('subtask-container' + id);
-    let errorMsg = document.getElementById('subtask-error' + id);
 
-    if (list && list.children.length < 2) {
-        container.classList.remove('input-error');
-        errorMsg.classList.add('d_none');
-    }
 }
 
 /**
  * Edits an existing subtask by replacing its content with an input field.
  * @param {number} taskIdNumber - The ID of the subtask to edit.
  */
-function editSubTask(taskIdNumber) {
-    let taskItem = document.getElementById('task_' + taskIdNumber);
-    let inputField = document.createElement("input");
-    inputField.type = "text";
-    inputField.value = taskItem.textContent.trim();
-    let parentUl = taskItem.parentElement;
-    parentUl.style.listStyleType = "none";
+function editSubTask(subId, value) {
+    let taskItem = document.getElementById(subId);
+    if (!taskItem) return;
+
+    let oldText = value
+
     taskItem.innerHTML = "";
-    taskItem.appendChild(inputField);
-    document.getElementById('imgID_' + taskIdNumber).src = "/assets/img/check.svg";
-    document.getElementById('imgID_' + taskIdNumber).onclick = function () { saveSubTask(inputField, taskIdNumber) };
-    inputField.addEventListener("blur", function () {
-        saveSubTask(inputField, taskIdNumber);
-    });
+    taskItem.className = 'subtask-edit-wrapper';
+
+    let wrapper = document.createElement('div');
+    wrapper.className = 'subtask-edit-input-wrapper';
+
+    let input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'subtask-edit-input';
+    input.value = oldText;
+
+    let checkImg = document.createElement('img');
+    checkImg.src = "/assets/img/check.svg"
+    checkImg.className = 'subtask-icon check';
+    checkImg.onclick = function () {
+        saveSubTask(input.value, subId);
+    };
+
+    let cancelImg = document.createElement('img');
+    cancelImg.src = '/assets/img/delete.svg';
+    cancelImg.className = 'subtask-icon cancel';
+    cancelImg.onclick = function () {
+        deleteSubTask(subId);
+    };
+
+    wrapper.appendChild(input);
+    wrapper.appendChild(checkImg);
+    wrapper.appendChild(cancelImg);
+    taskItem.appendChild(wrapper);
+
+    input.focus();
 }
+
+
+
 
 /**
  * Saves the updated content of a subtask.
  * @param {HTMLInputElement} inputField - The input field containing the updated subtask content.
  * @param {number} taskIdNumber - The ID of the subtask to save.
  */
-function saveSubTask(inputField, taskIdNumber) {
-    let updatedText = inputField.value.trim();
-    let taskItem = document.getElementById('task_' + taskIdNumber);
-    if (updatedText !== "") {
-        taskItem.innerHTML = updatedText;
-    } else {
-        deleteSubTask(taskIdNumber);
-    }
-    let parentUl = taskItem.parentElement;
-    parentUl.style.listStyleType = "disc";
-    document.getElementById('imgID_' + taskIdNumber).src = "/assets/img/edit.svg";
-    document.getElementById('imgID_' + taskIdNumber).onclick = function () { editSubTask(taskIdNumber) };
+function saveSubTask(value, subId) {
+    let taskItem = document.getElementById(subId);
+    taskItem.className = 'subtask-item';
+
+    taskItem.innerHTML = `
+        <div class="subtask-value">
+            <img class="dot" src="/assets/img/Subtasks icons11.svg">
+            <span class="subtask-title">${value}</span>
+        </div>
+        <div class="subtask-icons">
+            <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
+            <img class="subtask-trash-img" src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}')">
+        </div>
+    `;
 }
+
+
 
 /**
  * Sets the priority of a task to "Urgent".
@@ -529,4 +535,3 @@ function checkValidations() {
     }
     return isValid;
 }
-

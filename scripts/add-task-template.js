@@ -33,7 +33,7 @@ function initHTML(content) {
     <section class="right-section">
         <div class="date-div">
             <p for="due-date">Due date<span class="red">*</span></p>
-            <input type="date" id="due-date" placeholder="Hallo" required>
+            <input type="date" id="due-date" required>
         </div>
         <div>
             <p>Prio</p>
@@ -49,14 +49,17 @@ function initHTML(content) {
                 </div>
             </div>
         </div>
-        <div class="category-div">
-            <p for="category">Category<span class="red">*</span></p>
-            <select id="category" name="category" required>
-                <option value="">Select task category</option>
-                <option value="Technical Task">Technical Task</option>
-                <option value="User Story">User Story</option>
-            </select>
-        </div>
+<div class="custom-select">
+    <select id="category" name="category" required>
+        <option value="">Select task category</option>
+        <option value="Technical Task">Technical Task</option>
+        <option value="User Story">User Story</option>
+    </select>
+    <span class="arrow-category-hover">
+    <img src="/assets/img/arrow_drop_down.svg" id="category-arrow" alt="Dropdown Icon">
+    </span>
+</div>
+
 
         <div>
         <div id="subtask-container" class="input-container">
@@ -70,8 +73,6 @@ function initHTML(content) {
 
            
     </div> <div class="d_none subtasks" id="subtasks"></div>
-                          <div id="subtask-error" class="error-message d_none absolute">Max. 2 Subtasks erlaubt</div>
-
     </section>
     </div>
 
@@ -98,19 +99,21 @@ setupSubtaskEnterKey();
  * @param {string} taskId - The ID of the task the subtask belongs to.
  * @returns {string} - The HTML string for the subtask item.
  */
-function createSubtaskHTML(subId, value, taskId) {
+function createSubtaskHTML(subId, value, taskId) {    
     return `
     <div class="subtask-item">
         <div class="subtask-value">
             <img class="dot" src="/assets/img/Subtasks icons11.svg">
             ${value}
         </div>
-        <div class="subtask-trash-img">
-            <img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
+        <div class="subtask-icons">
+            <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
+            <img class= "subtask-trash-img"src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
         </div>
     </div>
     `;
 }
+
 
 
 function contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials,bgColor, fontColor, checkboxImage){
