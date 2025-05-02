@@ -1,15 +1,3 @@
-// Wähle alle .contact-list-Elemente aus
-const contactListItems = document.querySelectorAll(".contact-list");
-
-contactListItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    // Entferne die 'active'-Klasse von allen Elementen
-    contactListItems.forEach((el) => el.classList.remove("active"));
-    // Füge die 'active'-Klasse zum angeklickten Element hinzu
-    item.classList.add("active");
-  });
-});
-
 /**
  * @file contacts.js
  * @description This file contains the logic for managing contacts, including rendering contact lists, adding, editing, and deleting contacts, as well as handling UI interactions for mobile and desktop views.
@@ -76,6 +64,7 @@ function renderLeftColumnContacts() {
       lastInitial = initial;
     }
     renderLeftColumnPartTwo(user, indexOfUser, keyObj);
+    makeLeftContactActive();
   });
 }
 
@@ -163,12 +152,25 @@ function hideContactDetails(users) {
   overlayButton.style.display = "none";
 }
 
+function makeLeftContactActive() {
+  const contactListItems = document.querySelectorAll(".contact-list");
+
+  contactListItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      // Entferne die 'active'-Klasse von allen Elementen
+      contactListItems.forEach((el) => el.classList.remove("active"));
+      // Füge die 'active'-Klasse zum angeklickten Element hinzu
+      item.classList.add("active");
+    });
+  });
+}
+
 function renderRightContactArea(name, email, phone, paramKey, users) {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
     overlayButton.style.display = "block";
   }
-
+  makeLeftContactActive();
   handleResponsiveView(paramKey, users);
   updateContactDetails(name, email, phone, paramKey, users);
   updateUserDetails(paramKey, users);
@@ -367,59 +369,18 @@ async function saveEditedContact(key) {
 
   try {
     await fetch(firebaseURL, {
-      method: "PATCH",
+      method: "PATCH", // PATCH wird verwendet, um bestehende Daten zu aktualisieren
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, phone }),
     });
 
     closeEditOverlay();
     contactsuccessfullyEditedNotification();
-    contactFirebase();
+    contactFirebase(); // Kontakte neu laden
   } catch (error) {
     console.error("Error updating contact:", error);
-    alert("An error occurred while saving the contact. Please try again.");
   }
 }
-
-function mobileEditOptions(paramKey, users) {
-  if (!paramKey || !users || !users[paramKey]) {
-    console.error("Invalid paramKey or users data");
-    alert("The selected contact could not be found. Please try again.");
-    return;
-  }
-
-  let buttonOverlayArea = document.getElementById("button-overlay-area");
-  if (buttonOverlayArea) {
-    buttonOverlayArea.remove();
-  }
-  if (!buttonOverlayArea) {
-    console.error("Button overlay area not found");
-    return;
-  }
-
-  let mobileOverlayButton = document.getElementById("overlayButton");
-  mobileOverlayButton.style.display = "none !important";
-  mobileOverlayButton.remove();
-
-  // Entferne vorherige Overlays, falls vorhanden
-  let existingOverlay = document.getElementById("mobileEditOptions");
-  if (existingOverlay) {
-    existingOverlay.remove();
-  }
-}
-
-// // Füge das Overlay hinzu
-// buttonOverlayArea.innerHTML = `
-//     <div onclick="closeResponsiveOverlay('${paramKey}')" class="mobileOverlay" id="mobileEditOptions">
-//       <div id="small-responsive-overlay-options">
-//         <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
-//           <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit
-//         </button>
-//         <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${paramKey}', users)">
-//           <img id="trash-icon" src="/assets/img/trash-icon.svg">Delete
-//         </button>
-//       </div>
-//     </div>`;
 
 // Entferne den Overlay-Button, um doppelte Klicks zu vermeiden
 let overlayButton = document.getElementById("overlayButton");

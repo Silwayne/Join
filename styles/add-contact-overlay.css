@@ -1,3 +1,7 @@
+#contact-page-area {
+  overflow-y: auto;
+}
+
 #outer-add-contact-overlay {
   display: flex;
   justify-content: center;
@@ -12,13 +16,14 @@
 #add-contact-overlay {
   background-color: #2a3647;
   height: 50vh;
+  max-height: 600px;
+  width: 70%;
   max-width: 1200px !important;
   border-radius: 30px;
   display: flex;
   position: absolute;
   justify-content: center;
   align-items: center;
-  width: 70%;
   margin-left: -232px;
 }
 
@@ -55,7 +60,7 @@
 .add-contact-form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 40px;
 }
 
 input {
@@ -121,6 +126,7 @@ input {
 #edit-contact-overlay {
   background-color: #2a3647;
   height: 50vh;
+  max-height: 600px;
   border-radius: 30px;
   display: flex;
   position: absolute;
@@ -154,7 +160,7 @@ input {
 .edit-contact-form {
   display: flex;
   flex-direction: column;
-  gap: 50px;
+  gap: 40px;
 }
 
 .edit-contacts-overlay-btns {
@@ -185,6 +191,10 @@ input {
 }
 
 @media (max-width: 1250px) {
+  .edit-contact-form {
+    gap: 20px;
+  }
+
   #add-contact-heading {
     font-size: 47px;
   }
@@ -199,7 +209,7 @@ input {
 
   #add-contact-overlay {
     width: 90% !important;
-    height: 90vh;
+    height: auto;
     margin-bottom: 100px !important;
   }
 
@@ -218,5 +228,12 @@ input {
 
   #edit-contact-overlay {
     width: 60% !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #add-contact-overlay {
+    margin-bottom: 100px !important;
+    padding-bottom: 0 !important;
   }
 }

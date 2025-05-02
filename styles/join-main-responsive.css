@@ -53,7 +53,7 @@
   .menu-responsive {
     display: flex;
     align-items: center;
-    gap: 15vw;
+    gap: 10vw;
   }
 
   .menu-button-responsive {
@@ -67,25 +67,27 @@
   }
 
   .menu-button-design-responsive {
-    width: 12vw;
+    width: 10vw;
     gap: 8px;
     border-radius: 15px;
     padding: 5px 0;
   }
 
   .menu-button-design-responsive:hover {
+    width: 70px;
     cursor: pointer;
     background-color: #091931;
   }
 
   .active-button {
-    background-color: #091931; /* dunklere Farbe */
-    border-radius: 10px;
+    width: 70px;
+    background-color: #091931 !important;
+    border-radius: 10px !important;
   }
 
   .font-size-responsive {
     font-family: "Inter", sans-serif;
-    font-size: 2vw;
+    font-size: 14px;
     font-weight: 400;
     white-space: nowrap;
   }

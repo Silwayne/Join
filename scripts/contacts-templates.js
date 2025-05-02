@@ -149,13 +149,16 @@ function displayAddContactOverlay() {
 function validateAndSubmitForm(event) {
   event.preventDefault();
 
+  const formId = event.target.id;
+  const key = event.target.getAttribute("data-key"); // Schlüssel aus dem Formular holen
+
+  let isValid = true;
+
+  // Validierung der Eingabefelder
   const fullName = document.getElementById("fullName");
   const email = document.getElementById("new-email");
   const phone = document.getElementById("new-phone");
 
-  let isValid = true;
-
-  // Validate full name
   if (!fullName.value.trim()) {
     showError(fullName, "Full name is required.");
     isValid = false;
@@ -163,7 +166,6 @@ function validateAndSubmitForm(event) {
     clearError(fullName);
   }
 
-  // Validate email
   if (!validateEmail(email.value.trim())) {
     showError(email, "Please enter a valid email address.");
     isValid = false;
@@ -171,7 +173,6 @@ function validateAndSubmitForm(event) {
     clearError(email);
   }
 
-  // Validate phone
   if (!validatePhone(phone.value.trim())) {
     showError(phone, "Please enter a valid phone number.");
     isValid = false;
@@ -179,9 +180,13 @@ function validateAndSubmitForm(event) {
     clearError(phone);
   }
 
-  // If all inputs are valid, submit the form
+  // Wenn die Eingaben gültig sind, Aktion ausführen
   if (isValid) {
-    addContactToDatabase(event);
+    if (formId === "addContactForm") {
+      addContactToDatabase(event);
+    } else if (formId === "editContactForm") {
+      saveEditedContact(key); // Schlüssel an die Funktion übergeben
+    }
   }
 
   return false;
@@ -196,7 +201,13 @@ function showError(input, message) {
   const inputGroup = input.parentElement;
   const errorMessage = inputGroup.querySelector(".error-message");
   errorMessage.textContent = message;
+  errorMessage.classList.add("visible");
   input.style.border = "2px solid red";
+
+  // Entferne die Fehlermeldung und den roten Rahmen bei Eingabe
+  input.addEventListener("input", () => {
+    clearError(input);
+  });
 }
 
 /**
@@ -207,6 +218,7 @@ function clearError(input) {
   const inputGroup = input.parentElement;
   const errorMessage = inputGroup.querySelector(".error-message");
   errorMessage.textContent = "";
+  errorMessage.classList.remove("visible");
   input.style.border = "2px solid #ccc";
 }
 
@@ -237,24 +249,7 @@ function validatePhone(phone) {
  * @param {Object} users - The list of all users.
  */
 function editContactOverlay(key, users) {
-  if (!key) {
-    alert("The selected contact could not be found. Please try again.");
-    console.error("Key is undefined or invalid");
-    return;
-  }
-
-  if (!users || Object.keys(users).length === 0) {
-    console.error("Users data not loaded yet");
-    alert("User data is not available. Please try again later.");
-    return;
-  }
-
   let user = users[key];
-  if (!user) {
-    alert("The selected contact could not be found. Please try again.");
-    console.error("User not found for key:", key);
-    return;
-  }
 
   let realBody = document.getElementById("body");
   realBody.style.overflow = "hidden";
@@ -262,31 +257,41 @@ function editContactOverlay(key, users) {
   body.innerHTML = `
       <div onclick="closeEditOverlay()" id="outer-edit-contact-overlay">
         <div onclick="stopPropagation(event)" id="edit-contact-overlay">
-          <div id="closeEditOverlay" id="left-edit-contact-column">
+          <div id="left-edit-contact-column" onclick="stopPropagation(event)">
             <button id="closeEditOverlay" onclick="closeEditOverlay()">X</button>
-            <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
             <h1 id="edit-contact-heading">Edit contact</h1>
+            <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
           </div>
           <div id="right-edit-contact-column">
             <div class="new-contact-icon">
               <img src="/assets/img/new-contact-icon.svg"/>
             </div>
             <div id="edit-contact-options">
-              <form action="" class="edit-contact-form">
-                <input required type="text" id="fullName" value="${user.name}" placeholder="${user.name}" />
+              <form id="editContactForm" data-key="${key}" class="edit-contact-form" onsubmit="return validateAndSubmitForm(event)">
+                <div class="input-group">
+                  <input type="text" id="fullName" value="${user.name}" placeholder="First and second name" />
                   <img class="icon" src="/assets/img/person.svg">
-                <input type="email" id="new-email" value="${user.email}" placeholder="${user.email}" />
+                  <small class="error-message"></small>
+                </div>
+                <div class="input-group">
+                  <input type="email" id="new-email" value="${user.email}" placeholder="E-Mail" />
                   <img class="icon" src="/assets/img/mail.svg">
-                <input type="tel" id="new-phone" value="${user.phone}" placeholder="${user.phone}" />
+                  <small class="error-message"></small>
+                </div>
+                <div class="input-group">
+                  <input type="tel" id="new-phone" value="${user.phone}" placeholder="Phone" />
                   <img class="icon" src="/assets/img/call.svg">
+                  <small class="error-message"></small>
+                </div>
+                <div id="button-area">
+                  <button type="button" onclick="deleteContactFromDatabase('${key}', users)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
+                    Delete
+                  </button>
+                  <button type="submit" class="edit-contacts-overlay-btns">
+                    Save ✓
+                  </button>
+                </div>
               </form>
-              <div id="button-area">
-                <button onclick="deleteContactFromDatabase('${key}', users)" id="cancel-edit-contact" class="edit-contacts-overlay-btns">
-                  Delete</button
-                ><button onclick="saveEditedContact('${key}')" class="edit-contacts-overlay-btns">
-                  Save ✓
-                </button>
-              </div>
             </div>
           </div>
         </div>`;
@@ -301,7 +306,6 @@ function editContactOverlay(key, users) {
 function mobileEditOptions(paramKey, users) {
   if (!paramKey || !users || !users[paramKey]) {
     console.error("Invalid paramKey or users data");
-    alert("The selected contact could not be found. Please try again.");
     return;
   }
 
@@ -310,6 +314,9 @@ function mobileEditOptions(paramKey, users) {
     console.error("Button overlay area not found");
     return;
   }
+
+  let mobileOverlayButton = document.getElementById("overlayButton");
+  mobileOverlayButton.remove();
 
   // Entferne vorherige Overlays, falls vorhanden
   let existingOverlay = document.getElementById("mobileEditOptions");

@@ -1,4 +1,22 @@
 @media (max-width: 1250px) {
+  #contact-div {
+    overflow: auto;
+  }
+
+  .success-notifications {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 90%;
+  }
+
+  .add-contact-btn {
+    margin-top: 60px;
+  }
+
+  #editContactForm > div:nth-child(3) > img {
+    margin-top: -50px;
+  }
+
   h3 {
     padding-left: 10px !important;
   }
@@ -10,7 +28,7 @@
 
   #left-contacts-page-column {
     width: 100vw;
-    padding-bottom: 0;
+    margin-bottom: 150px;
   }
 
   #sidbar {
@@ -24,6 +42,7 @@
   .user-picture-big {
     width: 80px;
     height: 80px;
+    aspect-ratio: 1/1;
     font-size: 27px;
   }
 
@@ -61,10 +80,12 @@
 
   #left-edit-contact-column {
     display: flex;
-    align-items: start;
-    padding-top: 200px;
-    padding-bottom: 150px;
+    justify-content: start;
+    height: fit-content;
+    width: 90%;
+    min-height: 150px;
   }
+
   #right-edit-contact-column {
     display: flex;
     flex-direction: column;
@@ -87,6 +108,11 @@
 
   #button-area {
     justify-content: center;
+    padding-top: 20px;
+  }
+
+  #editContactForm > div:nth-child(3) {
+    gap: 20px;
   }
 
   #overlay-join-logo {
@@ -97,27 +123,35 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    height: 30vh;
+    height: 100%;
+    min-height: 50px;
     border-radius: 30px !important;
     width: 100%;
     padding-left: 0 !important;
-    border-radius: 30px 30px 0 0 !important;
+  }
+
+  #closeEditOverlay:hover {
+    background-color: #2a3647;
   }
 
   #edit-contact-heading {
-    margin-top: -150px;
-    margin-bottom: 70px;
     color: white;
     display: flex;
-    width: 90%;
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 50px;
     justify-content: start !important;
   }
 
   #add-contact-overlay {
     display: flex;
     flex-direction: column;
-    height: fit-content !important;
     margin-left: 0 !important;
+  }
+
+  .add-contact-form {
+    gap: 3px;
   }
 
   #right-add-contact-column {
@@ -210,7 +244,7 @@
   }
 
   .icon {
-    margin-left: 93% !important;
+    margin-left: 68vw !important;
   }
 
   #outer-overlay-responsiv {
@@ -231,18 +265,19 @@
   }
 
   #edit-contact-overlay {
+    background-color: #2a3647 !important;
     position: fixed;
-    transform: translateX(-50%);
-    width: 90vw !important;
-    background: lightgray;
-    animation: slideInFromLeft 125ms ease-out forwards;
-    justify-content: center;
-    margin-left: 0 !important;
     display: flex;
     flex-direction: column;
-    height: 80vh !important;
     align-items: center !important;
-    justify-content: center;
+    justify-content: start;
+    transform: translateX(-50%);
+    width: 90vw !important;
+    height: fit-content;
+    background: lightgray;
+    animation: slideInFromLeft 125ms ease-out forwards;
+    margin-left: 0 !important;
+    margin-bottom: 50px;
   }
 
   .mobileOverlay {
@@ -313,6 +348,9 @@
   #contact-details-area {
     max-height: 100vh;
     padding-bottom: 80px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
     animation: slideInFromLeft 1s ease-out forwards;
   }
 
@@ -329,6 +367,21 @@
   #left-contacts-page-column {
     padding: 0;
     height: 100vh;
+  }
+
+  #edit-contact-heading {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 28px;
+  }
+
+  #left-edit-contact-column {
+    flex-direction: row-reverse;
+  }
+
+  .icon {
+    margin-left: 64vw !important;
   }
 
   .user-area {
@@ -368,6 +421,10 @@
 @media (min-width: 1250px) {
   .user-name-options {
     display: flex !important;
+  }
+
+  #closeEditOverlay {
+    display: none;
   }
 
   #overlayButton {
