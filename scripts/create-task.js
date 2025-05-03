@@ -6,7 +6,7 @@
 async function createTask() {
   let isValid = checkValidations();
   if (isValid) {
-    getTaskData();
+    await getTaskData();
     const success = document.getElementById('success');
     const successBoard = document.getElementById('success-board');
 
@@ -33,18 +33,16 @@ async function createTask() {
       await updateBoardHTML();
       removeAddTask();       
     }
-    else{
-      window.location.href = "board.html"; 
-    }      
-  }
+    
+  window.location.href = "board.html"; 
 }
 
-  
+} 
 /**
  * Collects task data from the form, including title, description, due date, category, and subtasks.
  * Posts the collected data to Firebase.
  */
-function getTaskData() {
+async function getTaskData() {
   let title = document.getElementById('add-task-title').value.trim();
   let description = document.getElementById('description-input').value.trim();
   let date = document.getElementById('due-date').value;
@@ -62,7 +60,7 @@ function getTaskData() {
     });
   }
 
-  postToFireBase(title, description, overlayContacts, date, priority, category, subtasks);
+ await postToFireBase(title, description, overlayContacts, date, priority, category, subtasks);
 }
 
 /**
@@ -97,5 +95,4 @@ async function postToFireBase(title, description, contacts, date, priority, cate
       }
   });
 
-  let data = await response.json();
 }

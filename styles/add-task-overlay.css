@@ -376,11 +376,13 @@ input::placeholder {
 .dropdown-menu {
   max-height: 108px;
   overflow-y: auto;
+  overflow-x: hidden;
   width: 396px;
   background-color: white;
   margin: 0;
   position: absolute;
 }
+
 
 ul {
   width: 396px;
@@ -488,6 +490,9 @@ footer {
   height: 100vh;
   z-index: 9;
 }
+.bottom-add-task-overlay-section{
+  justify-content: space-between !important;
+}
 
 /* Responsive */
 
@@ -495,6 +500,33 @@ footer {
   #add-task-overlay {
     overflow: scroll;
     overflow-x: hidden;
+  }
+
+  .buttons-bottom-right {
+    justify-content: space-between;
+
+  }
+
+  #add-task-overlay::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+  }
+
+  #add-task-overlay::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  #add-task-overlay::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.5);
+    border-radius: 3px;
+  }
+
+  #add-task-overlay::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .no-tasks-container {
+    height: auto;
   }
 
   .overlay-background {
@@ -546,7 +578,6 @@ footer {
 
   .bottom-add-task-overlay-section {
     display: flex;
-    padding-left: 128px;
     justify-content: center;
     background-color: white !important;
     padding-bottom: 100px;
@@ -607,21 +638,34 @@ footer {
 
 @media (max-width: 570px) {
 
-  .add-task-title-input{
+  .add-task-title-input {
     width: 100% !important;
   }
-  .add-task-h1{
+
+  .error-message {
+    margin-top: 4px !important;
+  }
+
+  .add-task-h1 {
     font-size: 32px;
   }
 }
+
 @media (max-width: 500px) {
-  .overlay-delete-edit{
+  .overlay-delete-edit {
     justify-content: center;
     align-items: center;
   }
 }
+
 @media (max-width: 450px) {
-  #task-overlay{
+  #task-overlay {
     height: 80%;
   }
+
+  .date-div {
+    padding-top: 80px;
+    padding-bottom: 40px;
   }
+
+}

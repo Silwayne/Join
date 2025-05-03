@@ -116,6 +116,10 @@
     .buttons-bottom-right{
         width: 60%
     }
+
+    .error-message{
+        width: 80%;
+    }
 }
 
 @media(max-width:400px) {
@@ -177,5 +181,12 @@
     .buttons-bottom-right{
         width: 60%
     }
+    .error-message{
+        width: 65%;
+    }
+    
+}
+@media (min-width: 2000px){
+  
     
 }

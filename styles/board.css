@@ -592,6 +592,20 @@ textarea {
 .drag-and-drop-box:active {
   transform: rotate(15deg);
 }
+.more-indicator {
+  background-color: #00b188 !important; 
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+
 
 #success-board {
   opacity: 0;

@@ -60,6 +60,34 @@ function getSelectedContactsFromAddTask(task) {
   }
   return html;
 }
+function getLimitedContactsHTML(task, maxVisible = 4) {
+  let html = '';
+  if (!task.contacts || task.contacts.length === 0) return html;
+
+  let visibleContacts = task.contacts.slice(0, maxVisible);
+  let hiddenCount = task.contacts.length - visibleContacts.length;
+
+  for (let name of visibleContacts) {
+    let color = contactColors[name] || "#29abe2";
+    let initials = getInitials(name);
+    html += `
+      <div class="user-icon user-icon-board-box" style="background-color: ${color};">
+        <p>${initials}</p>
+      </div>
+    `;
+  }
+
+  if (hiddenCount > 0) {
+    html += `
+      <div class="user-icon user-icon-board-box more-indicator">
+        <p>+${hiddenCount}</p>
+      </div>
+    `;
+  }
+
+  return html;
+}
+
 
 /**
  * Edits the position of a task by displaying a tooltip with move options.
@@ -125,7 +153,7 @@ function editTaskPosition(event, id) {
 function generateTodosHTML(task) {
   let subtask = checkIfSubtasks(task);
   let progressBar = generateProgressBar(subtask, task);
-  let contacts = getSelectedContactsFromAddTask(task);
+  let contacts = getLimitedContactsHTML(task);
   let img = filterPriorityImage(task);
 
   return `

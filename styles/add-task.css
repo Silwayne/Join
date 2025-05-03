@@ -16,10 +16,10 @@ body {
 
 .display-splitter {
   display: flex;
-  margin: 100px;
-  justify-content: space-around;
+  gap: 4%;
   align-items: center;
   margin: 0;
+  padding-left: 3%;
 }
 
 .add-task-h1 {
@@ -150,7 +150,8 @@ input::placeholder {
   width: 440px;
   background-color: white;
 }
-.custom-select{
+
+.custom-select {
   width: 100%;
 }
 
@@ -263,10 +264,12 @@ input::placeholder {
   gap: 12px;
   cursor: pointer;
 }
-textarea::placeholder{
-  color: #d1d1d1 ;
+
+textarea::placeholder {
+  color: #d1d1d1;
 }
-textarea{
+
+textarea {
   border: solid 1px !important;
   border-color: lightgray !important;
 }
@@ -297,11 +300,13 @@ textarea{
 .task:hover ::marker {
   color: yellowgreen;
 }
+
 .subtask-icons {
   display: flex;
   gap: 8px;
   align-items: center;
 }
+
 .subtask-icons img {
   width: 18px;
   height: 18px;
@@ -364,7 +369,8 @@ textarea{
   margin-left: 12px;
   cursor: pointer;
 }
-.subtask-edit-img{
+
+.subtask-edit-img {
   display: none;
   margin-left: 12px;
   cursor: pointer;
@@ -374,14 +380,17 @@ textarea{
 .subtask-entry:hover .subtask-trash-img {
   display: block;
 }
-.subtask-entry input{
+
+.subtask-entry input {
   width: 99%;
 }
+
 .dot {
   width: 6px;
   background-color: black;
   border-radius: 20px;
 }
+
 .subtask-edit-img,
 .subtask-trash-img {
   display: none;
@@ -410,6 +419,7 @@ textarea{
 .arrow-drop-down:hover {
   background-color: #e0e0e0;
 }
+
 .subtask-edit-wrapper {
   position: relative;
   width: 100%;
@@ -422,7 +432,8 @@ textarea{
 
 .subtask-edit-input {
   width: 100%;
-  padding-right: 60px; /* Platz für Icons rechts */
+  padding-right: 60px;
+  /* Platz für Icons rechts */
   padding-left: 8px;
   height: 36px;
   border-radius: 8px;
@@ -544,6 +555,27 @@ textarea{
   position: absolute;
 }
 
+.dropdown-menu::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+}
+
+.dropdown-menu::-webkit-scrollbar {
+  width: 6px;
+  /* oder height: 6px bei horizontalem Scroll */
+}
+
+.dropdown-menu::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+  /* dezente Farbe */
+  border-radius: 3px;
+}
+
+.dropdown-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+
 #addtaskx {
   visibility: hidden;
 }
@@ -609,8 +641,8 @@ footer {
 
 .bottom-add-task-overlay-section {
   display: flex;
-  justify-content: space-between;
   padding-top: 115px;
+  gap: 275px;
 }
 
 .fiel-Is-Required-Div {
@@ -723,7 +755,7 @@ footer {
 
 }
 
-@media (max-width: 950px) {
+@media (max-width: 1000px) {
   .display-splitter {
     flex-direction: column;
   }
@@ -810,8 +842,9 @@ footer {
   textarea {
     min-width: 0 !important;
   }
+
   .custom-select {
-  width: 100%;
+    width: 100%;
   }
 
   .headline {
@@ -875,13 +908,10 @@ footer {
     gap: 12px;
   }
 
-  .error-message {
-    margin-top: -64px !important;
-  }
-  .prio-box{
+  .prio-box {
     margin-bottom: 50px;
   }
-  
+
 }
 
 @media (max-width: 380px) {
@@ -930,8 +960,8 @@ footer {
     font-size: 16px;
   }
 
-  .contact-name {
-    font-size: 16px;
+  .checkbox-img {
+    height: 16px;
   }
 
   .error-message {

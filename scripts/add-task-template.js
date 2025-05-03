@@ -94,7 +94,7 @@ function initHTML(content) {
         </div>
 
 </section>`
-setupSubtaskEnterKey();
+    setupSubtaskEnterKey();
 
 }
 
@@ -105,7 +105,7 @@ setupSubtaskEnterKey();
  * @param {string} taskId - The ID of the task the subtask belongs to.
  * @returns {string} - The HTML string for the subtask item.
  */
-function createSubtaskHTML(subId, value, taskId) {    
+function createSubtaskHTML(subId, value, taskId) {
     return `
     <div class="subtask-item">
         <div class="subtask-value">
@@ -122,7 +122,7 @@ function createSubtaskHTML(subId, value, taskId) {
 
 
 
-function contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials,bgColor, fontColor, checkboxImage){
+function contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials, bgColor, fontColor, checkboxImage) {
 
     return `
     <div class="grey-contact-list contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
@@ -164,7 +164,7 @@ function filterNames(id) {
     let assigned = overlayContacts;
     let filteredNames = names.filter(name => name.toLowerCase().includes(input));
     if (filteredNames.length === 0) {
-        showContacts(id); 
+        showContacts(id);
         return;
     }
     for (let contactName of filteredNames) {
@@ -202,10 +202,9 @@ function contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName,
 `;
 }
 
-function resetValue(){
+function resetValue() {
     document.getElementById('category').value = '';
     document.getElementById('subtask-container').classList.remove('input-error');
-    document.getElementById('subtask-error').classList.add('d_none');
     document.getElementById('subtasks').innerHTML = '';
     resetValidation(document.getElementById('add-task-title'));
     resetValidation(document.getElementById('due-date'));
@@ -285,11 +284,11 @@ function renderContacts(firebaseAnswer, dropDownMenu, id) {
         let contactName = contact.name;
         let contactColor = contact.color;
         let contactInitials = getInitials(contactName);
-        
+
         saveContactLocally(contactName, contactColor);
         let isChecked = overlayContacts.includes(contactName);
         dropDownMenu.innerHTML += getContactListHTML(contactInitials, contactName, localCounter, contactColor, id, isChecked);
-        
+
         addCheckboxListener(contactName, localCounter, id);
         localCounter++;
     }
@@ -326,24 +325,31 @@ function getFilteredContactHTML(contactInitials, contactName, isChecked, id) {
  * Clears the Add Task form and resets all fields and states.
  */
 function clearTaskForm() {
-    overlayContacts= [];
+    overlayContacts = [];
+    names = [];
+    contactColors = {};
+
     let subTaskInput = document.getElementById('subtaskInput');
     let titleInput = document.getElementById('add-task-title');
     let descriptionInput = document.getElementById('description-input');
-    let checkboxes = document.querySelectorAll('.contact-checkbox');
     let dueDateInput = document.getElementById('due-date');
+    let dropdownMenu = document.getElementById('dropdownMenu');
+    let assignedContainer = document.getElementById('assignedContactsContainer');
+    let inputField = document.getElementById('dropdownInput');
 
+    if (subTaskInput) {
         subTaskInput.value = '';
-        updateIcons()
-        titleInput.value = '';
-        descriptionInput.value = '';
-    for (let checkbox of checkboxes) {
-        checkbox.checked = false;
+        updateIcons();
     }
-    renderAssignedContacts('assignedContactsContainer', []);
-    
-    if (dueDateInput) {
-        dueDateInput.value = '';
-    }
-    resetValue();
+    if (titleInput) titleInput.value = '';
+    if (descriptionInput) descriptionInput.value = '';
+    if (dueDateInput) dueDateInput.value = '';
+    if (dropdownMenu) dropdownMenu.innerHTML = '';
+    if (assignedContainer) assignedContainer.innerHTML = '';
+    if (inputField) inputField.value = '';
+
+    resetValue(); // Setzt Prio & Kategorie zurück
+    selectContacts('dropdownMenu'); // Kontakte neu laden
 }
+
+

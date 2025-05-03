@@ -38,6 +38,7 @@ body {
   width: 104px;
   height: 56px;
   gap: 16px;
+  margin-right: 10px;
 }
 
 .help-button {
