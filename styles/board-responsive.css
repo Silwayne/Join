@@ -211,6 +211,19 @@
   .task-title-p {
     font-size: 30px !important;
   }
+  .prio-box-div{
+    padding-top: 25px;
+
+  }
+  .subtaks-container-div p {
+    padding-top: 25px;
+  }
+  .custom-select-p{
+    padding-top: 25px;
+  }
+  .bottom-add-task-overlay-section{
+    padding-top: 75px;
+  }
 }
 
 @media (max-width: 500px) {

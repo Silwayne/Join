@@ -57,10 +57,12 @@ body {
   margin-left: 108px;
   color: black;
 }
-.overlay-subtasks{
+
+.overlay-subtasks {
   max-height: 250px;
   overflow-y: auto;
 }
+
 .overlay-subtasks::-webkit-scrollbar {
   width: 6px;
 }
@@ -73,10 +75,12 @@ body {
   background-color: #ccc;
   border-radius: 10px;
 }
-.subtask-list{
+
+.subtask-list {
   max-height: 150px;
   overflow-y: auto;
 }
+
 .subtask-list::-webkit-scrollbar {
   width: 6px;
 }
@@ -89,6 +93,7 @@ body {
   background-color: #ccc;
   border-radius: 10px;
 }
+
 .border {
   background-color: #d1d1d1;
   width: 1px;
@@ -175,7 +180,7 @@ input::placeholder {
 .input-container {
   display: flex;
   align-items: center;
-  border: 2px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 9px;
   width: 100%;
   background-color: white;
@@ -565,37 +570,58 @@ footer {
   }
 }
 
-  @media (max-width: 1000px) {
-    #add-task-overlay {
-      width: 90%;
-      padding: 5%;
-    }
-
-    .dropdown-menu {
-      width: 80%;
-    }
+@media (max-width: 1000px) {
+  #add-task-overlay {
+    width: 90%;
+    padding: 5%;
   }
 
-  @media (max-width: 650px) {
-    .add-task-h1 {
-      font-size: 40px;
-    }
+  .dropdown-menu {
+    width: 80%;
+  }
+}
 
-    .dropdown-menu {
-      width: 80% !important;
-    }
+@media (max-width: 650px) {
+  .add-task-h1 {
+    font-size: 40px;
+  }
 
-    .bottom-add-task-overlay-section {
-      padding: 0;
-    }
+  .dropdown-menu {
+    width: 80% !important;
+  }
 
-    #description-input {
-      max-width: 100% !important;
-      min-width: 100% !important;
-    }
+  .bottom-add-task-overlay-section {
+    padding: 0;
+  }
 
-    .bottom-add-task-overlay-section {
-      padding-bottom: 75px !important;
-      padding-top: 25px !important;
-    }
+  #description-input {
+    max-width: 100% !important;
+    min-width: 100% !important;
+  }
+
+  .bottom-add-task-overlay-section {
+    padding-bottom: 75px !important;
+    padding-top: 25px !important;
+  }
+}
+
+@media (max-width: 570px) {
+
+  .add-task-title-input{
+    width: 100% !important;
+  }
+  .add-task-h1{
+    font-size: 32px;
+  }
+}
+@media (max-width: 500px) {
+  .overlay-delete-edit{
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media (max-width: 450px) {
+  #task-overlay{
+    height: 80%;
+  }
   }

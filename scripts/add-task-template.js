@@ -11,10 +11,12 @@ function initHTML(content) {
     <div class="display-splitter">
     <section class="left-section">
         <div class="add-task-title">
+        <span class ="add-task-title-input">
             <p>Title<span class="red title-p">*</span></p>
             <input id="add-task-title" type="text" maxlength="20" placeholder="Enter a title">
+            <span>
         </div>
-        <div>
+        <div class="add-task-description-div">
             <p>Description</p>
             <textarea maxlength="250" id="description-input" type="text" placeholder="Enter a Description"></textarea>
         </div>
@@ -35,7 +37,7 @@ function initHTML(content) {
             <p for="due-date">Due date<span class="red">*</span></p>
             <input type="date" id="due-date" required>
         </div>
-        <div>
+        <div class="prio-box-div">
             <p>Prio</p>
             <div class="prio-box">
                 <div onclick="swapToUrgent('prio-urgent')" class="prio" id="prio-urgent">
@@ -50,7 +52,7 @@ function initHTML(content) {
             </div>
         </div>
 <div class="custom-select">
-<div>
+<div class="custom-select-p">
             <p>Category<span class="red">*</span></p>
         </div>
     <select id="category" name="category" required>
@@ -64,7 +66,8 @@ function initHTML(content) {
 </div>
 
 
-        <div>
+        <div class="subtaks-container-div">
+        <p>Subtasks</p>
         <div id="subtask-container" class="input-container">
             <input type="text" id="subtaskInput" maxlength="30" placeholder="Add new subtask" oninput="updateIcons()">
             <div class="icons">

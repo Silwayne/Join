@@ -41,7 +41,7 @@ h1 {
 
 input {
   border-radius: 10px;
-  border: solid;
+  border: solid 1px;
   border-color: lightgray;
   gap: 10px;
   padding: 8px 16px;
@@ -438,8 +438,8 @@ textarea {
   border-radius: 9px;
   padding-left: 7px;
   font-size: 18px;
-  border: solid;
-  border-color: lightgray;
+  border: solid 1px !important;
+  border-color: lightgray !important;
   resize: vertical;
   height: 100px;
   font-family: "Inter", sans-serif;

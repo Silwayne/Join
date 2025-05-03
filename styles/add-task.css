@@ -65,6 +65,8 @@ input {
   height: 48px;
   padding-left: 8px;
   font-size: 20px;
+  border: solid 1px;
+  border-color: lightgray;
 }
 
 input::placeholder {
@@ -100,10 +102,6 @@ input::placeholder {
   font-size: 20px;
   cursor: pointer;
 }
-#subtask-container{
-  margin-top: 50px;
-}
-
 
 .custom-select {
   position: relative;
@@ -264,6 +262,13 @@ input::placeholder {
   flex: 1;
   gap: 12px;
   cursor: pointer;
+}
+textarea::placeholder{
+  color: #d1d1d1 ;
+}
+textarea{
+  border: solid 1px !important;
+  border-color: lightgray !important;
 }
 
 .contact-checkbox {
@@ -786,9 +791,9 @@ footer {
   .dropdown-menu,
   .input-container,
   .subtasks {
-    width: 100% !important;
-    max-width: 100% !important;
-    min-width: unset !important;
+    width: 100%;
+    max-width: 100%;
+    min-width: unset;
     box-sizing: border-box;
   }
 
@@ -824,7 +829,6 @@ footer {
   .add-task-title p {
     font-size: 16px;
     margin: 0;
-    font-weight: bold;
   }
 
   .prio-box {
@@ -856,7 +860,7 @@ footer {
   .bottom-add-task-overlay-section {
     flex-direction: column;
     gap: 24px;
-    padding-top: 100px !important;
+    padding-top: 20px !important;
   }
 
   #clear-button,
@@ -877,14 +881,12 @@ footer {
   .prio-box{
     margin-bottom: 50px;
   }
-  #subtask-container{
-    margin-top: 100px;
-  }
+  
 }
 
 @media (max-width: 380px) {
   .add-task-h1 {
-    font-size: 36px;
+    font-size: 42px;
     padding-top: 40px;
     padding-bottom: 15px;
   }
@@ -896,11 +898,11 @@ footer {
   .prio-box label,
   label,
   p {
-    font-size: 14px !important;
+    font-size: 18px !important;
   }
 
   .headline {
-    font-size: 15px !important;
+    font-size: 17px !important;
   }
 
   input,
@@ -908,20 +910,20 @@ footer {
   select,
   .prio,
   .dropdown-menu {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   #dropdownInput,
   #subtaskInput {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .create-clear-button {
-    font-size: 16px;
+    font-size: 18px;
   }
 
   #category {
-    font-size: 14.5px;
+    font-size: 16px;
   }
 
   .user-initials {
@@ -929,7 +931,7 @@ footer {
   }
 
   .contact-name {
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .error-message {
