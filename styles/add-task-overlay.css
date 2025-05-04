@@ -383,7 +383,6 @@ input::placeholder {
   position: absolute;
 }
 
-
 ul {
   width: 396px;
   height: 45px;
@@ -490,7 +489,7 @@ footer {
   height: 100vh;
   z-index: 9;
 }
-.bottom-add-task-overlay-section{
+.bottom-add-task-overlay-section {
   justify-content: space-between !important;
 }
 
@@ -504,7 +503,6 @@ footer {
 
   .buttons-bottom-right {
     justify-content: space-between;
-
   }
 
   #add-task-overlay::-webkit-scrollbar-button {
@@ -535,7 +533,7 @@ footer {
   }
 
   .subtasks {
-    width: 90%;
+    width: 88%;
   }
 
   #addtaskx {
@@ -578,9 +576,9 @@ footer {
 
   .bottom-add-task-overlay-section {
     display: flex;
-    justify-content: center;
+    justify-content: center !important;
     background-color: white !important;
-    padding-bottom: 100px;
+    padding-bottom: 20px !important;
   }
 
   .fiel-Is-Required-Div {
@@ -605,6 +603,10 @@ footer {
   #add-task-overlay {
     width: 90%;
     padding: 5%;
+  }
+
+.subtasks{
+    width: 78%;
   }
 
   .dropdown-menu {
@@ -637,7 +639,6 @@ footer {
 }
 
 @media (max-width: 570px) {
-
   .add-task-title-input {
     width: 100% !important;
   }
@@ -667,5 +668,4 @@ footer {
     padding-top: 80px;
     padding-bottom: 40px;
   }
-
 }

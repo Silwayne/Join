@@ -299,6 +299,7 @@ seperator {
 
 #contact-div {
   overflow: hidden;
+  height: 91vh;
 }
 
 .phone-number {
