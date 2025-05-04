@@ -147,58 +147,10 @@
     padding-left: 0 !important;
   }
 
-  #sidbar {
-    display: none !important;
-  }
-
   .sidbar-logo {
     display: none;
   }
 
-  #sidebar-responsive {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    background-color: #2a3647;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
-  }
-
-  .sidbar-nav-responsive {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .menu-responsive {
-    display: flex;
-    align-items: center;
-    gap: 15vw;
-  }
-
-  .menu-button-responsive {
-    background-color: #2a3647;
-    border: none;
-    color: white;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .menu-button-design-responsive {
-    width: 12vw;
-    gap: 8px;
-    border-radius: 15px;
-    padding: 10px 0;
-  }
-
-  .menu-button-design-responsive:hover {
-    cursor: pointer;
-    background-color: #091931;
-  }
   .box-category-header {
     display: flex;
     justify-content: space-between;
@@ -211,26 +163,25 @@
   .task-title-p {
     font-size: 30px !important;
   }
-  .prio-box-div{
+  .prio-box-div {
     padding-top: 25px;
-
   }
   .subtaks-container-div p {
     padding-top: 25px;
   }
-  .custom-select-p{
+  .custom-select-p {
     padding-top: 25px;
   }
-  .bottom-add-task-overlay-section{
+  .bottom-add-task-overlay-section {
     padding-top: 75px;
   }
 }
 
 @media (max-width: 500px) {
-  #task-content{
+  #task-content {
     padding: 20px 16px;
   }
-  #add-task-overlay{
+  #add-task-overlay {
     width: 75% !important;
   }
   .responsive-button-board-div h1 {

@@ -129,7 +129,6 @@ input::placeholder {
   width: 25px;
   border-radius: 20px;
   pointer-events: none;
-
 }
 
 .arrow-category-hover img {
@@ -139,8 +138,6 @@ input::placeholder {
 .arrow-category-hover:hover {
   background-color: #e0e0e0;
 }
-
-
 
 .input-container {
   display: flex;
@@ -313,7 +310,6 @@ textarea {
   cursor: pointer;
 }
 
-
 #subtaskInput {
   font-size: 20px;
 }
@@ -403,7 +399,6 @@ textarea {
   display: block;
 }
 
-
 .arrow-drop-down {
   width: 24px;
   height: 24px;
@@ -457,7 +452,6 @@ textarea {
 .subtask-icon.cancel {
   right: 8px;
 }
-
 
 .arrow-up-img {
   width: 8px;
@@ -532,14 +526,12 @@ textarea {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   height: 56px;
   transition: box-shadow 0.1s ease-in-out;
-
 }
 
 .prio:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: box-shadow 0.1s ease-in-out;
 }
-
 
 .prio img {
   height: 10px;
@@ -574,7 +566,6 @@ textarea {
 .dropdown-menu::-webkit-scrollbar-track {
   background: transparent;
 }
-
 
 #addtaskx {
   visibility: hidden;
@@ -695,64 +686,13 @@ footer {
     padding-left: 0 !important;
   }
 
-  #sidbar {
-    display: none !important;
-  }
-
   .sidbar-logo {
     display: none;
-  }
-
-  #sidebar-responsive {
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    background-color: #2a3647;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
-  }
-
-  .sidbar-nav-responsive {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-
-  .menu-responsive {
-    display: flex;
-    align-items: center;
-    gap: 8vw;
-  }
-
-  .menu-button-responsive {
-    background-color: #2a3647;
-    border: none;
-    color: white;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-
-  .menu-button-design-responsive {
-    width: 12vw;
-    gap: 8px;
-    border-radius: 15px;
-    padding: 10px 0;
-  }
-
-  .menu-button-design-responsive:hover {
-    cursor: pointer;
-    background-color: #091931;
   }
 
   .add-task-h1 {
     padding-top: 40px;
   }
-
 }
 
 @media (max-width: 1000px) {
@@ -911,7 +851,6 @@ footer {
   .prio-box {
     margin-bottom: 50px;
   }
-
 }
 
 @media (max-width: 380px) {

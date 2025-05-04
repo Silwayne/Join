@@ -33,7 +33,7 @@
   }
 
   #sidebar-responsive {
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     background-color: #2a3647;
@@ -41,7 +41,6 @@
     bottom: 0;
     width: 100%;
     height: 80px;
-    z-index: 99;
   }
 
   .sidbar-nav-responsive {
@@ -53,7 +52,7 @@
   .menu-responsive {
     display: flex;
     align-items: center;
-    gap: 10vw;
+    gap: 5vw;
   }
 
   .menu-button-responsive {
@@ -64,19 +63,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 14px;
   }
 
   .menu-button-design-responsive {
-    width: 12vw;
     gap: 8px;
     border-radius: 15px;
-    padding: 10px;
+    padding: 10px 0;
   }
 
   .menu-button-design-responsive:hover {
     cursor: pointer;
     background-color: #091931;
+    width: auto;
   }
+
 
   .active-button {
     background-color: #091931 !important;

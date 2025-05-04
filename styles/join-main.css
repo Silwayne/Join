@@ -220,4 +220,5 @@ a:hover {
 .active-button {
   background-color: #091931; 
   border-radius: 10px;
+  width: auto;
 }
