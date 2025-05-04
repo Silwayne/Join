@@ -45,7 +45,7 @@
             <input oninput="filterTasks()" id="searchTasks" type="text" placeholder="Find Task" />
             <hr id="divider" />
             <img id="searchIcon" src="/assets/img/search.svg" alt="" />
-            <button class="add-task-button" id="add-task-button" onclick="addTask(event)">
+            <button class="add-task-button" id="add-task-button" onclick="addTask(event, 'todo')">
               Add task +
             </button>
           </div>
@@ -55,7 +55,7 @@
       <div id="the-board" onclick="closeAllTooltips()">
         <div>
           <div class="task-column" id="to-do-column">
-            To do<button onclick="addTask(event)" class="small-add-task-btn">
+            To do<button onclick="addTask(event, 'todo')" class="small-add-task-btn">
               +
             </button>
           </div>
@@ -66,7 +66,7 @@
 
         <div>
           <div class="task-column" id="in-progress-column">
-            In progress<button onclick="addTask(event)" class="small-add-task-btn">
+            In progress<button onclick="addTask(event, 'inprogress')" class="small-add-task-btn">
               +
             </button>
           </div>
@@ -79,7 +79,7 @@
 
         <div>
           <div class="task-column" id="await feedback-column">
-            Await feedback<button onclick="addTask(event)" class="small-add-task-btn">
+            Await feedback<button onclick="addTask(event, 'await')" class="small-add-task-btn">
               +
             </button>
           </div>

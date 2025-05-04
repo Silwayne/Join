@@ -71,7 +71,6 @@ function initHTML(content) {
         <div id="subtask-container" class="input-container">
             <input type="text" id="subtaskInput" maxlength="30" placeholder="Add new subtask" oninput="updateIcons()">
             <div class="icons">
-                <span id="plusIcon" class="icon"><img src="/assets/img/Subtasks icons11.svg"></span>
                 <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()" src="/assets/img/close.svg"></span>
                 <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()" src="/assets/img/check.svg"></span>
 

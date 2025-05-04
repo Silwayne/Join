@@ -9,6 +9,7 @@ let todos = [];
  * @type {number}
  */
 let currentDraggedTask;
+let taskProgress = ""
 
 /**
  * Initializes the Add Task overlay by rendering the HTML and selecting contacts.
@@ -23,7 +24,8 @@ function initAddTask(content) {
  * Opens the Add Task overlay and resets the priority and selected contacts.
  * @param {Event} event - The event object.
  */
-function addTask(event) {
+function addTask(event, id) {
+  taskProgress = id
   overlayContacts = [];
   event.stopPropagation();
   priority = "Medium";

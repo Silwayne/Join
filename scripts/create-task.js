@@ -59,8 +59,12 @@ async function getTaskData() {
       }
     });
   }
+  if (!taskProgress) {
+    let taskProgress = 'todo'
+    
+  }
 
- await postToFireBase(title, description, overlayContacts, date, priority, category, subtasks);
+ await postToFireBase(title, description, overlayContacts, date, priority, category, subtasks, taskProgress);
 }
 
 /**
@@ -75,6 +79,7 @@ async function getTaskData() {
  * @param {Array<Object>} subtasks - The list of subtasks, each containing a title and a "done" status.
  */
 async function postToFireBase(title, description, contacts, date, priority, category, subtasks) {
+
   let task = {
       'title': title,
       'description': description,
@@ -83,7 +88,7 @@ async function postToFireBase(title, description, contacts, date, priority, cate
       'priority': priority,
       'category': category,
       'subtasks' :subtasks,
-      'status': 'todo'
+      'status': taskProgress
     };
     
 
