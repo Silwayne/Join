@@ -164,7 +164,7 @@ body {
 
 .menu-button {
   background-color: #2a3647;
-  border: none;
+  border: none; 
   color: white;
 }
 
@@ -219,6 +219,5 @@ a:hover {
 
 .active-button {
   background-color: #091931; 
-  border-radius: 10px;
-  width: auto;
+  width: 100%;
 }
