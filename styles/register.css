@@ -219,8 +219,14 @@ footer {
 
 @media (max-width: 600px) {
   .logo {
-    top: 5%;
-    left: 50%;
+    left: 30%;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo {
+    top: 3%;
+    left: 20%;
     transform: translate(-50%);
   }
 }

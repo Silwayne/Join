@@ -3,9 +3,11 @@
  * The message box is shown for 2 seconds before being hidden.
  * @param {string} message - The message to display.
  */
-function showMessage(message) {
+
+function showMessage(message, isSuccess = false) {
   let messageBox = document.getElementById("message-box");
   messageBox.textContent = message;
+  messageBox.style.backgroundColor = isSuccess ? "#28a745" : "#dc3545";
   messageBox.classList.remove("d-none");
   messageBox.style.display = "block";
 
@@ -81,6 +83,10 @@ function validatePasswords(password, confirmPassword, privacyChecked) {
   }
   if (password !== confirmPassword) {
     showMessage("Passwords do not match!", false);
+    return false;
+  }
+  if (password.length < 6) {
+    showMessage("Password must be at least 6 characters long!", false);
     return false;
   }
   return true;

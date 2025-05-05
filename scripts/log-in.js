@@ -28,8 +28,8 @@ window.onload = function () {
   setTimeout(() => {
     logo.style.width = "100px";
     logo.style.height = "122px";
-    logo.style.top = "5%";
-    logo.style.left = "5%";
+    logo.style.top = "2%";
+    logo.style.left = "30%";
     logo.style.transform = "translate(0, 0)";
     loader.style.opacity = "0";
 
@@ -69,20 +69,44 @@ function fetchUsers(email, password) {
  * @param {string} email - The email entered by the user.
  * @param {string} password - The password entered by the user.
  */
+// function checkLogin(users, email, password) {
+//   let userList = Object.values(users || {});
+//   let userFound = userList.find(
+//     (user) => user.email === email && user.password === password
+//   );
+
+//   if (userFound) {
+//     sessionStorage.setItem("userName", userFound.name);
+//     sessionStorage.setItem("userColor", userFound.color);
+//     window.location.href = "./join-main.html";
+//   } else {
+//     showMessage("Incorrect email or password!");
+//   }
+// }
+
 function checkLogin(users, email, password) {
   let userList = Object.values(users || {});
-  let userFound = userList.find(
-    (user) => user.email === email && user.password === password
-  );
+  let user = userList.find((user) => user.email === email);
 
-  if (userFound) {
-    sessionStorage.setItem("userName", userFound.name);
-    sessionStorage.setItem("userColor", userFound.color);
-    window.location.href = "./join-main.html";
-  } else {
-    showMessage("Incorrect email or password!");
+  if (!user) {
+    showMessage("E-Mail address not found!", false);
+    return;
   }
+
+  if (user.password !== password) {
+    showMessage("Incorrect password!", false);
+    return;
+  }
+
+  showMessage("Login successful! Redirecting...", true);
+  sessionStorage.setItem("userName", user.name);
+  sessionStorage.setItem("userColor", user.color);
+
+  setTimeout(() => {
+    window.location.href = "./join-main.html";
+  }, 1500);
 }
+
 
 /**
  * Logs in as a guest user by setting default guest credentials in session storage.

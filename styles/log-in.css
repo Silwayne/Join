@@ -54,8 +54,8 @@ a {
 
 .logo {
   position: absolute;
-  top: 80%;
-  left: 70%;
+  top: 45%;
+  left: 47%;
   transform: translate(-50%, -50%);
   transition: all 1s ease-in-out;
   z-index: 1;
@@ -81,10 +81,10 @@ a {
   top: 22%;
   border-radius: 30px;
   gap: 32px;
-  padding: 35px 30px 35px 30px;
+  padding: 25px 30px 25px 30px;
   flex-direction: column;
   box-shadow: 0px 0px 14px 3px #0000000a;
-  background-color: white
+  background-color: white;
 }
 
 .register-container {
@@ -132,7 +132,6 @@ a {
 .login-headline {
   font-weight: 700;
   font-size: 61px;
-  line-height: 73.2px;
   margin-block-start: 0;
   margin-block-end: 0;
 }
@@ -238,7 +237,7 @@ footer {
   justify-content: center;
   display: flex;
   position: absolute;
-  bottom: 15px;
+  bottom: 5px;
   width: 246px;
   height: 35px;
   gap: 16px;
