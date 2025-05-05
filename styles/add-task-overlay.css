@@ -661,7 +661,7 @@ footer {
 
 @media (max-width: 450px) {
   #task-overlay {
-    height: 80%;
+    max-height: 80%;
   }
 
   .date-div {

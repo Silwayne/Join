@@ -1,4 +1,9 @@
 @media (max-width: 1440px) {
+  #main{
+    margin-left: 178px;
+  }
+}
+@media (max-width: 1250px) {
   .drag-and-drop-box:active {
     transform: none;
   }

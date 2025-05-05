@@ -494,20 +494,23 @@ function hideContacts(event, id) {
  * Renders the assigned contacts in the container.
  * @param {string} id - The ID of the container.
  */
-function renderAssignedContacts(id) {        
+function renderAssignedContacts(id) {
     let taskId = '';
     if (id !== "contact-container") {
-        taskId = '_'+ id;
+        taskId = '_' + id;
     }
 
     let container = document.getElementById('assignedContactsContainer' + taskId);
     if (!container) return;
-    container.innerHTML = '';    
 
-    for (let i = 0; i < overlayContacts.length; i++) {
-        let name = overlayContacts[i];
+    container.innerHTML = '';
+    const maxVisible = 4;
+    const visibleContacts = overlayContacts.slice(0, maxVisible);
+    const hiddenCount = overlayContacts.length - visibleContacts.length;
+
+    for (let name of visibleContacts) {
         let initials = getInitials(name);
-        let color = contactColors[name];
+        let color = contactColors[name] || "#29abe2";
 
         container.innerHTML += `
             <div class="user-icon" style="background-color: ${color};">
@@ -515,7 +518,18 @@ function renderAssignedContacts(id) {
             </div>
         `;
     }
+
+    if (hiddenCount > 0) {
+        // Optional: Tooltip mit Hover über +x
+        const hiddenNames = overlayContacts.slice(maxVisible).join(', ');
+        container.innerHTML += `
+            <div class="user-icon more-indicator" title="${hiddenNames}">
+                <span class="user-initials">+${hiddenCount}</span>
+            </div>
+        `;
+    }
 }
+
 
 /**
  * Sets up the "Enter" key functionality for the subtask input field.

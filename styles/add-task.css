@@ -313,6 +313,11 @@ textarea {
 #subtaskInput {
   font-size: 20px;
 }
+.more-indicator {
+  background-color: #2ecc71;
+  cursor: pointer;
+}
+
 
 .subtasks {
   margin-top: 15px;
@@ -852,6 +857,20 @@ footer {
     margin-bottom: 50px;
   }
 }
+@media(max-width:520px) {
+  .selectedInitials {
+    position: relative;
+    justify-content: flex-start;
+    width: 80%
+  }
+}
+@media(max-width:400px) {
+  .selectedInitials {
+  
+    width: 65%
+  }
+}
+
 
 @media (max-width: 380px) {
   .add-task-h1 {
@@ -869,6 +888,7 @@ footer {
   p {
     font-size: 18px !important;
   }
+  
 
   .headline {
     font-size: 17px !important;
