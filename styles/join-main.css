@@ -220,4 +220,9 @@ a:hover {
 .active-button {
   background-color: #091931; 
   width: 100%;
+  border-radius: 0;
+}
+
+.menu-button:hover {
+  border-radius: 0;
 }
