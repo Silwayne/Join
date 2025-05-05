@@ -520,7 +520,6 @@ function renderAssignedContacts(id) {
     }
 
     if (hiddenCount > 0) {
-        // Optional: Tooltip mit Hover über +x
         const hiddenNames = overlayContacts.slice(maxVisible).join(', ');
         container.innerHTML += `
             <div class="user-icon more-indicator" title="${hiddenNames}">
