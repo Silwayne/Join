@@ -4,6 +4,7 @@ body {
 
 #main {
   margin-left: 232px;
+  max-width: 1920px;
 }
 
 h1 {
