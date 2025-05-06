@@ -24,7 +24,12 @@ function initHTML(content) {
         <div class="assigned-div">
             <p>Assinged to</p>
             <div id="contact-container" class="input-container" onclick="showContacts('contact-container')">
-            <input oninput="filterNames('assignedContactsContainer')" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'"> <span class="arrow-drop-down" id="arrow-drop-down"><img src="/assets/img/arrow_drop_down.svg"></span>
+            <input oninput="filterNames('assignedContactsContainer')" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'">
+            <div id="arrow-drop-down">
+                            <span class="arrow-drop-down">
+            <img src="/assets/img/arrow_drop_down.svg">
+            </span>
+            </div>
             </div>
             <div class="selectedInitials" id="assignedContactsContainer"></div>
             <div class="dropdown-menu  d_none" id="dropdownMenu">

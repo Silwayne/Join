@@ -432,7 +432,9 @@ function showContacts(id) {
     assignedContainer.classList.add('d_none');
     inputContainer.onclick = null;    
     arrow.innerHTML = `
+                <span class="arrow-drop-down">
         <img onclick="hideContacts(event, '${id}')" src="/assets/img/arrow_drop_downaa.svg">
+        </span>
     `;
 
     dropDownMenu.classList.remove('d_none');
@@ -482,8 +484,10 @@ function hideContacts(event, id) {
     if (container) container.classList.remove('d_none');
     if (arrow) {
         arrow.innerHTML = `
-            <img onclick="hideContacts(event, '${id}')" src="/assets/img/arrow_drop_down.svg">
-        `;
+                          <span onclick="showContacts(event, '${id}')" class="arrow-drop-down">
+                        <img src="/assets/img/arrow_drop_down.svg">
+                        </span>
+            `;
     }
     if (dropDownMenu) dropDownMenu.classList.add('d_none');
     if (inputContainer) inputContainer.onclick = () => showContacts(id); 
