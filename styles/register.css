@@ -217,16 +217,20 @@ footer {
   color: #29abe2;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 2560px) {
   .logo {
-    left: 30%;
+    left: 30% !important;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 1440px) {
   .logo {
-    top: 3%;
-    left: 20%;
-    transform: translate(-50%);
+    left: 20% !important;
+  }
+}
+
+@media (max-width: 425px) {
+  .logo {
+    left: 10% !important;
   }
 }

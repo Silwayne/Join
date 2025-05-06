@@ -28,6 +28,11 @@ function getRandomColor() {
   return colors[randomIndex];
 }
 
+function isValidEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+}
+
 /**
  * Handles the user registration process.
  * Validates the input fields, checks if the email is already registered,
@@ -39,6 +44,8 @@ function registerUser() {
   let confirmPassword = document.getElementById("confirm-password").value;
   let name = document.getElementById("first-name").value;
   let privacyChecked = document.getElementById("privacy-policy").checked;
+
+  if (!isValidEmail(email)) {showMessage("Please enter a valid email address. An '@' symbol is required."); return;}
 
   if (!validatePasswords(password, confirmPassword, privacyChecked)) return;
 

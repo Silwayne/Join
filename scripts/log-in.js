@@ -43,9 +43,20 @@ window.onload = function () {
  * Handles the login process by retrieving the email and password from the input fields
  * and calling the function to fetch users from Firebase.
  */
+function isValidEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+}
+
 function login() {
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
+
+  if (!isValidEmail(email)) {
+    showMessage("Please enter a valid email address. An '@' symbol is required.", false);
+    return;
+  }
+
   fetchUsers(email, password);
 }
 
@@ -69,20 +80,6 @@ function fetchUsers(email, password) {
  * @param {string} email - The email entered by the user.
  * @param {string} password - The password entered by the user.
  */
-// function checkLogin(users, email, password) {
-//   let userList = Object.values(users || {});
-//   let userFound = userList.find(
-//     (user) => user.email === email && user.password === password
-//   );
-
-//   if (userFound) {
-//     sessionStorage.setItem("userName", userFound.name);
-//     sessionStorage.setItem("userColor", userFound.color);
-//     window.location.href = "./join-main.html";
-//   } else {
-//     showMessage("Incorrect email or password!");
-//   }
-// }
 
 function checkLogin(users, email, password) {
   let userList = Object.values(users || {});
