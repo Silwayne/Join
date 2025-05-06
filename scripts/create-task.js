@@ -6,35 +6,39 @@
 async function createTask() {
   let isValid = checkValidations();
   if (isValid) {
-    await getTaskData();
-    const success = document.getElementById('success');
-    const successBoard = document.getElementById('success-board');
-
-    if (success) {
-      success.style.display = 'block';
-      setTimeout(() => success.style.opacity = '1', 10);
-      setTimeout(() => {
-        success.style.opacity = '0';
-        setTimeout(() => {
-          success.style.display = 'none';
-        }, 500);
-      }, 1000);
-    }   if (successBoard) {
-      successBoard.style.display = 'block';
-      setTimeout(() => successBoard.style.opacity = '1', 10);
-      setTimeout(() => {
-        successBoard.style.opacity = '0';
-        setTimeout(() => {
-          successBoard.style.display = 'none';
-        }, 500);
-      }, 1000);
-    }
+    await getTaskData();    
     if (typeof updateBoardHTML === "function") {
+      const success = document.getElementById('success');
+      const successBoard = document.getElementById('success-board');
+  
+      if (success) {
+        success.style.display = 'block';
+        setTimeout(() => success.style.opacity = '1', 10);
+        setTimeout(() => {
+          success.style.opacity = '0';
+          setTimeout(() => {
+            success.style.display = 'none';
+          }, 500);
+        }, 1000);
+      }   if (successBoard) {
+        successBoard.style.display = 'block';
+        setTimeout(() => successBoard.style.opacity = '1', 10);
+        setTimeout(() => {
+          successBoard.style.opacity = '0';
+          setTimeout(() => {
+            successBoard.style.display = 'none';
+          }, 500);
+        }, 1000);
+      }
+
+      clearTaskForm()
       await updateBoardHTML();
       removeAddTask();       
     }
+    else{
+      window.location.href = "board.html";
+    }
     
-  window.location.href = "board.html"; 
 }
 
 } 
@@ -60,7 +64,7 @@ async function getTaskData() {
     });
   }
   if (!taskProgress) {
-    let taskProgress = 'todo'
+    var taskProgress = 'todo'
     
   }
 
@@ -78,7 +82,7 @@ async function getTaskData() {
  * @param {string} category - The category of the task.
  * @param {Array<Object>} subtasks - The list of subtasks, each containing a title and a "done" status.
  */
-async function postToFireBase(title, description, contacts, date, priority, category, subtasks) {
+async function postToFireBase(title, description, contacts, date, priority, category, subtasks, taskProgress) {
 
   let task = {
       'title': title,
