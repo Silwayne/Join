@@ -33,18 +33,15 @@ function updateIcons(taskId) {
         id = '_' + taskId;
     }
     let input = document.getElementById('subtaskInput' + id);
-    let plus = document.getElementById('plusIcon' + id);
     let check = document.getElementById('checkIcon' + id);
     let cancel = document.getElementById('cancelIcon' + id);
 
-    if (!input || !plus || !check || !cancel) return;
+    if (!input || !check || !cancel) return;
 
     if (input.value.trim() !== '') {
-        plus.classList.add('d_none');
         check.classList.remove('d_none');
         cancel.classList.remove('d_none');
     } else {
-        plus.classList.remove('d_none');
         check.classList.add('d_none');
         cancel.classList.add('d_none');
     }
@@ -165,6 +162,12 @@ function editSubTask(subId, value) {
     input.maxLength = '30'
     input.className = 'subtask-edit-input';
     input.value = oldText;
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            saveSubTask(input.value, subId);
+        }
+    });
 
     let checkImg = document.createElement('img');
     checkImg.src = "/assets/img/check.svg"

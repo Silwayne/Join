@@ -330,6 +330,7 @@ button {
 #task-overlay {
   position: absolute;
   top: 50%;
+  max-height: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
