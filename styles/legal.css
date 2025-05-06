@@ -46,19 +46,12 @@ a:hover {
 @media (max-width: 1250px) {
   .legal-content {
     margin-bottom: 80px;
-  }
-}
-
-
-@media (max-width: 900px) {
-  .legal-content {
-    margin-left: 20px;
-    
+    margin-left: 0;
   }
 }
 
 @media (max-width: 370px) {
   h1 {
-    font-size: 38px}
+    font-size: 38px;
+  }
 }
-

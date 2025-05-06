@@ -1,13 +1,17 @@
 @media (max-width: 2560px) {
   .register-container {
-    right: 5%;
+    right: 25%;
   }
   .logo {
-    left: 5% !important;
+    left: 30% !important;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1440px) {
+  .register-container {
+    right: 5%;
+  }
+
   .logo {
     left: 20% !important;
   }
