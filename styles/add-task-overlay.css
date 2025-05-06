@@ -497,7 +497,7 @@ footer {
 
 @media (max-width: 1440px) {
   #add-task-overlay {
-    overflow: scroll;
+    overflow: scroll !important;
     overflow-x: hidden;
   }
 
@@ -614,7 +614,17 @@ footer {
   }
 }
 
+
 @media (max-width: 650px) {
+  #add-task-overlay {
+    height: auto;
+    max-height: 95vh;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding-bottom: 30px;
+  }
+
+
   .add-task-h1 {
     font-size: 40px;
   }

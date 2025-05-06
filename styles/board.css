@@ -336,7 +336,7 @@ button {
   width: 100%;
   max-width: 525px;
   border-radius: 30px;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 #task-content::-webkit-scrollbar {
@@ -402,7 +402,6 @@ button {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  max-height: 820px;
 }
 
 .due-date {
@@ -592,8 +591,9 @@ textarea {
 .drag-and-drop-box:active {
   transform: rotate(15deg);
 }
+
 .more-indicator {
-  background-color: #00b188 !important; 
+  background-color: #00b188 !important;
   color: white;
   font-weight: bold;
   border-radius: 50%;
