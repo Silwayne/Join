@@ -234,11 +234,12 @@ function validateEmail(email) {
 
 /**
  * Validates a phone number using a regular expression.
+ * Allows numbers with an optional '+' at the beginning and spaces.
  * @param {string} phone - The phone number to validate.
  * @returns {boolean} - Returns true if the phone number is valid, otherwise false.
  */
 function validatePhone(phone) {
-  const phoneRegex = /^[0-9]{10,15}$/; // Accepts 10 to 15 digits
+  const phoneRegex = /^\+?[0-9\s]{10,15}$/; // Optional '+' at the start, allows digits and spaces
   return phoneRegex.test(phone);
 }
 
