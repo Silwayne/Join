@@ -72,6 +72,7 @@ input {
 .overlay-input-description {
   height: 120px;
   text-align: start;
+  max-height: 225px;
 }
 
 .overlay-input-date {
