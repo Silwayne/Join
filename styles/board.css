@@ -74,6 +74,17 @@ input {
   text-align: start;
   max-height: 225px;
 }
+#task-overlay::-webkit-scrollbar {
+  width: 6px;
+  padding-right: 2px;
+}
+#task-overlay::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 6px;
+}
+#task-overlay::-webkit-scrollbar-track {
+  background: transparent;
+}
 
 .overlay-input-date {
   font-family: "Inter", sans-serif;
