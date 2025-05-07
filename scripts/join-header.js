@@ -33,13 +33,19 @@ function renderHeader() {
       <div id="user-dropdown" class="dropdown hidden">
         <a href="./privacy.html">Privacy Policy</a>
         <a href="./legal.html">Legal Notice</a>
-        <a href="./index.html">Log out</a>
+        <a href="#" onclick="logout()">Log out</a>
       </div>
     </div>
   `;
 
   let userName = sessionStorage.getItem("userName") || "Gast";
   createCurrentUserInitials({ name: userName });
+}
+
+function logout() {
+  sessionStorage.clear();         
+  localStorage.removeItem("user"); 
+  window.location.href = "./index.html"; 
 }
 
 /**
