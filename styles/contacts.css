@@ -102,6 +102,7 @@ h2 {
 #left-contact-list {
   overflow-y: auto;
   overflow-x: hidden;
+  padding-bottom: 50px;
   height: calc(100% - 55px);
 }
 
@@ -299,7 +300,7 @@ seperator {
 
 #contact-div {
   overflow: hidden;
-  height: 91vh;
+  height: 93vh;
 }
 
 .phone-number {
