@@ -295,9 +295,6 @@ function editOverlay(id) {
      <div id="subtask-container_${id}" class="input-container subtask-container-edit">
   <input type="text" maxlength="30" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
   <div class="icons">
-    <span id="plusIcon_${id}" class="icon">
-      <img src="/assets/img/Subtasks icons11.svg">
-    </span>
     <span id="checkIcon_${id}" class="icon d_none">
       <img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg">
     </span>
@@ -325,10 +322,17 @@ function hideDropDownContacts() {
     document.getElementById('outer-task-overlay')?.addEventListener('click', closeOverlay, { once: true });
   }, 0);
 }
+function editDate() {
+  let today = new Date();
+  let futureLimit = new Date();
+  futureLimit.setFullYear(today.getFullYear() + 3); 
 
-function editDate(date){
-    const formatted = new Date(date).toISOString().split("T")[0];
-    document.getElementById("edit-date").min = formatted;
+  let formattedMin = today.toISOString().split("T")[0];
+  let formattedMax = futureLimit.toISOString().split("T")[0];
+
+  let input = document.getElementById("edit-date");
+  input.min = formattedMin;
+  input.max = formattedMax;
 }
 
 
