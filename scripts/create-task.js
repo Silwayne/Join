@@ -63,9 +63,9 @@ async function getTaskData() {
       }
     });
   }
-  if (!taskProgress) {
-    let taskProgress = 'todo'
-    
+  
+  if (taskProgress == '') {
+     taskProgress = "todo"
   }
 
  await postToFireBase(title, description, overlayContacts, date, priority, category, subtasks, taskProgress);
