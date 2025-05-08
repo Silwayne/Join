@@ -64,7 +64,7 @@ async function getTaskData() {
     });
   }
   if (!taskProgress) {
-    var taskProgress = 'todo'
+    let taskProgress = 'todo'
     
   }
 
