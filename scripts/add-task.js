@@ -16,6 +16,7 @@ let contactColors = {};
 let priority = 'Medium';
 let overlayContacts = [];
 let names = [];
+let taskProgress = ""
 
 function minDateOfToday(){
     let today = new Date().toISOString().split("T")[0];

@@ -9,8 +9,6 @@ let todos = [];
  * @type {number}
  */
 let currentDraggedTask;
-let taskProgress = ""
-
 /**
  * Initializes the Add Task overlay by rendering the HTML and selecting contacts.
  * @param {string} content - The ID of the container where the HTML will be rendered.
