@@ -16,6 +16,8 @@ let currentDraggedTask;
 function initAddTask(content) {
   initHTML(content);
   selectContacts("dropdownMenu");
+  minDateOfToday()
+
 }
 
 /**
