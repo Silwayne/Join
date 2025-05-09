@@ -18,7 +18,7 @@ let overlayContacts = [];
 let names = [];
 let taskProgress = ""
 
-function minDateOfToday(){
+function minDateOfToday() {
     let today = new Date().toISOString().split("T")[0];
     document.getElementById("due-date").min = today;
 }
@@ -38,7 +38,10 @@ function updateIcons(taskId) {
     let cancel = document.getElementById('cancelIcon' + id);
 
     if (!input || !check || !cancel) return;
+    checkInputValue(input, check, cancel)
 
+}
+function checkInputValue(input, check, cancel) {
     if (input.value.trim() !== '') {
         check.classList.remove('d_none');
         cancel.classList.remove('d_none');
@@ -46,7 +49,9 @@ function updateIcons(taskId) {
         check.classList.add('d_none');
         cancel.classList.add('d_none');
     }
+
 }
+
 
 /**
  * Clears the input field for a subtask and resets the icons.
@@ -81,17 +86,20 @@ function addSubTaskInput(taskId) {
     let subtaskId = generateUniqueSubtaskId();
     let subtaskHTML = createSubtaskHTML(subtaskId, value, taskId);
 
+    createList(subtaskId, subtaskHTML, list, input, taskId)
+}
+function createList(subtaskId, subtaskHTML, list, input, taskId) {
     let li = document.createElement('div');
     li.id = subtaskId;
     li.className = "subtask-entry";
     li.innerHTML = subtaskHTML;
     list.appendChild(li);
     list.classList.remove('d_none');
-
-
     input.value = '';
     updateIcons(taskId);
+
 }
+
 
 /**
  * Formats the subtask ID by appending an underscore if necessary.
@@ -103,29 +111,12 @@ function formatSubtaskId(taskId) {
 }
 
 /**
- * Checks if the subtask limit has been reached.
- * @param {HTMLElement} list - The list element containing subtasks.
- * @returns {boolean} - True if the limit is reached, otherwise false.
- */
-
-/**
- * Displays an error message when the subtask limit is reached.
- * @param {HTMLElement} container - The container element for the subtask input.
- */
-
-
-/**
- * Hides the subtask error message and resets the container state.
- * @param {HTMLElement} container - The container element for the subtask input.
- */
-
-/**
  * Generates a unique ID for a new subtask.
  * @returns {string} - The unique subtask ID.
  */
 function generateUniqueSubtaskId() {
     return 'task_' + (subtaskCounter++);
-  }
+}
 
 /**
  * Deletes a subtask from the task list.
@@ -149,73 +140,50 @@ function deleteSubTask(subtaskId, taskId) {
 function editSubTask(subId, value) {
     let taskItem = document.getElementById(subId);
     if (!taskItem) return;
-
     let oldText = value
-
     taskItem.innerHTML = "";
     taskItem.className = 'subtask-edit-wrapper';
-
-    let wrapper = document.createElement('div');
-    wrapper.className = 'subtask-edit-input-wrapper';
-
     let input = document.createElement('input');
     input.type = 'text';
     input.maxLength = '30'
     input.className = 'subtask-edit-input';
     input.value = oldText;
-
+    addInputevent(input, subId)
+    checkImgOfEditSubtask(input, subId)
+    cancelImgOfEditSubtask(subId)
+}
+function addInputevent(input, subId) {
     input.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             saveSubTask(input.value, subId);
         }
     });
-
+}
+function checkImgOfEditSubtask(input, subId) {
     let checkImg = document.createElement('img');
     checkImg.src = "/assets/img/check.svg"
     checkImg.className = 'subtask-icon check';
     checkImg.onclick = function () {
         saveSubTask(input.value, subId);
     };
-
+}
+function cancelImgOfEditSubtask(subId) {
     let cancelImg = document.createElement('img');
     cancelImg.src = '/assets/img/delete.svg';
     cancelImg.className = 'subtask-icon cancel';
     cancelImg.onclick = function () {
         deleteSubTask(subId);
     };
-
+}
+function setEditSubtaskWrapper(input, checkImg, cancelImg) {
+    let wrapper = document.createElement('div');
+    wrapper.className = 'subtask-edit-input-wrapper';
     wrapper.appendChild(input);
     wrapper.appendChild(checkImg);
     wrapper.appendChild(cancelImg);
     taskItem.appendChild(wrapper);
-
     input.focus();
 }
-
-
-
-
-/**
- * Saves the updated content of a subtask.
- * @param {HTMLInputElement} inputField - The input field containing the updated subtask content.
- * @param {number} taskIdNumber - The ID of the subtask to save.
- */
-function saveSubTask(value, subId) {
-    let taskItem = document.getElementById(subId);
-    taskItem.className = 'subtask-item';
-
-    taskItem.innerHTML = `
-        <div class="subtask-value">
-            <img class="dot" src="/assets/img/Subtasks icons11.svg">
-            <span class="subtask-title">${value}</span>
-        </div>
-        <div class="subtask-icons">
-            <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
-            <img class="subtask-trash-img" src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}')">
-        </div>
-    `;
-}
-
 
 
 /**
@@ -375,7 +343,7 @@ function handleContactSelection(name, checked, id) {
     } else {
         overlayContacts = overlayContacts.filter(n => n !== name);
     }
-    renderAssignedContacts(id); 
+    renderAssignedContacts(id);
 }
 
 /**
@@ -424,7 +392,7 @@ function showContacts(id) {
     let taskId = "";
     if (id !== "contact-container") {
         taskId = "_" + id;
-    }   
+    }
     let inputContainer = document.getElementById('contact-container' + taskId);
     let assignedContainer = document.getElementById('assignedContactsContainer' + taskId);
     let arrow = document.getElementById('arrow-drop-down' + taskId);
@@ -433,69 +401,55 @@ function showContacts(id) {
     if (!inputContainer || !assignedContainer || !arrow || !dropDownMenu) {
         return;
     }
+    assignedContainerClasslist(assignedContainer, arrow, id, inputContainer, dropDownMenu)
+}
+function assignedContainerClasslist(assignedContainer, arrow, id, inputContainer, dropDownMenu) {
     assignedContainer.classList.add('d_none');
-    inputContainer.onclick = null;    
-    arrow.innerHTML = `
-                <span class="arrow-drop-down">
-        <img onclick="hideContacts(event, '${id}')" src="/assets/img/arrow_drop_downaa.svg">
-        </span>
-    `;
-
+    inputContainer.onclick = null;
+    arrow.innerHTML = getArrowHTMLWithHideContacts(id)
     dropDownMenu.classList.remove('d_none');
     addContactCloser(id)
-      
 }
+
 function addContactCloser(id) {
     setTimeout(() => {
-      let taskId = id !== 'contact-container' ? '_' + id : '';
-  
-      let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
-      let arrow = document.getElementById('arrow-drop-down' + taskId);
-      let inputContainer = document.getElementById('contact-container' + taskId);
-  
-      let clickOutsideHandler = function (e) {
-        if (
-          dropDownMenu && !dropDownMenu.contains(e.target) &&
-          arrow && !arrow.contains(e.target) &&
-          inputContainer && !inputContainer.contains(e.target)
-        ) {
-          hideContacts(e, id);
-          document.removeEventListener('pointerdown', clickOutsideHandler);
-        } 
-      };
+        let taskId = id !== 'contact-container' ? '_' + id : '';
+        let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
+        let arrow = document.getElementById('arrow-drop-down' + taskId);
+        let inputContainer = document.getElementById('contact-container' + taskId);
+        let clickOutsideHandler = function (e) {
+            if (
+                dropDownMenu && !dropDownMenu.contains(e.target) && arrow && !arrow.contains(e.target) && inputContainer && !inputContainer.contains(e.target)
+            ) {
+                hideContacts(e, id);
+                document.removeEventListener('pointerdown', clickOutsideHandler);
+            }
+        };
         document.addEventListener('pointerdown', clickOutsideHandler);
     }, 0);
-  }
-  
+}
 
 /**
  * Hides the contact dropdown menu.
  * @param {Event} event - The event object.
  * @param {string} id - The ID of the dropdown menu.
  */
-function hideContacts(event, id) {    
+function hideContacts(event, id) {
     event.stopPropagation();
     let taskId = '';
     if (id !== 'contact-container') {
-        taskId = "_"+id;
+        taskId = "_" + id;
     }
-
-    let container = document.getElementById('assignedContactsContainer' +taskId);
-    let arrow = document.getElementById('arrow-drop-down' +taskId);
-    let dropDownMenu = document.getElementById('dropdownMenu' +taskId);
-    let inputContainer = document.getElementById('contact-container' +taskId);
+    let container = document.getElementById('assignedContactsContainer' + taskId);
+    let arrow = document.getElementById('arrow-drop-down' + taskId);
+    let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
+    let inputContainer = document.getElementById('contact-container' + taskId);
 
     if (container) container.classList.remove('d_none');
     if (arrow) {
-        arrow.innerHTML = `
-                          <span onclick="showContacts(event, '${id}')" class="arrow-drop-down">
-                        <img src="/assets/img/arrow_drop_down.svg">
-                        </span>
-            `;
+        getArrowHTMLWithShowContacts(arrow, id, dropDownMenu, inputContainer)
+
     }
-    if (dropDownMenu) dropDownMenu.classList.add('d_none');
-    if (inputContainer) inputContainer.onclick = () => showContacts(id); 
-        renderAssignedContacts(id);
 }
 
 /**
@@ -507,36 +461,14 @@ function renderAssignedContacts(id) {
     if (id !== "contact-container") {
         taskId = '_' + id;
     }
-
     let container = document.getElementById('assignedContactsContainer' + taskId);
     if (!container) return;
-
     container.innerHTML = '';
-    const maxVisible = 4;
-    const visibleContacts = overlayContacts.slice(0, maxVisible);
-    const hiddenCount = overlayContacts.length - visibleContacts.length;
-
-    for (let name of visibleContacts) {
-        let initials = getInitials(name);
-        let color = contactColors[name] || "#29abe2";
-
-        container.innerHTML += `
-            <div class="user-icon" style="background-color: ${color};">
-                <span class="user-initials">${initials}</span>
-            </div>
-        `;
-    }
-
-    if (hiddenCount > 0) {
-        const hiddenNames = overlayContacts.slice(maxVisible).join(', ');
-        container.innerHTML += `
-            <div class="user-icon more-indicator" title="${hiddenNames}">
-                <span class="user-initials">+${hiddenCount}</span>
-            </div>
-        `;
-    }
+    let maxVisible = 4;
+    let visibleContacts = overlayContacts.slice(0, maxVisible);
+    let hiddenCount = overlayContacts.length - visibleContacts.length;
+    generateVisibleContactsHTML(visibleContacts, container, contactColors, maxVisible, hiddenCount)
 }
-
 
 /**
  * Sets up the "Enter" key functionality for the subtask input field.
@@ -566,7 +498,9 @@ function checkValidations() {
     resetValidation(titleInput);
     resetValidation(dueDateInput);
     resetValidation(categorySelect);
-
+    checkallValidationInputs(isValid, titleInput, dueDateInput, categorySelect)
+}
+function checkallValidationInputs(isValid, titleInput, dueDateInput, categorySelect) {
     if (titleInput.value.trim() === '') {
         showValidationError(titleInput, 'Title is required');
         isValid = false;
@@ -580,4 +514,5 @@ function checkValidations() {
         isValid = false;
     }
     return isValid;
+
 }
