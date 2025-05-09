@@ -225,3 +225,19 @@ function generateVisibleContactsHTML(visibleContacts, container, contactColors, 
     }
 
 }
+
+function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id, isChecked) {
+    let fontColor = "";
+    let checkboxImage;
+    let backgroundClass = "";
+
+    if (isChecked === true) {
+        checkboxImage = "../assets/img/checked.svg";
+        backgroundClass = "blue-background";
+        fontColor = "white-font";
+    } else {
+        checkboxImage = "../assets/img/unchecked.svg";
+        fontColor = "normal-font";
+    }
+    return contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials, bgColor, fontColor, checkboxImage);
+}

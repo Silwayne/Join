@@ -356,21 +356,6 @@ function handleContactSelection(name, checked, id) {
  * @param {boolean} isChecked - Whether the contact is selected.
  * @returns {string} - The HTML string for the contact list item.
  */
-function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id, isChecked) {
-    let fontColor = "";
-    let checkboxImage;
-    let backgroundClass = "";
-
-    if (isChecked === true) {
-        checkboxImage = "../assets/img/checked.svg";
-        backgroundClass = "blue-background";
-        fontColor = "white-font";
-    } else {
-        checkboxImage = "../assets/img/unchecked.svg";
-        fontColor = "normal-font";
-    }
-    return contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials, bgColor, fontColor, checkboxImage);
-}
 
 /**
  * Extracts the initials from a contact's name.
@@ -491,16 +476,18 @@ function setupSubtaskEnterKey(taskId = '') {
  * @returns {boolean} - True if all fields are valid, otherwise false.
  */
 function checkValidations() {
-    let isValid = true;
     let titleInput = document.getElementById('add-task-title');
     let dueDateInput = document.getElementById('due-date');
     let categorySelect = document.getElementById('category');
+
     resetValidation(titleInput);
     resetValidation(dueDateInput);
     resetValidation(categorySelect);
-    checkallValidationInputs(isValid, titleInput, dueDateInput, categorySelect)
+    return checkallValidationInputs(titleInput, dueDateInput, categorySelect);
 }
-function checkallValidationInputs(isValid, titleInput, dueDateInput, categorySelect) {
+function checkallValidationInputs(titleInput, dueDateInput, categorySelect) {
+    let isValid = true;
+
     if (titleInput.value.trim() === '') {
         showValidationError(titleInput, 'Title is required');
         isValid = false;
@@ -513,6 +500,6 @@ function checkallValidationInputs(isValid, titleInput, dueDateInput, categorySel
         showValidationError(categorySelect, 'Category is required');
         isValid = false;
     }
-    return isValid;
 
+    return isValid;
 }

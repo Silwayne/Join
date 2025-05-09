@@ -1,13 +1,4 @@
-/**
- * Array to store all tasks.
- * @type {Array<Object>}
- */
 let todos = [];
-
-/**
- * Stores the ID of the currently dragged task.
- * @type {number}
- */
 let currentDraggedTask;
 /**
  * Initializes the Add Task overlay by rendering the HTML and selecting contacts.
@@ -17,7 +8,6 @@ function initAddTask(content) {
   initHTML(content);
   selectContacts("dropdownMenu");
   minDateOfToday()
-
 }
 
 /**
@@ -213,32 +203,6 @@ async function closeOverlay() {
 }
 
 /**
- * Generates the HTML content for the subtasks in the overlay.
- * @param {Object} task - The task object containing subtasks.
- * @returns {string} - The HTML string for the subtasks.
- */
-function subtaskOverlayContent(task) {
-  if (task.subtasks) {
-    let html = `<h4 class="assigned-to">Subtasks</h4><div class="subtasks-list">`;
-
-    for (let i = 0; i < task.subtasks.length; i++) {
-      let subtask = task.subtasks[i];
-      let imageSrc;
-
-      if (subtask.done === true) {
-        imageSrc = "../assets/img/checked.svg";
-      } else {
-        imageSrc = "../assets/img/unchecked.svg";
-      }
-      html += subtaskOverlayContentHTML(task.id, i, imageSrc, subtask.title)
-    }
-    html += `</div>`;
-    return html;
-  }
-  return "";
-}
-
-/**
  * Toggles the completion status of a subtask and updates its progress.
  * @param {number} taskId - The ID of the task.
  * @param {number} subtaskIndex - The index of the subtask.
@@ -286,26 +250,6 @@ function updateSubtaskProgress(task) {
   }
 }
 
-/**
- * Generates the HTML content for the contacts assigned to a task.
- * @param {Object} task - The task object containing contacts.
- * @returns {string} - The HTML string for the contacts.
- */
-function contactsOverlayContent(task) {
-  if (task.contacts) {
-    let html = `<div class="overlay-contacts-list"><h4 class="assigned-to">Assigned to:</h4></div>`;
-    for (let i = 0; i < task.contacts.length; i++) {
-      let contact = task.contacts[i];
-      let color = contactColors[contact];
-      let initials = getInitials(contact);
-      html += `
-                    <div class="overlay-user-icon"><p class="user-icon" style="background-color:${color};">${initials}</p><h2 class="contact-name">${contact}</h2></div>
-            `;
-    }
-    return html;
-  }
-  return "";
-}
 
 /**
  * Sets the ID of the currently dragged task.
@@ -349,41 +293,7 @@ function checkIfSubtasks(task) {
     }
     return done + "/" + total + " Subtasks";
   }
-
   return "";
-}
-
-/**
- * Filters the priority image based on the task's priority.
- * @param {Object} task - The task object containing the priority.
- * @returns {string} - The HTML string for the priority image.
- */
-function filterPriorityImage(task) {
-  let priority = task.priority.toLowerCase();
-
-  if (priority === "low") {
-    return '<img src="../assets/img/Prio-low-green.svg">';
-  } else if (priority === "medium") {
-    return '<img src="../assets/img/Prio-media-orange.svg">';
-  }
-  return '<img src="../assets/img/Prio-alta-red.svg">';
-}
-
-/**
- * Deletes a task from Firebase and updates the board.
- * @param {number} id - The ID of the task to delete.
- * @async
- */
-async function deleteOverlay(id) {
-  let task = todos.find((t) => t.id === id);
-  if (!task) return;
-
-  await fetch(`${firebaseURL}tasks/${task.firebaseID}.json`, {
-    method: "DELETE",
-  });
-
-  closeOverlay();
-  updateBoardHTML();
 }
 
 /**
@@ -401,24 +311,6 @@ async function saveEditedTask(id) {
   await updateBoardHTML();
 }
 
-/**
- * Builds the updated task object with new values from the overlay.
- * @param {number} id - The ID of the task.
- * @param {Object} oldTask - The original task object.
- * @returns {Object} - The updated task object.
- */
-function buildUpdatedTask(id, oldTask) {
-  return {
-    title: getInputValue(".overlay-input-title"),
-    description: getInputValue(".overlay-input-description"),
-    date: getInputValue(".overlay-input-date"),
-    priority: priority,
-    contacts: overlayContacts,
-    subtasks: collectEditedSubtasks(id, oldTask),
-    status: oldTask.status,
-    category: oldTask.category,
-  };
-}
 
 /**
  * Retrieves the value of an input field based on its selector.
@@ -428,57 +320,6 @@ function buildUpdatedTask(id, oldTask) {
 function getInputValue(selector) {
   let input = document.querySelector(selector);
   return input ? input.value.trim() : '';
-}
-
-/**
- * Collects the edited subtasks from the overlay.
- * @param {number} id - The ID of the task.
- * @param {Object} oldTask - The original task object.
- * @returns {Array<Object>} - The array of updated subtasks.
- */
-function collectEditedSubtasks(id, oldTask) {
-  let subtasks = [];
-  let subtaskContainer = document.getElementById("subtasks_" + id);
-  if (!subtaskContainer) return subtasks;
-  let subtaskElements = subtaskContainer.children;
-  for (let element of subtaskElements) {
-    let valueElement = element.querySelector(".subtask-value");
-    let subtaskText = extractSubtaskText(valueElement);
-
-    if (subtaskText) {
-      let wasDone = findSubtaskDoneStatus(oldTask, subtaskText);
-      subtasks.push({ title: subtaskText, done: wasDone });
-    }
-  }
-  return subtasks;
-}
-
-/**
- * Extracts the text content of a subtask from its HTML element.
- * @param {HTMLElement} valueElement - The HTML element containing the subtask text.
- * @returns {string} - The text content of the subtask.
- */
-function extractSubtaskText(valueElement) {
-  if (!valueElement) return '';
-  return Array.from(valueElement.childNodes)
-    .filter(node => node.nodeType === Node.TEXT_NODE)
-    .map(node => node.textContent.trim())
-    .join('');
-}
-
-/**
- * Finds the "done" status of a subtask in the original task object.
- * @param {Object} oldTask - The original task object.
- * @param {string} subtaskText - The text of the subtask.
- * @returns {boolean} - The "done" status of the subtask.
- */
-function findSubtaskDoneStatus(oldTask, subtaskText) {
-  if (!oldTask.subtasks) return false;
-
-  let matchingSubtask = oldTask.subtasks.find(
-    t => t.title.trim() === subtaskText
-  );
-  return matchingSubtask ? matchingSubtask.done : false;
 }
 
 /**
@@ -501,18 +342,6 @@ function filterTasks() {
 function getSearchInputValue() {
   let input = document.getElementById("searchTasks");
   return input ? input.value.toLowerCase() : '';
-}
-
-/**
- * Filters the tasks based on the search input.
- * @param {string} input - The search input value.
- * @returns {Array<Object>} - The filtered tasks.
- */
-function filterTodos(input) {
-  return todos.filter(task =>
-    task.title.toLowerCase().includes(input) ||
-    task.description.toLowerCase().includes(input)
-  );
 }
 
 /**
@@ -554,15 +383,3 @@ function renderTasksInColumn(taskDiv, tasks) {
  * @param {HTMLElement} taskDiv - The HTML element of the task column.
  * @param {string} status - The status of the task column.
  */
-function renderEmptyStatusMessage(taskDiv, status) {
-  let statusMessages = {
-    todo: "No tasks to do",
-    inprogress: "No tasks in progress",
-    await: "No tasks to await",
-    done: "No tasks done",
-  };
-
-  taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
-  taskDiv.classList.remove("task-columns");
-  taskDiv.classList.add("no-tasks-container");
-}

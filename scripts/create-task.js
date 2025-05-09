@@ -4,44 +4,34 @@
  * @async
  */
 async function createTask() {
-  let isValid = checkValidations();
-  if (isValid) {
-    await getTaskData();    
-    if (typeof updateBoardHTML === "function") {
-      const success = document.getElementById('success');
-      const successBoard = document.getElementById('success-board');
-  
-      if (success) {
-        success.style.display = 'block';
-        setTimeout(() => success.style.opacity = '1', 10);
-        setTimeout(() => {
-          success.style.opacity = '0';
-          setTimeout(() => {
-            success.style.display = 'none';
-          }, 500);
-        }, 1000);
-      }   if (successBoard) {
-        successBoard.style.display = 'block';
-        setTimeout(() => successBoard.style.opacity = '1', 10);
-        setTimeout(() => {
-          successBoard.style.opacity = '0';
-          setTimeout(() => {
-            successBoard.style.display = 'none';
-          }, 500);
-        }, 1000);
-      }
 
+  let isValid = checkValidations();  
+  if (isValid) {
+    await getTaskData();
+    if (typeof updateBoardHTML === "function") {
+      let successBoard = document.getElementById('success-board');
+      generateSuccessBoardTask(successBoard)
       clearTaskForm()
       await updateBoardHTML();
-      removeAddTask();       
+      removeAddTask();
     }
-    else{
+    else {
       window.location.href = "board.html";
     }
-    
+
+  }
 }
 
-} 
+function generateSuccessBoardTask(successBoard) {
+  successBoard.style.display = 'block';
+  setTimeout(() => successBoard.style.opacity = '1', 10);
+  setTimeout(() => {
+    successBoard.style.opacity = '0';
+    setTimeout(() => {
+      successBoard.style.display = 'none';
+    }, 500);
+  }, 1000);
+}
 /**
  * Collects task data from the form, including title, description, due date, category, and subtasks.
  * Posts the collected data to Firebase.
@@ -52,23 +42,22 @@ async function getTaskData() {
   let date = document.getElementById('due-date').value;
   let category = document.getElementById('category').value;
   let subtasks = [];
-
   let list = document.getElementById('subtasks');
   if (list) {
     let subtaskItems = list.querySelectorAll('.subtask-item');
     subtaskItems.forEach(item => {
-      let value = item.querySelector('.subtask-value')?.innerText.trim(); 
+      let value = item.querySelector('.subtask-value')?.innerText.trim();
       if (value && value !== '') {
         subtasks.push({ title: value, done: false });
       }
     });
   }
-  
+
   if (taskProgress == '') {
-     taskProgress = "todo"
+    taskProgress = "todo"
   }
 
- await postToFireBase(title, description, overlayContacts, date, priority, category, subtasks, taskProgress);
+  await postToFireBase(title, description, overlayContacts, date, priority, category, subtasks, taskProgress);
 }
 
 /**
@@ -85,23 +74,21 @@ async function getTaskData() {
 async function postToFireBase(title, description, contacts, date, priority, category, subtasks, taskProgress) {
 
   let task = {
-      'title': title,
-      'description': description,
-      'contacts': contacts,
-      'date': date,
-      'priority': priority,
-      'category': category,
-      'subtasks' :subtasks,
-      'status': taskProgress
-    };
-    
-
-  let response = await fetch(firebaseURL +'tasks.json', {
-      method: 'POST',
-      body: JSON.stringify(task),
-      headers: {
-          'Content-Type': 'application/json'
-      }
+    'title': title,
+    'description': description,
+    'contacts': contacts,
+    'date': date,
+    'priority': priority,
+    'category': category,
+    'subtasks': subtasks,
+    'status': taskProgress
+  };
+  let response = await fetch(firebaseURL + 'tasks.json', {
+    method: 'POST',
+    body: JSON.stringify(task),
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 
 }
