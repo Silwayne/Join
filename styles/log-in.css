@@ -55,10 +55,22 @@ a {
 .logo {
   position: absolute;
   top: 45%;
-  left: 47%;
-  transform: translate(-50%, -50%);
-  transition: all 1s ease-in-out;
+  left: 5%;
+  animation: moveLogo 2s ease-in-out;
   z-index: 1;
+}
+
+@keyframes moveLogo {
+  from {
+    transform: translate(50vh, 50vh); /* Startposition */
+  }
+  to {
+    transform: translate(0%); /* Endposition */
+  }
+}
+
+.logo {
+  animation: moveLogo 2s ease-in-out; /* Animation anwenden */
 }
 
 .login-page {
