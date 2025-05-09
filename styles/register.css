@@ -42,6 +42,17 @@ a {
   position: absolute;
   top: 5%;
   left: 5%;
+  animation: moveLogo 2s ease-in-out;
+  z-index: 999;
+}
+
+@keyframes moveLogo {
+  from {
+    transform: translate(50vh, 50vh);
+  }
+  to {
+    transform: translate(0%);
+  }
 }
 
 .logo-black {
@@ -232,5 +243,11 @@ footer {
 @media (max-width: 425px) {
   .logo {
     left: 10% !important;
+  }
+}
+
+@media (min-width: 2561px) {
+  .logo {
+    left: 30% !important;
   }
 }

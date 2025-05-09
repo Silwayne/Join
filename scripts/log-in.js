@@ -53,7 +53,7 @@ function login() {
   let password = document.getElementById("password").value;
 
   if (!isValidEmail(email)) {
-    showMessage("Please enter a valid email address. An '@' symbol is required.", false);
+    showMessage("Enter a valid email address.", false);
     return;
   }
 

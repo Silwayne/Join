@@ -1,3 +1,9 @@
+@media (min-width: 1921px) {
+  .header-right {
+    right: 50%;
+  }
+}
+
 @media (max-width: 1250px) {
   .d-none {
     display: none;

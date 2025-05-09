@@ -45,7 +45,7 @@ function registerUser() {
   let name = document.getElementById("first-name").value;
   let privacyChecked = document.getElementById("privacy-policy").checked;
 
-  if (!isValidEmail(email)) {showMessage("Please enter a valid email address. An '@' symbol is required."); return;}
+  if (!isValidEmail(email)) {showMessage("Enter a valid email address."); return;}
 
   if (!validatePasswords(password, confirmPassword, privacyChecked)) return;
 

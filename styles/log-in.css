@@ -204,6 +204,7 @@ input:focus-visible {
 .container-button {
   display: flex;
   justify-content: center;
+  align-items: end;
   width: 100%;
   height: 100px;
   gap: 35px;
