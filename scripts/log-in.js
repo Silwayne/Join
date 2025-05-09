@@ -21,6 +21,7 @@ function showMessage(message, isSuccess = false) {
  * Initializes the loader animation on the login page.
  * Adjusts the logo size and position, fades out the loader, and hides it after a delay.
  */
+
 window.onload = function () {
   const loader = document.getElementById("loader");
   const logo = document.getElementById("logo");
@@ -28,14 +29,14 @@ window.onload = function () {
   setTimeout(() => {
     logo.style.width = "100px";
     logo.style.height = "122px";
-    logo.style.top = "2%";
-    logo.style.left = "30%";
+    logo.style.top = "15%";
+    logo.style.left = "20%";
     logo.style.transform = "translate(0, 0)";
     loader.style.opacity = "0";
 
     setTimeout(() => {
       loader.style.display = "none";
-    }, 1000);
+    }, 2000);
   }, 500);
 };
 

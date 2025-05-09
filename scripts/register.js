@@ -33,19 +33,33 @@ function isValidEmail(email) {
   return emailRegex.test(email);
 }
 
+function validateEmailInput() {
+  const emailInput = document.getElementById("email");
+  const errorMessage = document.getElementById("email-error");
+
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim());
+
+  if (!isValid) {
+    errorMessage.classList.add("visible");
+    return false;
+  } else {
+    errorMessage.classList.remove("visible");
+    return true;
+  }
+}
+
 /**
  * Handles the user registration process.
  * Validates the input fields, checks if the email is already registered,
  * and saves the user data to Firebase if valid.
  */
 function registerUser() {
+  if (!validateEmailInput()) return;
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
   let confirmPassword = document.getElementById("confirm-password").value;
   let name = document.getElementById("first-name").value;
   let privacyChecked = document.getElementById("privacy-policy").checked;
-
-  if (!isValidEmail(email)) {showMessage("Enter a valid email address."); return;}
 
   if (!validatePasswords(password, confirmPassword, privacyChecked)) return;
 

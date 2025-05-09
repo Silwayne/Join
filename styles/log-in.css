@@ -52,25 +52,27 @@ a {
   transition: opacity 1s ease-in-out;
 }
 
+.animate-logo {
+  animation: moveLogo 2s ease-in-out forwards;
+}
+
 .logo {
   position: absolute;
-  top: 45%;
-  left: 5%;
-  animation: moveLogo 2s ease-in-out;
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  transition: all 1s ease-in-out;
+  animation: moveLogo 2s ease-in-out forwards; 
   z-index: 1;
 }
 
 @keyframes moveLogo {
   from {
-    transform: translate(50vh, 50vh); /* Startposition */
+    transform: translate(-50%, -50%); 
   }
   to {
-    transform: translate(0%); /* Endposition */
+    transform: translate(-30%, -80%); 
   }
-}
-
-.logo {
-  animation: moveLogo 2s ease-in-out; /* Animation anwenden */
 }
 
 .login-page {
@@ -106,8 +108,8 @@ a {
   justify-content: flex-end;
   gap: 20px;
   position: fixed;
-  top: 5%;
-  right: 25%;
+  top: 10%;
+  right: 15%;
 }
 
 .no-user {
@@ -204,10 +206,10 @@ input:focus-visible {
 .container-button {
   display: flex;
   justify-content: center;
-  align-items: end;
   width: 100%;
   height: 100px;
   gap: 35px;
+  padding-top: 30px;
 }
 
 .log-in-button {

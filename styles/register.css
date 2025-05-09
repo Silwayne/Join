@@ -42,17 +42,7 @@ a {
   position: absolute;
   top: 5%;
   left: 5%;
-  animation: moveLogo 2s ease-in-out;
   z-index: 999;
-}
-
-@keyframes moveLogo {
-  from {
-    transform: translate(50vh, 50vh);
-  }
-  to {
-    transform: translate(0%);
-  }
 }
 
 .logo-black {
@@ -109,7 +99,6 @@ a {
 .log-in-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .container-button {
@@ -153,21 +142,37 @@ a {
 }
 
 input {
-  border: 1px solid #ccc;
   width: 100%;
   height: 45px;
   padding: 12px 38px 12px 21px;
-  gap: 10px;
   border-radius: 10px;
   border: 1px solid;
   opacity: 0.5;
   box-sizing: border-box;
 }
 
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
 input:focus-visible {
   outline: none;
   border: 2px solid #29abe2;
   opacity: 1;
+}
+
+.error-message {
+  color: red;
+  font-size: 16px;
+  margin-top: 4px;
+  margin-left: 4px;
+  height: 18px; 
+  visibility: hidden; 
+}
+
+.error-message.visible {
+  visibility: visible;
 }
 
 .input-container {
@@ -200,6 +205,7 @@ input:focus-visible {
   align-items: center;
   gap: 10px;
   justify-content: center;
+  padding-bottom: 15px;
 }
 
 .checkbox {
@@ -228,6 +234,12 @@ footer {
   color: #29abe2;
 }
 
+@media (min-width: 2561px) {
+  .logo {
+    left: 30% !important;
+  }
+}
+
 @media (max-width: 2560px) {
   .logo {
     left: 30% !important;
@@ -246,8 +258,16 @@ footer {
   }
 }
 
-@media (min-width: 2561px) {
-  .logo {
-    left: 30% !important;
+@media (max-width: 375px) {
+  .error-message {
+    font-size: 14px;
   }
 }
+
+@media (max-width: 320px) {
+  .error-message {
+    font-size: 12px;
+  }
+}
+
+

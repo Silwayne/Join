@@ -1,16 +1,6 @@
-@media (max-width: 2560px) {
-  .logo {
-    left: 30% !important;
-  }
-}
-
 @media (max-width: 1440px) {
   .register-container {
     right: 5%;
-  }
-
-  .logo {
-    left: 5% !important;
   }
 }
 
@@ -31,17 +21,5 @@
 
   .no-user {
     font-size: 18px;
-  }
-}
-
-@media (max-width: 425px) {
-  .logo {
-    left: 10% !important;
-  }
-}
-
-@media (min-width: 2561px) {
-  .logo {
-    left: 30% !important;
   }
 }
