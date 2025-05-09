@@ -54,7 +54,11 @@ async function loadTasksFromFirebase() {
   let tasksBoxContent = [];
   let index = 0;
   let validContactNames = Object.keys(contactColors);
+  await loadFireBaseData(firebaseData, tasksBoxContent, index, validContactNames)
+  todos = tasksBoxContent;
+}
 
+async function loadFireBaseData(firebaseData, tasksBoxContent, index, validContactNames){
   for (let key in firebaseData) {
     let task = firebaseData[key];
     task.id = index;
@@ -68,12 +72,11 @@ async function loadTasksFromFirebase() {
         await updateFireBaseData(task.firebaseID, task);
       }
     }
-
     tasksBoxContent.push(task);
     index++;
   }
+  return tasksBoxContent
 
-  todos = tasksBoxContent;
 }
 
 /**
@@ -86,12 +89,18 @@ async function loadContactColors() {
   let users = await response.json();
   contactColors = {};
   let validNames = [];
+  await loadFromUserFirebase(users, validNames)
 
+}
+async function loadFromUserFirebase(users, validNames) {
   for (let key in users) {
     let user = users[key];
     contactColors[user.name] = user.color;
     validNames.push(user.name);
   }
+  await loadTaskFromFirebase(validNames)
+}
+async function loadTaskFromFirebase(validNames) {
   for (let task of todos) {
     if (Array.isArray(task.contacts)) {
       let originalContacts = [...task.contacts];
@@ -106,6 +115,7 @@ async function loadContactColors() {
     }
   }
 }
+
 
 /**
  * Moves a task to a new status and updates it in Firebase.
@@ -235,12 +245,12 @@ function subtaskOverlayContent(task) {
  * @param {HTMLElement} element - The HTML element representing the subtask.
  */
 function toggleCustomSubtask(taskId, subtaskIndex, element) {
-    let task = todos.find(t => t.id === taskId);
-    if (!task) return;
+  let task = todos.find(t => t.id === taskId);
+  if (!task) return;
 
-    toggleSubtaskDone(task, subtaskIndex, element);
-    updateSubtaskProgress(task);
-    updateFireBaseData(task.firebaseID, task);
+  toggleSubtaskDone(task, subtaskIndex, element);
+  updateSubtaskProgress(task);
+  updateFireBaseData(task.firebaseID, task);
 }
 
 /**
@@ -250,11 +260,11 @@ function toggleCustomSubtask(taskId, subtaskIndex, element) {
  * @param {HTMLElement} element - The HTML element representing the subtask.
  */
 function toggleSubtaskDone(task, subtaskIndex, element) {
-    let img = element.querySelector("img");
-    let subtask = task.subtasks[subtaskIndex];
+  let img = element.querySelector("img");
+  let subtask = task.subtasks[subtaskIndex];
 
-    subtask.done = !subtask.done;
-    img.src = subtask.done ? "../assets/img/checked.svg" : "../assets/img/unchecked.svg";
+  subtask.done = !subtask.done;
+  img.src = subtask.done ? "../assets/img/checked.svg" : "../assets/img/unchecked.svg";
 }
 
 /**
@@ -262,18 +272,18 @@ function toggleSubtaskDone(task, subtaskIndex, element) {
  * @param {Object} task - The task object containing subtasks.
  */
 function updateSubtaskProgress(task) {
-    let doneCount = task.subtasks.filter(subtask => subtask.done).length;
-    let total = task.subtasks.length;
-    let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`);
-    let progressBar = document.getElementById(`progress-${task.id}`);
+  let doneCount = task.subtasks.filter(subtask => subtask.done).length;
+  let total = task.subtasks.length;
+  let subtaskCounter = document.getElementById(`subtaskcounter-${task.id}`);
+  let progressBar = document.getElementById(`progress-${task.id}`);
 
-    if (subtaskCounter) {
-        subtaskCounter.innerHTML = `${doneCount}/${total} Subtasks`;
-    }
-    if (progressBar) {
-        let progress = (doneCount / total) * 100;
-        progressBar.style.width = `${progress}%`;
-    }
+  if (subtaskCounter) {
+    subtaskCounter.innerHTML = `${doneCount}/${total} Subtasks`;
+  }
+  if (progressBar) {
+    let progress = (doneCount / total) * 100;
+    progressBar.style.width = `${progress}%`;
+  }
 }
 
 /**
@@ -382,15 +392,13 @@ async function deleteOverlay(id) {
  * @async
  */
 async function saveEditedTask(id) {
-    let task = todos.find(t => t.id === id);
-    if (!task) return;
-
-    let firebaseID = task.firebaseID;
-    let updatedTask = buildUpdatedTask(id, task);
-
-    await updateFireBaseData(firebaseID, updatedTask);
-    await closeOverlay();
-    await updateBoardHTML();
+  let task = todos.find(t => t.id === id);
+  if (!task) return;
+  let firebaseID = task.firebaseID;
+  let updatedTask = buildUpdatedTask(id, task);
+  await updateFireBaseData(firebaseID, updatedTask);
+  await closeOverlay();
+  await updateBoardHTML();
 }
 
 /**
@@ -400,16 +408,16 @@ async function saveEditedTask(id) {
  * @returns {Object} - The updated task object.
  */
 function buildUpdatedTask(id, oldTask) {
-    return {
-        title: getInputValue(".overlay-input-title"),
-        description: getInputValue(".overlay-input-description"),
-        date: getInputValue(".overlay-input-date"),
-        priority: priority,
-        contacts: overlayContacts,
-        subtasks: collectEditedSubtasks(id, oldTask),
-        status: oldTask.status,
-        category: oldTask.category,
-    };
+  return {
+    title: getInputValue(".overlay-input-title"),
+    description: getInputValue(".overlay-input-description"),
+    date: getInputValue(".overlay-input-date"),
+    priority: priority,
+    contacts: overlayContacts,
+    subtasks: collectEditedSubtasks(id, oldTask),
+    status: oldTask.status,
+    category: oldTask.category,
+  };
 }
 
 /**
@@ -418,8 +426,8 @@ function buildUpdatedTask(id, oldTask) {
  * @returns {string} - The trimmed value of the input field.
  */
 function getInputValue(selector) {
-    let input = document.querySelector(selector);
-    return input ? input.value.trim() : '';
+  let input = document.querySelector(selector);
+  return input ? input.value.trim() : '';
 }
 
 /**
@@ -429,22 +437,20 @@ function getInputValue(selector) {
  * @returns {Array<Object>} - The array of updated subtasks.
  */
 function collectEditedSubtasks(id, oldTask) {
-    let subtasks = [];
-    let subtaskContainer = document.getElementById("subtasks_" + id);
+  let subtasks = [];
+  let subtaskContainer = document.getElementById("subtasks_" + id);
+  if (!subtaskContainer) return subtasks;
+  let subtaskElements = subtaskContainer.children;
+  for (let element of subtaskElements) {
+    let valueElement = element.querySelector(".subtask-value");
+    let subtaskText = extractSubtaskText(valueElement);
 
-    if (!subtaskContainer) return subtasks;
-
-    let subtaskElements = subtaskContainer.children;
-    for (let element of subtaskElements) {
-        let valueElement = element.querySelector(".subtask-value");
-        let subtaskText = extractSubtaskText(valueElement);
-
-        if (subtaskText) {
-            let wasDone = findSubtaskDoneStatus(oldTask, subtaskText);
-            subtasks.push({ title: subtaskText, done: wasDone });
-        }
+    if (subtaskText) {
+      let wasDone = findSubtaskDoneStatus(oldTask, subtaskText);
+      subtasks.push({ title: subtaskText, done: wasDone });
     }
-    return subtasks;
+  }
+  return subtasks;
 }
 
 /**
@@ -453,11 +459,11 @@ function collectEditedSubtasks(id, oldTask) {
  * @returns {string} - The text content of the subtask.
  */
 function extractSubtaskText(valueElement) {
-    if (!valueElement) return '';
-    return Array.from(valueElement.childNodes)
-        .filter(node => node.nodeType === Node.TEXT_NODE)
-        .map(node => node.textContent.trim())
-        .join('');
+  if (!valueElement) return '';
+  return Array.from(valueElement.childNodes)
+    .filter(node => node.nodeType === Node.TEXT_NODE)
+    .map(node => node.textContent.trim())
+    .join('');
 }
 
 /**
@@ -467,25 +473,25 @@ function extractSubtaskText(valueElement) {
  * @returns {boolean} - The "done" status of the subtask.
  */
 function findSubtaskDoneStatus(oldTask, subtaskText) {
-    if (!oldTask.subtasks) return false;
+  if (!oldTask.subtasks) return false;
 
-    let matchingSubtask = oldTask.subtasks.find(
-        t => t.title.trim() === subtaskText
-    );
-    return matchingSubtask ? matchingSubtask.done : false;
+  let matchingSubtask = oldTask.subtasks.find(
+    t => t.title.trim() === subtaskText
+  );
+  return matchingSubtask ? matchingSubtask.done : false;
 }
 
 /**
  * Filters tasks based on the search input and updates the board.
  */
 function filterTasks() {
-    let input = getSearchInputValue();
-    let filteredTasks = filterTodos(input);
-    let statuses = ["todo", "inprogress", "await", "done"];
+  let input = getSearchInputValue();
+  let filteredTasks = filterTodos(input);
+  let statuses = ["todo", "inprogress", "await", "done"];
 
-    statuses.forEach(status => {
-        updateTaskColumn(status, filteredTasks);
-    });
+  statuses.forEach(status => {
+    updateTaskColumn(status, filteredTasks);
+  });
 }
 
 /**
@@ -493,8 +499,8 @@ function filterTasks() {
  * @returns {string} - The lowercase value of the search input.
  */
 function getSearchInputValue() {
-    let input = document.getElementById("searchTasks");
-    return input ? input.value.toLowerCase() : '';
+  let input = document.getElementById("searchTasks");
+  return input ? input.value.toLowerCase() : '';
 }
 
 /**
@@ -503,10 +509,10 @@ function getSearchInputValue() {
  * @returns {Array<Object>} - The filtered tasks.
  */
 function filterTodos(input) {
-    return todos.filter(task =>
-        task.title.toLowerCase().includes(input) ||
-        task.description.toLowerCase().includes(input)
-    );
+  return todos.filter(task =>
+    task.title.toLowerCase().includes(input) ||
+    task.description.toLowerCase().includes(input)
+  );
 }
 
 /**
@@ -515,16 +521,16 @@ function filterTodos(input) {
  * @param {Array<Object>} filteredTasks - The filtered tasks to display.
  */
 function updateTaskColumn(status, filteredTasks) {
-    let taskDiv = document.getElementById("drag-and-drop-" + status);
-    let tasks = filteredTasks.filter(t => t.status === status);
+  let taskDiv = document.getElementById("drag-and-drop-" + status);
+  let tasks = filteredTasks.filter(t => t.status === status);
 
-    if (!taskDiv) return;
+  if (!taskDiv) return;
 
-    if (tasks.length > 0) {
-        renderTasksInColumn(taskDiv, tasks);
-    } else {
-        renderEmptyStatusMessage(taskDiv, status);
-    }
+  if (tasks.length > 0) {
+    renderTasksInColumn(taskDiv, tasks);
+  } else {
+    renderEmptyStatusMessage(taskDiv, status);
+  }
 }
 
 /**
@@ -533,14 +539,14 @@ function updateTaskColumn(status, filteredTasks) {
  * @param {Array<Object>} tasks - The tasks to render.
  */
 function renderTasksInColumn(taskDiv, tasks) {
-    taskDiv.innerHTML = "";
-    taskDiv.classList.remove("no-tasks-container");
-    taskDiv.classList.add("task-columns");
+  taskDiv.innerHTML = "";
+  taskDiv.classList.remove("no-tasks-container");
+  taskDiv.classList.add("task-columns");
 
-    tasks.forEach(task => {
-        let taskHTML = generateTodosHTML(task);
-        taskDiv.innerHTML += taskHTML;
-    });
+  tasks.forEach(task => {
+    let taskHTML = generateTodosHTML(task);
+    taskDiv.innerHTML += taskHTML;
+  });
 }
 
 /**
@@ -549,14 +555,14 @@ function renderTasksInColumn(taskDiv, tasks) {
  * @param {string} status - The status of the task column.
  */
 function renderEmptyStatusMessage(taskDiv, status) {
-    let statusMessages = {
-        todo: "No tasks to do",
-        inprogress: "No tasks in progress",
-        await: "No tasks to await",
-        done: "No tasks done",
-    };
+  let statusMessages = {
+    todo: "No tasks to do",
+    inprogress: "No tasks in progress",
+    await: "No tasks to await",
+    done: "No tasks done",
+  };
 
-    taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
-    taskDiv.classList.remove("task-columns");
-    taskDiv.classList.add("no-tasks-container");
+  taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
+  taskDiv.classList.remove("task-columns");
+  taskDiv.classList.add("no-tasks-container");
 }

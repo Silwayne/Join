@@ -270,15 +270,11 @@ function editOverlay(id) {
         </div>
             <div>
     <p>Prio</p>
-            <div class="prio-box">
-               
+            <div class="prio-box">  
                    ${handlePriority(id)}
-               
-               
+                
             </div>
         </div>
-        
-
         <div class="dropdown overlay-dropdown">
             <p>Assigned to</p>
             <div id="contact-container_${id}" class="input-container" onclick="showContacts(${id})">
@@ -291,7 +287,6 @@ function editOverlay(id) {
             <div class="selectedInitials-edit" id="assignedContactsContainer_${id}"></div>
             <div class=" dropdown-menu-edit d_none" id="dropdownMenu_${id}"></div>
         </div>
-
      <div id="subtask-container_${id}" class="input-container subtask-container-edit">
   <input type="text" maxlength="30" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
   <div class="icons">
