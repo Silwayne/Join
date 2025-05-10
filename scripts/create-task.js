@@ -22,6 +22,11 @@ async function createTask() {
   }
 }
 
+/**
+ * Briefly shows a success animation on the board and fades it out.
+ *
+ * @param {HTMLElement} successBoard - The success element to animate.
+ */
 function generateSuccessBoardTask(successBoard) {
   successBoard.style.display = 'block';
   setTimeout(() => successBoard.style.opacity = '1', 10);
@@ -32,6 +37,7 @@ function generateSuccessBoardTask(successBoard) {
     }, 500);
   }, 1000);
 }
+
 /**
  * Collects task data from the form, including title, description, due date, category, and subtasks.
  * Posts the collected data to Firebase.
@@ -92,3 +98,184 @@ async function postToFireBase(title, description, contacts, date, priority, cate
   });
 
 }
+
+/**
+ * Validates the Add Task form fields.
+ * @returns {boolean} - True if all fields are valid, otherwise false.
+ */
+function checkValidations() {
+    let titleInput = document.getElementById('add-task-title');
+    let dueDateInput = document.getElementById('due-date');
+    let categorySelect = document.getElementById('category');
+
+    resetValidation(titleInput);
+    resetValidation(dueDateInput);
+    resetValidation(categorySelect);
+    return checkallValidationInputs(titleInput, dueDateInput, categorySelect);
+}
+/**
+ * Validates required form inputs for title, due date, and category.
+ * Displays error messages if fields are empty.
+ *
+ * @param {HTMLInputElement} titleInput - The input field for the task title.
+ * @param {HTMLInputElement} dueDateInput - The input field for the due date.
+ * @param {HTMLSelectElement} categorySelect - The select field for the category.
+ * @returns {boolean} True if all inputs are valid, otherwise false.
+ */
+function checkallValidationInputs(titleInput, dueDateInput, categorySelect) {
+    let isValid = true;
+
+    if (titleInput.value.trim() === '') {
+        showValidationError(titleInput, 'Title is required');
+        isValid = false;
+    }
+    if (dueDateInput.value.trim() === '') {
+        showValidationError(dueDateInput, 'Due date is required');
+        isValid = false;
+    }
+    if (categorySelect.value.trim() === '') {
+        showValidationError(categorySelect, 'Category is required');
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+
+/**
+ * Sets the priority of a task to "Urgent".
+ * @param {string} elementId - The ID of the priority element.
+ */
+function swapToUrgent(elementId) {
+    let element = document.getElementById(elementId);
+    element.classList.add('prio-urgent');
+    element.classList.remove('prio-medium', 'prio-low');
+    element.classList.add('bold');
+
+    clearPriorityStyles(getSiblingId(elementId, 'medium'));
+    clearPriorityStyles(getSiblingId(elementId, 'low'));
+
+    element.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p>`;
+    priority = 'Urgent';
+}
+
+/**
+ * Sets the priority of a task to "Medium".
+ * @param {string} elementId - The ID of the priority element.
+ */
+function swapToMedium(elementId) {
+    let element = document.getElementById(elementId);
+    element.classList.add('prio-medium');
+    element.classList.remove('prio-urgent', 'prio-low');
+    element.classList.add('bold');
+
+    clearPriorityStyles(getSiblingId(elementId, 'urgent'));
+    clearPriorityStyles(getSiblingId(elementId, 'low'));
+
+    element.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-white.svg"></p>`;
+    priority = 'Medium';
+}
+
+/**
+ * Sets the priority of a task to "Low".
+ * @param {string} elementId - The ID of the priority element.
+ */
+function swapToLow(elementId) {
+    let element = document.getElementById(elementId);
+    element.classList.add('prio-low');
+    element.classList.remove('prio-urgent', 'prio-medium');
+    element.classList.add('bold');
+
+    clearPriorityStyles(getSiblingId(elementId, 'urgent'));
+    clearPriorityStyles(getSiblingId(elementId, 'medium'));
+
+    element.innerHTML = `<p>Low <img src="/assets/img/Prio-low-white.svg"></p>`;
+    priority = 'Low';
+}
+
+/**
+ * Adds a one-time global event listener that closes the contact dropdown
+ * when clicking outside of it.
+ *
+ * @param {string} id - The task or container ID used to resolve related elements.
+ */
+function addContactCloser(id) {
+    setTimeout(() => {
+        let taskId = id !== 'contact-container' ? '_' + id : '';
+        let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
+        let arrow = document.getElementById('arrow-drop-down' + taskId);
+        let inputContainer = document.getElementById('contact-container' + taskId);
+
+        let clickOutsideHandler = function (e) {
+            if (
+                dropDownMenu && !dropDownMenu.contains(e.target) &&
+                arrow && !arrow.contains(e.target) &&
+                inputContainer && !inputContainer.contains(e.target)
+            ) {
+                hideContacts(e, id);
+                document.removeEventListener('pointerdown', clickOutsideHandler);
+            }
+        };
+
+        document.addEventListener('pointerdown', clickOutsideHandler);
+    }, 0);
+}
+
+
+/**
+ * Hides the contact dropdown menu.
+ * @param {Event} event - The event object.
+ * @param {string} id - The ID of the dropdown menu.
+ */
+function hideContacts(event, id) {
+    event.stopPropagation();
+    let taskId = '';
+    if (id !== 'contact-container') {
+        taskId = "_" + id;
+    }
+    let container = document.getElementById('assignedContactsContainer' + taskId);
+    let arrow = document.getElementById('arrow-drop-down' + taskId);
+    let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
+    let inputContainer = document.getElementById('contact-container' + taskId);
+
+    if (container) container.classList.remove('d_none');
+    if (arrow) {
+        getArrowHTMLWithShowContacts(arrow, id, dropDownMenu, inputContainer)
+
+    }
+}
+
+/**
+ * Renders the assigned contacts in the container.
+ * @param {string} id - The ID of the container.
+ */
+function renderAssignedContacts(id) {
+    let taskId = '';
+    if (id !== "contact-container") {
+        taskId = '_' + id;
+    }
+    let container = document.getElementById('assignedContactsContainer' + taskId);
+    if (!container) return;
+    container.innerHTML = '';
+    let maxVisible = 4;
+    let visibleContacts = overlayContacts.slice(0, maxVisible);
+    let hiddenCount = overlayContacts.length - visibleContacts.length;
+    generateVisibleContactsHTML(visibleContacts, container, contactColors, maxVisible, hiddenCount)
+}
+
+/**
+ * Sets up the "Enter" key functionality for the subtask input field.
+ * @param {string} [taskId=''] - The ID of the task or subtask.
+ */
+function setupSubtaskEnterKey(taskId = '') {
+    let input = document.getElementById('subtaskInput' + taskId);
+    if (!input) return;
+
+    input.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            addSubTaskInput(taskId);
+        }
+    });
+}
+

@@ -195,11 +195,20 @@ function filterTodos(input) {
     task.description.toLowerCase().includes(input)
   );
 }
+/**
+ * Sets a one-time click event listener on the task overlay
+ * to trigger the overlay close function.
+ */
 function hideDropDownContacts() {
   setTimeout(() => {
     document.getElementById('outer-task-overlay')?.addEventListener('click', closeOverlay, { once: true });
   }, 0);
 }
+
+/**
+ * Sets the minimum and maximum selectable dates on the date input.
+ * Min is today, max is 3 years from today.
+ */
 function editDate() {
   let today = new Date();
   let futureLimit = new Date();
@@ -210,6 +219,7 @@ function editDate() {
   input.min = formattedMin;
   input.max = formattedMax;
 }
+
 
 /**
  * Extracts the text content of a subtask from its HTML element.

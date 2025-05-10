@@ -196,7 +196,14 @@ function generateTodosHTML(task) {
   `;
 
 }
-
+/**
+ * Generates HTML for displaying a limited number of contact icons,
+ * with an indicator if there are more contacts.
+ *
+ * @param {Object} task - The task object containing a `contacts` array.
+ * @param {number} [maxVisible=4] - Max number of contacts to display.
+ * @returns {string} HTML string with contact icons and optional overflow indicator.
+ */
 function getLimitedContactsHTML(task, maxVisible = 4) {
     let html = '';
     if (!task.contacts || task.contacts.length === 0) return html;
@@ -224,6 +231,7 @@ function getLimitedContactsHTML(task, maxVisible = 4) {
 
     return html;
 }
+
 
 
 
@@ -282,7 +290,12 @@ function editTaskPosition(event, id) {
     tooltip.innerHTML = html;
     tooltip.classList.toggle("d_none");
 }
-
+/**
+ * Displays a placeholder message in the task column when no tasks exist for a given status.
+ *
+ * @param {HTMLElement} taskDiv - The container where the message should be rendered.
+ * @param {string} status - The task status key ('todo', 'inprogress', 'await', 'done').
+ */
 function renderEmptyStatusMessage(taskDiv, status) {
     let statusMessages = {
         todo: "No tasks to do",
@@ -295,6 +308,7 @@ function renderEmptyStatusMessage(taskDiv, status) {
     taskDiv.classList.remove("task-columns");
     taskDiv.classList.add("no-tasks-container");
 }
+
 /**
  * Generates the HTML content for the subtasks in the overlay.
  * @param {Object} task - The task object containing subtasks.

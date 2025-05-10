@@ -18,16 +18,18 @@ let overlayContacts = [];
 let names = [];
 let taskProgress = ""
 
+/**
+ * Sets the minimum selectable date on the due date input to today's date.
+ */
 function minDateOfToday() {
     let today = new Date().toISOString().split("T")[0];
     document.getElementById("due-date").min = today;
 }
+
 /**
  * Updates the visibility of icons (plus, check, cancel) based on the input value.
  * @param {string|number} taskId - The ID of the task or subtask.
  */
-
-
 function updateIcons(taskId) {
     let id = '';
     if (taskId === 0 || taskId) {
@@ -41,6 +43,13 @@ function updateIcons(taskId) {
     checkInputValue(input, check, cancel)
 
 }
+/**
+ * Toggles visibility of check and cancel icons based on input field content.
+ *
+ * @param {HTMLInputElement} input - The input field to check.
+ * @param {HTMLElement} check - The check icon element.
+ * @param {HTMLElement} cancel - The cancel icon element.
+ */
 function checkInputValue(input, check, cancel) {
     if (input.value.trim() !== '') {
         check.classList.remove('d_none');
@@ -49,7 +58,6 @@ function checkInputValue(input, check, cancel) {
         check.classList.add('d_none');
         cancel.classList.add('d_none');
     }
-
 }
 
 
@@ -88,6 +96,16 @@ function addSubTaskInput(taskId) {
 
     createList(subtaskId, subtaskHTML, list, input, taskId)
 }
+/**
+ * Creates a subtask entry element and appends it to the list.
+ * Also resets the input and updates related icons.
+ *
+ * @param {string} subtaskId - Unique ID for the subtask element.
+ * @param {string} subtaskHTML - Inner HTML content of the subtask.
+ * @param {HTMLElement} list - The container to which the subtask is added.
+ * @param {HTMLInputElement} input - The input field to reset.
+ * @param {string} taskId - ID of the parent task (used to update icons).
+ */
 function createList(subtaskId, subtaskHTML, list, input, taskId) {
     let li = document.createElement('div');
     li.id = subtaskId;
@@ -97,7 +115,6 @@ function createList(subtaskId, subtaskHTML, list, input, taskId) {
     list.classList.remove('d_none');
     input.value = '';
     updateIcons(taskId);
-
 }
 
 
@@ -132,7 +149,6 @@ function deleteSubTask(subtaskId, taskId) {
     }
 
 }
-
 /**
  * Edits an existing subtask by replacing its content with an input field.
  * @param {number} taskIdNumber - The ID of the subtask to edit.
@@ -152,6 +168,12 @@ function editSubTask(subId, value) {
     checkImgOfEditSubtask(input, subId)
     cancelImgOfEditSubtask(subId)
 }
+/**
+ * Adds an event listener to the input that saves the subtask on Enter key press.
+ *
+ * @param {HTMLInputElement} input - The input field to listen on.
+ * @param {string} subId - The ID to use when saving the subtask.
+ */
 function addInputevent(input, subId) {
     input.addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
@@ -159,14 +181,29 @@ function addInputevent(input, subId) {
         }
     });
 }
+
+/**
+ * Creates a check icon for editing a subtask and assigns a click handler
+ * to save the subtask when clicked.
+ *
+ * @param {HTMLInputElement} input - The input field containing the subtask text.
+ * @param {string} subId - The ID used when saving the subtask.
+ */
 function checkImgOfEditSubtask(input, subId) {
     let checkImg = document.createElement('img');
-    checkImg.src = "/assets/img/check.svg"
+    checkImg.src = "/assets/img/check.svg";
     checkImg.className = 'subtask-icon check';
     checkImg.onclick = function () {
         saveSubTask(input.value, subId);
     };
 }
+
+/**
+ * Creates a cancel (delete) icon for editing a subtask and assigns a click handler
+ * to delete the subtask when clicked.
+ *
+ * @param {string} subId - The ID of the subtask to delete.
+ */
 function cancelImgOfEditSubtask(subId) {
     let cancelImg = document.createElement('img');
     cancelImg.src = '/assets/img/delete.svg';
@@ -175,6 +212,15 @@ function cancelImgOfEditSubtask(subId) {
         deleteSubTask(subId);
     };
 }
+
+/**
+ * Wraps the subtask input and action icons into a container,
+ * appends it to the task item, and focuses the input.
+ *
+ * @param {HTMLInputElement} input - The input element for the subtask.
+ * @param {HTMLElement} checkImg - The check icon element.
+ * @param {HTMLElement} cancelImg - The cancel (delete) icon element.
+ */
 function setEditSubtaskWrapper(input, checkImg, cancelImg) {
     let wrapper = document.createElement('div');
     wrapper.className = 'subtask-edit-input-wrapper';
@@ -183,58 +229,6 @@ function setEditSubtaskWrapper(input, checkImg, cancelImg) {
     wrapper.appendChild(cancelImg);
     taskItem.appendChild(wrapper);
     input.focus();
-}
-
-
-/**
- * Sets the priority of a task to "Urgent".
- * @param {string} elementId - The ID of the priority element.
- */
-function swapToUrgent(elementId) {
-    let element = document.getElementById(elementId);
-    element.classList.add('prio-urgent');
-    element.classList.remove('prio-medium', 'prio-low');
-    element.classList.add('bold');
-
-    clearPriorityStyles(getSiblingId(elementId, 'medium'));
-    clearPriorityStyles(getSiblingId(elementId, 'low'));
-
-    element.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p>`;
-    priority = 'Urgent';
-}
-
-/**
- * Sets the priority of a task to "Medium".
- * @param {string} elementId - The ID of the priority element.
- */
-function swapToMedium(elementId) {
-    let element = document.getElementById(elementId);
-    element.classList.add('prio-medium');
-    element.classList.remove('prio-urgent', 'prio-low');
-    element.classList.add('bold');
-
-    clearPriorityStyles(getSiblingId(elementId, 'urgent'));
-    clearPriorityStyles(getSiblingId(elementId, 'low'));
-
-    element.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-white.svg"></p>`;
-    priority = 'Medium';
-}
-
-/**
- * Sets the priority of a task to "Low".
- * @param {string} elementId - The ID of the priority element.
- */
-function swapToLow(elementId) {
-    let element = document.getElementById(elementId);
-    element.classList.add('prio-low');
-    element.classList.remove('prio-urgent', 'prio-medium');
-    element.classList.add('bold');
-
-    clearPriorityStyles(getSiblingId(elementId, 'urgent'));
-    clearPriorityStyles(getSiblingId(elementId, 'medium'));
-
-    element.innerHTML = `<p>Low <img src="/assets/img/Prio-low-white.svg"></p>`;
-    priority = 'Low';
 }
 
 /**
@@ -271,6 +265,12 @@ function getSiblingId(currentId, targetPriority) {
     }
 }
 
+/**
+ * Fetches contacts from Firebase and renders them in the dropdown menu for a given task.
+ *
+ * @async
+ * @param {string} id - The ID of the task for which to load contacts.
+ */
 async function selectContacts(id) {
     let firebaseAnswer = await fetchContactsFromFirebase();
     let taskId = formatTaskId(id);
@@ -280,10 +280,18 @@ async function selectContacts(id) {
     renderContacts(firebaseAnswer, dropDownMenu, id);
 }
 
+
+/**
+ * Fetches all user contact data from Firebase.
+ *
+ * @async
+ * @returns {Promise<Object>} A promise that resolves to the users object from Firebase.
+ */
 async function fetchContactsFromFirebase() {
     let response = await fetch(firebaseURL + 'users.json');
     return await response.json();
 }
+
 
 /**
  * Formats the task ID for dropdown menus.
@@ -347,17 +355,6 @@ function handleContactSelection(name, checked, id) {
 }
 
 /**
- * Generates the HTML for a contact list item.
- * @param {string} contactInitials - The initials of the contact.
- * @param {string} contactName - The name of the contact.
- * @param {number} idNumber - The ID of the contact.
- * @param {string} bgColor - The background color of the contact icon.
- * @param {string} id - The ID of the dropdown menu.
- * @param {boolean} isChecked - Whether the contact is selected.
- * @returns {string} - The HTML string for the contact list item.
- */
-
-/**
  * Extracts the initials from a contact's name.
  * @param {string} name - The full name of the contact.
  * @returns {string} - The initials of the contact.
@@ -388,118 +385,22 @@ function showContacts(id) {
     }
     assignedContainerClasslist(assignedContainer, arrow, id, inputContainer, dropDownMenu)
 }
+/**
+ * Hides the assigned contacts container, resets the click handler,
+ * changes the arrow icon, and shows the contact dropdown menu.
+ *
+ * @param {HTMLElement} assignedContainer - The element displaying assigned contacts.
+ * @param {HTMLElement} arrow - The arrow icon element.
+ * @param {string} id - The task ID used for dynamic references.
+ * @param {HTMLElement} inputContainer - The container that was previously clickable.
+ * @param {HTMLElement} dropDownMenu - The dropdown menu to show.
+ */
 function assignedContainerClasslist(assignedContainer, arrow, id, inputContainer, dropDownMenu) {
     assignedContainer.classList.add('d_none');
     inputContainer.onclick = null;
-    arrow.innerHTML = getArrowHTMLWithHideContacts(id)
+    arrow.innerHTML = getArrowHTMLWithHideContacts(id);
     dropDownMenu.classList.remove('d_none');
-    addContactCloser(id)
+    addContactCloser(id);
 }
 
-function addContactCloser(id) {
-    setTimeout(() => {
-        let taskId = id !== 'contact-container' ? '_' + id : '';
-        let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
-        let arrow = document.getElementById('arrow-drop-down' + taskId);
-        let inputContainer = document.getElementById('contact-container' + taskId);
-        let clickOutsideHandler = function (e) {
-            if (
-                dropDownMenu && !dropDownMenu.contains(e.target) && arrow && !arrow.contains(e.target) && inputContainer && !inputContainer.contains(e.target)
-            ) {
-                hideContacts(e, id);
-                document.removeEventListener('pointerdown', clickOutsideHandler);
-            }
-        };
-        document.addEventListener('pointerdown', clickOutsideHandler);
-    }, 0);
-}
 
-/**
- * Hides the contact dropdown menu.
- * @param {Event} event - The event object.
- * @param {string} id - The ID of the dropdown menu.
- */
-function hideContacts(event, id) {
-    event.stopPropagation();
-    let taskId = '';
-    if (id !== 'contact-container') {
-        taskId = "_" + id;
-    }
-    let container = document.getElementById('assignedContactsContainer' + taskId);
-    let arrow = document.getElementById('arrow-drop-down' + taskId);
-    let dropDownMenu = document.getElementById('dropdownMenu' + taskId);
-    let inputContainer = document.getElementById('contact-container' + taskId);
-
-    if (container) container.classList.remove('d_none');
-    if (arrow) {
-        getArrowHTMLWithShowContacts(arrow, id, dropDownMenu, inputContainer)
-
-    }
-}
-
-/**
- * Renders the assigned contacts in the container.
- * @param {string} id - The ID of the container.
- */
-function renderAssignedContacts(id) {
-    let taskId = '';
-    if (id !== "contact-container") {
-        taskId = '_' + id;
-    }
-    let container = document.getElementById('assignedContactsContainer' + taskId);
-    if (!container) return;
-    container.innerHTML = '';
-    let maxVisible = 4;
-    let visibleContacts = overlayContacts.slice(0, maxVisible);
-    let hiddenCount = overlayContacts.length - visibleContacts.length;
-    generateVisibleContactsHTML(visibleContacts, container, contactColors, maxVisible, hiddenCount)
-}
-
-/**
- * Sets up the "Enter" key functionality for the subtask input field.
- * @param {string} [taskId=''] - The ID of the task or subtask.
- */
-function setupSubtaskEnterKey(taskId = '') {
-    let input = document.getElementById('subtaskInput' + taskId);
-    if (!input) return;
-
-    input.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            addSubTaskInput(taskId);
-        }
-    });
-}
-
-/**
- * Validates the Add Task form fields.
- * @returns {boolean} - True if all fields are valid, otherwise false.
- */
-function checkValidations() {
-    let titleInput = document.getElementById('add-task-title');
-    let dueDateInput = document.getElementById('due-date');
-    let categorySelect = document.getElementById('category');
-
-    resetValidation(titleInput);
-    resetValidation(dueDateInput);
-    resetValidation(categorySelect);
-    return checkallValidationInputs(titleInput, dueDateInput, categorySelect);
-}
-function checkallValidationInputs(titleInput, dueDateInput, categorySelect) {
-    let isValid = true;
-
-    if (titleInput.value.trim() === '') {
-        showValidationError(titleInput, 'Title is required');
-        isValid = false;
-    }
-    if (dueDateInput.value.trim() === '') {
-        showValidationError(dueDateInput, 'Due date is required');
-        isValid = false;
-    }
-    if (categorySelect.value.trim() === '') {
-        showValidationError(categorySelect, 'Category is required');
-        isValid = false;
-    }
-
-    return isValid;
-}

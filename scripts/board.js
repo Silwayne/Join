@@ -48,11 +48,23 @@ async function loadTasksFromFirebase() {
   todos = tasksBoxContent;
 }
 
-async function loadFireBaseData(firebaseData, tasksBoxContent, index, validContactNames){
+/**
+ * Loads tasks from Firebase data, assigns IDs, filters invalid contacts,
+ * updates Firebase if necessary, and pushes tasks into the task list.
+ *
+ * @async
+ * @param {Object} firebaseData - Raw data from Firebase.
+ * @param {Array} tasksBoxContent - Array to store valid tasks.
+ * @param {number} index - Starting index for task IDs.
+ * @param {Array<string>} validContactNames - List of allowed contact names.
+ * @returns {Promise<Array>} Updated array of tasks.
+ */
+async function loadFireBaseData(firebaseData, tasksBoxContent, index, validContactNames) {
   for (let key in firebaseData) {
     let task = firebaseData[key];
     task.id = index;
     task.firebaseID = key;
+
     if (task.contacts && Array.isArray(task.contacts)) {
       let originalContacts = [...task.contacts];
       task.contacts = task.contacts.filter((name) =>
@@ -62,12 +74,13 @@ async function loadFireBaseData(firebaseData, tasksBoxContent, index, validConta
         await updateFireBaseData(task.firebaseID, task);
       }
     }
+
     tasksBoxContent.push(task);
     index++;
   }
-  return tasksBoxContent
-
+  return tasksBoxContent;
 }
+
 
 /**
  * Loads contact colors from Firebase and updates the `contactColors` object.
@@ -82,14 +95,29 @@ async function loadContactColors() {
   await loadFromUserFirebase(users, validNames)
 
 }
+/**
+ * Loads user data from Firebase, stores their colors,
+ * collects valid names, and loads their tasks.
+ *
+ * @async
+ * @param {Object} users - Firebase user data.
+ * @param {Array<string>} validNames - Array to store valid user names.
+ */
 async function loadFromUserFirebase(users, validNames) {
   for (let key in users) {
     let user = users[key];
     contactColors[user.name] = user.color;
     validNames.push(user.name);
   }
-  await loadTaskFromFirebase(validNames)
+  await loadTaskFromFirebase(validNames);
 }
+
+/**
+ * Filters invalid contact names from tasks and updates Firebase if needed.
+ *
+ * @async
+ * @param {Array<string>} validNames - List of allowed contact names.
+ */
 async function loadTaskFromFirebase(validNames) {
   for (let task of todos) {
     if (Array.isArray(task.contacts)) {

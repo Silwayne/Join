@@ -126,8 +126,19 @@ function createSubtaskHTML(subId, value, taskId) {
 
 
 
+/**
+ * Generates the HTML template for a single contact list item.
+ *
+ * @param {string} backgroundClass - CSS class for background highlighting.
+ * @param {string|number} idNumber - Unique identifier for the contact element.
+ * @param {string} contactName - Full name of the contact.
+ * @param {string} contactInitials - Initials to display in the icon.
+ * @param {string} bgColor - Background color for the icon.
+ * @param {string} fontColor - CSS class for the font color.
+ * @param {string} checkboxImage - Path to the checkbox image.
+ * @returns {string} The generated HTML string for the contact list item.
+ */
 function contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials, bgColor, fontColor, checkboxImage) {
-
     return `
     <div class="grey-contact-list contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
         <label class="contact-list-label">
@@ -142,6 +153,19 @@ function contactListHTMLTemplate(backgroundClass, idNumber, contactName, contact
     </div>
 `;
 }
+
+/**
+ * Generates an HTML template for a contact list item using dynamic color mapping.
+ *
+ * @param {string} backgroundClass - CSS class for background highlighting.
+ * @param {string|number} idNumber - Unique identifier for the contact element.
+ * @param {string} contactName - Full name of the contact.
+ * @param {Object} contactColors - Object mapping contact names to background colors.
+ * @param {string} contactInitials - Initials to display in the icon.
+ * @param {string} fontColor - CSS class for the font color.
+ * @param {string} checkboxImage - Path to the checkbox image.
+ * @returns {string} The generated HTML string for the contact list item.
+ */
 function contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName, contactColors, contactInitials, fontColor, checkboxImage) {
     return `
     <div class="contact-list ${backgroundClass}" id="background_${idNumber}" onclick="toggleContactCheckbox(this, '${contactName}', '${idNumber}')">
@@ -157,6 +181,7 @@ function contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName,
     </div>
 `;
 }
+
 
 /**
  * Saves the updated content of a subtask.
@@ -178,14 +203,29 @@ function saveSubTask(value, subId) {
         </div>
     `;
 }
+/**
+ * Returns the HTML string for a dropdown arrow icon that hides the contact menu when clicked.
+ *
+ * @param {string} id - The task or contact container ID used for the hide action.
+ * @returns {string} HTML string containing the clickable dropdown arrow.
+ */
 function getArrowHTMLWithHideContacts(id) {
     return `
                 <span class="arrow-drop-down">
         <img onclick="hideContacts(event, '${id}')" src="/assets/img/arrow_drop_downaa.svg">
         </span>
     `;
-
 }
+
+/**
+ * Updates the arrow element to show the contact dropdown when clicked,
+ * hides the dropdown menu if present, rebinds the click handler, and renders assigned contacts.
+ *
+ * @param {HTMLElement} arrow - The arrow container element to update.
+ * @param {string} id - The task or contact container ID used for event binding.
+ * @param {HTMLElement} dropDownMenu - The dropdown menu element (optional).
+ * @param {HTMLElement} inputContainer - The input container to rebind the click event (optional).
+ */
 function getArrowHTMLWithShowContacts(arrow, id, dropDownMenu, inputContainer) {
     arrow.innerHTML = `
                           <span onclick="showContacts(event, '${id}')" class="arrow-drop-down">
@@ -196,18 +236,37 @@ function getArrowHTMLWithShowContacts(arrow, id, dropDownMenu, inputContainer) {
     if (dropDownMenu) dropDownMenu.classList.add('d_none');
     if (inputContainer) inputContainer.onclick = () => showContacts(id);
     renderAssignedContacts(id);
-
-}
-function generateHiddenNamesCounter(overlayContacts, maxVisible, hiddenCount, container){
- let hiddenNames = overlayContacts.slice(maxVisible).join(', ');
-        container.innerHTML += `
-            <div class="user-icon more-indicator" title="${hiddenNames}">
-                <span class="user-initials">+${hiddenCount}</span>
-            </div>
-        `;
 }
 
-function generateVisibleContactsHTML(visibleContacts, container, contactColors, maxVisible, hiddenNames, hiddenCount) {
+/**
+ * Appends a contact overflow indicator to the container, showing how many contacts are hidden,
+ * and sets a tooltip with the hidden contact names.
+ *
+ * @param {Array<string>} overlayContacts - List of all contact names.
+ * @param {number} maxVisible - Maximum number of visible contacts.
+ * @param {number} hiddenCount - Number of hidden contacts.
+ * @param {HTMLElement} container - The container where the indicator is appended.
+ */
+function generateHiddenNamesCounter(overlayContacts, maxVisible, hiddenCount, container) {
+    let hiddenNames = overlayContacts.slice(maxVisible).join(', ');
+    container.innerHTML += `
+        <div class="user-icon more-indicator" title="${hiddenNames}">
+            <span class="user-initials">+${hiddenCount}</span>
+        </div>
+    `;
+}
+
+/**
+ * Renders the visible contact icons and adds a hidden names indicator if needed.
+ *
+ * @param {Array<string>} visibleContacts - Array of contact names to display.
+ * @param {HTMLElement} container - The HTML element where the contacts are rendered.
+ * @param {Object} contactColors - Map of contact names to their icon background colors.
+ * @param {number} maxVisible - Maximum number of contacts to show before hiding the rest.
+ * @param {Array<string>} overlayContacts - Full list of contact names (used for hidden tooltip).
+ * @param {number} hiddenCount - Number of hidden contacts to display as +X.
+ */
+function generateVisibleContactsHTML(visibleContacts, container, contactColors, maxVisible, overlayContacts, hiddenCount) {
     for (let name of visibleContacts) {
         let initials = getInitials(name);
         let color = contactColors[name] || "#29abe2";
@@ -220,12 +279,22 @@ function generateVisibleContactsHTML(visibleContacts, container, contactColors, 
     }
 
     if (hiddenCount > 0) {
-        generateHiddenNamesCounter(hiddenNames, overlayContacts, maxVisible, hiddenCount, container)
-
+        generateHiddenNamesCounter(overlayContacts, maxVisible, hiddenCount, container);
     }
-
 }
 
+
+/**
+ * Builds the contact list item HTML based on selection state.
+ *
+ * @param {string} contactInitials - Initials to show in the contact icon.
+ * @param {string} contactName - Full name of the contact.
+ * @param {string|number} idNumber - Unique identifier for the contact element.
+ * @param {string} bgColor - Background color for the contact icon.
+ * @param {string} id - The task or dropdown ID (used for dynamic behavior).
+ * @param {boolean} isChecked - Whether the contact is currently selected.
+ * @returns {string} The generated HTML string for the contact list item.
+ */
 function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id, isChecked) {
     let fontColor = "";
     let checkboxImage;
@@ -239,5 +308,6 @@ function getContactListHTML(contactInitials, contactName, idNumber, bgColor, id,
         checkboxImage = "../assets/img/unchecked.svg";
         fontColor = "normal-font";
     }
+
     return contactListHTMLTemplate(backgroundClass, idNumber, contactName, contactInitials, bgColor, fontColor, checkboxImage);
 }

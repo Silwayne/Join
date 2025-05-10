@@ -17,14 +17,24 @@ function filterNames(id) {
     renderFilteredContactsManager(resultsContainer, input, id)
 }
 
+/**
+ * Renders a filtered list of contacts based on the input value for the manager dropdown.
+ * Falls back to showing all contacts if no match is found.
+ *
+ * @param {HTMLElement} resultsContainer - The container to render the filtered contacts into.
+ * @param {string} input - The current user input for filtering.
+ * @param {string} id - The ID used to track the current dropdown/task context.
+ */
 function renderFilteredContactsManager(resultsContainer, input, id) {
     resultsContainer.innerHTML = '';
     let assigned = overlayContacts;
     let filteredNames = names.filter(name => name.toLowerCase().includes(input));
+    
     if (filteredNames.length === 0) {
         showContacts(id);
         return;
     }
+
     for (let contactName of filteredNames) {
         let contactInitials = getInitials(contactName);
         let isChecked = assigned.includes(contactName) ? 'checked' : '';
@@ -184,6 +194,18 @@ function clearTaskForm() {
     let inputField = document.getElementById('dropdownInput');
     setValueToZero(subTaskInput, titleInput, descriptionInput, dueDateInput, dropdownMenu, assignedContainer, inputField)
 }
+/**
+ * Resets the values of all task-related input fields and UI containers to default.
+ * Also resets dropdown content, assigned contacts, and updates icons.
+ *
+ * @param {HTMLInputElement} subTaskInput - Input field for subtasks.
+ * @param {HTMLInputElement} titleInput - Input field for the task title.
+ * @param {HTMLTextAreaElement} descriptionInput - Textarea for the task description.
+ * @param {HTMLInputElement} dueDateInput - Input field for the due date.
+ * @param {HTMLElement} dropdownMenu - Container for the contact dropdown menu.
+ * @param {HTMLElement} assignedContainer - Container showing assigned contacts.
+ * @param {HTMLInputElement} inputField - Optional additional input to reset.
+ */
 function setValueToZero(subTaskInput, titleInput, descriptionInput, dueDateInput, dropdownMenu, assignedContainer, inputField) {
     if (subTaskInput) {
         subTaskInput.value = '';
@@ -195,8 +217,7 @@ function setValueToZero(subTaskInput, titleInput, descriptionInput, dueDateInput
     if (dropdownMenu) dropdownMenu.innerHTML = '';
     if (assignedContainer) assignedContainer.innerHTML = '';
     if (inputField) inputField.value = '';
+
     resetValue();
     selectContacts('dropdownMenu');
-
 }
-
