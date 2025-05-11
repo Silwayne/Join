@@ -152,9 +152,23 @@ function validateAndSubmitForm(event) {
   const formId = event.target.id;
   const key = event.target.getAttribute("data-key"); // Schlüssel aus dem Formular holen
 
+  const isValid = validateFormInputs();
+
+  if (isValid) {
+    handleFormSubmission(formId, key, event);
+  }
+
+  return false;
+}
+
+/**
+ * Validates the form inputs for name, email, and phone.
+ * Displays error messages for invalid fields.
+ * @returns {boolean} - Returns true if all inputs are valid, otherwise false.
+ */
+function validateFormInputs() {
   let isValid = true;
 
-  // Validierung der Eingabefelder
   const fullName = document.getElementById("fullName");
   const email = document.getElementById("new-email");
   const phone = document.getElementById("new-phone");
@@ -180,16 +194,22 @@ function validateAndSubmitForm(event) {
     clearError(phone);
   }
 
-  // Wenn die Eingaben gültig sind, Aktion ausführen
-  if (isValid) {
-    if (formId === "addContactForm") {
-      addContactToDatabase(event);
-    } else if (formId === "editContactForm") {
-      saveEditedContact(key); // Schlüssel an die Funktion übergeben
-    }
-  }
+  return isValid;
+}
 
-  return false;
+/**
+ * Handles the form submission based on the form ID.
+ * Calls the appropriate function to add or edit a contact.
+ * @param {string} formId - The ID of the form being submitted.
+ * @param {string} key - The unique key of the contact (for editing).
+ * @param {Event} event - The submit event from the form.
+ */
+function handleFormSubmission(formId, key, event) {
+  if (formId === "addContactForm") {
+    addContactToDatabase(event);
+  } else if (formId === "editContactForm") {
+    saveEditedContact(key); // Schlüssel an die Funktion übergeben
+  }
 }
 
 /**

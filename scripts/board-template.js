@@ -22,12 +22,10 @@ async function updateBoardHTML() {
         taskDiv.innerHTML += taskHTML;
       }
     } else {
-      await noBoxHTMLGenerator(status, taskDiv)
+      await noBoxHTMLGenerator(status, taskDiv);
     }
   }
-  
 }
-
 
 /**
  * Generates the HTML for the selected contacts in a task.
@@ -116,7 +114,6 @@ function filterPriorityImage(task) {
   return '<img src="../assets/img/Prio-alta-red.svg">';
 }
 
-
 /**
  * Allows a drop event to occur by preventing the default behavior.
  * @param {DragEvent} ev - The drag event object.
@@ -190,9 +187,10 @@ function collectEditedSubtasks(id, oldTask) {
  * @returns {Array<Object>} - The filtered tasks.
  */
 function filterTodos(input) {
-  return todos.filter(task =>
-    task.title.toLowerCase().includes(input) ||
-    task.description.toLowerCase().includes(input)
+  return todos.filter(
+    (task) =>
+      task.title.toLowerCase().includes(input) ||
+      task.description.toLowerCase().includes(input)
   );
 }
 /**
@@ -201,7 +199,9 @@ function filterTodos(input) {
  */
 function hideDropDownContacts() {
   setTimeout(() => {
-    document.getElementById('outer-task-overlay')?.addEventListener('click', closeOverlay, { once: true });
+    document
+      .getElementById("outer-task-overlay")
+      ?.addEventListener("click", closeOverlay, { once: true });
   }, 0);
 }
 
@@ -212,7 +212,7 @@ function hideDropDownContacts() {
 function editDate() {
   let today = new Date();
   let futureLimit = new Date();
-  futureLimit.setFullYear(today.getFullYear() + 3); 
+  futureLimit.setFullYear(today.getFullYear() + 3);
   let formattedMin = today.toISOString().split("T")[0];
   let formattedMax = futureLimit.toISOString().split("T")[0];
   let input = document.getElementById("edit-date");
@@ -220,18 +220,17 @@ function editDate() {
   input.max = formattedMax;
 }
 
-
 /**
  * Extracts the text content of a subtask from its HTML element.
  * @param {HTMLElement} valueElement - The HTML element containing the subtask text.
  * @returns {string} - The text content of the subtask.
  */
 function extractSubtaskText(valueElement) {
-  if (!valueElement) return '';
+  if (!valueElement) return "";
   return Array.from(valueElement.childNodes)
-    .filter(node => node.nodeType === Node.TEXT_NODE)
-    .map(node => node.textContent.trim())
-    .join('');
+    .filter((node) => node.nodeType === Node.TEXT_NODE)
+    .map((node) => node.textContent.trim())
+    .join("");
 }
 
 /**
@@ -244,7 +243,7 @@ function findSubtaskDoneStatus(oldTask, subtaskText) {
   if (!oldTask.subtasks) return false;
 
   let matchingSubtask = oldTask.subtasks.find(
-    t => t.title.trim() === subtaskText
+    (t) => t.title.trim() === subtaskText
   );
   return matchingSubtask ? matchingSubtask.done : false;
 }

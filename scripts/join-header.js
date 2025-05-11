@@ -7,11 +7,11 @@
 function createCurrentUserInitials(user) {
   const userImage = document.getElementById("current-user-initials");
   if (!user?.name || !userImage) return;
-  
+
   const [first, second] = user.name.split(" ");
   const initials = (first?.charAt(0) || "") + (second?.charAt(0) || "");
   const color = sessionStorage.getItem("userColor") || "#000";
-  
+
   userImage.innerHTML = initials.toUpperCase();
   userImage.classList.add("user-initials");
   userImage.style.color = color;
@@ -24,7 +24,7 @@ function createCurrentUserInitials(user) {
  * Also initializes the current user's initials in the header.
  */
 function renderHeader() {
-  document.getElementById('header').innerHTML = `
+  document.getElementById("header").innerHTML = `
     <img class="logo-responsive" src="/assets/img/Capa 1.svg" alt="Logo">
     <span class="headline">Kanban Project Management Tool</span>
     <div class="header-right">
@@ -42,10 +42,13 @@ function renderHeader() {
   createCurrentUserInitials({ name: userName });
 }
 
+/**
+ * Logs out the user by clearing session storage and local storage and redirecting to the index page.
+ */
 function logout() {
-  sessionStorage.clear();         
-  localStorage.removeItem("user"); 
-  window.location.href = "./index.html"; 
+  sessionStorage.clear();
+  localStorage.removeItem("user");
+  window.location.href = "./index.html";
 }
 
 /**

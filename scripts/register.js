@@ -28,11 +28,21 @@ function getRandomColor() {
   return colors[randomIndex];
 }
 
+/**
+ * Checks if the provided email is valid.
+ * @returns {string} - Returns true if the email is valid, otherwise false.
+ */
 function isValidEmail(email) {
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   return emailRegex.test(email);
 }
 
+/**
+ * Validates the email input field.
+ * Checks if the email entered by the user matches a valid email format.
+ * Displays an error message if the email is invalid.
+ * @returns {boolean} - True if the email is valid, otherwise false.
+ */
 function validateEmailInput() {
   const emailInput = document.getElementById("email");
   const errorMessage = document.getElementById("email-error");
@@ -68,6 +78,11 @@ function registerUser() {
   });
 }
 
+/**
+ * Checks the validity of the registration form.
+ * Ensures that all required fields are filled and the privacy policy is accepted.
+ * Enables or disables the register button based on the form's validity.
+ */
 function checkFormValidity() {
   const name = document.getElementById("first-name").value.trim();
   const email = document.getElementById("email").value.trim();

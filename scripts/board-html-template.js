@@ -4,13 +4,13 @@
  */
 
 function editOverlay(id) {
-    selectContacts(id);
-    let task = todos.find((t) => t.id === id);
-    let { title, description, date, contacts = [], subtasks = [] } = task;
-    overlayContacts = contacts;
-    priority = task.priority
-    handlePriority()
-    document.getElementById("task-content").innerHTML = `
+  selectContacts(id);
+  let task = todos.find((t) => t.id === id);
+  let { title, description, date, contacts = [], subtasks = [] } = task;
+  overlayContacts = contacts;
+  priority = task.priority;
+  handlePriority();
+  document.getElementById("task-content").innerHTML = `
         <div class="closeEditOverlay-x">
           <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
           </div>
@@ -63,34 +63,39 @@ function editOverlay(id) {
 </div>
 
         <div class="button-div"><button class="saveEditedTaskClass" onclick="saveEditedTask(${id})">Save</button></div>
-    `
-    handlePriority(id)
-    renderAssignedContacts(id);
-    updateIcons(id);
-    setupSubtaskEnterKeyEdit(id)
-    editDate(date)
-    hideDropDownContacts()
-
+    `;
+  handlePriority(id);
+  renderAssignedContacts(id);
+  updateIcons(id);
+  setupSubtaskEnterKeyEdit(id);
+  editDate(date);
+  hideDropDownContacts();
 }
+
 async function noBoxHTMLGenerator(status, taskDiv) {
-    if (status === "todo") {
-        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks to do</p></div>`;
-    } else if (status === "inprogress") {
-        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks in progress</p></div>`;
-    } else if (status === "await") {
-        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks to await</p></div>`;
-    } else if (status === "done") {
-        taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks done</p></div>`;
-    }
+  if (status === "todo") {
+    taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks to do</p></div>`;
+  } else if (status === "inprogress") {
+    taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks in progress</p></div>`;
+  } else if (status === "await") {
+    taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks to await</p></div>`;
+  } else if (status === "done") {
+    taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks done</p></div>`;
+  }
 
-    taskDiv.classList.add("no-tasks-container");
+  taskDiv.classList.add("no-tasks-container");
 }
 
-
+/**
+ * Handles the priority display for a task in the edit overlay.
+ * Generates the HTML for the priority buttons based on the current priority.
+ * @param {number} id - The ID of the task.
+ * @returns {string} - The HTML string for the priority buttons.
+ */
 function handlePriority(id) {
-    let html = ""
-    if (priority === 'Urgent') {
-        html = `
+  let html = "";
+  if (priority === "Urgent") {
+    html = `
               <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio prio-urgent bold" id="prio-urgent_${id}">
               <div>
                     <p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p></div></div>
@@ -101,10 +106,10 @@ function handlePriority(id) {
                     <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
                 </div>
   
-  `
-    }
-    if (priority === 'Medium') {
-        html = `
+  `;
+  }
+  if (priority === "Medium") {
+    html = `
     <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
     <div>
           <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p></div></div>
@@ -115,9 +120,10 @@ function handlePriority(id) {
           <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
       </div>
 
-`  }
-    if (priority === 'Low') {
-        html = `
+`;
+  }
+  if (priority === "Low") {
+    html = `
     <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
     <div>
           <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p></div></div>
@@ -128,36 +134,44 @@ function handlePriority(id) {
           <p>Low <img src="/assets/img/Prio-low-white.svg"></p>
       </div>
 
-`  };
-    return html
+`;
+  }
+  return html;
 }
 /**
  * Generates the content for the task box overlay.
  * @param {Object} task - The task object containing task details.
  */
 function generateTaskBoxContent(task) {
-    let img = filterPriorityImage(task);
+  let img = filterPriorityImage(task);
 
-    document.getElementById("task-content").innerHTML = `
+  document.getElementById("task-content").innerHTML = `
       <div class="categorydiv"> 
-      <div> <p class="box-category-header-userstory ${task.category}">${task.category
-        }</p></div>
+      <div> <p class="box-category-header-userstory ${task.category}">${
+    task.category
+  }</p></div>
       <div onclick="closeOverlay()"class="closeOverlay-x"><img src="../assets/img/close.svg"></div>
       </div>
         <div><p class="task-title-p">${task.title}</p></div>
-            <div class="description-div"><p class="description-p">${task.description
-        }</p></div>
-            <div class="overlay-date"><p class="due-date">Due date: ${task.date}</p></div>
-                <div class="priority-div"><p class="priority">Priority:   ${task.priority
-        } </p>${img}</div>
+            <div class="description-div"><p class="description-p">${
+              task.description
+            }</p></div>
+            <div class="overlay-date"><p class="due-date">Due date: ${
+              task.date
+            }</p></div>
+                <div class="priority-div"><p class="priority">Priority:   ${
+                  task.priority
+                } </p>${img}</div>
                 <div><p>${contactsOverlayContent(task)}</p></div>
                 <div id="overlay-subtasks">${subtaskOverlayContent(task)}</div>
                 <div class="overlay-delete-edit">
-                    <div onclick="deleteOverlay(${task.id
-        })" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
+                    <div onclick="deleteOverlay(${
+                      task.id
+                    })" class="overlay-delete"><img src="../assets/img/delete.svg"><p class="delete-p">Delete</p></div>
                         <div class="overlay-delete-edit-border"></div>
-                    <div onclick="editOverlay(${task.id
-        })" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
+                    <div onclick="editOverlay(${
+                      task.id
+                    })" class="overlay-edit"><img src="../assets/img/edit-icon.svg"><p>Edit</p></div>
                 </div>
     `;
 }
@@ -168,12 +182,12 @@ function generateTaskBoxContent(task) {
  * @returns {string} - The HTML string for the task card.
  */
 function generateTodosHTML(task) {
-    let subtask = checkIfSubtasks(task);
-    let progressBar = generateProgressBar(subtask, task);
-    let contacts = getLimitedContactsHTML(task);
-    let img = filterPriorityImage(task);
+  let subtask = checkIfSubtasks(task);
+  let progressBar = generateProgressBar(subtask, task);
+  let contacts = getLimitedContactsHTML(task);
+  let img = filterPriorityImage(task);
 
-    return `
+  return `
     <div draggable="true" onclick="openTaskBoxOverlay(${task.id})" ondragstart="moveTask(${task.id})" class="drag-and-drop-box">
       <div class="box-category-header">
         <p class="box-category-header-userstory ${task.category}">${task.category}</p>
@@ -194,7 +208,6 @@ function generateTodosHTML(task) {
       </div>
     </div>
   `;
-
 }
 /**
  * Generates HTML for displaying a limited number of contact icons,
@@ -205,35 +218,32 @@ function generateTodosHTML(task) {
  * @returns {string} HTML string with contact icons and optional overflow indicator.
  */
 function getLimitedContactsHTML(task, maxVisible = 4) {
-    let html = '';
-    if (!task.contacts || task.contacts.length === 0) return html;
+  let html = "";
+  if (!task.contacts || task.contacts.length === 0) return html;
 
-    let visibleContacts = task.contacts.slice(0, maxVisible);
-    let hiddenCount = task.contacts.length - visibleContacts.length;
+  let visibleContacts = task.contacts.slice(0, maxVisible);
+  let hiddenCount = task.contacts.length - visibleContacts.length;
 
-    for (let name of visibleContacts) {
-        let color = contactColors[name] || "#29abe2";
-        let initials = getInitials(name);
-        html += `
+  for (let name of visibleContacts) {
+    let color = contactColors[name] || "#29abe2";
+    let initials = getInitials(name);
+    html += `
       <div class="user-icon user-icon-board-box" style="background-color: ${color};">
         <p>${initials}</p>
       </div>
     `;
-    }
+  }
 
-    if (hiddenCount > 0) {
-        html += `
+  if (hiddenCount > 0) {
+    html += `
       <div class="user-icon user-icon-board-box more-indicator">
         <p>+${hiddenCount}</p>
       </div>
     `;
-    }
+  }
 
-    return html;
+  return html;
 }
-
-
-
 
 /**
  * Edits the position of a task by displaying a tooltip with move options.
@@ -241,25 +251,23 @@ function getLimitedContactsHTML(task, maxVisible = 4) {
  * @param {number} id - The ID of the task to edit.
  */
 function editTaskPosition(event, id) {
-    event.stopPropagation();
-    let tooltip = document.getElementById("tooltip_" + id);
-    let task = todos.find(t => t.id === id);
+  event.stopPropagation();
+  let tooltip = document.getElementById("tooltip_" + id);
+  let task = todos.find((t) => t.id === id);
 
-
-    let html = `
+  let html = `
     <div class="tooltip-box">
       <p class="tooltip-title">Move to</p>
   `;
 
-    if (task.status === 'todo') {
-        html += `
+  if (task.status === "todo") {
+    html += `
       <div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
         <img src="./assets/img/arrow_downward.svg"> In Progress
       </div>
     `;
-    }
-    else if (task.status === 'inprogress') {
-        html += `
+  } else if (task.status === "inprogress") {
+    html += `
       <div class="tooltip-item" onclick="moveToStatus(${id}, 'todo')">
         <img src="./assets/img/arrow_upward.svg"> To Do
       </div>
@@ -267,9 +275,8 @@ function editTaskPosition(event, id) {
         <img src="./assets/img/arrow_downward.svg"> Await feedback
       </div>
     `;
-    }
-    else if (task.status === 'await') {
-        html += `
+  } else if (task.status === "await") {
+    html += `
       <div class="tooltip-item" onclick="moveToStatus(${id}, 'inprogress')">
         <img src="./assets/img/arrow_upward.svg"> In Progress
       </div>
@@ -277,18 +284,17 @@ function editTaskPosition(event, id) {
         <img src="./assets/img/arrow_downward.svg"> Done
       </div>
     `;
-    }
-    else if (task.status === 'done') {
-        html += `
+  } else if (task.status === "done") {
+    html += `
       <div class="tooltip-item" onclick="moveToStatus(${id}, 'await')">
         <img src="./assets/img/arrow_upward.svg"> Await
       </div>
     `;
-    }
+  }
 
-    html += `</div>`;
-    tooltip.innerHTML = html;
-    tooltip.classList.toggle("d_none");
+  html += `</div>`;
+  tooltip.innerHTML = html;
+  tooltip.classList.toggle("d_none");
 }
 /**
  * Displays a placeholder message in the task column when no tasks exist for a given status.
@@ -297,16 +303,16 @@ function editTaskPosition(event, id) {
  * @param {string} status - The task status key ('todo', 'inprogress', 'await', 'done').
  */
 function renderEmptyStatusMessage(taskDiv, status) {
-    let statusMessages = {
-        todo: "No tasks to do",
-        inprogress: "No tasks in progress",
-        await: "No tasks to await",
-        done: "No tasks done",
-    };
+  let statusMessages = {
+    todo: "No tasks to do",
+    inprogress: "No tasks in progress",
+    await: "No tasks to await",
+    done: "No tasks done",
+  };
 
-    taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
-    taskDiv.classList.remove("task-columns");
-    taskDiv.classList.add("no-tasks-container");
+  taskDiv.innerHTML = `<p class="no-tasks-text">${statusMessages[status]}</p>`;
+  taskDiv.classList.remove("task-columns");
+  taskDiv.classList.add("no-tasks-container");
 }
 
 /**
@@ -325,14 +331,13 @@ function subtaskOverlayContent(task) {
       } else {
         imageSrc = "../assets/img/unchecked.svg";
       }
-      html += subtaskOverlayContentHTML(task.id, i, imageSrc, subtask.title)
+      html += subtaskOverlayContentHTML(task.id, i, imageSrc, subtask.title);
     }
     html += `</div>`;
     return html;
   }
   return "";
 }
-
 
 /**
  * Generates the HTML content for the contacts assigned to a task.

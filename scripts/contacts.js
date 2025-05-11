@@ -165,6 +165,15 @@ function makeLeftContactActive() {
   });
 }
 
+/**
+ * Renders the right contact details area.
+ * Updates the UI to display the selected contact's details and handles responsive view adjustments.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
 function renderRightContactArea(name, email, phone, paramKey, users) {
   let overlayButton = document.getElementById("overlayButton");
   if (overlayButton) {
@@ -176,6 +185,12 @@ function renderRightContactArea(name, email, phone, paramKey, users) {
   updateUserDetails(paramKey, users);
 }
 
+/**
+ * Handles the responsive view for the contact details area.
+ * Adjusts the layout for smaller screens and displays a back button.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
 function handleResponsiveView(paramKey, users) {
   if (window.innerWidth < 1250) {
     let rightColumn = document.getElementById("right-contacts-page-column");
@@ -191,6 +206,12 @@ function handleResponsiveView(paramKey, users) {
   }
 }
 
+/**
+ * Handles the overlay button for mobile view.
+ * Adds a button to the contact details area for additional options.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
 function handleOverlayButton(paramKey, users) {
   let contactDiv = document.getElementById("contact-div");
   if (!contactDiv) {
@@ -198,13 +219,13 @@ function handleOverlayButton(paramKey, users) {
     return;
   }
 
-  // Entferne vorherige Buttons, falls vorhanden
+  // Remove existing buttons if present
   let existingButton = document.getElementById("overlayButton");
   if (existingButton) {
     existingButton.remove();
   }
 
-  // Füge den neuen Button hinzu
+  // Add the new button
   contactDiv.innerHTML += `
     <div id="button-overlay-area">
       <button onclick="mobileEditOptions('${paramKey}', users)" id="overlayButton">
@@ -213,6 +234,15 @@ function handleOverlayButton(paramKey, users) {
     </div>`;
 }
 
+/**
+ * Updates the contact details in the right column.
+ * Populates the UI with the selected contact's information and sets up event handlers for edit and delete actions.
+ * @param {string} name - The name of the contact.
+ * @param {string} email - The email of the contact.
+ * @param {string} phone - The phone number of the contact.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
 function updateContactDetails(name, email, phone, paramKey, users) {
   contactDetailsAreaTemplate(paramKey, users);
   hideContactOptionsForMobile();
@@ -231,10 +261,16 @@ function updateContactDetails(name, email, phone, paramKey, users) {
     deleteContactFromDatabase(paramKey, users);
   };
   rightEditButton.onclick = function () {
-    editContact(paramKey, users); // Übergabe von paramKey
+    editContact(paramKey, users);
   };
 }
 
+/**
+ * Updates the user details in the right column.
+ * Sets the user's avatar and background color.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
 function updateUserDetails(paramKey, users) {
   let user = users[paramKey];
   createBigContactNameInitials(user);
