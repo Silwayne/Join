@@ -1,6 +1,7 @@
 .back-main-arrow {
   display: flex;
-  margin-left: 1000px;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 1%;
 }
 
@@ -54,11 +55,6 @@ a:hover {
     margin-bottom: 80px;
     margin-left: 0;
   }
-
-  .back-main-arrow {
-    margin-right: 2%;
-    justify-content: flex-end;
-  }
 }
 
 @media (max-width: 1024px) {
@@ -66,4 +62,3 @@ a:hover {
     margin-left: 0;
   }
 }
-
