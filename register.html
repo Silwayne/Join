@@ -83,6 +83,7 @@
                 placeholder="Password"
                 id="password"
                 required
+                onblur="validatePassword()"
               />
               <img
                 class="input-icon-lock"
@@ -90,7 +91,7 @@
                 alt="Passwort Icon"
               />
             </label>
-            <small class="error-message">&nbsp;</small>
+            <small id="password-error" class="error-message">Password must be at least 6 characters long.</small>
           </div>
           <div class="input-group">
             <label class="input-container">
@@ -99,6 +100,7 @@
                 placeholder="Confirm password"
                 id="confirm-password"
                 required
+                onblur="validatePasswordMatch()"
               />
               <img
                 class="input-icon-lock"
@@ -106,7 +108,7 @@
                 alt="Passwort Icon"
               />
             </label>
-            <small class="error-message">&nbsp;</small>
+            <small id="confirm-password-error" class="error-message">Passwords do not match.</small>
           </div>
           <div class="checkbox-container">
             <input id="privacy-policy" class="checkbox" type="checkbox" /><span
