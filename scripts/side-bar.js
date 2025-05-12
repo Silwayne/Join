@@ -105,5 +105,3 @@ function highlightActiveSidebarButton() {
       }
     });
   }
-  
-  

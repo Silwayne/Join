@@ -405,9 +405,3 @@ function renderTasksInColumn(taskDiv, tasks) {
     taskDiv.innerHTML += taskHTML;
   });
 }
-
-/**
- * Renders an empty message for a task column.
- * @param {HTMLElement} taskDiv - The HTML element of the task column.
- * @param {string} status - The status of the task column.
- */
