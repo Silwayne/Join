@@ -128,6 +128,11 @@ function rightContactDetailsHideOnLoad() {
   contactDetailsArea.classList.add("hide");
 }
 
+/**
+ * Creates and displays the initials for a contact's avatar in the large contact details view.
+ * If the contact has a first and last name, both initials are displayed.
+ * @param {Object} user - The user object containing the contact's name.
+ */
 function createBigContactNameInitials(user) {
   let userName = user.name;
   let firstLetterOfUserName = userName.charAt(0);
@@ -143,6 +148,11 @@ function createBigContactNameInitials(user) {
   }
 }
 
+/**
+ * Hides the right contact details area and displays the left contact list.
+ * Adjusts the UI for desktop and mobile views by hiding the right column and showing the left column.
+ * @param {Object} users - The list of all users.
+ */
 function hideContactDetails(users) {
   let rightColumn = document.getElementById("right-contacts-page-column");
   let leftColumn = document.getElementById("left-contacts-page-column");
@@ -152,14 +162,15 @@ function hideContactDetails(users) {
   overlayButton.style.display = "none";
 }
 
+/**
+ * Adds an event listener to each contact in the left contact list.
+ * Highlights the selected contact by adding an "active" class and removes the class from other contacts.
+ */
 function makeLeftContactActive() {
   const contactListItems = document.querySelectorAll(".contact-list");
-
   contactListItems.forEach((item) => {
     item.addEventListener("click", () => {
-      // Entferne die 'active'-Klasse von allen Elementen
       contactListItems.forEach((el) => el.classList.remove("active"));
-      // Füge die 'active'-Klasse zum angeklickten Element hinzu
       item.classList.add("active");
     });
   });
@@ -207,34 +218,6 @@ function handleResponsiveView(paramKey, users) {
 }
 
 /**
- * Handles the overlay button for mobile view.
- * Adds a button to the contact details area for additional options.
- * @param {string} paramKey - The unique key of the contact.
- * @param {Object} users - The list of all users.
- */
-function handleOverlayButton(paramKey, users) {
-  let contactDiv = document.getElementById("contact-div");
-  if (!contactDiv) {
-    console.error("Contact div not found");
-    return;
-  }
-
-  // Remove existing buttons if present
-  let existingButton = document.getElementById("overlayButton");
-  if (existingButton) {
-    existingButton.remove();
-  }
-
-  // Add the new button
-  contactDiv.innerHTML += `
-    <div id="button-overlay-area">
-      <button onclick="mobileEditOptions('${paramKey}', users)" id="overlayButton">
-        <img id="three-dots-options" src="/assets/img/three_dots.svg">
-      </button>
-    </div>`;
-}
-
-/**
  * Updates the contact details in the right column.
  * Populates the UI with the selected contact's information and sets up event handlers for edit and delete actions.
  * @param {string} name - The name of the contact.
@@ -251,12 +234,10 @@ function updateContactDetails(name, email, phone, paramKey, users) {
   let rightPhoneArea = document.getElementById("user-phone-number");
   let rightDeleteButton = document.getElementById("contact-to-trash");
   let rightEditButton = document.getElementById("contact-edit");
-
   rightPhoneArea.innerText = phone;
   rightEmailArea.innerHTML = `${email}<br>`;
   rightEmailArea.href = `mailto:${email}`;
   rightContactNameArea.innerText = name;
-
   rightDeleteButton.onclick = function () {
     deleteContactFromDatabase(paramKey, users);
   };
@@ -295,19 +276,37 @@ async function deleteContactFromDatabase(key, users) {
   }
 }
 
+/**
+ * Opens the edit overlay for a contact.
+ * @param {string} paramKey - The unique key of the contact to edit.
+ * @param {Object} users - The list of all users.
+ */
 function editContact(paramKey, users) {
   editContactOverlay(paramKey, users);
 }
 
+/**
+ * Stops the propagation of an event.
+ * Prevents the event from bubbling up to parent elements.
+ * @param {Event} event - The event to stop propagation for.
+ */
 function stopPropagation(event) {
   event.stopPropagation();
 }
 
+/**
+ * Displays the phone number of a user in the contact details area.
+ * @param {Object} user - The user object containing the phone number.
+ */
 function displayPhoneNumber(user) {
   let phoneNumberArea = document.getElementById("user-phone-number");
   phoneNumberArea.innerText = user.phone;
 }
 
+/**
+ * Applies random colors to user avatars in the contact list.
+ * Uses the `color` property of each user to set the background color.
+ */
 function applyRandomColors() {
   let userPictures = document.getElementsByClassName("user-initials user-icon");
   Array.from(userPictures).forEach((element, index) => {
@@ -317,6 +316,10 @@ function applyRandomColors() {
   });
 }
 
+/**
+ * Sets a random background color for the large contact avatar.
+ * @param {Object} user - The user object containing the color property.
+ */
 function bigRandomColour(user) {
   let bigInitialsArea = document.getElementById("user-picture-big-index");
   if (bigInitialsArea && user.color) {
@@ -324,6 +327,10 @@ function bigRandomColour(user) {
   }
 }
 
+/**
+ * Hides the contact options for mobile view.
+ * Adjusts the UI to hide the options dropdown for smaller screens.
+ */
 function hideContactOptionsForMobile() {
   let userNameOptions = document.getElementById("user-name-options");
   if (window.innerWidth < 1250) {
@@ -331,28 +338,7 @@ function hideContactOptionsForMobile() {
   }
 }
 
-function closeResponsiveOverlay(paramKey) {
-  let overlayButton = document.getElementById("overlayButton");
-  if (overlayButton) {
-    overlayButton.remove();
-  }
 
-  let overlayArea = document.getElementById("mobileEditOptions");
-  if (overlayArea) {
-    overlayArea.remove();
-  }
-  let contactDiv = document.getElementById("contact-div");
-  contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions('${paramKey}', user)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
-}
-let leftColumn = document.getElementById("left-contacts-page-column");
-let buttonOverlayArea = document.getElementById("button-overlay-area");
-if (leftColumn && buttonOverlayArea) {
-  buttonOverlayArea.remove();
-}
-
-if (buttonOverlayArea) {
-  buttonOverlayArea.remove();
-}
 
 /**
  * Adds a new contact to the Firebase database.
@@ -360,18 +346,15 @@ if (buttonOverlayArea) {
  */
 function addContactToDatabase(event) {
   event.preventDefault();
-
   const form = document.getElementById("addContactForm");
   if (!form.checkValidity()) {
     return false;
   }
-
   let firebaseURL = firebaseURLUser;
   let name = document.getElementById("fullName").value;
   let email = document.getElementById("new-email").value;
   let phone = document.getElementById("new-phone").value;
   let color = colours[Math.floor(Math.random() * colours.length)];
-
   fetch(firebaseURL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -387,7 +370,6 @@ function addContactToDatabase(event) {
     .catch((error) => {
       console.error("Error adding contact:", error);
     });
-
   return false;
 }
 
@@ -400,26 +382,17 @@ async function saveEditedContact(key) {
   let name = document.getElementById("fullName").value;
   let email = document.getElementById("new-email").value;
   let phone = document.getElementById("new-phone").value;
-
   let firebaseURL = `${firebaseForDeletion}${key}.json`;
-
   try {
     await fetch(firebaseURL, {
-      method: "PATCH", // PATCH wird verwendet, um bestehende Daten zu aktualisieren
+      method: "PATCH", // PATCH is used to update existing data
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, phone }),
     });
-
     closeEditOverlay();
     contactsuccessfullyEditedNotification();
-    contactFirebase(); // Kontakte neu laden
+    contactFirebase(); // Reload contacts
   } catch (error) {
     console.error("Error updating contact:", error);
   }
-}
-
-// Entferne den Overlay-Button, um doppelte Klicks zu vermeiden
-let overlayButton = document.getElementById("overlayButton");
-if (overlayButton) {
-  overlayButton.remove();
 }

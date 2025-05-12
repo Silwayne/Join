@@ -1,7 +1,6 @@
 /**
  * Renders the right sidebar by calling the function to generate its content.
  */
-
 function renderRight() {
   renderRightSidebar();
 }
@@ -11,7 +10,6 @@ function renderRight() {
  * Displays a greeting message and the user's name with a dynamic color.
  * Retrieves the user's name and color from session storage.
  */
-
 function renderRightSidebar() {
   let greetingText = getGreetingText();
   let userName = sessionStorage.getItem("userName") || "Gast";

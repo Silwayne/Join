@@ -43,17 +43,9 @@ function renderFilteredContactsManager(resultsContainer, input, id) {
 }
 
 /**
- * Generates the HTML template for a filtered contact list item.
- * @param {string} backgroundClass - The CSS class for the background.
- * @param {string} idNumber - The unique ID for the contact.
- * @param {string} contactName - The name of the contact.
- * @param {Object} contactColors - An object mapping contact names to their colors.
- * @param {string} contactInitials - The initials of the contact.
- * @param {string} fontColor - The font color for the contact name.
- * @param {string} checkboxImage - The URL of the checkbox image.
- * @returns {string} - The HTML string for the filtered contact list item.
+ * Resets the validation state and UI elements for the Add Task form.
+ * Clears input errors, resets subtasks, and sets the priority to medium.
  */
-
 function resetValue() {
     document.getElementById('category').value = '';
     document.getElementById('subtask-container').classList.remove('input-error');
@@ -111,6 +103,15 @@ function toggleContactCheckbox(element, contactName, idNumber) {
     renderAssignedContacts(idNumber);
 }
 
+/**
+ * Updates the UI to uncheck a contact checkbox.
+ * Removes the contact from the assigned contacts list and updates the checkbox styling.
+ * 
+ * @param {HTMLImageElement} img - The image element representing the checkbox.
+ * @param {HTMLElement} element - The contact list item element.
+ * @param {HTMLElement} nameSpan - The span element containing the contact name.
+ * @param {string} contactName - The name of the contact to uncheck.
+ */
 function getContactCheckboxImg(img, element, nameSpan, contactName) {
     overlayContacts = overlayContacts.filter(name => name !== contactName);
     img.src = "../assets/img/unchecked.svg";
@@ -120,6 +121,15 @@ function getContactCheckboxImg(img, element, nameSpan, contactName) {
     nameSpan.classList.add('normal-font');
 }
 
+/**
+ * Updates the UI to check a contact checkbox.
+ * Adds the contact to the assigned contacts list and updates the checkbox styling.
+ * 
+ * @param {HTMLImageElement} img - The image element representing the checkbox.
+ * @param {HTMLElement} element - The contact list item element.
+ * @param {HTMLElement} nameSpan - The span element containing the contact name.
+ * @param {string} contactName - The name of the contact to check.
+ */
 function getContactUnCheckboxImg(img, element, nameSpan, contactName) {
     overlayContacts.push(contactName);
     img.src = "../assets/img/checked.svg";
@@ -135,7 +145,6 @@ function getContactUnCheckboxImg(img, element, nameSpan, contactName) {
  * @param {HTMLElement} dropDownMenu - The dropdown menu container element.
  * @param {string} id - The ID of the dropdown menu.
  */
-
 function renderContacts(firebaseAnswer, dropDownMenu, id) {
     let localCounter = 0;
     for (let key in firebaseAnswer) {
@@ -217,7 +226,6 @@ function setValueToZero(subTaskInput, titleInput, descriptionInput, dueDateInput
     if (dropdownMenu) dropdownMenu.innerHTML = '';
     if (assignedContainer) assignedContainer.innerHTML = '';
     if (inputField) inputField.value = '';
-
     resetValue();
     selectContacts('dropdownMenu');
 }

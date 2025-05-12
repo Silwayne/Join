@@ -65,6 +65,11 @@ function renderSidebarResponsive() {
   highlightActiveSidebarButton();
 }
 
+/**
+ * Highlights the active sidebar button based on the current page.
+ * Compares the current page's filename with the `href` attributes of all sidebar links.
+ * If a match is found, the corresponding button element is assigned the "active-button" class.
+ */
 function highlightActiveSidebarButton() {
   const currentPage = window.location.pathname.split("/").pop();
   const allLinks = document.querySelectorAll(

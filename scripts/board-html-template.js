@@ -72,6 +72,13 @@ function editOverlay(id) {
   hideDropDownContacts();
 }
 
+/**
+ * Generates and displays a placeholder message in a task column when no tasks exist for a given status.
+ * Adds a specific message and styling to indicate the absence of tasks.
+ * 
+ * @param {string} status - The task status key ('todo', 'inprogress', 'await', 'done').
+ * @param {HTMLElement} taskDiv - The container element where the message should be rendered.
+ */
 async function noBoxHTMLGenerator(status, taskDiv) {
   if (status === "todo") {
     taskDiv.innerHTML = `<div class="no-box"><p class="no-tasks-text">No tasks to do</p></div>`;

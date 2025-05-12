@@ -118,3 +118,62 @@ function closeResponsiveOverlay(paramKey, users) {
       </button>
     </div>`;
 }
+
+/**
+ * Closes the responsive overlay for mobile view.
+ * Removes the overlay button and restores the original UI state.
+ * @param {string} paramKey - The unique key of the contact.
+ */
+function closeResponsiveOverlay(paramKey) {
+  let overlayButton = document.getElementById("overlayButton");
+  if (overlayButton) {
+    overlayButton.remove();
+  }
+
+  let overlayArea = document.getElementById("mobileEditOptions");
+  if (overlayArea) {
+    overlayArea.remove();
+  }
+
+  let contactDiv = document.getElementById("contact-div");
+  contactDiv.innerHTML += `<div id="button-overlay-area"><button onclick="mobileEditOptions('${paramKey}', user)" id="overlayButton"><img id="three-dots-options" src="/assets/img/three_dots.svg"></button></div>`;
+}
+let leftColumn = document.getElementById("left-contacts-page-column");
+let buttonOverlayArea = document.getElementById("button-overlay-area");
+if (leftColumn && buttonOverlayArea) {
+  buttonOverlayArea.remove();
+}
+
+if (buttonOverlayArea) {
+  buttonOverlayArea.remove();
+}
+
+/**
+ * Handles the overlay button for mobile view.
+ * Adds a button to the contact details area for additional options.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
+function handleOverlayButton(paramKey, users) {
+  let contactDiv = document.getElementById("contact-div");
+  if (!contactDiv) {
+    console.error("Contact div not found");
+    return;
+  }
+  let existingButton = document.getElementById("overlayButton");
+  if (existingButton) {
+    existingButton.remove();
+  }
+  contactDiv.innerHTML += `
+    <div id="button-overlay-area">
+      <button onclick="mobileEditOptions('${paramKey}', users)" id="overlayButton">
+        <img id="three-dots-options" src="/assets/img/three_dots.svg">
+      </button>
+    </div>`;
+}
+
+// Entferne den Overlay-Button, um doppelte Klicks zu vermeiden
+let overlayButton = document.getElementById("overlayButton");
+if (overlayButton) {
+  overlayButton.remove();
+}

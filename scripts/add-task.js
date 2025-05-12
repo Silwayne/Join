@@ -1,3 +1,12 @@
+let subtaskCounter = 0
+let countContactsID = 0;
+let counter = 0;
+let contactColors = {};
+let priority = 'Medium';
+let overlayContacts = [];
+let names = [];
+let taskProgress = ""
+
 /**
  * Initializes the Add Task page by rendering the sidebar, header, and main content.
  * @param {string} content - The ID of the container where the HTML will be rendered.
@@ -9,14 +18,6 @@ function init(content) {
     renderHeader();
     minDateOfToday()
 }
-let subtaskCounter = 0
-let countContactsID = 0;
-let counter = 0;
-let contactColors = {};
-let priority = 'Medium';
-let overlayContacts = [];
-let names = [];
-let taskProgress = ""
 
 /**
  * Sets the minimum selectable date on the due date input to today's date.
@@ -59,7 +60,6 @@ function checkInputValue(input, check, cancel) {
         cancel.classList.add('d_none');
     }
 }
-
 
 /**
  * Clears the input field for a subtask and resets the icons.
@@ -280,7 +280,6 @@ async function selectContacts(id) {
     renderContacts(firebaseAnswer, dropDownMenu, id);
 }
 
-
 /**
  * Fetches all user contact data from Firebase.
  *
@@ -291,7 +290,6 @@ async function fetchContactsFromFirebase() {
     let response = await fetch(firebaseURL + 'users.json');
     return await response.json();
 }
-
 
 /**
  * Formats the task ID for dropdown menus.
@@ -402,5 +400,3 @@ function assignedContainerClasslist(assignedContainer, arrow, id, inputContainer
     dropDownMenu.classList.remove('d_none');
     addContactCloser(id);
 }
-
-

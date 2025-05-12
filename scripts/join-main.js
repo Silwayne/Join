@@ -10,8 +10,6 @@ function init() {
     updateTaskCounters();
 }
 
-
-
 /**
  * Updates the task counters on the dashboard by fetching tasks from Firebase.
  * Counts tasks based on their status (e.g., "todo", "done", "urgent").
