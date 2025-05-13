@@ -385,13 +385,13 @@ async function saveEditedContact(key) {
   let firebaseURL = `${firebaseForDeletion}${key}.json`;
   try {
     await fetch(firebaseURL, {
-      method: "PATCH", // PATCH is used to update existing data
+      method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, phone }),
     });
     closeEditOverlay();
     contactsuccessfullyEditedNotification();
-    contactFirebase(); // Reload contacts
+    contactFirebase();
   } catch (error) {
     console.error("Error updating contact:", error);
   }

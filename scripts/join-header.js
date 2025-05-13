@@ -59,14 +59,11 @@ function logout() {
 function initDropdownEvents() {
   const userIcon = document.getElementById("current-user-initials");
   const dropdown = document.getElementById("user-dropdown");
-
-  if (!userIcon || !dropdown) return; // Sicherheits-Check
-
+  if (!userIcon || !dropdown) return;
   userIcon.addEventListener("click", (e) => {
     e.stopPropagation();
     dropdown.classList.toggle("hidden");
   });
-
   document.addEventListener("click", (e) => {
     if (!dropdown.classList.contains("hidden")) {
       dropdown.classList.add("hidden");

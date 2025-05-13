@@ -150,7 +150,7 @@ function validateAndSubmitForm(event) {
   event.preventDefault();
 
   const formId = event.target.id;
-  const key = event.target.getAttribute("data-key"); // Schlüssel aus dem Formular holen
+  const key = event.target.getAttribute("data-key");
 
   const isValid = validateFormInputs();
 
@@ -208,7 +208,7 @@ function handleFormSubmission(formId, key, event) {
   if (formId === "addContactForm") {
     addContactToDatabase(event);
   } else if (formId === "editContactForm") {
-    saveEditedContact(key); // Schlüssel an die Funktion übergeben
+    saveEditedContact(key);
   }
 }
 
@@ -223,8 +223,6 @@ function showError(input, message) {
   errorMessage.textContent = message;
   errorMessage.classList.add("visible");
   input.style.border = "2px solid red";
-
-  // Entferne die Fehlermeldung und den roten Rahmen bei Eingabe
   input.addEventListener("input", () => {
     clearError(input);
   });
@@ -259,7 +257,7 @@ function validateEmail(email) {
  * @returns {boolean} - Returns true if the phone number is valid, otherwise false.
  */
 function validatePhone(phone) {
-  const phoneRegex = /^\+?[0-9\s]{10,15}$/; // Optional '+' at the start, allows digits and spaces
+  const phoneRegex = /^\+?[0-9\s]{10,15}$/;
   return phoneRegex.test(phone);
 }
 
@@ -329,23 +327,17 @@ function mobileEditOptions(paramKey, users) {
     console.error("Invalid paramKey or users data");
     return;
   }
-
   let buttonOverlayArea = document.getElementById("button-overlay-area");
   if (!buttonOverlayArea) {
     console.error("Button overlay area not found");
     return;
   }
-
   let mobileOverlayButton = document.getElementById("overlayButton");
   mobileOverlayButton.remove();
-
-  // Entferne vorherige Overlays, falls vorhanden
   let existingOverlay = document.getElementById("mobileEditOptions");
   if (existingOverlay) {
     existingOverlay.remove();
   }
-
-  // Füge das Overlay hinzu
   buttonOverlayArea.innerHTML = `
     <div onclick="closeResponsiveOverlay('${paramKey}')" class="mobileOverlay" id="mobileEditOptions">
       <div id="small-responsive-overlay-options">

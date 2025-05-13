@@ -172,7 +172,6 @@ function handleOverlayButton(paramKey, users) {
     </div>`;
 }
 
-// Entferne den Overlay-Button, um doppelte Klicks zu vermeiden
 let overlayButton = document.getElementById("overlayButton");
 if (overlayButton) {
   overlayButton.remove();
