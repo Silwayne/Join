@@ -165,8 +165,9 @@ function editSubTask(subId, value) {
     input.className = 'subtask-edit-input';
     input.value = oldText;
     addInputevent(input, subId)
-    checkImgOfEditSubtask(input, subId)
-    cancelImgOfEditSubtask(subId)
+    let checkImg = checkImgOfEditSubtask(input, subId);
+    let cancelImg = cancelImgOfEditSubtask(subId);
+    setEditSubtaskWrapper(taskItem, input, checkImg, cancelImg)
 }
 /**
  * Adds an event listener to the input that saves the subtask on Enter key press.
@@ -189,6 +190,7 @@ function addInputevent(input, subId) {
  * @param {HTMLInputElement} input - The input field containing the subtask text.
  * @param {string} subId - The ID used when saving the subtask.
  */
+
 function checkImgOfEditSubtask(input, subId) {
     let checkImg = document.createElement('img');
     checkImg.src = "/assets/img/check.svg";
@@ -196,14 +198,16 @@ function checkImgOfEditSubtask(input, subId) {
     checkImg.onclick = function () {
         saveSubTask(input.value, subId);
     };
+    return checkImg; // ← wichtig!
 }
 
 /**
  * Creates a cancel (delete) icon for editing a subtask and assigns a click handler
  * to delete the subtask when clicked.
- *
- * @param {string} subId - The ID of the subtask to delete.
- */
+*
+* @param {string} subId - The ID of the subtask to delete.
+*/
+
 function cancelImgOfEditSubtask(subId) {
     let cancelImg = document.createElement('img');
     cancelImg.src = '/assets/img/delete.svg';
@@ -211,6 +215,7 @@ function cancelImgOfEditSubtask(subId) {
     cancelImg.onclick = function () {
         deleteSubTask(subId);
     };
+    return cancelImg; // ← wichtig!
 }
 
 /**
@@ -221,7 +226,7 @@ function cancelImgOfEditSubtask(subId) {
  * @param {HTMLElement} checkImg - The check icon element.
  * @param {HTMLElement} cancelImg - The cancel (delete) icon element.
  */
-function setEditSubtaskWrapper(input, checkImg, cancelImg) {
+function setEditSubtaskWrapper(taskItem, input, checkImg, cancelImg) {
     let wrapper = document.createElement('div');
     wrapper.className = 'subtask-edit-input-wrapper';
     wrapper.appendChild(input);
