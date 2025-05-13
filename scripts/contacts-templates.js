@@ -141,127 +141,6 @@ function displayAddContactOverlay() {
 }
 
 /**
- * Validates the form inputs and provides feedback for invalid fields.
- * If all inputs are valid, the form is submitted.
- * @param {Event} event - The submit event from the form.
- * @returns {boolean} - Returns false to prevent default form submission if validation fails.
- */
-function validateAndSubmitForm(event) {
-  event.preventDefault();
-
-  const formId = event.target.id;
-  const key = event.target.getAttribute("data-key");
-
-  const isValid = validateFormInputs();
-
-  if (isValid) {
-    handleFormSubmission(formId, key, event);
-  }
-
-  return false;
-}
-
-/**
- * Validates the form inputs for name, email, and phone.
- * Displays error messages for invalid fields.
- * @returns {boolean} - Returns true if all inputs are valid, otherwise false.
- */
-function validateFormInputs() {
-  let isValid = true;
-
-  const fullName = document.getElementById("fullName");
-  const email = document.getElementById("new-email");
-  const phone = document.getElementById("new-phone");
-
-  if (!fullName.value.trim()) {
-    showError(fullName, "Name is required.");
-    isValid = false;
-  } else {
-    clearError(fullName);
-  }
-
-  if (!validateEmail(email.value.trim())) {
-    showError(email, "Please enter a valid email address.");
-    isValid = false;
-  } else {
-    clearError(email);
-  }
-
-  if (phone.value.trim() && !validatePhone(phone.value.trim())) {
-    showError(phone, "Please enter a valid phone number.");
-    isValid = false;
-  } else {
-    clearError(phone);
-  }
-
-  return isValid;
-}
-
-/**
- * Handles the form submission based on the form ID.
- * Calls the appropriate function to add or edit a contact.
- * @param {string} formId - The ID of the form being submitted.
- * @param {string} key - The unique key of the contact (for editing).
- * @param {Event} event - The submit event from the form.
- */
-function handleFormSubmission(formId, key, event) {
-  if (formId === "addContactForm") {
-    addContactToDatabase(event);
-  } else if (formId === "editContactForm") {
-    saveEditedContact(key);
-  }
-}
-
-/**
- * Displays an error message and highlights the input field with a red border.
- * @param {HTMLElement} input - The input element to highlight.
- * @param {string} message - The error message to display.
- */
-function showError(input, message) {
-  const inputGroup = input.parentElement;
-  const errorMessage = inputGroup.querySelector(".error-message");
-  errorMessage.textContent = message;
-  errorMessage.classList.add("visible");
-  input.style.border = "2px solid red";
-  input.addEventListener("input", () => {
-    clearError(input);
-  });
-}
-
-/**
- * Clears the error message and removes the red border from the input field.
- * @param {HTMLElement} input - The input element to clear.
- */
-function clearError(input) {
-  const inputGroup = input.parentElement;
-  const errorMessage = inputGroup.querySelector(".error-message");
-  errorMessage.textContent = "";
-  errorMessage.classList.remove("visible");
-  input.style.border = "2px solid #ccc";
-}
-
-/**
- * Validates an email address using a regular expression.
- * @param {string} email - The email address to validate.
- * @returns {boolean} - Returns true if the email is valid, otherwise false.
- */
-function validateEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
-}
-
-/**
- * Validates a phone number using a regular expression.
- * Allows numbers with an optional '+' at the beginning and spaces.
- * @param {string} phone - The phone number to validate.
- * @returns {boolean} - Returns true if the phone number is valid, otherwise false.
- */
-function validatePhone(phone) {
-  const phoneRegex = /^\+?[0-9\s]{10,15}$/;
-  return phoneRegex.test(phone);
-}
-
-/**
  * Displays the overlay for editing an existing contact.
  * Dynamically generates the HTML for the overlay and populates it with the contact's current details.
  * @param {string} key - The unique key of the contact to edit.
@@ -323,23 +202,50 @@ function editContactOverlay(key, users) {
  * @param {Object} users - The list of all users.
  */
 function mobileEditOptions(paramKey, users) {
+  if (!isValidContactData(paramKey, users)) return;
+  removeExistingOverlay();
+  generateMobileEditOverlay(paramKey, users);
+}
+
+/**
+ * Validates the contact data before rendering the overlay.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ * @returns {boolean} - Returns true if the data is valid, otherwise false.
+ */
+function isValidContactData(paramKey, users) {
   if (!paramKey || !users || !users[paramKey]) {
     console.error("Invalid paramKey or users data");
-    return;
+    return false;
   }
   let buttonOverlayArea = document.getElementById("button-overlay-area");
   if (!buttonOverlayArea) {
     console.error("Button overlay area not found");
-    return;
+    return false;
   }
+  return true;
+}
+
+/**
+ * Removes any existing overlay or mobile edit button from the DOM.
+ */
+function removeExistingOverlay() {
   let mobileOverlayButton = document.getElementById("overlayButton");
-  mobileOverlayButton.remove();
+  if (mobileOverlayButton) mobileOverlayButton.remove();
+
   let existingOverlay = document.getElementById("mobileEditOptions");
-  if (existingOverlay) {
-    existingOverlay.remove();
-  }
+  if (existingOverlay) existingOverlay.remove();
+}
+
+/**
+ * Generates and appends the mobile edit options overlay to the DOM.
+ * @param {string} paramKey - The unique key of the contact.
+ * @param {Object} users - The list of all users.
+ */
+function generateMobileEditOverlay(paramKey, users) {
+  let buttonOverlayArea = document.getElementById("button-overlay-area");
   buttonOverlayArea.innerHTML = `
-    <div onclick="closeResponsiveOverlay('${paramKey}')" class="mobileOverlay" id="mobileEditOptions">
+    <div onclick="closeResponsiveOverlay('${paramKey}', users)" class="mobileOverlay" id="mobileEditOptions">
       <div id="small-responsive-overlay-options">
         <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
           <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit
