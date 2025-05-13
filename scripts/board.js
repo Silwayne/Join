@@ -330,6 +330,12 @@ function checkIfSubtasks(task) {
  * @async
  */
 async function saveEditedTask(id) {
+  let dueDateInput = document.getElementById('edit-date');
+
+  if (!isValidDateRange(dueDateInput.value)) {
+    showValidationError(dueDateInput, 'Please select a valid date from today to 3 years ahead');
+    return
+  }
   let task = todos.find(t => t.id === id);
   if (!task) return;
   let firebaseID = task.firebaseID;

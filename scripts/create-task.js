@@ -133,12 +133,32 @@ function checkallValidationInputs(titleInput, dueDateInput, categorySelect) {
         showValidationError(dueDateInput, 'Due date is required');
         isValid = false;
     }
+       if (!isValidDateRange(dueDateInput.value)) {
+        showValidationError(dueDateInput, 'Please select a valid date from today to 3 years ahead');
+        isValid = false;
+    }
     if (categorySelect.value.trim() === '') {
         showValidationError(categorySelect, 'Category is required');
         isValid = false;
     }
 
     return isValid;
+}
+function isValidDateRange(dateString) {
+    if (!dateString) return false;
+
+    let inputDate = new Date(dateString);
+    if (isNaN(inputDate)) return false;
+
+    let today = new Date();
+    let maxDate = new Date();
+    maxDate.setFullYear(today.getFullYear() + 3);
+
+    today.setHours(0, 0, 0, 0);
+    maxDate.setHours(0, 0, 0, 0);
+    inputDate.setHours(0, 0, 0, 0);
+
+    return inputDate >= today && inputDate <= maxDate;
 }
 
 
