@@ -247,14 +247,16 @@ function getArrowHTMLWithShowContacts(arrow, id, dropDownMenu, inputContainer) {
  * @param {number} hiddenCount - Number of hidden contacts.
  * @param {HTMLElement} container - The container where the indicator is appended.
  */
-function generateHiddenNamesCounter(overlayContacts, maxVisible, hiddenCount, container) {
+function generateHiddenNamesCounter(maxVisible, hiddenCount, container) {
     let hiddenNames = overlayContacts.slice(maxVisible).join(', ');
+
     container.innerHTML += `
         <div class="user-icon more-indicator" title="${hiddenNames}">
             <span class="user-initials">+${hiddenCount}</span>
         </div>
     `;
 }
+
 
 /**
  * Renders the visible contact icons and adds a hidden names indicator if needed.
@@ -266,7 +268,7 @@ function generateHiddenNamesCounter(overlayContacts, maxVisible, hiddenCount, co
  * @param {Array<string>} overlayContacts - Full list of contact names (used for hidden tooltip).
  * @param {number} hiddenCount - Number of hidden contacts to display as +X.
  */
-function generateVisibleContactsHTML(visibleContacts, container, contactColors, maxVisible, overlayContacts, hiddenCount) {
+function generateVisibleContactsHTML(visibleContacts, container, contactColors, maxVisible, hiddenCount) {
     for (let name of visibleContacts) {
         let initials = getInitials(name);
         let color = contactColors[name] || "#29abe2";
@@ -277,10 +279,10 @@ function generateVisibleContactsHTML(visibleContacts, container, contactColors, 
             </div>
         `;
     }
-
     if (hiddenCount > 0) {
-        generateHiddenNamesCounter(overlayContacts, maxVisible, hiddenCount, container);
+        generateHiddenNamesCounter(maxVisible, hiddenCount, container);
     }
+
 }
 
 

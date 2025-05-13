@@ -255,6 +255,7 @@ function renderAssignedContacts(id) {
         taskId = '_' + id;
     }
     let container = document.getElementById('assignedContactsContainer' + taskId);
+    
     if (!container) return;
     container.innerHTML = '';
     let maxVisible = 4;
