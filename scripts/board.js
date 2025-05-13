@@ -14,8 +14,8 @@ function initAddTask(content) {
  * Opens the Add Task overlay and resets the priority and selected contacts.
  * @param {Event} event - The event object.
  */
-function addTask(event, id) {
-  linkToAddTaskIfMobile()
+async function addTask(event, id) {
+  await linkToAddTaskIfMobile()
   taskProgress = id
   overlayContacts = [];
   event.stopPropagation();
@@ -26,7 +26,7 @@ function addTask(event, id) {
   document.getElementById("add-task-overlay").classList.remove("d_none");
 }
 
- function linkToAddTaskIfMobile(){
+async function linkToAddTaskIfMobile(){
   if (window.innerWidth <= 570) {
         window.location.href = "add-task.html";
     }
