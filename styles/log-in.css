@@ -6,7 +6,7 @@
   box-sizing: border-box;
 }
 
-a {
+.button-link {
   text-decoration: none;
   display: flex;
   justify-content: center;
@@ -86,8 +86,6 @@ a {
   align-items: center;
   min-height: 100vh;
   background: #f6f7f8;
-  margin: 0;
-  padding: 0;
   transition: opacity 1s ease-in-out;
 }
 
@@ -97,7 +95,7 @@ a {
   max-width: 500px;
   width: 90%;
   height: auto;
-  top: 20%;
+  top: 18%;
   border-radius: 30px;
   gap: 32px;
   padding: 25px 30px 25px 30px;
