@@ -232,23 +232,6 @@ function setEditSubtaskWrapper(input, checkImg, cancelImg) {
 }
 
 /**
- * Clears the styles of a priority element.
- * @param {string} elementId - The ID of the priority element.
- */
-function clearPriorityStyles(elementId) {
-    let element = document.getElementById(elementId);
-    element.classList.remove('prio-urgent', 'prio-medium', 'prio-low', 'bold');
-
-    if (elementId.includes('urgent')) {
-        element.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>`;
-    } else if (elementId.includes('medium')) {
-        element.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>`;
-    } else if (elementId.includes('low')) {
-        element.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`;
-    }
-}
-
-/**
  * Gets the ID of a sibling priority element.
  * @param {string} currentId - The ID of the current priority element.
  * @param {string} targetPriority - The target priority ("urgent", "medium", or "low").

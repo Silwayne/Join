@@ -15,6 +15,7 @@ function initAddTask(content) {
  * @param {Event} event - The event object.
  */
 function addTask(event, id) {
+  linkToAddTaskIfMobile()
   taskProgress = id
   overlayContacts = [];
   event.stopPropagation();
@@ -24,6 +25,12 @@ function addTask(event, id) {
     .classList.add("overlay-background");
   document.getElementById("add-task-overlay").classList.remove("d_none");
 }
+
+ function linkToAddTaskIfMobile(){
+  if (window.innerWidth <= 570) {
+        window.location.href = "add-task.html";
+    }
+  }
 
 /**
  * Closes the Add Task overlay and removes the background overlay.

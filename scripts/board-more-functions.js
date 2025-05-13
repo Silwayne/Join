@@ -51,68 +51,6 @@ function getSelectedContactsFromAddTask(task) {
   return html;
 }
 
-/**
- * Generates the HTML for the progress bar of a task.
- * @param {string} subtask - The subtask description.
- * @param {Object} task - The task object containing subtasks.
- * @returns {string} - The HTML string for the progress bar.
- */
-function generateProgressBar(subtask, task) {
-  if (subtask) {
-    let progressBar;
-    let done = 0;
-    for (let i = 0; i < task.subtasks.length; i++) {
-      if (task.subtasks[i].done === true) {
-        done++;
-      }
-    }
-    let progress = (done / task.subtasks.length) * 100;
-    return (progressBar = `
-            <div class="box-category-progress-subtasks-box">
-                <div class="box-category-progress-bar">
-                    <div id="progress-${task.id}" class="progress" style="width: ${progress}%;"></div>
-                </div>
-                <p class="subtask-description" id="subtaskcounter-${task.id}">${subtask}</p>
-            </div>
-        `);
-  }
-  return "";
-}
-
-/**
- * Generates the HTML for a subtask item in the overlay.
- * @param {number} id - The ID of the task.
- * @param {number} i - The index of the subtask.
- * @param {string} imageSrc - The source URL of the checkbox image.
- * @param {string} title - The title of the subtask.
- * @returns {string} - The HTML string for the subtask item.
- */
-function subtaskOverlayContentHTML(id, i, imageSrc, title) {
-  return `
-<div onclick="toggleCustomSubtask(${id}, ${i}, this)" class="subtask-item overlay-subtasks cursor-pointer">
-                    <div class="custom-checkbox" >
-                        <img src="${imageSrc}" class="checkbox-img" id="custom-subtask-${id}-${i}">
-                    </div>
-                    <label class="subtask-class">${title}</label>
-                </div>
-            `;
-}
-
-/**
- * Filters the priority image based on the task's priority.
- * @param {Object} task - The task object containing the priority.
- * @returns {string} - The HTML string for the priority image.
- */
-function filterPriorityImage(task) {
-  let priority = task.priority.toLowerCase();
-
-  if (priority === "low") {
-    return '<img src="../assets/img/Prio-low-green.svg">';
-  } else if (priority === "medium") {
-    return '<img src="../assets/img/Prio-media-orange.svg">';
-  }
-  return '<img src="../assets/img/Prio-alta-red.svg">';
-}
 
 /**
  * Allows a drop event to occur by preventing the default behavior.

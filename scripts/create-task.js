@@ -144,6 +144,13 @@ function checkallValidationInputs(titleInput, dueDateInput, categorySelect) {
 
     return isValid;
 }
+/**
+ * Validates whether a given date string falls within the allowed range:
+ * from today (inclusive) up to 3 years in the future.
+ *
+ * @param {string} dateString - The date input string in 'YYYY-MM-DD' format.
+ * @returns {boolean} Returns true if the date is valid and within the range, otherwise false.
+ */
 function isValidDateRange(dateString) {
     if (!dateString) return false;
 
