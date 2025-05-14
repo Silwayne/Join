@@ -41,7 +41,7 @@ function editOverlay(id) {
                 <input class="filterNamesInput" oninput="filterNames(${id})" type="text" id="dropdownInput_${id}" placeholder="Select contacts to assign"
                     onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'">
                 <span class="arrow-drop-down" id="arrow-drop-down_${id}">
-                    <img src="/assets/img/arrow_drop_down.svg">
+                    <img src="./assets/img/arrow_drop_down.svg">
                 </span>
             </div>
             <div class="selectedInitials-edit" id="assignedContactsContainer_${id}"></div>
@@ -51,10 +51,10 @@ function editOverlay(id) {
   <input type="text" maxlength="30" id="subtaskInput_${id}" class="filterNamesInput" placeholder="Add subtask..." oninput="updateIcons(${id})">
   <div class="icons">
     <span id="checkIcon_${id}" class="icon d_none">
-      <img onclick="clearSubTaskInput(${id})" src="/assets/img/close.svg">
+      <img onclick="clearSubTaskInput(${id})" src="./assets/img/close.svg">
     </span>
     <span id="cancelIcon_${id}" class="icon d_none">
-      <img onclick="addSubTaskInput(${id})" src="/assets/img/check.svg">
+      <img onclick="addSubTaskInput(${id})" src="./assets/img/check.svg">
     </span>
   </div>
   </div>
@@ -105,12 +105,12 @@ function handlePriority(id) {
     html = `
               <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio prio-urgent bold" id="prio-urgent_${id}">
               <div>
-                    <p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p></div></div>
+                    <p>Urgent <img src="./assets/img/Prio-alta-white.svg"></p></div></div>
               <div onclick="swapToMedium('prio-medium_${id}')" class="prio" id="prio-medium_${id}">
-                    <p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>
+                    <p>Medium <img src="./assets/img/Prio-media-orange.svg"></p>
                 </div>
                     <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
-                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+                    <p>Low <img src="./assets/img/Prio-low-green.svg"></p>
                 </div>
   
   `;
@@ -119,12 +119,12 @@ function handlePriority(id) {
     html = `
     <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
     <div>
-          <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p></div></div>
+          <p>Urgent <img src="./assets/img/Prio-alta-red.svg"></p></div></div>
     <div onclick="swapToMedium('prio-medium_${id}')" class="prio prio-medium bold" id="prio-medium_${id}">
-          <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
+          <p>Medium <img src="./assets/img/Prio-media-white.svg"></p>
       </div>
           <div onclick="swapToLow('prio-low_${id}')" class="prio" id="prio-low_${id}">
-          <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+          <p>Low <img src="./assets/img/Prio-low-green.svg"></p>
       </div>
 
 `;
@@ -133,12 +133,12 @@ function handlePriority(id) {
     html = `
     <div onclick="swapToUrgent('prio-urgent_${id}')" class="prio" id="prio-urgent_${id}">
     <div>
-          <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p></div></div>
+          <p>Urgent <img src="./assets/img/Prio-alta-red.svg"></p></div></div>
     <div onclick="swapToMedium('prio-medium_${id}')" class="prio" id="prio-medium_${id}">
-          <p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>
+          <p>Medium <img src="./assets/img/Prio-media-orange.svg"></p>
       </div>
           <div onclick="swapToLow('prio-low_${id}')" class="prio prio-low bold" id="prio-low_${id}">
-          <p>Low <img src="/assets/img/Prio-low-white.svg"></p>
+          <p>Low <img src="./assets/img/Prio-low-white.svg"></p>
       </div>
 
 `;
@@ -447,12 +447,12 @@ function getSubtaskHTML(taskId, subtasks) {
       html += `
         <div class="subtask-item" id="${subId}">
           <div class="subtask-value">
-            <img class="dot" src="/assets/img/Subtasks icons11.svg">
+            <img class="dot" src="./assets/img/Subtasks icons11.svg">
             ${subtask.title}
           </div>
-                      <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${subtask.title}')">
+                      <img id="editIcon_${subId}" class="subtask-edit-img" src="./assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${subtask.title}')">
           <div class="subtask-trash-img">
-            <img src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
+            <img src="./assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
           </div>
         </div>
       `;
@@ -470,10 +470,10 @@ function clearPriorityStyles(elementId) {
     element.classList.remove('prio-urgent', 'prio-medium', 'prio-low', 'bold');
 
     if (elementId.includes('urgent')) {
-        element.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>`;
+        element.innerHTML = `<p>Urgent <img src="./assets/img/Prio-alta-red.svg"></p>`;
     } else if (elementId.includes('medium')) {
-        element.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-orange.svg"></p>`;
+        element.innerHTML = `<p>Medium <img src="./assets/img/Prio-media-orange.svg"></p>`;
     } else if (elementId.includes('low')) {
-        element.innerHTML = `<p>Low <img src="/assets/img/Prio-low-green.svg"></p>`;
+        element.innerHTML = `<p>Low <img src="./assets/img/Prio-low-green.svg"></p>`;
     }
 }

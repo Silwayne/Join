@@ -8,11 +8,11 @@ function renderSidebar() {
   
         <nav class="sidbar-nav">
             <div class="sidbar-top">
-                <img class="sidbar-logo" src="/assets/img/Capa 2.svg" alt="Logo">
+                <img class="sidbar-logo" src="./assets/img/Capa 2.svg" alt="Logo">
                 <div class="menu">
                     <a href="./index.html">
                         <button class="menu-button menu-button-design font-size">
-                            <img src="/assets/img/Icons.svg" alt="Log in Icon" />
+                            <img src="./assets/img/Icons.svg" alt="Log in Icon" />
                             <span>Log in</span>
                         </button>
                     </a>
@@ -47,7 +47,7 @@ function renderSidebarResponsive() {
             <a href="./index.html">
                 <button class="footer-btn">
                     <i class="fa-solid fa-right-to-bracket"></i>
-                    <img src="/assets/img/Icons.svg" alt="Log in Icon" />
+                    <img src="./assets/img/Icons.svg" alt="Log in Icon" />
                     <span>Log In</span>
                 </button>
             </a>

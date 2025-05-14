@@ -193,7 +193,7 @@ function addInputevent(input, subId) {
 
 function checkImgOfEditSubtask(input, subId) {
     let checkImg = document.createElement('img');
-    checkImg.src = "/assets/img/check.svg";
+    checkImg.src = "./assets/img/check.svg";
     checkImg.className = 'subtask-icon check';
     checkImg.onclick = function () {
         saveSubTask(input.value, subId);
@@ -210,7 +210,7 @@ function checkImgOfEditSubtask(input, subId) {
 
 function cancelImgOfEditSubtask(subId) {
     let cancelImg = document.createElement('img');
-    cancelImg.src = '/assets/img/delete.svg';
+    cancelImg.src = './assets/img/delete.svg';
     cancelImg.className = 'subtask-icon cancel';
     cancelImg.onclick = function () {
         deleteSubTask(subId);

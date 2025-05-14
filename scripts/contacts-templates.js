@@ -54,7 +54,7 @@ function contactDetailsAreaTemplate(paramKey, users) {
                       class="edit-options"
                       ><img
                         class="option-icon"
-                        src="/assets/img/edit-icon.svg"
+                        src="./assets/img/edit-icon.svg"
                       />
                       Edit</a
                     >
@@ -64,7 +64,7 @@ function contactDetailsAreaTemplate(paramKey, users) {
                       onclick="deleteContactFromDatabase('${paramKey}', users)"
                       ><img
                         class="option-icon"
-                        src="/assets/img/trash-icon.svg"
+                        src="./assets/img/trash-icon.svg"
                       />
                       Delete</a
                     >
@@ -98,7 +98,7 @@ function displayAddContactOverlay() {
         <div onclick="stopPropagation(event)" id="add-contact-overlay">
           <div id="left-add-contact-column">
             <div id="add-contact-header-area">
-              <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
+              <img id="overlay-join-logo" .="./assets/img/Capa 2.svg" alt="" />
               <h1 id="add-contact-heading">Add contact</h1>
               <h2>Tasks are better with a team!</h2>
             </div>
@@ -106,23 +106,23 @@ function displayAddContactOverlay() {
           </div>
           <div id="right-add-contact-column">
             <div class="new-contact-icon">
-              <img src="/assets/img/new-contact-icon.svg" alt="" />
+              <img src="./assets/img/new-contact-icon.svg" alt="" />
             </div>
             <div id="add-contact-options">
               <form id="addContactForm" class="add-contact-form" onsubmit="return validateAndSubmitForm(event)">
                 <div class="input-group">
                   <input type="text" id="fullName" placeholder="Name" />
-                  <img class="icon" src="/assets/img/person.svg">
+                  <img class="icon" src="./assets/img/person.svg">
                   <small class="error-message"></small>
                 </div>
                 <div class="input-group">
                   <input id="new-email" placeholder="E-Mail" />
-                  <img class="icon" src="/assets/img/mail.svg">
+                  <img class="icon" src="./assets/img/mail.svg">
                   <small class="error-message"></small>
                 </div>
                 <div class="input-group">
                   <input type="tel" id="new-phone" placeholder="Phone" />
-                  <img class="icon" src="/assets/img/call.svg">
+                  <img class="icon" src="./assets/img/call.svg">
                   <small class="error-message"></small>
                 </div>
                 <div class="create-contact-btn" id="button-area">
@@ -158,27 +158,27 @@ function editContactOverlay(key, users) {
           <div id="left-edit-contact-column" onclick="stopPropagation(event)">
             <button id="closeEditOverlay" onclick="closeEditOverlay()">X</button>
             <h1 id="edit-contact-heading">Edit contact</h1>
-            <img id="overlay-join-logo" src="/assets/img/Capa 2.svg" alt="" />
+            <img id="overlay-join-logo" src="./assets/img/Capa 2.svg" alt="" />
           </div>
           <div id="right-edit-contact-column">
             <div class="new-contact-icon">
-              <img src="/assets/img/new-contact-icon.svg"/>
+              <img src="./assets/img/new-contact-icon.svg"/>
             </div>
             <div id="edit-contact-options">
               <form id="editContactForm" data-key="${key}" class="edit-contact-form" onsubmit="return validateAndSubmitForm(event)">
                 <div class="input-group">
                   <input type="text" id="fullName" value="${user.name}" placeholder="Name" />
-                  <img class="icon" src="/assets/img/person.svg">
+                  <img class="icon" src="./assets/img/person.svg">
                   <small class="error-message"></small>
                 </div>
                 <div class="input-group">
                   <input id="new-email" value="${user.email}" placeholder="E-Mail" />
-                  <img class="icon" src="/assets/img/mail.svg">
+                  <img class="icon" src="./assets/img/mail.svg">
                   <small class="error-message"></small>
                 </div>
                 <div class="input-group">
                   <input type="tel" id="new-phone" value="${user.phone}" placeholder="Phone" />
-                  <img class="icon" src="/assets/img/call.svg">
+                  <img class="icon" src="./assets/img/call.svg">
                   <small class="error-message"></small>
                 </div>
                 <div id="button-area">
@@ -248,10 +248,10 @@ function generateMobileEditOverlay(paramKey, users) {
     <div onclick="closeResponsiveOverlay('${paramKey}', users)" class="mobileOverlay" id="mobileEditOptions">
       <div id="small-responsive-overlay-options">
         <button class="responsiveButton" onclick="editContactOverlay('${paramKey}', users)">
-          <img id="edit-icon" src="/assets/img/edit-icon.svg">Edit
+          <img id="edit-icon" src="./assets/img/edit-icon.svg">Edit
         </button>
         <button id="deleteMobileButton" class="responsiveButton" onclick="deleteContactFromDatabase('${paramKey}', users)">
-          <img id="trash-icon" src="/assets/img/trash-icon.svg">Delete
+          <img id="trash-icon" src="./assets/img/trash-icon.svg">Delete
         </button>
       </div>
     </div>`;

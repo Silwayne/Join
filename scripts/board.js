@@ -38,7 +38,7 @@ async function addTask(event, id) {
  */
 async function linkToAddTaskIfMobile() {
   if (window.innerWidth <= 570) {
-    window.location.href = "add-task.html";
+    window.location.href = "./add-task.html";
     return;
   }
 }

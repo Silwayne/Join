@@ -7,41 +7,41 @@ function renderSidebar() {
   document.getElementById("sidbar").innerHTML = `
     <nav class="sidbar-nav">
         <div class="sidbar-top">
-            <img class="sidbar-logo" src="/assets/img/Capa 2.svg" alt="Logo">
+            <img class="sidbar-logo" src="./assets/img/Capa 2.svg" alt="Logo">
             <div class="menu">
-                <a href="/join-main.html">
+                <a href="./join-main.html">
                     <button class="menu-button menu-button-design font-size">
-                        <img src="/assets/img/summary-icon.svg" alt="Summary">
+                        <img src="./assets/img/summary-icon.svg" alt="Summary">
                         <span>Summary</span>
                     </button>
                 </a>
-                <a href="/add-task.html">
+                <a href="./add-task.html">
                     <button class="menu-button menu-button-design font-size">
-                        <img src="/assets/img/add_task_icon.svg" alt="Add Task">
+                        <img src="./assets/img/add_task_icon.svg" alt="Add Task">
                         <span style="white-space: nowrap;">Add Task</span>
                     </button>
                 </a>
-                <a href="/board.html">
+                <a href="./board.html">
                     <button class="menu-button menu-button-design font-size">
-                        <img src="/assets/img/board-icon.svg" alt="Board">
+                        <img src="./assets/img/board-icon.svg" alt="Board">
                         <span>Board</span>
                     </button>
                 </a>
-                <a href="/contacts.html">
+                <a href="./contacts.html">
                     <button class="menu-button menu-button-design font-size">
-                        <img src="/assets/img/perm_contact_calendar.svg" alt="Contacts">
+                        <img src="./assets/img/perm_contact_calendar.svg" alt="Contacts">
                         <span>Contacts</span>
                     </button>
                 </a>
             </div>
         </div>
         <div class="sidbar-bottom d-none">
-            <a href="/privacy.html">
+            <a href="./privacy.html">
                 <button class="menu-button menu-button-lower-design font-size">
                     Privacy Policy
                 </button>
             </a>
-            <a href="/legal.html">
+            <a href="./legal.html">
                 <button class="menu-button menu-button-lower-design font-size">
                     Legal Notice
                 </button>
@@ -60,27 +60,27 @@ highlightActiveSidebarButton();
 function renderSidebarResponsive() {
   document.getElementById("sidebar-responsive").innerHTML = `
     <div class="menu-responsive">
-        <a href="/join-main.html">
+        <a href="./join-main.html">
             <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
-                <img src="/assets/img/summary-icon.svg" alt="Summary">
+                <img src="./assets/img/summary-icon.svg" alt="Summary">
                 <span>Summary</span>
             </button>
         </a>
-        <a href="/add-task.html">
+        <a href="./add-task.html">
             <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
-                <img src="/assets/img/add_task_icon.svg" style="width: 28px; alt="Add Task">
+                <img src="./assets/img/add_task_icon.svg" style="width: 28px; alt="Add Task">
                 <span style="white-space: nowrap;">Add Task</span>
             </button>
         </a>
-        <a href="/board.html">
+        <a href="./board.html">
             <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
-                <img src="/assets/img/board-icon.svg" alt="Board">
+                <img src="./assets/img/board-icon.svg" alt="Board">
                 <span>Board</span>
             </button>
         </a>
-        <a href="/contacts.html">
+        <a href="./contacts.html">
             <button class="menu-button-responsive menu-button-design-responsive font-size-responsive">
-                <img src="/assets/img/perm_contact_calendar.svg" alt="Contacts">
+                <img src="./assets/img/perm_contact_calendar.svg" alt="Contacts">
                 <span>Contacts</span>
             </button>
         </a>

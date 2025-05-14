@@ -27,7 +27,7 @@ function initHTML(content) {
             <input oninput="filterNames('assignedContactsContainer')" type="text" id="dropdownInput" placeholder="Select contacts to assign" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Select contacts to assign'">
             <div id="arrow-drop-down">
                             <span class="arrow-drop-down">
-            <img src="/assets/img/arrow_drop_down.svg">
+            <img src="./assets/img/arrow_drop_down.svg">
             </span>
             </div>
             </div>
@@ -46,13 +46,13 @@ function initHTML(content) {
             <p>Prio</p>
             <div class="prio-box">
                 <div onclick="swapToUrgent('prio-urgent')" class="prio" id="prio-urgent">
-                    <p>Urgent <img src="/assets/img/Prio-alta-red.svg"></p>
+                    <p>Urgent <img src="./assets/img/Prio-alta-red.svg"></p>
                 </div>
                 <div onclick="swapToMedium('prio-medium')" class="prio prio-medium bold" id="prio-medium">
-                    <p>Medium <img src="/assets/img/Prio-media-white.svg"></p>
+                    <p>Medium <img src="./assets/img/Prio-media-white.svg"></p>
                 </div>
                 <div onclick="swapToLow('prio-low')" class="prio" id="prio-low">
-                    <p>Low <img src="/assets/img/Prio-low-green.svg"></p>
+                    <p>Low <img src="./assets/img/Prio-low-green.svg"></p>
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@ function initHTML(content) {
         <option value="User Story">User Story</option>
     </select>
     <span class="arrow-category-hover">
-    <img src="/assets/img/arrow_drop_down.svg" id="category-arrow" alt="Dropdown Icon">
+    <img src="./assets/img/arrow_drop_down.svg" id="category-arrow" alt="Dropdown Icon">
     </span>
 </div>
 
@@ -76,8 +76,8 @@ function initHTML(content) {
         <div id="subtask-container" class="input-container">
             <input type="text" id="subtaskInput" maxlength="30" placeholder="Add new subtask" oninput="updateIcons()">
             <div class="icons">
-                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()" src="/assets/img/close.svg"></span>
-                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()" src="/assets/img/check.svg"></span>
+                <span id="checkIcon" class="icon d_none"><img onclick="clearSubTaskInput()" src="./assets/img/close.svg"></span>
+                <span id="cancelIcon" class="icon d_none"><img onclick="addSubTaskInput()" src="./assets/img/check.svg"></span>
 
             </div>
 
@@ -93,8 +93,8 @@ function initHTML(content) {
     <p><span class="red">*</span>This field is required</p>   
     </div>
     <div class="buttons-bottom-right">    
-    <button class="create-clear-button" onclick="clearTaskForm()" id="clear-button">Clear <img src="/assets/img/Vector.svg"></button>
-    <button class="create-clear-button" onclick="createTask()" id="createtask-button">Create Task <img src="/assets/img/check.svg"</button>
+    <button class="create-clear-button" onclick="clearTaskForm()" id="clear-button">Clear <img src="./assets/img/Vector.svg"></button>
+    <button class="create-clear-button" onclick="createTask()" id="createtask-button">Create Task <img src="./assets/img/check.svg"</button>
         </div>
 
 </section>`
@@ -113,12 +113,12 @@ function createSubtaskHTML(subId, value, taskId) {
     return `
     <div class="subtask-item">
         <div class="subtask-value">
-            <img class="dot" src="/assets/img/Subtasks icons11.svg">
+            <img class="dot" src="./assets/img/Subtasks icons11.svg">
             ${value}
         </div>
         <div class="subtask-icons">
-            <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
-            <img class= "subtask-trash-img"src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
+            <img id="editIcon_${subId}" class="subtask-edit-img" src="./assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
+            <img class= "subtask-trash-img"src="./assets/img/delete.svg" onclick="deleteSubTask('${subId}', ${taskId})">
         </div>
     </div>
     `;
@@ -196,12 +196,12 @@ function saveSubTask(value, subId) {
 
     taskItem.innerHTML = `
         <div class="subtask-value">
-            <img class="dot" src="/assets/img/Subtasks icons11.svg">
+            <img class="dot" src="./assets/img/Subtasks icons11.svg">
             ${value}
         </div>
         <div class="subtask-icons">
-            <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
-            <img class="subtask-trash-img" src="/assets/img/delete.svg" onclick="deleteSubTask('${subId}')">
+            <img id="editIcon_${subId}" class="subtask-edit-img" src="./assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
+            <img class="subtask-trash-img" src="./assets/img/delete.svg" onclick="deleteSubTask('${subId}')">
         </div>
     `;
 }
@@ -215,7 +215,7 @@ function saveSubTask(value, subId) {
 function getArrowHTMLWithHideContacts(id) {
     return `
                 <span class="arrow-drop-down">
-        <img onclick="hideContacts(event, '${id}')" src="/assets/img/arrow_drop_downaa.svg">
+        <img onclick="hideContacts(event, '${id}')" src="./assets/img/arrow_drop_downaa.svg">
         </span>
     `;
 }
@@ -232,7 +232,7 @@ function getArrowHTMLWithHideContacts(id) {
 function getArrowHTMLWithShowContacts(arrow, id, dropDownMenu, inputContainer) {
     arrow.innerHTML = `
                           <span onclick="showContacts(event, '${id}')" class="arrow-drop-down">
-                        <img src="/assets/img/arrow_drop_down.svg">
+                        <img src="./assets/img/arrow_drop_down.svg">
                         </span>
             `;
 

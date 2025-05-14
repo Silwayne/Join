@@ -16,7 +16,7 @@ async function createTask() {
       removeAddTask();
     }
     else {
-      window.location.href = "board.html";
+      window.location.href = "./board.html";
     }
 
   }
@@ -182,7 +182,7 @@ function swapToUrgent(elementId) {
     clearPriorityStyles(getSiblingId(elementId, 'medium'));
     clearPriorityStyles(getSiblingId(elementId, 'low'));
 
-    element.innerHTML = `<p>Urgent <img src="/assets/img/Prio-alta-white.svg"></p>`;
+    element.innerHTML = `<p>Urgent <img src="./assets/img/Prio-alta-white.svg"></p>`;
     priority = 'Urgent';
 }
 
@@ -199,7 +199,7 @@ function swapToMedium(elementId) {
     clearPriorityStyles(getSiblingId(elementId, 'urgent'));
     clearPriorityStyles(getSiblingId(elementId, 'low'));
 
-    element.innerHTML = `<p>Medium <img src="/assets/img/Prio-media-white.svg"></p>`;
+    element.innerHTML = `<p>Medium <img src="./assets/img/Prio-media-white.svg"></p>`;
     priority = 'Medium';
 }
 
@@ -216,7 +216,7 @@ function swapToLow(elementId) {
     clearPriorityStyles(getSiblingId(elementId, 'urgent'));
     clearPriorityStyles(getSiblingId(elementId, 'medium'));
 
-    element.innerHTML = `<p>Low <img src="/assets/img/Prio-low-white.svg"></p>`;
+    element.innerHTML = `<p>Low <img src="./assets/img/Prio-low-white.svg"></p>`;
     priority = 'Low';
 }
 

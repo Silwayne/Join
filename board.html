@@ -13,13 +13,13 @@
 
     <link rel="icon" type="image/x-icon" href="/assets/img/Capa 1.svg" />
   <!-- CSS -->
-  <link rel="stylesheet" href="styles/join-main.css" />
-  <link rel="stylesheet" href="styles/board.css" />
-  <link rel="stylesheet" href="styles/board-responsive.css" />
-  <link rel="stylesheet" href="styles/add-task.css" />
-  <link rel="stylesheet" href="styles/add-task-overlay.css" />
-  <link rel="stylesheet" href="/styles/join-main-responsive.css" />
-  <link rel="stylesheet" href="styles/rotate.css" />
+  <link rel="stylesheet" href="./styles/join-main.css" />
+  <link rel="stylesheet" href="./styles/board.css" />
+  <link rel="stylesheet" href="./styles/board-responsive.css" />
+  <link rel="stylesheet" href="./styles/add-task.css" />
+  <link rel="stylesheet" href="./styles/add-task-overlay.css" />
+  <link rel="stylesheet" href="./styles/join-main-responsive.css" />
+  <link rel="stylesheet" href="./styles/rotate.css" />
   <title>Board</title>
 </head>
 
@@ -44,14 +44,14 @@
           <div id="board-alignment-end">
             <input oninput="filterTasks()" id="searchTasks" type="text" placeholder="Find Task" />
             <hr id="divider" />
-            <img id="searchIcon" src="/assets/img/search.svg" alt="" />
+            <img id="searchIcon" src="./assets/img/search.svg" alt="" />
             <button class="add-task-button" id="add-task-button" onclick="addTask(event, 'todo')">
               Add task +
             </button>
           </div>
         </div>
       </div>
-      <div><img class="success" id="success-board" src ="/assets/img/Added to back log V1.svg"></div>
+      <div><img class="success" id="success-board" src ="./assets/img/Added to back log V1.svg"></div>
       <div id="the-board" onclick="closeAllTooltips()">
         <div>
           <div class="task-column" id="to-do-column">
@@ -109,16 +109,16 @@
 
 </body>
 <!-- Scripts -->
- <script src="/scripts/firebase-log-in.js"></script>
-<script src="/scripts/side-bar.js"></script>
-<script src="/scripts/join-header.js"></script>
-<script src="/scripts/add-task.js"></script>
-<script src="/scripts/board.js"></script>
-<script src="/scripts/create-task.js"></script>
-<script src="/scripts/add-task-summary-functions.js"></script>
-<script src="/scripts/board-more-functions.js"></script>
-<script src="/scripts/add-task-template.js"></script>
-<script src="/scripts/board-template.js"></script>
+<script src="./scripts/firebase-log-in.js"></script>
+<script src="./scripts/side-bar.js"></script>
+<script src="./scripts/join-header.js"></script>
+<script src="./scripts/add-task.js"></script>
+<script src="./scripts/board.js"></script>
+<script src="./scripts/create-task.js"></script>
+<script src="./scripts/add-task-summary-functions.js"></script>
+<script src="./scripts/board-more-functions.js"></script>
+<script src="./scripts/add-task-template.js"></script>
+<script src="./scripts/board-template.js"></script>
 
 
 </html>
