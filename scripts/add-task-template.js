@@ -185,8 +185,10 @@ function contactListHTMLFilteredTemplate(backgroundClass, idNumber, contactName,
 
 /**
  * Saves the updated content of a subtask.
- * @param {HTMLInputElement} inputField - The input field containing the updated subtask content.
- * @param {number} taskIdNumber - The ID of the subtask to save.
+ * Replaces the editable input with standard subtask HTML structure.
+ *
+ * @param {string} value - The updated text content of the subtask.
+ * @param {string} subId - The DOM ID of the subtask element.
  */
 function saveSubTask(value, subId) {
     let taskItem = document.getElementById(subId);
@@ -195,7 +197,7 @@ function saveSubTask(value, subId) {
     taskItem.innerHTML = `
         <div class="subtask-value">
             <img class="dot" src="/assets/img/Subtasks icons11.svg">
-            <span class="subtask-title">${value}</span>
+            ${value}
         </div>
         <div class="subtask-icons">
             <img id="editIcon_${subId}" class="subtask-edit-img" src="/assets/img/edit-icon.svg" onclick="editSubTask('${subId}', '${value}')">
@@ -203,6 +205,7 @@ function saveSubTask(value, subId) {
         </div>
     `;
 }
+
 /**
  * Returns the HTML string for a dropdown arrow icon that hides the contact menu when clicked.
  *

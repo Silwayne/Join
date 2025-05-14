@@ -26,12 +26,22 @@ async function addTask(event, id) {
   document.getElementById("add-task-overlay").classList.remove("d_none");
 }
 
-async function linkToAddTaskIfMobile(){
+/**
+ * Redirects the user to the "add-task.html" page if the screen width is 570px or less.
+ * 
+ * This function ensures responsive behavior by detecting mobile viewports
+ * and navigating to the task creation page accordingly.
+ *
+ * @async
+ * @function linkToAddTaskIfMobile
+ * @returns {Promise<void>} Resolves when the redirection (if any) is completed.
+ */
+async function linkToAddTaskIfMobile() {
   if (window.innerWidth <= 570) {
-        window.location.href = "add-task.html";
-        return
-    }
+    window.location.href = "add-task.html";
+    return;
   }
+}
 
 /**
  * Closes the Add Task overlay and removes the background overlay.
@@ -348,6 +358,8 @@ async function saveEditedTask(id) {
   if (!task) return;
   let firebaseID = task.firebaseID;
   let updatedTask = buildUpdatedTask(id, task);
+  console.log(task);
+  
   await updateFireBaseData(firebaseID, updatedTask);
   await closeOverlay();
   await updateBoardHTML();
