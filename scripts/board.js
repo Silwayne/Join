@@ -358,8 +358,6 @@ async function saveEditedTask(id) {
   if (!task) return;
   let firebaseID = task.firebaseID;
   let updatedTask = buildUpdatedTask(id, task);
-  console.log(task);
-  
   await updateFireBaseData(firebaseID, updatedTask);
   await closeOverlay();
   await updateBoardHTML();
